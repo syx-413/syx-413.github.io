@@ -7,68 +7,68 @@
 而--bg-blur变量定义了带模糊效果的导航栏背景颜色为RGBA值(250, 250, 246, 0.4)。
 最后，body选择器使用var()函数将--bg变量应用于整个网站的主要背景。如果您想要更改网站的背景颜色，您可以在此文件中编辑--bg变量的值为所需的颜色即可*/
 
-body {
-  background: var(--bg);
+body { /* Body */
+  background: var(--bg); /* 使用var()函数将--bg变量应用于整个网站的主要背景 */
+}
+  
+  /* Navbar */ /* 导航栏 */
+  
+  .Navbar { /* 导航栏 */
+  display: flex; /* 将导航栏的子元素排成一行 */
+  align-items: center; /* 将导航栏的子元素垂直居中 */
+  font-size: 16px; /* 导航栏的字体大小 */
+  position: fixed; /* 将导航栏固定在屏幕上方 */
+  top: 0; /* 将导航栏固定在屏幕上方 */
+  left: 0; /* 将导航栏固定在屏幕上方 */
+  z-index: 999; /* 将导航栏固定在屏幕上方 */
+  width: 100%; /* 将导航栏的宽度设置为100% */
+  height: 50px; /* 将导航栏的高度设置为50px */
+  padding: 10px 20px; /* 将导航栏的内边距设置为10px 20px */
+  /* Background blur stuff. */ /* 背景模糊效果 */
+  background-color: var(--bg-blur); /* 将导航栏的背景颜色设置为--bg-blur变量的值 */
+  -webkit-backdrop-filter: blur(20px); /* 使用-webkit-backdrop-filter属性为导航栏添加背景模糊效果 */
+  backdrop-filter: blur(20px); /* 使用backdrop-filter属性为导航栏添加背景模糊效果 */
+  overflow-x: auto; /* 将导航栏的子元素溢出部分设置为自动 */
+} 
+
+.Navbar a { /* 导航栏的链接 */
+  color: inherit; /* 将导航栏的链接的颜色设置为继承 */
+  text-decoration: none; /* 将导航栏的链接的文本装饰设置为无 */
+} 
+
+.Navbar a:last-child > .Navbar__Btn { /* 导航栏的最后一个链接的子元素 */
+  /* .nav padding 20px */ /* 将导航栏的内边距设置为20px */
+  margin-right: 20px; /* 将导航栏的外边距设置为20px */
 }
 
-/* Navbar */
-
-.Navbar {
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  height: 50px;
-  padding: 10px 20px;
-  /* Background blur stuff. */
-  background-color: var(--bg-blur);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  overflow-x: auto;
+.Navbar__Btn { /* 导航栏的按钮 */   
+  border-radius: 0.25rem; /* 将导航栏的按钮的边框半径设置为0.25rem */
+  padding: 0 6px; /* 将导航栏的按钮的内边距设置为0 6px */
+  line-height: 1.8125; /* 将导航栏的按钮的行高设置为1.8125 */
+  transition: background 30ms ease-in-out 0s; /* 将导航栏的按钮的背景颜色的过渡效果设置为30ms ease-in-out 0s */
+  /* For centering inline image */ /* 用于居中内联图像 */
+  display: flex; /* 将导航栏的按钮的子元素排成一行 */
+  align-items: center; /* 将导航栏的按钮的子元素垂直居中 */
 }
 
-.Navbar a {
-  color: inherit;
-  text-decoration: none;
+.Navbar__Btn:hover { /* 导航栏的按钮的鼠标悬停效果 */
+  background: rgba(55, 53, 47, 0.08); 
 }
 
-.Navbar a:last-child > .Navbar__Btn {
-  /* .nav padding 20px */
-  margin-right: 20px;
-}
-
-.Navbar__Btn {
-  border-radius: 0.25rem;
-  padding: 0 6px;
-  line-height: 1.8125;
-  transition: background 30ms ease-in-out 0s;
-  /* For centering inline image */
-  display: flex;
-  align-items: center;
-}
-
-.Navbar__Btn:hover {
-  background: rgba(55, 53, 47, 0.08);
-}
-
-.Navbar__Btn:active {
+.Navbar__Btn:active { /* 导航栏的按钮的鼠标按下效果 */
   background: rgba(55, 53, 47, 0.16);
 }
 
-.Navbar__Btn > span {
-  white-space: nowrap;
+.Navbar__Btn > span { /* 导航栏的按钮的子元素 */
+  white-space: nowrap; /* 将导航栏的按钮的子元素的空白设置为不换行 */
+} 
+
+.Navbar__Btn > span:not(:first-child) { /* 导航栏的按钮的子元素的非第一个子元素 */
+  margin-left: 6px; 
 }
 
-.Navbar__Btn > span:not(:first-child) {
-  margin-left: 6px;
-}
-
-.Navbar__Delim {
-  margin: 0 3px;
+.Navbar__Delim { /* 导航栏的分隔符 */
+  margin: 0 3px; 
   color: rgba(55, 53, 47, 0.4);
 }
 
@@ -76,13 +76,15 @@ body {
 
 .Header,
 .PageRoot,
-.ArticleList {
-  width: 900px;
+.ArticleList { /* 头部，页面根，文章列表 */
+  /* width: 900px; */
+  width: 945px;
   max-width: 100%;
   margin: 0px auto;
-  padding: 0px 96px;
+  padding: 0px 96px; 
 }
 
+/* For mobile devices */ /* 用于移动设备 */
 @media only screen and (max-width: 900px) {
   .Header,
   .PageRoot,
@@ -95,42 +97,43 @@ body {
 
 /* Header */
 
-.Header a {
-  color: inherit;
-  text-decoration: none;
+.Header a { /* 头部的链接 */
+  color: inherit; /* 将头部的链接的颜色设置为继承 */
+  text-decoration: none; /* 将头部的链接的文本装饰设置为无 */
 }
 
-.Header__Cover {
-  position: absolute;
+.Header__Cover { /* 头部的封面 */
+  position: absolute; /* 将头部的封面的位置设置为绝对定位 */
   top: 0;
   right: 0;
-  /* Firefox need this while Chrome doesn't. */
+  /* Firefox need this while Chrome doesn't. */ /* Firefox需要这个，而Chrome不需要。 */
   left: 0;
   z-index: -1;
 }
 
-.Header__Cover > img {
-  height: calc(30vh + 50px);
-  width: 100%;
-  object-fit: cover;
+.Header__Cover > img { /* 头部的封面的图片 */
+  height: calc(30vh + 50px); /* 将头部的封面的图片的高度设置为calc(30vh + 50px) */
+  width: 100%; 
+  object-fit: cover; /* 将头部的封面的图片的对象适配设置为覆盖 */
 }
 
-.Header__Spacer {
+.Header__Spacer { /* 头部的间距 */
   margin-top: 30vh;
 }
 
-.Header__Spacer--NoCover {
+.Header__Spacer--NoCover { /* 头部的间距--无封面 */
   margin-top: calc(50px + 2.5rem);
 }
 
-.Header__Icon {
-  line-height: 1.1;
-  /* On Android Firefox, emoji can't be displayed if font-size > 77px. */
+.Header__Icon { /* 头部的图标 */
+  line-height: 1.1; /* 将头部的图标的行高设置为1.1 */
+  /* On Android Firefox, emoji can't be displayed if font-size > 77px. */ /* 在Android Firefox上，如果字体大小大于77px，则无法显示表情符号。 */
   font-size: 75px;
 }
 
-.Header__Title {
-  margin-top: 2.5rem;
+.Header__Title { /* 头部的标题 */
+  /* margin-top: 2.5rem; */
+  margin-top: 1.5rem;
   margin-bottom: 0.25em;
   line-height: 1.2;
   font-size: 2.625rem;
@@ -138,53 +141,53 @@ body {
   letter-spacing: -0.005em;
 }
 
-.Header > *:last-child {
+.Header > *:last-child { /* 头部的最后一个子元素 */
   margin-bottom: 2.5rem;
 }
 
-.Header__DescBigQuoteMark {
+.Header__DescBigQuoteMark { /* 头部的大引号 */
   font-size: 1.5em;
   line-height: 0;
 }
 
 /* DateTagBar */
 
-.DateTagBar {
+.DateTagBar { /* 日期标签栏 */
   font-size: 0.9rem;
   line-height: 1.2;
   display: flex;
   flex-wrap: wrap;
 }
 
-.DateTagBar__Item {
+.DateTagBar__Item {  /* 日期标签栏的项目 */
   margin-right: 8px;
   margin-bottom: 8px;
   padding: 2px 6px;
   border-radius: 0.25rem;
 }
 
-.DateTagBar__Date {
+.DateTagBar__Date { /* 日期标签栏的日期 */
   color: hsla(45, 2%, 40%, 1);
   padding-left: 0px;
   padding-right: 8px;
 }
 
-.DateTagBar__Tag {
+.DateTagBar__Tag { /* 日期标签栏的标签 */
   font-size: 0.85rem;
   white-space: nowrap;
 }
 
-.DateTagBar__Tag--default {
+.DateTagBar__Tag--default { /* 日期标签栏的标签--默认 */
   color: rgb(50, 48, 44);
   background: rgba(227, 226, 224, 0.5);
 }
 
-.DateTagBar__Tag--gray {
+.DateTagBar__Tag--gray { /* 日期标签栏的标签--灰色 */
   color: rgb(50, 48, 44);
   background: rgb(227, 226, 224);
 }
 
-.DateTagBar__Tag--brown {
+.DateTagBar__Tag--brown { /* 日期标签栏的标签--棕色 */
   color: rgb(68, 42, 30);
   background: rgb(238, 224, 218);
 }
@@ -224,74 +227,75 @@ body {
   background: rgb(255, 226, 221);
 }
 
-.DateTagBar__Tag > a {
-  border: none;
+.DateTagBar__Tag > a { /* 日期标签栏的标签的链接 */
+  border: none; /* 将日期标签栏的标签的链接的边框设置为无 */
 }
 
 /* Article */
 
-.Article {
-  margin: 2rem 0;
+.Article { /* 文章 */
+  margin: 2rem 0; /* 将文章的外边距设置为2rem 0 */
 }
 
-.Article a {
+.Article a { /* 文章的链接 */
   color: inherit;
   text-decoration: none;
 }
 
-.Article__Title {
-  margin: 0;
+.Article__Title { /* 文章的标题 */
+  margin: 0; 
   padding-bottom: 0.5rem;
-  line-height: 1.5;
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  line-height: 1.5; /* 将文章的标题的行高设置为1.5 */
+  font-size: 1.4rem; /* 将文章的标题的字体大小设置为1.4rem */
+  font-weight: 600; /* 将文章的标题的字体粗细设置为600 */
+  letter-spacing: -0.01em;  /* 将文章的标题的字母间距设置为-0.01em */
 }
 
-.Article__Title > a {
-  border-bottom: 2px solid hsl(45, 8%, 85%);
+.Article__Title > a { /* 文章的标题的链接 */
+  border-bottom: 2px solid hsl(45, 8%, 85%); /* 将文章的标题的链接的下边框设置为2px solid hsl(45, 8%, 85%) */
+} 
+
+.Article__Title > a:not(:first-child) { /* 文章的标题的链接的非第一个子元素 */
+  margin-left: 5px; 
 }
 
-.Article__Title > a:not(:first-child) {
-  margin-left: 5px;
+.Article__Title > a:hover { /* 文章的标题的链接的鼠标悬停效果 */
+  border-bottom: 2px solid hsl(45, 8%, 55%); /* 将文章的标题的链接的下边框设置为2px solid hsl(45, 8%, 55%) */
 }
 
-.Article__Title > a:hover {
-  border-bottom: 2px solid hsl(45, 8%, 55%);
-}
-
-.Article__Desc {
+.Article__Desc { /* 文章的描述 */
   padding-bottom: 0.5rem;
 }
 
 /* PageRoot (content body) */
 
-.PageRoot {
+.PageRoot { /* 页面根 */
   padding-bottom: 0;
   padding-top: 0;
 }
 
 /* Footer */
 
-.Footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+.Footer { /* 页脚 */
+  display: flex; /* 将页脚的子元素排成一行 */
+  flex-wrap: wrap; /* 将页脚的子元素换行 */
+  align-items: center; /* 将页脚的子元素垂直居中 */
+  justify-content: center; /* 将页脚的子元素水平居中 */
   font-size: 14px;
   padding: 5rem 3rem;
   color: rgba(55, 53, 47, 0.6);
 }
 
-.Footer > div:nth-child(2) {
+.Footer > div:nth-child(2) { /* 页脚的第二个子元素 */
   margin: 0 3px;
 }
 
-.Footer a {
+.Footer a { /* 页脚的链接 */
   color: rgba(55, 53, 47);
 }
 
-@media only screen and (max-width: 680px) {
+
+@media only screen and (max-width: 680px) { /* 用于移动设备 */
   * {
     -webkit-tap-highlight-color: transparent;
   }
@@ -309,14 +313,15 @@ body {
   }
 }
 
-@supports (not (backdrop-filter: blur(20px))) and
-  (not (-webkit-backdrop-filter: blur(20px))) {
-  .Navbar {
+/* 用于不支持背景模糊效果的浏览器 */
+@supports (not (backdrop-filter: blur(20px))) and 
+  (not (-webkit-backdrop-filter: blur(20px))) {  
+  .Navbar { 
     background-color: var(--bg);
   }
 }
 
-.inline-img-icon {
+.inline-img-icon { /* 内联图像图标 */
   height: 1.2em;
   /* Setting width prevents content shifting after image loaded. */
   width: 1.2em;

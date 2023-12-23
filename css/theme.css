@@ -1,14 +1,14 @@
 /* Primitives */
 
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; /* 使得元素的宽度和高度包括内边距和边框，但不包括外边距 */
 }
 
-*::selection {
-  background: rgba(45, 170, 219, 0.3);
+*::selection { /* 选中文本的样式 */
+  background: rgba(45, 170, 219, 0.3); /* 选中文本的背景色 */
 }
 
-:root {
+:root { /* 根元素 */
   --color-text-default: rgb(55, 53, 47);
   --color-text-default-light: rgba(55, 53, 47, 0.6);
   --color-text-gray: rgb(155, 154, 151);
@@ -53,44 +53,44 @@
   --column-spacing: 46px;
 }
 
-body {
-  color: var(--color-text-default);
-  fill: currentColor;
-  font-family: 'Source Sans Pro', -apple-system, 'BlinkMacSystemFont',
+body { /* body元素 */
+  color: var(--color-text-default); /* 文本颜色 */
+  fill: currentColor; /* 填充颜色 */
+  font-family: 'Source Sans Pro', -apple-system, 'BlinkMacSystemFont', 
     'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   margin: 0;
 }
 
-code {
+code { /* code元素 */
   /* Use monospace before Courier so font looks better on Android Chrome. */
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace,
     Courier;
 }
 
-p {
+p { /* p元素 */
   margin: 0;
 }
 
 /* Anchor */
 
-.Anchor {
-  color: inherit;
-  text-decoration: none;
-  padding-right: 4px;
+.Anchor { /* 锚点 */
+  color: inherit;   /* 颜色 */
+  text-decoration: none; /* 文本装饰 */
+  padding-right: 4px; /* 右边距 */
   margin-left: -20px;
   visibility: hidden;
 }
 
 /* Audio */
 
-.Audio {
+.Audio { /* 音频 */
   width: 100%;
 }
 
 /* Bookmark */
 
-.Bookmark {
+.Bookmark { /* 书签 */
   margin: 4px 0;
   border: 1px solid rgba(55, 53, 47, 0.16);
   border-radius: 5px;
@@ -98,16 +98,16 @@ p {
   transition: background 120ms ease-in 0s;
 }
 
-.Bookmark:hover {
+.Bookmark:hover { /* 鼠标悬停效果 */
   background: var(--color-ui-hover-bg);
 }
 
-.Bookmark > a {
+.Bookmark > a { /* 书签的链接 */
   color: inherit;
   text-decoration: none;
 }
 
-.Bookmark__Title {
+.Bookmark__Title { /* 书签的标题 */
   margin: 0;
   margin-bottom: 2px;
   font-size: 0.875rem;
@@ -117,7 +117,7 @@ p {
   text-overflow: ellipsis;
 }
 
-.Bookmark__Desc {
+.Bookmark__Desc { /* 书签的描述 */
   margin: 0;
   font-size: 0.75rem;
   line-height: 1rem;
@@ -126,7 +126,7 @@ p {
   overflow: hidden;
 }
 
-.Bookmark__Link {
+.Bookmark__Link { /* 书签的链接 */
   margin: 0;
   margin-top: 6px;
   font-size: 0.75rem;
@@ -138,14 +138,14 @@ p {
 
 /* BulletedList */
 
-.BulletedListWrapper {
+.BulletedListWrapper { /* 无序列表 */
   margin: 2px 0;
   padding-left: calc(1.5em + 4px);
   line-height: 1.5;
   list-style-type: disc;
 }
 
-.BulletedList {
+.BulletedList { /* 无序列表 */
   margin: 2px 0;
   padding-top: 3px;
   padding-bottom: 3px;
@@ -153,7 +153,7 @@ p {
 
 /* Callout */
 
-.Callout {
+.Callout { /* Callout */
   display: flex;
   border-radius: 5px;
   padding: 16px 16px 16px 12px;
@@ -161,42 +161,43 @@ p {
   background: var(--color-bg-gray-light);
 }
 
-.Callout__Icon {
+.Callout__Icon { /* Callout的图标 */
   width: 1.5em;
   line-height: 1.5em;
 }
 
-.Callout__Content {
+.Callout__Content { /* Callout的内容 */
   margin-left: 8px;
 }
 
 /* Code */
 
-pre.Code {
+pre.Code { /* 代码 */
   border-radius: 5px;
   background-color: rgb(247, 246, 243);
   margin: 10px 0;
-  padding: 26px 16px;
+  padding: 26px 16px; 
   overflow: auto;
 }
 
-pre.Code code {
+pre.Code code { /* 代码 */
   background-color: rgb(247, 246, 243);
   color: rgb(55, 53, 47);
-  font-size: 0.9em;
+  /* font-size: 0.9em; */
+  font-size: 0.85em;
   line-height: 1.4;
   padding: 0;
-  word-wrap: break-word;
+  word-wrap: break-word; /* 使得单词能够换行 */
   tab-size: 2;
 }
 
-.Code.Code--NoWrap .SemanticString {
+.Code.Code--NoWrap .SemanticString { /* 代码--不换行 */
   white-space: pre;
 }
 
 /* Collection */
 
-.CollectionInline > h3 {
+.CollectionInline > h3 { /* 内联集合的标题 */
   line-height: 1.75;
   font-size: 1.25rem;
   font-weight: 700;
@@ -205,15 +206,15 @@ pre.Code code {
   padding: 3px 2px;
 }
 
-.CollectionInline > h3:hover > .Anchor {
+.CollectionInline > h3:hover > .Anchor { /* 内联集合的标题 */
   visibility: visible;
 }
 
-.Table {
+.Table { /* 表格 */
   overflow-x: auto;
 }
 
-.Table > table {
+.Table > table { /* 表格 */
   width: 100%;
   font-size: 0.875rem;
   /* No double border */
@@ -224,8 +225,8 @@ pre.Code code {
   margin-bottom: 10px;
 }
 
-.Table > table td,
-.Table > table th {
+.Table > table td, /* 表格的单元格 */
+.Table > table th { 
   /* For <th> and unknown <td> */
   padding: 0 8px;
   height: 2rem;
@@ -234,17 +235,17 @@ pre.Code code {
   word-break: break-word;
 }
 
-.Table > table td:first-child,
-.Table > table th:first-child {
+.Table > table td:first-child, /* 表格的单元格 */
+.Table > table th:first-child { 
   border-left: none;
 }
 
-.Table > table td:last-child,
-.Table > table th:last-child {
+.Table > table td:last-child, /* 表格的单元格 */
+.Table > table th:last-child { 
   border-right: none;
 }
 
-.Table > table th {
+.Table > table th { /* 表格的表头 */
   text-align: left;
   font-weight: normal;
   color: var(--color-text-default-light);
@@ -252,31 +253,31 @@ pre.Code code {
   width: 200px;
 }
 
-.Table__CellTitle > a {
+.Table__CellTitle > a { /* 表格的单元格的标题的链接 */
   color: inherit;
   text-decoration: none;
   border-bottom: 2px solid hsl(45, 8%, 85%);
 }
 
-.Table__CellTitle > a:hover {
+.Table__CellTitle > a:hover { /* 表格的单元格的标题的链接的鼠标悬停效果 */
   border-bottom: 2px solid hsl(45, 8%, 55%);
 }
 
-.Table__CellText {
+.Table__CellText { /* 表格的单元格的文本 */
   padding: 6px 8px;
   line-height: 1.5;
 }
 
-.Table__CellSelect {
+.Table__CellSelect { /* 表格的单元格的选择 */
   /* 3px + 3px (margin of span) = 6px (desired) */
   padding: 3px 8px;
 }
 
-.Table__CellCheckbox {
+.Table__CellCheckbox { /* 表格的单元格的复选框 */
   padding: 6px 8px;
 }
 
-.Table__CellCheckbox > div {
+.Table__CellCheckbox > div { /* 表格的单元格的复选框的div */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -284,7 +285,7 @@ pre.Code code {
   height: 1rem;
 }
 
-.Table__CellCheckbox--No svg {
+.Table__CellCheckbox--No svg { /* 表格的单元格的复选框--否 */
   width: 100%;
   height: 100%;
   display: block;
@@ -292,7 +293,7 @@ pre.Code code {
   backface-visibility: hidden;
 }
 
-.Table__CellCheckbox--Yes svg {
+.Table__CellCheckbox--Yes svg { /* 表格的单元格的复选框--是 */
   width: 12px;
   height: 12px;
   display: block;
@@ -301,7 +302,7 @@ pre.Code code {
   backface-visibility: hidden;
 }
 
-.Gallery {
+.Gallery { /* 图库 */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   grid-auto-rows: 1fr;
@@ -311,7 +312,7 @@ pre.Code code {
   padding-bottom: 4px;
 }
 
-.Gallery__Item {
+.Gallery__Item { /* 图库的项目 */
   box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
     rgba(15, 15, 15, 0.1) 0px 2px 4px;
   border-radius: 5px;
@@ -321,16 +322,16 @@ pre.Code code {
   /* padding-top: 70%; */
 }
 
-.Gallery__Item:hover {
+.Gallery__Item:hover { /* 图库的项目的鼠标悬停效果 */
   background: rgba(55, 53, 47, 0.03);
 }
 
-.Gallery__Item > a {
+.Gallery__Item > a { /* 图库的项目的链接 */
   color: inherit;
   text-decoration: none;
 }
 
-/* .Gallery__Item>a>div {
+/* .Gallery__Item>a>div { 
   position: absolute;
   top: 0;
   right: 0;
@@ -346,12 +347,12 @@ pre.Code code {
   height: calc(100% - 18px - 2rem);
 } */
 
-.Gallery__Item__Cover {
+.Gallery__Item__Cover { /* 图库的项目的封面 */
   box-shadow: rgba(55, 53, 47, 0.09) 0px -1px 0px 0px inset;
   height: 200px;
 }
 
-.Gallery__Item__Cover > img {
+.Gallery__Item__Cover > img { /* 图库的项目的封面的图片 */
   width: 100%;
   height: 100%;
   max-height: 200px;
@@ -361,21 +362,21 @@ pre.Code code {
   padding-bottom: 1px;
 }
 
-.Gallery__Item__Cover--Contain > img {
+.Gallery__Item__Cover--Contain > img { /* 图库的项目的封面--包含的图片 */
   object-fit: contain;
 }
 
-.Gallery__Item__Title {
+.Gallery__Item__Title { /* 图库的项目的标题 */
   padding: 8px 10px 6px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.Gallery__Item__Title .SemanticString {
+.Gallery__Item__Title .SemanticString { /* 图库的项目的标题的语义字符串 */
   white-space: nowrap;
 }
 
-.Gallery__Item__Property {
+.Gallery__Item__Property { /* 图库的项目的属性 */
   display: flex;
   align-items: center;
   font-size: 0.75rem;
@@ -385,15 +386,15 @@ pre.Code code {
   padding: 0px 10px;
 }
 
-.Gallery__Item__Property:last-child {
+.Gallery__Item__Property:last-child { /* 图库的项目的属性的最后一个子元素 */
   margin-bottom: 10px;
 }
 
-.Gallery__Item__PropertyText .SemanticString {
+.Gallery__Item__PropertyText .SemanticString { /* 图库的项目的属性的文本的语义字符串 */
   white-space: nowrap;
 }
 
-@supports not (display: grid) {
+@supports not (display: grid) { /* 不支持网格布局 */
   .Gallery__Item {
     margin-top: 16px;
   }
@@ -401,31 +402,31 @@ pre.Code code {
 
 /* ColorfulBlock */
 
-.ColorfulBlock--ColorDefault {
-  color: var(--color-text-default);
+.ColorfulBlock--ColorDefault { /* 彩色块--默认颜色 */
+  color: var(--color-text-default); 
 }
 
-.ColorfulBlock--ColorGray {
+.ColorfulBlock--ColorGray { /* 彩色块--灰色 */
   color: var(--color-text-gray);
 }
 
-.ColorfulBlock--ColorBrown {
+.ColorfulBlock--ColorBrown { 
   color: var(--color-text-brown);
 }
 
-.ColorfulBlock--ColorOrange {
+.ColorfulBlock--ColorOrange { 
   color: var(--color-text-orange);
 }
 
-.ColorfulBlock--ColorYellow {
+.ColorfulBlock--ColorYellow { 
   color: var(--color-text-yellow);
 }
 
-.ColorfulBlock--ColorGreen {
+.ColorfulBlock--ColorGreen { 
   color: var(--color-text-green);
 }
 
-.ColorfulBlock--ColorBlue {
+.ColorfulBlock--ColorBlue { 
   color: var(--color-text-blue);
 }
 
@@ -441,11 +442,11 @@ pre.Code code {
   color: var(--color-text-red);
 }
 
-.ColorfulBlock--BgDefault {
+.ColorfulBlock--BgDefault { /* 彩色块--默认背景色 */
   background: var(--color-bg-default);
 }
 
-.ColorfulBlock--BgGray {
+.ColorfulBlock--BgGray { /* 彩色块--灰色背景色 */
   background: var(--color-bg-gray);
 }
 
@@ -483,17 +484,17 @@ pre.Code code {
 
 /* ColumnList */
 
-.ColumnList {
+.ColumnList {  /* 列表 */
   display: flex;
   flex-wrap: wrap;
 }
 
-.Column {
+.Column { /* 列 */
   padding: 12px 0;
   word-break: break-word;
 }
 
-.Column:not(:first-child) {
+.Column:not(:first-child) { /* 列 */
   margin-left: var(--column-spacing);
 }
 
@@ -506,12 +507,12 @@ pre.Code code {
 
 /* Divider */
 
-.Divider {
+.Divider { /* 分割线 */
   width: 100%;
   border: 1px solid rgba(55, 53, 47, 0.09);
 }
 
-.Divider2 {
+.Divider2 { /* 分割线2 */
   width: 100%;
   height: calc(1.5rem + 10px);
   color: #1f2225;
@@ -527,24 +528,24 @@ pre.Code code {
 
 /* Embed */
 
-.Embed__Content {
+.Embed__Content { /* 嵌入的内容 */
   display: flex;
 }
 
-.Embed__Caption {
-  padding: 6px 2px;
+.Embed__Caption { /* 嵌入的标题 */
+  padding: 6px 2px; 
   color: var(--color-text-default-light);
   font-size: 0.875em;
 }
 
-.Embed__ResponsiveContainer {
+.Embed__ResponsiveContainer { /* 嵌入的响应式容器 */
   position: relative;
   min-height: 100px;
   height: 0;
   margin: 0 auto;
 }
 
-.Embed__ResponsiveContainer > iframe {
+.Embed__ResponsiveContainer > iframe { /* 嵌入的响应式容器的iframe */
   position: absolute;
   left: 0px;
   top: 0px;
@@ -558,19 +559,19 @@ pre.Code code {
 
 /* Equation */
 
-.Equation {
+.Equation { /* 公式 */
   margin: 4px 0;
   padding: 4px 8px;
 }
 
 /* File */
 
-.File {
+.File { /* 文件 */
   color: inherit;
   text-decoration: none;
 }
 
-.File > div {
+.File > div { /* 文件的div */
   display: flex;
   padding: 5px 0;
   margin: 2px 0;
@@ -578,22 +579,22 @@ pre.Code code {
   transition: background 120ms ease-in 0s;
 }
 
-.File > div:hover {
+.File > div:hover { /* 文件的div的鼠标悬停效果 */
   background: var(--color-ui-hover-bg);
 }
 
-.File__Icon {
+.File__Icon { /* 文件的图标 */
   margin-left: 2px;
   margin-right: 4px;
   width: 1.5em;
   text-align: center;
 }
 
-.File__Title {
+.File__Title { /* 文件的标题 */
   line-height: 1.5;
 }
 
-.File__Size {
+.File__Size { /* 文件的大小 */
   margin-left: 6px;
   color: var(--color-text-default-light);
   font-size: 0.75em;
@@ -601,31 +602,31 @@ pre.Code code {
 
 /* Heading */
 
-.Heading {
+.Heading { /* 标题 */
   margin-bottom: 1px;
   padding: 3px 2px;
 }
 
 /* Font-related CSS should be applied on ".SemanticString". */
-.Heading .SemanticString {
+.Heading .SemanticString { /* 标题的语义字符串 */
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.Heading:hover > .Anchor {
+.Heading:hover > .Anchor { /* 标题的鼠标悬停效果 */
   visibility: visible;
 }
 
-.Heading--1 .SemanticString {
+.Heading--1 .SemanticString { /* 标题1的语义字符串 */
   font-size: 2.0625rem;
   line-height: 1.515;
 }
 
-.Heading--2 {
+.Heading--2 { /* 标题2 */
   margin-top: 1rem;
 }
 
-.Heading--2 .SemanticString {
+.Heading--2 .SemanticString { /* 标题2的语义字符串 */
   font-size: 1.625rem;
   line-height: 1.538;
 }
@@ -650,14 +651,14 @@ pre.Code code {
   color: #888;
 }
 
-.Column > .Heading:first-child {
+.Column > .Heading:first-child { /* 列的第一个子元素的标题 */
   margin-top: 2px;
 }
 
 /* Icon */
 
-.Icon {
-  /* For emoji */
+.Icon { /* 图标 */
+  /* For emoji */ 
   text-align: center;
   /* For image */
   border-radius: 3px;
@@ -665,34 +666,34 @@ pre.Code code {
 
 /* Image */
 
-.Image {
+.Image { /* 图片 */
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   align-self: center;
 }
 
-.Image--FullWidth {
-  width: calc(100vw - 15px);
+.Image--FullWidth { /* 图片--全宽 */
+  width: calc(100vw - 15px); 
 }
 
-.Image--Normal,
+.Image--Normal, /* 图片--普通 */
 .Image--PageWidth {
   max-width: 100%;
 }
 
-.Image--Normal {
+.Image--Normal { /* 图片--普通 */
   text-align: center;
 }
 
-.Image--PageWidth {
+.Image--PageWidth { /* 图片--页面宽度 */
   width: 100%;
 }
 
-.Image > figure {
+.Image > figure { /* 图片的figure */
   margin: 0;
 }
 
-.Image > figure > figcaption {
+.Image > figure > figcaption { /* 图片的figure的figcaption */
   color: var(--color-text-default-light);
   font-size: 0.875rem;
   text-align: left;
@@ -721,13 +722,13 @@ pre.Code code {
 
 /* NumberedList */
 
-.NumberedListWrapper {
+.NumberedListWrapper { /* 有序列表 */
   margin: 2px 0;
   padding-left: calc(1.5em + 4px);
   line-height: 1.5;
 }
 
-.NumberedList {
+.NumberedList { /* 有序列表 */
   margin: 2px 0;
   padding-top: 3px;
   padding-bottom: 3px;
@@ -735,7 +736,7 @@ pre.Code code {
 
 /* Page */
 
-.PageRoot {
+.PageRoot { /* 页面根元素 */
   display: flex;
   flex-direction: column;
 }
@@ -744,12 +745,12 @@ pre.Code code {
   width: 100%;
 }
 
-.Page {
+.Page { /* 页面 */
   color: inherit;
   text-decoration: none;
 }
 
-.Page > div {
+.Page > div { /* 页面的div */
   display: flex;
   padding: 3px 0;
   margin: 2px 0;
@@ -757,11 +758,11 @@ pre.Code code {
   transition: background 120ms ease-in 0s;
 }
 
-.Page > div:hover {
+.Page > div:hover { /* 页面的div的鼠标悬停效果 */
   background: var(--color-ui-hover-bg);
 }
 
-.Page__Icon {
+.Page__Icon { /* 页面的图标 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -776,15 +777,15 @@ pre.Code code {
 
 /* PDF */
 
-.PDF__Content {
+.PDF__Content { /* PDF的内容 */
   text-align: center;
 }
 
-.PDF__Content > embed {
+.PDF__Content > embed { /* PDF的内容的嵌入 */
   max-width: 100%;
 }
 
-.PDF__Caption {
+.PDF__Caption { /* PDF的标题 */
   padding: 6px 2px;
   color: var(--color-text-default-light);
   font-size: 0.875em;
@@ -792,7 +793,7 @@ pre.Code code {
 
 /* Pill */
 
-.Pill {
+.Pill { /* 药丸 */
   padding: 0 6px;
   border-radius: 3px;
   white-space: nowrap;
@@ -802,7 +803,7 @@ pre.Code code {
   margin-right: 6px;
 }
 
-.Pill--ColorDefault {
+.Pill--ColorDefault { /* 药丸--默认颜色 */
   background: var(--color-pill-default);
 }
 
@@ -844,7 +845,7 @@ pre.Code code {
 
 /* Quote */
 
-.Quote {
+.Quote { /* 引用 */
   background: var(--color-bg-gray-light);
   border-left: 5px solid currentcolor;
   border-radius: 5px;
@@ -855,14 +856,14 @@ pre.Code code {
 
 /* SemanticStringArray */
 
-.SemanticString {
+.SemanticString { /* 语义字符串 */
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
 }
 
-.SemanticString__Fragment--Link,
-.SemanticString__Fragment--Resource > a {
+.SemanticString__Fragment--Link, /* 语义字符串的片段--链接 */
+.SemanticString__Fragment--Resource > a { /* 语义字符串的片段--资源的链接 */
   color: inherit;
   text-decoration: none;
   border-bottom: 2px solid hsl(45, 8%, 85%);
@@ -881,7 +882,7 @@ pre.Code code {
   word-break: break-word;
 }
 
-.SemanticString__Fragment--HighlightedBg,
+.SemanticString__Fragment--HighlightedBg, /* 语义字符串的片段--高亮背景 */
 .SemanticString__Fragment--HighlightedColor {
   background-color: inherit;
 }
@@ -989,61 +990,61 @@ pre.Code code {
 
 /* TableOfContents */
 
-.TableOfContents {
+.TableOfContents { /* 目录 */
   margin: 4px 0;
   padding: 5px;
   border-radius: 5px;
   font-size: 0.875rem;
 }
 
-.TableOfContents__Item {
+.TableOfContents__Item { /* 目录的项目 */
   list-style-type: none;
   transition: background 120ms ease-in 0s;
   border-radius: 5px;
 }
 
-.TableOfContents__Item:hover {
+.TableOfContents__Item:hover { /* 目录的项目的鼠标悬停效果 */
   background: var(--color-ui-hover-bg);
 }
 
-.TableOfContents__Item > a {
+.TableOfContents__Item > a { /* 目录的项目的链接 */
   color: inherit;
   text-decoration: none;
 }
 
-.TableOfContents__Item > a > div {
+.TableOfContents__Item > a > div { /* 目录的项目的链接的div */
   padding: 4.5px 2px;
 }
 
-.TableOfContents__Item .SemanticStringArray {
+.TableOfContents__Item .SemanticStringArray { /* 目录的项目的语义字符串数组 */
   border-bottom: 1px solid rgba(55, 53, 47, 0.16);
 }
 
 /* Text */
 
-.Text {
+.Text { /* 文本 */
   min-height: calc(1.5rem + 10px);
 }
 
-.Text__Content {
+.Text__Content { /* 文本的内容 */
   padding: 3px 2px;
   margin: 2px 0;
 }
 
-.Text__Children {
+.Text__Children { /* 文本的子元素 */
   margin-left: 1.5em;
 }
 
 /* ToDo */
 
-.ToDo__Content {
+.ToDo__Content { /* 待办事项的内容 */
   display: flex;
   padding: 3px 0;
   margin: 2px 0;
   line-height: 1.5;
 }
 
-.ToDo__Icon {
+.ToDo__Icon { /* 待办事项的图标 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1054,15 +1055,15 @@ pre.Code code {
   flex-shrink: 0;
 }
 
-.ToDo__Title--done {
+.ToDo__Title--done { /* 待办事项的标题--完成 */
   opacity: 0.375;
 }
 
-.ToDo__Children {
+.ToDo__Children { /* 待办事项的子元素 */
   margin-left: calc(1.5em + 6px);
 }
 
-.IconCheckboxChecked {
+.IconCheckboxChecked { /* 图标复选框--已选中 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1071,17 +1072,17 @@ pre.Code code {
   background: rgb(46, 170, 220);
 }
 
-.IconCheckboxChecked > svg {
+.IconCheckboxChecked > svg { /* 图标复选框--已选中 */
   width: 0.75em;
   height: 0.75em;
   fill: white;
 }
 
-.IconCheckboxUnchecked {
+.IconCheckboxUnchecked { /* 图标复选框--未选中 */
   display: flex;
 }
 
-.IconCheckboxUnchecked > svg {
+.IconCheckboxUnchecked > svg { /* 图标复选框--未选中 */
   width: 1em;
   height: 1em;
   fill: inherit;
@@ -1092,26 +1093,26 @@ pre.Code code {
  * Ref. https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
  */
 
-.Toggle {
+.Toggle { /* 切换 */
   margin: 2px 0;
 }
 
-.Toggle__Summary {
+.Toggle__Summary { /* 切换的摘要 */
   padding: 3px 0;
   cursor: pointer;
   list-style: none;
   display: flex;
 }
 
-.Toggle__Summary::-webkit-details-marker {
+.Toggle__Summary::-webkit-details-marker { /* 切换的摘要的webkit细节标记 */
   display: none;
 }
 
-.Toggle__Summary:focus {
+.Toggle__Summary:focus { /* 切换的摘要的焦点 */
   outline: none;
 }
 
-.Toggle__Summary::before {
+.Toggle__Summary::before { /* 切换的摘要的before伪元素 */
   /* If we don't specify "content", this element doesn't show. */
   content: '';
   /* Prevent this element shrink when content is long. */
@@ -1143,18 +1144,21 @@ pre.Code code {
 
 /* Video */
 
-.Video {
+.Video { /* 视频 */
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   align-self: center;
 }
 
-.Video__Content > video {
+.Video__Content > video { /* 视频的内容的视频 */
   max-width: 100%;
 }
 
-.Video__Caption {
+.Video__Caption { /* 视频的标题 */
   padding: 6px 2px;
   color: var(--color-text-default-light);
   font-size: 0.875em;
 }
+
+
+/* ------------------------------ 新功能*/
