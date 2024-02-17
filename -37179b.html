@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>时钟时序线&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="时钟时序线">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="Mdjnuthesis.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2F91c79ce2-9dc1-414b-be89-735edc58e136%2Flogo_(1).jpg?table=block&amp;id=8454a4bc-46ab-4652-9560-6a232f507969"></span>&nbsp;
+          
+          <span>Mdjnuthesis</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="Note.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>Note</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="reference.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📖&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>杂项</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="About.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😀&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">时钟时序线</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Sat, Feb 17, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/37179bb8758b4dafa5d01112e89a5772" class="PageRoot PageRoot--FullWidth"><h3 id="https://www.notion.so/920fb4d48c2740a6bf5cb2e548205370" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/920fb4d48c2740a6bf5cb2e548205370"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">缘由</span></span></h3><div id="https://www.notion.so/d1c9525837f5475fb4678d70f199bf29" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">突发有一天想要一个高质量的时序图来表达自己的想法，就找到了一个开源的方案.</span></span></p></div><div id="https://www.notion.so/ecfba33b6ed948289ab467a24f22d592" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://wavedrom.com/tutorial.html">WAVEDROM</a></span></span></p></div><div id="https://www.notion.so/45b9bb231dd1488f9c1badf798d1d5de" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">效果很好，语法简单，易于上手</span></span></p></div><div id="https://www.notion.so/2db7210f5a5b430498f0793c5bb7c3f9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/e04e5c207b424334a2ae3becc8a49e2e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/ff243c1359a14dd7b1b8d0ea1383e38a" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/ff243c1359a14dd7b1b8d0ea1383e38a"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">信号的不同种类</span></span></h3><div id="https://www.notion.so/663d39523acb4215a0f80a8ed7b09cf3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">wave</code></span><span class="SemanticString"> 后面的每一个都是一个波形甚至</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">.</code></span><span class="SemanticString"> 都是一种表示方式</span></span></p></div><pre id="https://www.notion.so/ff56035b283d4aef8cbee50733ed7e16" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span>name<span class="token operator">:</span>'Alfa'<span class="token punctuation">,</span>wave<span class="token operator">:</span>'<span class="token number">01</span>.zx=ud.<span class="token number">23.45678</span>'<span class="token punctuation">}</span><span class="token punctuation">,</span></span></span></span></code></pre><div id="https://www.notion.so/68af894bf2144c4e94849ecf15257e1b" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:320px"><iframe src="https://wavedrom.com/editor.html?%7B%20%22signal%22%20%3A%20%5B%0A%20%20%7B%20%22name%22%3A%20%22clk%22%2C%20%20%20%20%20%20%20%20%20%22wave%22%3A%20%22p....%22%20%7D%2C%0A%20%20%7B%20%22name%22%3A%20%22Data%22%2C%20%20%20%20%20%20%20%20%22wave%22%3A%20%22x345x%22%2C%20%22data%22%3A%20%5B%22head%22%2C%20%22body%22%2C%20%22tail%22%5D%20%7D%2C%0A%20%20%7B%20%22name%22%3A%20%22Request%22%2C%20%20%20%20%20%22wave%22%3A%20%2201..0%22%20%7D%0A%5D%2C%0A%20%20%22config%22%20%3A%20%7B%20%22hscale%22%20%3A%203%20%7D%0A%7D%0A" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/a7949d18f8374209aae300d9231438ee" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/e9c64ef1693f4b7b8de2a6e8d2d8809c" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/e9c64ef1693f4b7b8de2a6e8d2d8809c"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">时钟线的不同形式</span></span></h3><div id="https://www.notion.so/1a19e18da7a74c9eba648f57b11d7d0c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/226700ceaeb948a9862eaef71e2ca5a7" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span> signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"pclk"</span><span class="token punctuation">,</span> wave<span class="token operator">:</span> 'p.......' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"Pclk"</span><span class="token punctuation">,</span> wave<span class="token operator">:</span> 'P.......' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"nclk"</span><span class="token punctuation">,</span> wave<span class="token operator">:</span> 'n.......' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"Nclk"</span><span class="token punctuation">,</span> wave<span class="token operator">:</span> 'N.......' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'clk0'<span class="token punctuation">,</span> wave<span class="token operator">:</span> 'phnlPHNL' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'clk1'<span class="token punctuation">,</span> wave<span class="token operator">:</span> 'xhlhLHl.' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'clk2'<span class="token punctuation">,</span> wave<span class="token operator">:</span> 'hpHplnLn' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'clk3'<span class="token punctuation">,</span> wave<span class="token operator">:</span> 'nhNhplPl' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'clk4'<span class="token punctuation">,</span> wave<span class="token operator">:</span> 'xlh.L.Hx' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/aff2c5958d154f75ad52dd6d80eac398" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:1008px;height:759.9878845214844px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/66acf7ec84c346f4a56872295ac3a678" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/f3c852e018ed40f488cfc17f52badc1d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/a1bba6efec8848f6beed4243853f8402" class="ColorfulBlock ColorfulBlock--BgGray Callout"><div class="Callout__Icon"><div class="Icon">💡</div></div><p class="Callout__Content"><span class="SemanticStringArray"><span class="SemanticString">可以往下滑动鼠标</span></span></p></div><h3 id="https://www.notion.so/d4b6a1fae6b04355b3344661aaaca9a9" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/d4b6a1fae6b04355b3344661aaaca9a9"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">文字镶嵌</span></span></h3><pre id="https://www.notion.so/e2f6e698622d4ff3929d386518a928bc" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span> signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"clk"</span><span class="token punctuation">,</span>  wave<span class="token operator">:</span> <span class="token string">"P......"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"bus"</span><span class="token punctuation">,</span>  wave<span class="token operator">:</span> <span class="token string">"x.==.=x"</span><span class="token punctuation">,</span> data<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"head"</span><span class="token punctuation">,</span> <span class="token string">"body"</span><span class="token punctuation">,</span> <span class="token string">"tail"</span><span class="token punctuation">,</span> <span class="token string">"data"</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"wire"</span><span class="token punctuation">,</span> wave<span class="token operator">:</span> <span class="token string">"0.1..0."</span> <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/900acb0e225a4e638645449957ff5049" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:294.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/8f18e98fa6a04dd7a48ecb1edef62413" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/51f2094c58a848b7a3ebf7ce44946d63" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/51f2094c58a848b7a3ebf7ce44946d63"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">截断中间不必要的部分</span></span></h3><div id="https://www.notion.so/32fbcb36729d454d952f0bff1cfc74ab" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">|</code></span></span></p></div><pre id="https://www.notion.so/c659c332b3d840f3bc1240a051be2f09" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span> signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"clk"</span><span class="token punctuation">,</span>         wave<span class="token operator">:</span> <span class="token string">"p.....|..."</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"Data"</span><span class="token punctuation">,</span>        wave<span class="token operator">:</span> <span class="token string">"x.345x|=.x"</span><span class="token punctuation">,</span> data<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"head"</span><span class="token punctuation">,</span> <span class="token string">"body"</span><span class="token punctuation">,</span> <span class="token string">"tail"</span><span class="token punctuation">,</span> <span class="token string">"data"</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"Request"</span><span class="token punctuation">,</span>     wave<span class="token operator">:</span> <span class="token string">"0.1..0|1.0"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"Acknowledge"</span><span class="token punctuation">,</span> wave<span class="token operator">:</span> <span class="token string">"1.....|01."</span> <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/55dc995df83746a288ec65365c52cba2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/74cc224a7e5d4908bd1e3c38398ed3a0" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:420.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/5feb5fdc0f2b4d628affe90667d57e3b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/ded9ae3c752a4c15a357dd797d8a5849" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/ded9ae3c752a4c15a357dd797d8a5849"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">对于文字的标注</span></span></h3><div id="https://www.notion.so/ecf26c4fe7b34bae8e6010d6ef41e7e0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">[&#x27;group name&#x27;, {...}, {...}, ...]</code></span><span class="SemanticString"> 这样的方式</span></span></p></div><pre id="https://www.notion.so/4da32f7576b64a8c9c16d56a31c45b52" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span> signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+   <span class="token punctuation">{</span>name<span class="token operator">:</span> 'clk'<span class="token punctuation">,</span>   wave<span class="token operator">:</span> 'p..Pp..P'<span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>'Master'<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>'ctrl'<span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>name<span class="token operator">:</span> 'write'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">01.0</span>....'<span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>name<span class="token operator">:</span> 'read'<span class="token punctuation">,</span>  wave<span class="token operator">:</span> '<span class="token number">0</span>...<span class="token number">1</span>..<span class="token number">0</span>'<span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>  name<span class="token operator">:</span> 'addr'<span class="token punctuation">,</span>  wave<span class="token operator">:</span> 'x3.x4..x'<span class="token punctuation">,</span> data<span class="token operator">:</span> 'A1 A2'<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>  name<span class="token operator">:</span> 'wdata'<span class="token punctuation">,</span> wave<span class="token operator">:</span> 'x3.x....'<span class="token punctuation">,</span> data<span class="token operator">:</span> 'D1'   <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>'Slave'<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>'ctrl'<span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>name<span class="token operator">:</span> 'ack'<span class="token punctuation">,</span>   wave<span class="token operator">:</span> 'x01x0.1x'<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>  name<span class="token operator">:</span> 'rdata'<span class="token punctuation">,</span> wave<span class="token operator">:</span> 'x.....4x'<span class="token punctuation">,</span> data<span class="token operator">:</span> 'Q2'<span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">]</span><span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/b5f2debe30a4447d8e466a52a4a52da9" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:525.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/594948795a2a42cd9ded71bce8aef68b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/d92612df8586475698120d3144ecfa0c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">周期和相位的调整</span></span></p></div><div id="https://www.notion.so/638a8c89408e4d248662acf3e4bba321" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">Period </strong></code></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold"> &amp;</strong></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">Phase</strong></code></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold"> </strong></span><span class="SemanticString"> 关键字来调整</span></span></p></div><pre id="https://www.notion.so/416e1f16fac0463baa612710c8c7bc3a" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span> signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"CK"</span><span class="token punctuation">,</span>   wave<span class="token operator">:</span> <span class="token string">"P......."</span><span class="token punctuation">,</span>                                              period<span class="token operator">:</span> <span class="token number">2</span>  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"CMD"</span><span class="token punctuation">,</span>  wave<span class="token operator">:</span> <span class="token string">"x.3x=x4x=x=x=x=x"</span><span class="token punctuation">,</span> data<span class="token operator">:</span> <span class="token string">"RAS NOP CAS NOP NOP NOP NOP"</span><span class="token punctuation">,</span> phase<span class="token operator">:</span> <span class="token number">0.5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"ADDR"</span><span class="token punctuation">,</span> wave<span class="token operator">:</span> <span class="token string">"x.=x..=x........"</span><span class="token punctuation">,</span> data<span class="token operator">:</span> <span class="token string">"ROW COL"</span><span class="token punctuation">,</span>                     phase<span class="token operator">:</span> <span class="token number">0.5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"DQS"</span><span class="token punctuation">,</span>  wave<span class="token operator">:</span> <span class="token string">"z.......0.1010z."</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">"DQ"</span><span class="token punctuation">,</span>   wave<span class="token operator">:</span> <span class="token string">"z.........5555z."</span><span class="token punctuation">,</span> data<span class="token operator">:</span> <span class="token string">"D0 D1 D2 D3"</span> <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/e6b69adfc5f04cb3b6e504ca8787fd1e" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:467.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/af21f1ec726e48fea3c90102e3680e37" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/9b8341f7eb8040549bb52e4556679d5e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/9b8341f7eb8040549bb52e4556679d5e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">个性化的特别参数</span></span></h2><h3 id="https://www.notion.so/0518ea06844d4c21be18a2bb4f53cb6f" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/0518ea06844d4c21be18a2bb4f53cb6f"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">config:{...}</strong></code></span></span></h3><div id="https://www.notion.so/39af310ac8534eabbb23e9f0eaa60973" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/834b4997bb6c4cbc9de467550a9346de" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">hscale</strong></code></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold"> —&gt;</strong></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold"><code class="SemanticString__Fragment SemanticString__Fragment--Code">config: { hscale: number }</code></strong></span></span></p></div><div id="https://www.notion.so/74190a20f2b74617801c65882ea5321f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">skin</strong></code></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold"> —&gt; </strong></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">config:{skin:&#x27;...&#x27;}</strong></code></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">  </strong></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">&#x27;default&#x27;</strong></code></span><span class="SemanticString"> &amp;</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">&#x27;narrow&#x27;</strong></code></span></span></p></div><div id="https://www.notion.so/c8345084192047b0af8ade786838c26f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">head/foot</strong></code></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold"> —&gt;</strong></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">head:{...}</strong></code></span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">&amp;</strong></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">foot:{...}</strong></code></span></span></p></div><div id="https://www.notion.so/9eec364600874ce09ac51f9ac10350f3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">tick</strong></code></span></span></p></div><div id="https://www.notion.so/d3e1ec96a4c64a32a8ad7a46a62b0815" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">tock</strong></code></span></span></p></div><div id="https://www.notion.so/a83f4e4ee7644eb4bc0f6308d156d1b7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">text</strong></code></span></span></p></div><div id="https://www.notion.so/d4634970329c462f8c6aab58ff378b5e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">every</strong></code></span></span></p></div><div id="https://www.notion.so/5b222102c55145dcba93bfcf9542c6af" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:509.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/ef37fab09340451f957eb91feec43b7f" class="Divider"></div><div id="https://www.notion.so/ba5e89f9d436437dadb4d188b1e31e46" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:486.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/d33e57d2da6945779adb9a11eef50e59" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">tspan</strong></code></span></span></p></div><div id="https://www.notion.so/07f40f2968dc4dcea09ddedbbafa1382" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/dce671fdfbaa421190f4563366bdaf13" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/dce671fdfbaa421190f4563366bdaf13"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">箭头指向</span></span></h3><pre id="https://www.notion.so/794c70ed578d42ec8a8bcd64c3a96d8d" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>~    -~
+&lt;~>  &lt;-~>
+ ~>   -~>  ~-></span></span></span></code></pre><pre id="https://www.notion.so/250bf59f1efa4dc1bb79cb5884f45fd4" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span> signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'A'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">01</span>........<span class="token number">0</span>....'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '.a........j' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'B'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">0.1</span>.......<span class="token number">0.1</span>..'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '..b.......i' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'C'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">0</span>..<span class="token number">1</span>....<span class="token number">0</span>...<span class="token number">1</span>..'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '...c....h..' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'D'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">0</span>...<span class="token number">1</span>..<span class="token number">0</span>.....<span class="token number">1</span>.'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '....d..g...' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'E'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">0</span>....<span class="token number">10</span>.......<span class="token number">1</span>'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '.....ef....' <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  edge<span class="token operator">:</span> <span class="token punctuation">[</span>
+    'a~b t1'<span class="token punctuation">,</span> 'c-~a t2'<span class="token punctuation">,</span> 'c-~>d time <span class="token number">3</span>'<span class="token punctuation">,</span> 'd~-e'<span class="token punctuation">,</span>
+    'e~>f'<span class="token punctuation">,</span> 'f->g'<span class="token punctuation">,</span> 'g-~>h'<span class="token punctuation">,</span> 'h~>i some text'<span class="token punctuation">,</span> 'h~->j'
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/35299f931bab4f43bf1371e18f237db8" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:469.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/87703073320548faae2975ba2afba6fd" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/87703073320548faae2975ba2afba6fd"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">Sharp lines</strong></span></span></h3><pre id="https://www.notion.so/6b5490be03bd4eed96d34b526424e7ca" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>-   -|   -|-
+&lt;-> &lt;-|> &lt;-|->
+ ->  -|>  -|->  |->
+ +</span></span></span></code></pre><pre id="https://www.notion.so/e2ccb71c0c7a438fbce14edd30be4f30" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">{</span> signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'A'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">01</span>..<span class="token number">0</span>..'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '.a..e..' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'B'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">0.1</span>..<span class="token number">0</span>.'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '..b..d.'<span class="token punctuation">,</span> phase<span class="token operator">:</span><span class="token number">0.5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'C'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">0</span>..<span class="token number">1</span>..<span class="token number">0</span>'<span class="token punctuation">,</span>  node<span class="token operator">:</span> '...c..f' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>                              node<span class="token operator">:</span> '...g..h' <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>                              node<span class="token operator">:</span> '...I..J'<span class="token punctuation">,</span>  phase<span class="token operator">:</span><span class="token number">0.5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> name<span class="token operator">:</span> 'D'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '<span class="token number">0</span>..<span class="token number">1</span>..<span class="token number">0</span>'<span class="token punctuation">,</span>  phase<span class="token operator">:</span><span class="token number">0.5</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  edge<span class="token operator">:</span> <span class="token punctuation">[</span>
+    'b-|a t1'<span class="token punctuation">,</span> 'a-|c t2'<span class="token punctuation">,</span> 'b-|-c t3'<span class="token punctuation">,</span> 'c-|->e t4'<span class="token punctuation">,</span> 'e-|>f more text'<span class="token punctuation">,</span>
+    'e|->d t6'<span class="token punctuation">,</span> 'c-g'<span class="token punctuation">,</span> 'f-h'<span class="token punctuation">,</span> 'g&lt;->h <span class="token number">3</span> ms'<span class="token punctuation">,</span> 'I+J <span class="token number">5</span> ms'
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/0e5281c423c94be0bfa770711b8d92fb" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:484.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/f08d10b50372497da5deaee0c69cde89" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/4fa3d5bb9d3e491f95ab5666b8a7a0c7" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/4fa3d5bb9d3e491f95ab5666b8a7a0c7"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">可以镶嵌函数代替</span></span></h3><pre id="https://www.notion.so/f66b9ca299684109b1a994027fa115bd" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>(function (bits<span class="token punctuation">,</span> ticks) <span class="token punctuation">{</span>
+  var i<span class="token punctuation">,</span> t<span class="token punctuation">,</span> gray<span class="token punctuation">,</span> state<span class="token punctuation">,</span> data = <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> arr = <span class="token punctuation">[</span><span class="token punctuation">]</span>;
+  for (i = <span class="token number">0</span>; i &lt; bits; i++) <span class="token punctuation">{</span>
+    arr.push(<span class="token punctuation">{</span>name<span class="token operator">:</span> i + ''<span class="token punctuation">,</span> wave<span class="token operator">:</span> ''<span class="token punctuation">}</span>);
+    state = <span class="token number">1</span>;
+    for (t = <span class="token number">0</span>; t &lt; ticks; t++) <span class="token punctuation">{</span>
+      data.push(t + '');
+      gray = (((t >> <span class="token number">1</span>) ^ t) >> i) &amp; <span class="token number">1</span>;
+      arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>.wave += (gray === state) ? '.' <span class="token operator">:</span> gray + '';
+      state = gray;
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  arr.unshift('gray');
+  return <span class="token punctuation">{</span>signal<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>name<span class="token operator">:</span> 'bin'<span class="token punctuation">,</span> wave<span class="token operator">:</span> '='.repeat(ticks)<span class="token punctuation">,</span> data<span class="token operator">:</span> data<span class="token punctuation">}</span><span class="token punctuation">,</span> arr
+  <span class="token punctuation">]</span><span class="token punctuation">}</span>;
+<span class="token punctuation">}</span>)(<span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">16</span>)</span></span></span></code></pre><div id="https://www.notion.so/3a87a20b82d84c0a8b6bdf12582e8c4a" class="Embed"><div class="Embed__Content"><div class="Embed__ResponsiveContainer" style="width:-1px;height:488.9964294433594px"><iframe src="https://wavedrom.com/editor.html" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" allowfullscreen=""></iframe></div></div><p class="Embed__Caption"><span class="SemanticStringArray"></span></p></div></article>
+  <footer class="Footer">
+  <div>&copy; 413’s Website 2020~2024 </div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/syx-413" target="_blank"
+      rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+</body>
+
+</html>
