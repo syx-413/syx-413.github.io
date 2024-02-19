@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>CH32V307的配置痛点&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="CH32V307的配置痛点">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="Mdjnuthesis.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2F91c79ce2-9dc1-414b-be89-735edc58e136%2Flogo_(1).jpg?table=block&amp;id=8454a4bc-46ab-4652-9560-6a232f507969"></span>&nbsp;
+          
+          <span>Mdjnuthesis</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="About.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😀&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="reference.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📖&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>杂项</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="Note.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>Note</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">CH32V307的配置痛点</h1>
+    
+      <div class="DateTagBar">
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/416f625ea0ed4a99b783141e7724c4bc" class="PageRoot PageRoot--FullWidth"><h2 id="https://www.notion.so/ca6d87d3520b4c5e8f6f652656725e7f" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/ca6d87d3520b4c5e8f6f652656725e7f"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">VScode 配置 CH32V307(使用MRS) + Cortex-Debug(1.4.4)</span></span></h2><div id="https://www.notion.so/df25a5711e6541d98f6c54d094349b46" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/1becc7a7d27b424f851ba6d9940bcede" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">可以参考这两篇 </span><span class="SemanticString"><span class="SemanticString__Fragment SemanticString__Fragment--Resource"><a href="-ch32v208-ch32v208-ubuntu2204-makefile-vscode---milton----4cdfee.html"><span class="SemanticStringArray"><span class="SemanticString">沁恒 CH32V208(三): CH32V208 Ubuntu22.04 Makefile VSCode环境配置 - Milton - 博客园</span></span></a></span></span><span class="SemanticString"> &amp;&amp; </span><span class="SemanticString"><span class="SemanticString__Fragment SemanticString__Fragment--Resource"><a href="vscodeeidech32vrisc-v-mcu---wahahahehehe----c7de18.html"><span class="SemanticStringArray"><span class="SemanticString">VSCode+EIDE开发CH32V系列RISC-V MCU - Wahahahehehe - 博客园</span></span></a></span></span><span class="SemanticString"> </span></span></p></div><div id="https://www.notion.so/b7f862c8ee8745b7a6906fc51269c794" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/c1e039c9c9ac4c8e807bb0538dfa1ead" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">唯一注意到的一点是 如果需要 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">Debug</code></span><span class="SemanticString">  的话，需要注意</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">Debug</code></span><span class="SemanticString">的时候 连接</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">ch32v307</code></span><span class="SemanticString">和 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">Cortex-Debug</code></span><span class="SemanticString">(1.4.4)的版本</span></span></p></div><h2 id="https://www.notion.so/a4831c497a724abdb8930913ef77b3ab" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/a4831c497a724abdb8930913ef77b3ab"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Cortex Debug 降级到 1.4.4</mark></span></span></h2><div id="https://www.notion.so/59adf1f64d33440b99f8d83c0e88f3ba" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">首先是 Cortex Debug 的版本, 当前版本是 1.10.0, 这个版本运行沁恒的 gdb client 会提示如下错误</mark></span></span></p></div><pre id="https://www.notion.so/38defa31136b49dfbe6c71220bd5612e" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><span>ERROR: GDB major version should be <span class="token operator">>=</span> <span class="token number">9</span>, yours is <span class="token number">8</span><span class="token punctuation">;</span> GDB could not start as expected. Bad installation or version mismatch. See <span class="token keyword">if</span> you can start gdb from a shell prompt and check its version <span class="token punctuation">(</span>Must be <span class="token operator">>=</span> <span class="token number">9</span><span class="token punctuation">)</span></span></mark></span></span></code></pre><div id="https://www.notion.so/7b50ece73206431ea55411aa69a37c97" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">沁恒定制的这个gcc已经8.3很久了, 等着沁恒升级不太现实, 只能将 </mark></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Cortex Debug</mark></code></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 降级到 1.4.4 使用, 这是支持gcc 8的最后一个版本. 在 </mark></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">VSCode </mark></code></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">的扩展中打开 Cortex Debug 的介绍页, 在 </mark></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Uninstall</mark></code></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorRed"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">右侧的小箭头点击展开</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">, 能看到 Install Another Version 的菜单, 在里面选择 1.4.4 安装</mark></span></span></p></div><div id="https://www.notion.so/faf45dce0ac34017a66d7066f5344fb9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+  <footer class="Footer">
+  <div>&copy; 413’s Website 2020~2024 </div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/syx-413" target="_blank"
+      rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+</body>
+
+</html>
