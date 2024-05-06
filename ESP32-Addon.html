@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>ESP32中的输出信息&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="ESP32中的输出信息">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="Mdjnuthesis.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2F6340375a-48f6-4803-8afe-f2fd46834d17%2FLogo_transparent.png?table=block&amp;id=8454a4bc-46ab-4652-9560-6a232f507969"></span>&nbsp;
+          
+          <span>Mdjnuthesis</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="About.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😀&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="Note.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>Note</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="reference.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📖&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>杂项</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">ESP32中的输出信息</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Sun, May 5, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/78046ebe146a41e895861ba0bb907f85" class="PageRoot PageRoot--FullWidth"><div id="https://www.notion.so/c2d9bc54b81c40989ce27d495453424f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在写(shui)论文的时候发现，在</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">ESP32</code></span><span class="SemanticString">输出调试信息关键很少，没有说服力</span></span></p></div><div id="https://www.notion.so/73b04945d33d4681b6f21120b2643ab3" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2Fa3230e1f-8f7f-486c-a60c-b0e48bc6e59c%2FUntitled.png?width=336&amp;table=block&amp;id=73b04945-d33d-4681-b6f2-1120b2643ab3"><img src="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2Fa3230e1f-8f7f-486c-a60c-b0e48bc6e59c%2FUntitled.png?width=336&amp;table=block&amp;id=73b04945-d33d-4681-b6f2-1120b2643ab3" style="width:336px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/cf33f247ff5d40eb8690e67c9661b7f1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">于是在</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">boot.py </code></span><span class="SemanticString">寻找相关的解决方法 （GPT）</span></span></p></div><h2 id="https://www.notion.so/c9ef5abd031f4e5fb3c927865ef4104f" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/c9ef5abd031f4e5fb3c927865ef4104f"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">启用 ESP32 MicroPython 调试信息</strong></span></span></h2><div id="https://www.notion.so/4389805a79f94100b777bb83e247883e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">您提供的代码片段展示了如何禁用 ESP32 MicroPython 的调试信息。要启用调试信息，您需要进行以下操作：</span></span></p></div><pre id="https://www.notion.so/ac86f20643d246df8a86815970bf6865" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">import</span> esp
+esp<span class="token punctuation">.</span>osdebug<span class="token punctuation">(</span><span class="token boolean">None</span><span class="token punctuation">)</span></span></span></span></code></pre><div id="https://www.notion.so/e1e462dea3a64c51ae9857847c884f2e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">2. (可选) 设置调试级别:</strong></span></span></p></div><div id="https://www.notion.so/c888496851994a39a292a3d734fc8228" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">您可以使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp.osdebug()</code></span><span class="SemanticString"> 函数设置调试信息的级别。默认级别为 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">0</code></span><span class="SemanticString">，表示不输出任何调试信息。</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/17958711eb6e44be88d8baf4f7c0448c" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp.osdebug(None)</code></span><span class="SemanticString">: 禁用调试信息 (与注释掉代码行相同)</span></span></li><li id="https://www.notion.so/a6017d9f3ef744f5a769f3e7b418d742" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp.osdebug(0)</code></span><span class="SemanticString">: 无调试信息 (默认)</span></span></li><li id="https://www.notion.so/a14a6f87c83d46a7b185559c8012385e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp.osdebug(1)</code></span><span class="SemanticString">: 错误信息</span></span></li><li id="https://www.notion.so/aa81e1b7a7b84f1db85525a93dcd29b9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp.osdebug(2)</code></span><span class="SemanticString">: 错误信息和警告</span></span></li><li id="https://www.notion.so/3f5b278658884f39a811da5024af4191" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp.osdebug(3)</code></span><span class="SemanticString">: 错误信息、警告和调试信息</span></span></li></ul><div id="https://www.notion.so/3231337cd6b7458799b8c8b89d2e7be6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">例如，要启用错误信息和警告，可以使用以下代码:</span></span></p></div><pre id="https://www.notion.so/5e9149ce27f349318869a8ef34dbe071" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">import</span> esp
+esp<span class="token punctuation">.</span>osdebug<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span></span></span></span></code></pre><h3 id="https://www.notion.so/8017734e9f724bb0ac02bba9ce1b174b" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/8017734e9f724bb0ac02bba9ce1b174b"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">查看 ESP32 MicroPython 调试信息</strong></span></span></h3><div id="https://www.notion.so/0137161e15f94099aaa8f7af0ad52fc9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">启用 ESP32 MicroPython 调试信息后，您可以通过以下步骤查看这些信息：</span></span></p></div><h3 id="https://www.notion.so/5017f6ef56894fd4aa3bf9aba7e4d6b4" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/5017f6ef56894fd4aa3bf9aba7e4d6b4"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">1. 连接串口</strong></span><span class="SemanticString">:</span></span></h3><div id="https://www.notion.so/51c298a82aa94c3e95e4f3b5208a8383" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">使用 USB 线将 ESP32 连接到您的电脑。 确保您已安装所需的 USB 驱动程序。</span></span></p></div><h3 id="https://www.notion.so/03baa50bfa164c54b1c73e5ad2ff18b9" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/03baa50bfa164c54b1c73e5ad2ff18b9"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">2. 确定串口</strong></span></span></h3><div id="https://www.notion.so/82275452ceec423e9af22455d19157ce" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">:您需要确定 ESP32 连接到哪个串口。 在 Windows 上，您可以使用设备管理器查看可用串口。 在 macOS 或 Linux 上，您可以使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">ls /dev/tty*</code></span><span class="SemanticString"> 命令列出可用串口。</span></span></p></div><h3 id="https://www.notion.so/4c36c8fe021a41b199181f6c81a99420" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/4c36c8fe021a41b199181f6c81a99420"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">3. 选择串口监视器</strong></span><span class="SemanticString">:</span></span></h3><div id="https://www.notion.so/b5a74682d552402487d8dc4ab6a5e949" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">选择并打开一个串口监视器应用程序，例如：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/c8ed0b38dbc342f993a8442f56e08de5" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">PuTTY (Windows):</strong></span><span class="SemanticString"> 免费且易于使用的串口监视器。</span></span></li><li id="https://www.notion.so/b23e961afc4e4b369e55783935454d60" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">screen (macOS/Linux):</strong></span><span class="SemanticString"> 终端应用程序，提供串口监视功能。</span></span></li><li id="https://www.notion.so/2ff51e552a204dc3b187be2558e7d49a" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">Arduino IDE 串口监视器:</strong></span><span class="SemanticString"> 如果您使用 Arduino IDE 进行开发，可以直接使用内置的串口监视器。</span></span></li></ul><div id="https://www.notion.so/fbe3c60ee97546d69ed445585d37781a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/498555f6ceff47ca946a718360ee764c" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/498555f6ceff47ca946a718360ee764c"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">关于监视器的选择</span></span></h3><div id="https://www.notion.so/4be630f9e3e44a4baaea1bdd7edd7abb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">pyserial</strong></code></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">-miniterm -f direct</code></span><span class="SemanticString"> 是一个Putty的替代方案</span></span></p></div><div id="https://www.notion.so/5dd3eae8579f4a7a97bb0979c9f57be1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">pip install pyserial</code></span><span class="SemanticString"> 就可以安装，不过要设置一下相关的波特率，一般micropython也是115200</span></span></p></div><div id="https://www.notion.so/6a0495629a834077866b0782ae9238e6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/0278c81577d448f4bf5cb8691c69f1e2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/8a4cf1d07aef4864ac90ab4a32a2bbc4" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/8a4cf1d07aef4864ac90ab4a32a2bbc4"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">效果展示</span></span></h3><div id="https://www.notion.so/839801abc169497f8d57bd7fe34a16eb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">相对于原来的显示内容变多了😈 </span></span></p></div><div id="https://www.notion.so/8fbc6fc682874c29af06ae7fb15b2670" class="Image Image--PageWidth"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2Fc8298e52-a219-434c-91ae-1ddb61b9d0a9%2FUntitled.png?width=707.996826171875&amp;table=block&amp;id=8fbc6fc6-8287-4c29-af06-ae7fb15b2670"><img src="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2Fc8298e52-a219-434c-91ae-1ddb61b9d0a9%2FUntitled.png?width=707.996826171875&amp;table=block&amp;id=8fbc6fc6-8287-4c29-af06-ae7fb15b2670" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/94e74dfb058b497cbf3d1c42fb487fe3" class="Image Image--PageWidth"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2F8191416a-4b00-4ac6-b657-1d91a3c3c244%2FUntitled.png?width=1841&amp;table=block&amp;id=94e74dfb-058b-497c-bf3d-1c42fb487fe3"><img src="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2F8191416a-4b00-4ac6-b657-1d91a3c3c244%2FUntitled.png?width=1841&amp;table=block&amp;id=94e74dfb-058b-497c-bf3d-1c42fb487fe3" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/a9556db10b12420a9930a194def5ab59" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+  <footer class="Footer">
+  <div>&copy; 413’s Website 2020~2024 </div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/syx-413" target="_blank"
+      rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+</body>
+
+</html>
