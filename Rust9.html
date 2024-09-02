@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>分析 ESP32 固件和分区表&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="分析 ESP32 固件和分区表">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="Note.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>Note</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="reference.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📖&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>杂项</span>
+        </div>
+      </a>
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="About.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😀&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">分析 ESP32 固件和分区表</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/17f02f453b3a4a2aa46ec636cdd8ad06" class="PageRoot"><h2 id="https://www.notion.so/8ffb6de674b145058eee70ea0686027e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/8ffb6de674b145058eee70ea0686027e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">1 使用 esptool.py image_info 查看 app 固件内容 </mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://blog.opsnull.com/rust-embedded/esp-firmware/#%E4%BD%BF%E7%94%A8-esptool-dot-py-image-info-%E6%9F%A5%E7%9C%8B-app-%E5%9B%BA%E4%BB%B6%E5%86%85%E5%AE%B9"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">#</mark></a></span></span></h2><div id="https://www.notion.so/0db10c981c7a401e8958ca026231b36c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">参考 </mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/system/app_image_format.html"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">app_image_format.html</mark></a></span></span></p></div><div id="https://www.notion.so/3d6647c0fc9f4ff58791c79ef7f125b9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/b66affea9a7b4f7eb75359610dd17167" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>esptool.py --chip esp32s3 image_info build/app.bin
+esptool.py v2.3.1
+Image version: 1
+Entry point: 40080ea4
+13 segments
+
+Segment 1: len 0x13ce0 load 0x3f400020 file_offs 0x00000018 SOC_DROM
+Segment 2: len 0x00000 load 0x3ff80000 file_offs 0x00013d00 SOC_RTC_DRAM
+Segment 3: len 0x00000 load 0x3ff80000 file_offs 0x00013d08 SOC_RTC_DRAM
+Segment 4: len 0x028e0 load 0x3ffb0000 file_offs 0x00013d10 DRAM
+Segment 5: len 0x00000 load 0x3ffb28e0 file_offs 0x000165f8 DRAM
+Segment 6: len 0x00400 load 0x40080000 file_offs 0x00016600 SOC_IRAM
+Segment 7: len 0x09600 load 0x40080400 file_offs 0x00016a08 SOC_IRAM
+Segment 8: len 0x62e4c load 0x400d0018 file_offs 0x00020010 SOC_IROM
+Segment 9: len 0x06cec load 0x40089a00 file_offs 0x00082e64 SOC_IROM
+Segment 10: len 0x00000 load 0x400c0000 file_offs 0x00089b58 SOC_RTC_IRAM
+Segment 11: len 0x00004 load 0x50000000 file_offs 0x00089b60 SOC_RTC_DATA
+Segment 12: len 0x00000 load 0x50000004 file_offs 0x00089b6c SOC_RTC_DATA
+Segment 13: len 0x00000 load 0x50000004 file_offs 0x00089b74 SOC_RTC_DATA
+Checksum: e8 (valid)
+Validation Hash: 407089ca0eae2bbf83b4120979d3354b1c938a49cb7a0c997f240474ef2ec76b (valid)</span></span></span></code></pre><div id="https://www.notion.so/f25e869d4a254bf69302c28353011088" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">查看 Bootloader Image Format:</mark></span></span></p></div><div id="https://www.notion.so/746cc848598c4f08856f3b0adcf9ca01" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/106a1999990f4a2995cd4d75456fc352" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>esptool.py --chip esp32s3 image_info build/bootloader/bootloader.bin --version 2
+
+File size: 26576 (bytes)
+
+ESP32 image header
+==================
+Image version: 1
+Entry point: 0x40080658
+Segments: 4
+Flash size: 2MB
+Flash freq: 40m
+Flash mode: DIO
+
+ESP32 extended image header
+===========================
+WP pin: 0xee
+Flash pins drive settings: clk_drv: 0x0, q_drv: 0x0, d_drv: 0x0, cs0_drv: 0x0, hd_drv: 0x0, wp_drv: 0x0
+Chip ID: 0
+Minimal chip revision: v0.0, (legacy min_rev = 0)
+Maximal chip revision: v3.99
+
+Segments information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+    1  0x01bb0  0x3fff0030  0x00000018  BYTE_ACCESSIBLE, DRAM, DIRAM_DRAM
+    2  0x03c90  0x40078000  0x00001bd0  CACHE_APP
+    3  0x00004  0x40080400  0x00005868  IRAM
+    4  0x00f2c  0x40080404  0x00005874  IRAM
+
+ESP32 image footer
+==================
+Checksum: 0x65 (valid)
+Validation hash: 6f31a7f8512f26f6bce7c3b270f93bf6cf1ee4602c322998ca8ce27433527e92 (valid)
+
+Bootloader information
+======================
+Bootloader version: 1
+ESP-IDF: v5.1-dev-4304-gcb51a3b-dirty
+Compile time: Mar 30 2023 19:14:17</span></span></span></code></pre><h2 id="https://www.notion.so/fd98cfb5f76f428586a1d0bce54bb3c1" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/fd98cfb5f76f428586a1d0bce54bb3c1"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">2 分区表 </mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://blog.opsnull.com/rust-embedded/esp-firmware/#%E5%88%86%E5%8C%BA%E8%A1%A8"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">#</mark></a></span></span></h2><div id="https://www.notion.so/852ad62227e94226aebf0bc664f146a3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">使用 idf.py partition-table 来显示分区表内容。</mark></span></span></p></div><div id="https://www.notion.so/7e8a0f2b9f944accb58c93ef9da8709e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">使用 gen_esp32part.py 工具来将 CSV 分区表转换为烧写到 FLASH 的 bin 格式。</mark></span></span></p></div><div id="https://www.notion.so/2eaaedd28ade405eb5491ffb1196b171" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/9f6cddec82b84da9ae0b3d58aada9cc6" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span># Erase partition with name &#x27;storage&#x27;
+parttool.py --port &quot;/dev/ttyUSB1&quot; erase_partition --partition-name=storage
+
+# Read partition with type &#x27;data&#x27; and subtype &#x27;spiffs&#x27; and save to file &#x27;spiffs.bin&#x27;
+parttool.py --port &quot;/dev/ttyUSB1&quot; read_partition --partition-type=data --partition-subtype=spiffs --output &quot;spiffs.bin&quot;
+
+# Write to partition &#x27;factory&#x27; the contents of a file named &#x27;factory.bin&#x27;
+parttool.py --port &quot;/dev/ttyUSB1&quot; write_partition --partition-name=factory --input &quot;factory.bin&quot;
+
+# Print the size of default boot partition
+parttool.py --port &quot;/dev/ttyUSB1&quot; get_partition_info --partition-boot-default --info size</span></span></span></code></pre></article>
+  <footer class="Footer">
+  <div>&copy; 413’s Website 2020~2024 </div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/syx-413" target="_blank"
+      rel="noopener noreferrer"> notablog</a>.<div>
+        <!-- 100% privacy-first analytics -->
+<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript></div>
+</div>
+</footer>
+
+</body>
+
+</html>
