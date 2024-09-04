@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+
+<style>
+  :root {
+    font-size: 20px;
+}
+</style>
+  <title>
+    使用 cargo run 和 espflash 烧写固件&nbsp;|&nbsp;413’s Website
+  </title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="使用 cargo run 和 espflash 烧写固件">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📖&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😀&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">
+      使用 cargo run 和 espflash 烧写固件
+    </h1>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+    </div>
+    
+  </header>
+  <article id="https://www.notion.so/e3e099bee0f249f090161724c0cd9966" class="PageRoot"><div id="https://www.notion.so/d231649270c047c9aa0b9f013f36269d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">espflash 是固件烧录和终端监视工具，基于 esptool.py.</mark></span></span></p></div><div id="https://www.notion.so/357487044b0a42db8954ee05d9f16b96" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">参考：</mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/espflash/tree/main/espflash#installation"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">https://github.com/esp-rs/espflash/tree/main/espflash#installation</mark></a></span></span></p></div><div id="https://www.notion.so/38d3996464b64a8db32d7ada2d155c15" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">cargo-espflash vs espflash: cargo-espflash 是作为 cargo 的一个子命令来运行的，如 cargo espflash, 它支持 cargo 的 –bin/–expample 参数来快速指定 bin 和 example binary 名称。而 espflash 是一个单独工具，需要指定 bin 文件的具体路径：</mark></span></span></p></div><div id="https://www.notion.so/a377874ed0f6460b901f983a16528ef5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/743fbaefb96d45ebac8f86829763e88c" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>MCU=esp32c3 cargo espflash flash --target riscv32imc-esp-espidf --example ledc_simple --monitor
+cargo espflash flash --example=blinky --monitor
+
+espflash flash target/debug/myapp --monitor</span></span></span></code></pre><div id="https://www.notion.so/82fb24229d1d4d5a9004d6efdbdbb7db" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">espflash 使用 USB 串口(linux: /dev/ttyUSB0, macOS: /dev/cu.*) 来烧录芯片的 Flash，它会检查项目的依赖是否包含 esp-idf-sys 来判断是那种类型的应用，然后 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">自动烧写不同的文件</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> ：</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/18461c8d62754332ba6475bae501f58b" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">对于 std 应用，会烧写三个文件：应用 binary，bootloader.bin，partition-table.bin；</mark></span></span><ul class="BulletedListWrapper"><li id="https://www.notion.so/0b8289a388574831a626580ee2cdcc52" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">bootloader.bin，partition-table.bin 是 esp-idf-sys build script 生成的。</mark></span></span></li></ul></li><li id="https://www.notion.so/d7a3a215928949a68dbfc304a1fe4fb0" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">对于 no_std 应用，只烧写一个 elf 格式的应用 binary；</mark></span></span></li></ul><div id="https://www.notion.so/ef5ae8e64f5f4ba78ab26f21ad7d923e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/5a12f2af8cd4490bb9a951be7584f745" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/codes/esp32$ espflash --help
+A command-line tool for flashing Espressif devices
+
+Usage: espflash &lt;COMMAND&gt;
+
+Commands:
+  board-info       Print information about a connected target device
+  completions      Generate completions for the given shell
+  erase-flash      Erase Flash entirely
+  erase-parts      Erase specified partitions
+  erase-region     Erase specified region
+  flash            Flash an application in ELF format to a connected target device
+  monitor          Open the serial monitor without flashing the connected target device
+  partition-table  Convert partition tables between CSV and binary format
+  save-image       Generate a binary application image and save it to a local disk
+  write-bin        Write a binary file to a specific address in a target device&#x27;s flash
+  help             Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+zj@a:~/codes/esp32$</span></span></span></code></pre><div id="https://www.notion.so/f65b88f6ea0d4b52a42eee9d826324e0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">cargo run: 在项目的 .cargo/config.toml 中添加如下内容, 然后就可以执行 cargo run 来 flash 和 monitor 应用:</mark></span></span></p></div><div id="https://www.notion.so/f107b78e3e53468ebcb69c24d56d2d60" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/9d2d523328e8434c990e1806e378dcb7" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>[target.&#x27;cfg(any(target_arch = &quot;riscv32&quot;, target_arch = &quot;xtensa&quot;))&#x27;]
+runner = &quot;espflash flash --baud=921600 --monitor&quot;</span></span></span></code></pre><div id="https://www.notion.so/d01b9f3f60f74bf99661d762815d4643" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">espflash 配置文件 espflash.toml:</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/a77c044d940e40c7b9953f3c8ed9fdf6" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">具体配置参数：</mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/espflash/blob/main/espflash/src/cli/config.rs#L77"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">https://github.com/esp-rs/espflash/blob/main/espflash/src/cli/config.rs#L77</mark></a></span></span></li></ul><div id="https://www.notion.so/5fd04d8ce52d4b46a858e030cf8939c5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/7c4593af9e9147f891c7a61251ddc6a0" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>[connection]
+serial = &quot;/dev/ttyUSB0&quot;
+baudrate = 460800
+bootloader = &quot;path/to/custom/bootloader.bin&quot;
+partition_table = &quot;path/to/custom/partition-table.bin&quot;
+
+[flash]
+mode = &quot;qio&quot;
+size = &quot;8MB&quot;
+frequency = &quot;80MHz&quot;</span></span></span></code></pre><div id="https://www.notion.so/5ac85eae871c486fa8931bfe60262180" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">espflash.toml 文件位置:</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/4f7b924019454b1a9be7ace83147b63f" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">项目目录（Cargo.toml 所在目录）；</mark></span></span></li><li id="https://www.notion.so/ee75fe9c14874b45a9a68ee7a76b07d1" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">workspace 根目录；</mark></span></span></li><li id="https://www.notion.so/409e6a6134964608b59abfc52ccd11d2" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">$HOME/Library/Application Support/rs.esp.espflash/espflash.toml</mark></span></span></li></ol><div id="https://www.notion.so/ab32b6dbe42b40cebc7562827824c580" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">monitor 日志格式：espflash 的 flash 和 monitor 子命令支持 -L/–log-format 参数指定日志格式：</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/762b3678d07047cea0d26d92d0e548f3" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">serial</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">: Default logging format</mark></span></span></li><li id="https://www.notion.so/709ff1c5d3d74c94bb3d54482217ec33" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">defmt</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : Uses [defmt] logging framework. With logging format, logging strings have framing bytes to indicate that they are defmt messages.</mark></span></span><ul class="BulletedListWrapper"><li id="https://www.notion.so/684b8201f66444b5ac607cc8619e4eeb" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">一般是在 no_std 应用中使用，需要和 esp-println crate 联合使用。</mark></span></span></li></ul></li></ol><div id="https://www.notion.so/7dc81d1c20e8418dbfff2436e0d4e181" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Establishing a serial connection with the ESP32-S3 target device could be done using </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">USB-to-UART bridge</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> or </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">USB peripheral</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> supported in ESP32-S3. For the ESP32-S3, </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">the USB peripheral</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> is available, allowing you to flash the binaries </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">without the need for an external USB-to-UART bridge</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">.</mark></span></span></p></div><div id="https://www.notion.so/1be893ef87364afd92facd5118615ede" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">If you are flashing for the first time, you need to get the ESP32-S3 into </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">the download mode</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> manually. To do so, press and </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">hold the BOOT button and then press the RESET button once</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">. After that release the BOOT button.</mark></span></span></p></div><div id="https://www.notion.so/8cdc29ca3bf746af9daaf8d7bd17578f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">在线下载固件和烧写：esp-launchpad，它使用 USB-Serial-JTAG 接口， 例如在线下载和</mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://espressif.github.io/esp-launchpad/?flashConfigURL=https://espressif.github.io/esp-box/launchpad.toml"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">烧写 esp-box 固件</mark></a></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/fcc95aaeeaed451facdded9e7ed9e842" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">如果烧写了 USB-OTG 应用（如摄像头），则可能不能找到设备，这时可以按住 BOOT 按钮的同时按 RST 按钮将芯片至于 download 模式，这时芯片内 USB PHY 会连接 USB-Serial-JTAG Controller。</mark></span></span></li></ul><div id="https://www.notion.so/d7c68ddfdda3482893e5a21654bc12ef" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">probe-rs：embassy 使用 probe-rs 来烧写和调试：</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/4aee22539d0f47a6a03cc22750f7fe43" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://embassy.dev/book/dev/getting_started.html"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">https://embassy.dev/book/dev/getting_started.html</mark></a></span></span></li><li id="https://www.notion.so/0a62e74099f94210990ee0c31bbece3b" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://embassy.dev/book/dev/project_structure.html"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">https://embassy.dev/book/dev/project_structure.html</mark></a></span></span></li></ol></article>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2024
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
