@@ -10,28 +10,27 @@
 <!-- Chrome, Firefox OS and Opera Status Bar Color -->
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
 <link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
 <link rel="stylesheet" type="text/css" href="css/theme.css">
 <link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
 <!-- Favicon -->
 
-<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
-
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
 
 <style>
   :root {
     font-size: 20px;
-}
+  }
 </style>
-  <title>
-    使用 USB-JTAG/probe-rs 调试应用&nbsp;|&nbsp;413’s Website
-  </title>
+  <title>使用 USB-JTAG/probe-rs 调试应用&nbsp;|&nbsp;413’s Website</title>
   <meta property="og:type" content="blog">
   <meta property="og:title" content="使用 USB-JTAG/probe-rs 调试应用">
   
   
-  <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
+    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
   
   <style>
     .DateTagBar {
@@ -50,6 +49,8 @@
       <span>Home</span>
     </div>
   </a>
+  
+  
   
   
   
@@ -211,34 +212,29 @@
     <div class="Header__Spacer Header__Spacer--NoCover">
     </div>
     
-    <div class="Header__Icon">
-      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
-    </div>
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      </div>
     
-    <h1 class="Header__Title">
-      使用 USB-JTAG/probe-rs 调试应用
-    </h1>
+    <h1 class="Header__Title">使用 USB-JTAG/probe-rs 调试应用</h1>
     
-    <div class="DateTagBar">
-      
-      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
-      
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
-        <a href="tag/Rust.html">
-          Rust
-        </a>
-      </span>
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
-        <a href="tag/单片机.html">
-          单片机
-        </a>
-      </span>
-      
-    </div>
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
     
   </header>
+    <div id="content-html"></div>
   <article id="https://www.notion.so/2aa2bc468bf944c2b62da2ffc6dbd646" class="PageRoot"><div id="https://www.notion.so/9fa8d1953602403582ed5b5fd4da8033" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">ESP32-S3 开发版一般有两个 USB 接口，一般标记为 UART 和 USB，后者是支持 USB-Serial-JTAG 调试的接口，该接口包含两个 USB 设备：</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/635f46e580d0422c92890e96730bb49a" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">USB-CDC-ACM：PC 识别为 USB 串口设备，可以用于下载固件和打印芯片输出的日志；</mark></span></span></li><li id="https://www.notion.so/46ffeee9980b4472aecd9eb1b58c0054" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">JTAG 设备：可以被用来进行 JTAG 调试；</mark></span></span></li></ol><h3 id="https://www.notion.so/7c9fed20f014411ea3b3bd2080f8064d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/7c9fed20f014411ea3b3bd2080f8064d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">查看 MaxcOS USE-Serial-JTAG 设备信息：</mark></span></span></h3><div id="https://www.notion.so/447c64731b5f449c832c1449fb221ad0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/bc04d87805be4a8bab8227f1bd19447c" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/docs$ system_profiler SPUSBDataType | grep -A 11 &quot;USB JTAG&quot;
         USB JTAG/serial debug unit:
 
@@ -341,6 +337,18 @@ RAM: 0x40370000..0x40378000 (32.00 KiB)
 RAM: 0x40378000..0x403e0000 (416.00 KiB)
 NVM: 0x42000000..0x44000000 (32.00 MiB)
 NVM: 0x3c000000..0x3e000000 (32.00 MiB)</span></span></span></code></pre><ul id="https://www.notion.so/c9b9fb022d03430e92a4c150ece327d9" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/7c9fed20f014411ea3b3bd2080f8064d"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">查看 MaxcOS USE-Serial-JTAG 设备信息：</mark></span></span></div></a></li></ul></article>
+    <aside class="Aside">
+        <a href="#content-html"><div id="up">👆</div></a>
+        <a href="#message-board"><div id="down">👇</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <script src="https://utteranc.es/client.js"
+        repo="Iris1e27/Iris1e27.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+    </script>
   <footer class="Footer">
   <div>
     &copy; 413’s Website 2020~2024

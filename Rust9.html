@@ -10,28 +10,27 @@
 <!-- Chrome, Firefox OS and Opera Status Bar Color -->
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
 <link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
 <link rel="stylesheet" type="text/css" href="css/theme.css">
 <link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
 <!-- Favicon -->
 
-<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
-
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
 
 <style>
   :root {
     font-size: 20px;
-}
+  }
 </style>
-  <title>
-    分析 ESP32 固件和分区表&nbsp;|&nbsp;413’s Website
-  </title>
+  <title>分析 ESP32 固件和分区表&nbsp;|&nbsp;413’s Website</title>
   <meta property="og:type" content="blog">
   <meta property="og:title" content="分析 ESP32 固件和分区表">
   
   
-  <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
+    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
   
   <style>
     .DateTagBar {
@@ -50,6 +49,8 @@
       <span>Home</span>
     </div>
   </a>
+  
+  
   
   
   
@@ -211,34 +212,29 @@
     <div class="Header__Spacer Header__Spacer--NoCover">
     </div>
     
-    <div class="Header__Icon">
-      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
-    </div>
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      </div>
     
-    <h1 class="Header__Title">
-      分析 ESP32 固件和分区表
-    </h1>
+    <h1 class="Header__Title">分析 ESP32 固件和分区表</h1>
     
-    <div class="DateTagBar">
-      
-      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
-      
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
-        <a href="tag/单片机.html">
-          单片机
-        </a>
-      </span>
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
-        <a href="tag/Rust.html">
-          Rust
-        </a>
-      </span>
-      
-    </div>
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+      </div>
     
   </header>
+    <div id="content-html"></div>
   <article id="https://www.notion.so/17f02f453b3a4a2aa46ec636cdd8ad06" class="PageRoot"><h2 id="https://www.notion.so/8ffb6de674b145058eee70ea0686027e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/8ffb6de674b145058eee70ea0686027e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">1 使用 esptool.py image_info 查看 app 固件内容 </mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://blog.opsnull.com/rust-embedded/esp-firmware/#%E4%BD%BF%E7%94%A8-esptool-dot-py-image-info-%E6%9F%A5%E7%9C%8B-app-%E5%9B%BA%E4%BB%B6%E5%86%85%E5%AE%B9"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">#</mark></a></span></span></h2><div id="https://www.notion.so/0db10c981c7a401e8958ca026231b36c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">参考 </mark></span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/system/app_image_format.html"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">app_image_format.html</mark></a></span></span></p></div><div id="https://www.notion.so/3d6647c0fc9f4ff58791c79ef7f125b9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/b66affea9a7b4f7eb75359610dd17167" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>esptool.py --chip esp32s3 image_info build/app.bin
 esptool.py v2.3.1
 Image version: 1
@@ -309,6 +305,18 @@ parttool.py --port &quot;/dev/ttyUSB1&quot; write_partition --partition-name=fac
 
 # Print the size of default boot partition
 parttool.py --port &quot;/dev/ttyUSB1&quot; get_partition_info --partition-boot-default --info size</span></span></span></code></pre><div id="https://www.notion.so/be7ebda351cb48ca99cd9467d8baa4c2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><ul id="https://www.notion.so/53252945b50441369847d0567c40b286" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/8ffb6de674b145058eee70ea0686027e"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">1 使用 esptool.py image_info 查看 app 固件内容 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">#</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/fd98cfb5f76f428586a1d0bce54bb3c1"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">2 分区表 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">#</mark></span></span></div></a></li></ul></article>
+    <aside class="Aside">
+        <a href="#content-html"><div id="up">👆</div></a>
+        <a href="#message-board"><div id="down">👇</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <script src="https://utteranc.es/client.js"
+        repo="Iris1e27/Iris1e27.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+    </script>
   <footer class="Footer">
   <div>
     &copy; 413’s Website 2020~2024
