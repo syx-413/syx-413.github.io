@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>ILI9225笔记&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="ILI9225笔记">
+  
+  
+    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;💡&lt;/text&gt;&lt;/svg&gt;">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="homre.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🌈&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>413’s Website bar</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;💡&lt;/text&gt;&lt;/svg&gt;"></span>
+      </div>
+    
+    <h1 class="Header__Title">ILI9225笔记</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Feb 6, 2023</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/4c808c07f82e4b84831e098215550e5e" class="PageRoot"><h3 id="https://www.notion.so/0b4aa2e7b02845d7a2d7dfd4f54595d4" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/0b4aa2e7b02845d7a2d7dfd4f54595d4"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">ILI9225笔记</span></span></h3><ul id="https://www.notion.so/f56e4d80d4a0433f9fc446e80200293b" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/0b4aa2e7b02845d7a2d7dfd4f54595d4"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">ILI9225笔记</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/24539d95c12a409085d675afabe50012"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">LCD_ 函数</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/7e0f0b7ae3aa4b40ab4d7812ee51ac1f"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_setAddrWindow</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/024fe175b670481f9c4471ad56b35285"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_init [初始化]</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/a5244b6f69f1445ba67ce3099f4ec345"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_setDir</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/eb4bb479323741299a781a785754b6d3"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_setColor —LCD_setFont</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/4cb502725fc942dab276d3a1c6534f13"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_showChar</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/ccface900a8e4dc39ec8e2bd4318a8cc"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_showString</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/97c00485d4b844a7856336ec63295e5a"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_showPicture</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/5ff71572b1ee4328809e5f2aec6dc324"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_clear</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/a0a4daa815a8435193d4f9732c4c9d90"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_fillCircle—LCD_fillSemiCircle</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/32825f67071c44ba9673f8d8c1ccbe76"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_writeByte—LCD_writeHalfword</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/024c8f6cebb04d0bb6c928d38cbb4e09"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_writeCmd</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/d89904d358224d758cdf332a520bb286"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_fill</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/a34b3b7de225439281e58022a54f1488"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_drawPixel</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/1eb4495f5e1c40748b2ae88ffe289639"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_drawLine</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/0c6998a4aabf4735baed6de517e88994"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_drawRectangle</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/1df16afdf2f9470aaeaa5472dcd2eb8f"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">LCD_drawCircle</span></span></div></a></li></ul><h2 id="https://www.notion.so/24539d95c12a409085d675afabe50012" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/24539d95c12a409085d675afabe50012"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_ 函数</span></span></h2><h3 id="https://www.notion.so/7e0f0b7ae3aa4b40ab4d7812ee51ac1f" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/7e0f0b7ae3aa4b40ab4d7812ee51ac1f"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_setAddrWindow</span></span></h3><pre id="https://www.notion.so/ceb21073803e41a6bfa7972c62139f72" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/*
+      函数说明：设置读写起始和结束地址
+      入口数据：x1,x1 设置列的起始和结束地址
+                y0,y1 设置行的起始和结束地址
+       返回值：  无
+*/</span>
+
+<span class="token keyword">void</span> <span class="token function">LCD_setAddrWindow</span><span class="token punctuation">(</span>UINT16 x0<span class="token punctuation">,</span>UINT16 y0<span class="token punctuation">,</span>UINT16 x1<span class="token punctuation">,</span>UINT16 y1<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+		<span class="token function">LCD_writeCmd</span><span class="token punctuation">(</span><span class="token number">0x2a</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//列地址设置</span>
+		<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>x0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>x1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">LCD_writeCmd</span><span class="token punctuation">(</span><span class="token number">0x2b</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//行地址设置</span>
+		<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>y0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">LCD_writeCmd</span><span class="token punctuation">(</span><span class="token number">0x2c</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//储存器写</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/024fe175b670481f9c4471ad56b35285" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/024fe175b670481f9c4471ad56b35285"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_init [初始化]</span></span></h3><h3 id="https://www.notion.so/a5244b6f69f1445ba67ce3099f4ec345" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/a5244b6f69f1445ba67ce3099f4ec345"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_setDir</span></span></h3><pre id="https://www.notion.so/ae6421c2796b4e6aaefd8f1945007868" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">void</span> <span class="token function">LCD_setDir</span><span class="token punctuation">(</span>UINT8 dir<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    LCD_parameter<span class="token punctuation">.</span>dir <span class="token operator">=</span> dir <span class="token operator">&amp;</span> <span class="token number">3</span><span class="token punctuation">;</span>  
+<span class="token comment">// just perform the operation ourselves on the protected variables</span>
+    LCD_parameter<span class="token punctuation">.</span>width <span class="token operator">=</span> <span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>dir <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">?</span> LCD_H <span class="token operator">:</span> LCD_W<span class="token punctuation">;</span>
+    LCD_parameter<span class="token punctuation">.</span>height <span class="token operator">=</span> <span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>dir <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">?</span> LCD_W <span class="token operator">:</span> LCD_H<span class="token punctuation">;</span>
+	UINT16 val<span class="token punctuation">;</span>
+	<span class="token keyword">switch</span><span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>dir<span class="token punctuation">)</span> 
+	<span class="token punctuation">{</span>
+		<span class="token keyword">case</span> <span class="token number">0</span><span class="token operator">:</span> 
+			val <span class="token operator">=</span> <span class="token number">0x1030</span><span class="token punctuation">;</span> <span class="token comment">//0 degree </span>
+			<span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span> 
+			val <span class="token operator">=</span> <span class="token number">0x1028</span><span class="token punctuation">;</span> <span class="token comment">//90 degree </span>
+			<span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span> 
+			val <span class="token operator">=</span> <span class="token number">0x1000</span><span class="token punctuation">;</span> <span class="token comment">//180 degree </span>
+			<span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span> 
+			val <span class="token operator">=</span> <span class="token number">0x1018</span><span class="token punctuation">;</span> <span class="token comment">//270 degree </span>
+			<span class="token keyword">break</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token function">LCD_writeCmd</span><span class="token punctuation">(</span><span class="token number">0x03</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">//Vert_Scroll(0, HEIGHT, 0);</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/eb4bb479323741299a781a785754b6d3" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/eb4bb479323741299a781a785754b6d3"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_setColor —LCD_setFont</span></span></h3><pre id="https://www.notion.so/1dc3ca848a9142cb9011c36f231fa2a9" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">void</span> <span class="token function">LCD_setColor</span><span class="token punctuation">(</span>UINT16 color<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	LCD_parameter<span class="token punctuation">.</span>color <span class="token operator">=</span> color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">LCD_setBackground</span><span class="token punctuation">(</span>UINT16 color<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	LCD_parameter<span class="token punctuation">.</span>Background <span class="token operator">=</span> color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">LCD_setColorRGB</span><span class="token punctuation">(</span>UINT8 r<span class="token punctuation">,</span>UINT8 g<span class="token punctuation">,</span>UINT8 b<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	LCD_parameter<span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token function">RGB888_565</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span>g<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">LCD_setBackgroundRGB</span><span class="token punctuation">(</span>UINT8 r<span class="token punctuation">,</span>UINT8 g<span class="token punctuation">,</span>UINT8 b<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	LCD_parameter<span class="token punctuation">.</span>Background <span class="token operator">=</span> <span class="token function">RGB888_565</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span>g<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">LCD_setFont</span><span class="token punctuation">(</span>UINT8 font<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	LCD_parameter<span class="token punctuation">.</span>font <span class="token operator">=</span> font<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/4cb502725fc942dab276d3a1c6534f13" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/4cb502725fc942dab276d3a1c6534f13"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_showChar</span></span></h3><pre id="https://www.notion.so/9fd3ae51806f424c8ef5f045ceec00fa" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：显示单个字符
+      入口数据：x,y显示坐标
+                num 要显示的字符
+                overlay:  0非叠加模式  1叠加模式
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_showChar</span><span class="token punctuation">(</span>UINT16 x<span class="token punctuation">,</span>UINT16 y<span class="token punctuation">,</span>UINT8 num<span class="token punctuation">,</span>UINT8 overlay<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	UINT8 temp<span class="token punctuation">,</span>fontWidth<span class="token punctuation">,</span>t<span class="token punctuation">,</span>m<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	UINT16 i<span class="token punctuation">,</span>TypefaceNum<span class="token punctuation">;</span><span class="token comment">//一个字符所占字节大小</span>
+	UINT16 x0<span class="token operator">=</span>x<span class="token punctuation">;</span>
+	fontWidth<span class="token operator">=</span>LCD_parameter<span class="token punctuation">.</span>font<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+	TypefaceNum<span class="token operator">=</span><span class="token punctuation">(</span>fontWidth<span class="token operator">/</span><span class="token number">8</span><span class="token operator">+</span><span class="token punctuation">(</span><span class="token punctuation">(</span>fontWidth<span class="token operator">%</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">*</span>LCD_parameter<span class="token punctuation">.</span>font<span class="token punctuation">;</span>
+	num<span class="token operator">=</span>num<span class="token operator">-</span><span class="token char">' '</span><span class="token punctuation">;</span>    <span class="token comment">//得到偏移后的值</span>
+	
+	<span class="token function">LCD_setAddrWindow</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>x<span class="token operator">+</span>fontWidth<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>y<span class="token operator">+</span>LCD_parameter<span class="token punctuation">.</span>font<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//设置光标位置 </span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>TypefaceNum<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span> 
+		<span class="token keyword">switch</span> <span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>font<span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+		<span class="token keyword">case</span> <span class="token number">12</span><span class="token operator">:</span>temp<span class="token operator">=</span>ascii_1206<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//调用1206字体</span>
+		<span class="token keyword">case</span> <span class="token number">16</span><span class="token operator">:</span>temp<span class="token operator">=</span>ascii_1608<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//调用1608字体</span>
+		<span class="token keyword">case</span> <span class="token number">24</span><span class="token operator">:</span>temp<span class="token operator">=</span>ascii_2412<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">32</span><span class="token operator">:</span>temp<span class="token operator">=</span>ascii_3216<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">default</span><span class="token operator">:</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+		<span class="token keyword">for</span><span class="token punctuation">(</span>t<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>t<span class="token operator">&lt;</span><span class="token number">8</span><span class="token punctuation">;</span>t<span class="token operator">++</span><span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>overlay<span class="token punctuation">)</span><span class="token comment">//非叠加模式</span>
+			<span class="token punctuation">{</span>
+				<span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token number">0x01</span><span class="token operator">&lt;&lt;</span>t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">else</span> <span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>Background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				m<span class="token operator">++</span><span class="token punctuation">;</span>
+				<span class="token keyword">if</span><span class="token punctuation">(</span>m<span class="token operator">%</span>fontWidth<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>
+				<span class="token punctuation">{</span>
+					m<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+					<span class="token keyword">break</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">else</span><span class="token comment">//叠加模式</span>
+			<span class="token punctuation">{</span>
+				<span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token number">0x01</span><span class="token operator">&lt;&lt;</span>t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//画一个点</span>
+				x<span class="token operator">++</span><span class="token punctuation">;</span>
+				<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token operator">-</span>x0<span class="token punctuation">)</span><span class="token operator">==</span>fontWidth<span class="token punctuation">)</span>
+				<span class="token punctuation">{</span>
+					x<span class="token operator">=</span>x0<span class="token punctuation">;</span>
+					y<span class="token operator">++</span><span class="token punctuation">;</span>
+					<span class="token keyword">break</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>   	 	  
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/ccface900a8e4dc39ec8e2bd4318a8cc" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/ccface900a8e4dc39ec8e2bd4318a8cc"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_showString</span></span></h3><pre id="https://www.notion.so/3f17c9519b2849d9a516a885425bf0b4" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：显示字符串
+      入口数据：x,y显示坐标
+                *p 要显示的字符串
+                overlay:  0非叠加模式  1叠加模式
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_showString</span><span class="token punctuation">(</span>UINT16 x<span class="token punctuation">,</span>UINT16 y<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span>p<span class="token punctuation">,</span>UINT8 overlay<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>         
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">*</span>p<span class="token operator">!=</span><span class="token char">'\0'</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>       
+		<span class="token function">LCD_showChar</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span><span class="token operator">*</span>p<span class="token punctuation">,</span>overlay<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		x<span class="token operator">+=</span>LCD_parameter<span class="token punctuation">.</span>font<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+		p<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>  
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/97c00485d4b844a7856336ec63295e5a" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/97c00485d4b844a7856336ec63295e5a"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_showPicture</span></span></h3><pre id="https://www.notion.so/7fffedf0b9814ede924624afcd3a43f6" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：显示图片
+      入口数据：x,y起点坐标
+                length 图片长度
+                width  图片宽度
+                pic[]  图片数组    
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_showPicture</span><span class="token punctuation">(</span>UINT16 x<span class="token punctuation">,</span>UINT16 y<span class="token punctuation">,</span>UINT16 length<span class="token punctuation">,</span>UINT16 width<span class="token punctuation">,</span>UINT8 pic<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	UINT16 i<span class="token punctuation">,</span>j<span class="token punctuation">;</span>
+	UINT32 k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_setAddrWindow</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>x<span class="token operator">+</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>y<span class="token operator">+</span>width<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>width<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token function">LCD_writeByte</span><span class="token punctuation">(</span>pic<span class="token punctuation">[</span>k<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">LCD_writeByte</span><span class="token punctuation">(</span>pic<span class="token punctuation">[</span>k<span class="token operator">*</span><span class="token number">2</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			k<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/5ff71572b1ee4328809e5f2aec6dc324" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/5ff71572b1ee4328809e5f2aec6dc324"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_clear</span></span></h3><pre id="https://www.notion.so/e4e2fe0b6dd64d2b9e916e097bb59b57" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：在指定区域填充背景颜色
+      入口数据：x0,y0   起始坐标
+                x1,y1   终止坐标
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_clear</span><span class="token punctuation">(</span>UINT16 x0<span class="token punctuation">,</span>UINT16 y0<span class="token punctuation">,</span>UINT16 x1<span class="token punctuation">,</span>UINT16 y1<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>          
+	UINT32 cnt<span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>x0 <span class="token operator">></span> x1<span class="token punctuation">)</span><span class="token function">SWAP_HW</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span>x1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>y0 <span class="token operator">></span> y1<span class="token punctuation">)</span><span class="token function">SWAP_HW</span><span class="token punctuation">(</span>y0<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token function">LCD_setAddrWindow</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x1<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cnt <span class="token operator">=</span> <span class="token punctuation">(</span>x1<span class="token operator">-</span>x0<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>y1<span class="token operator">-</span>y0<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>								   	 	
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span>cnt <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span>cnt<span class="token operator">--</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>Background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> 					  	    
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/a0a4daa815a8435193d4f9732c4c9d90" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/a0a4daa815a8435193d4f9732c4c9d90"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_fillCircle—LCD_fillSemiCircle</span></span></h3><pre id="https://www.notion.so/5ba6cd2787e2451e9b9a04fb0f88231b" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">//fill a circle,thx for LCDWIKI</span>
+<span class="token keyword">void</span> <span class="token function">LCD_fillCircle</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> radius<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">LCD_fill</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token operator">-</span>radius<span class="token punctuation">,</span>x<span class="token punctuation">,</span> y<span class="token operator">+</span>radius<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_fillSemiCircle</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> radius<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//fill a semi-circle,thx for LCDWIKI</span>
+<span class="token keyword">void</span> <span class="token function">LCD_fillSemiCircle</span><span class="token punctuation">(</span><span class="token keyword">int</span> x0<span class="token punctuation">,</span> <span class="token keyword">int</span> y0<span class="token punctuation">,</span> <span class="token keyword">int</span> r<span class="token punctuation">,</span> UINT8 cornername<span class="token punctuation">,</span><span class="token keyword">int</span> delta<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> f     <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">-</span> r<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> ddF_x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> ddF_y <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">2</span> <span class="token operator">*</span> r<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> x     <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> y     <span class="token operator">=</span> r<span class="token punctuation">;</span>
+
+	<span class="token keyword">while</span> <span class="token punctuation">(</span>x<span class="token operator">&lt;</span>y<span class="token punctuation">)</span> 
+	<span class="token punctuation">{</span>
+    	<span class="token keyword">if</span> <span class="token punctuation">(</span>f <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> 
+		<span class="token punctuation">{</span>
+      		y<span class="token operator">--</span><span class="token punctuation">;</span>
+      		ddF_y <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+      		f <span class="token operator">+=</span> ddF_y<span class="token punctuation">;</span>
+    	<span class="token punctuation">}</span>
+    	x<span class="token operator">++</span><span class="token punctuation">;</span>
+    	ddF_x <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    	f <span class="token operator">+=</span> ddF_x<span class="token punctuation">;</span>
+
+    	<span class="token keyword">if</span> <span class="token punctuation">(</span>cornername <span class="token operator">&amp;</span> <span class="token number">0x1</span><span class="token punctuation">)</span> 
+		<span class="token punctuation">{</span>
+      		<span class="token function">LCD_fill</span><span class="token punctuation">(</span>x0<span class="token operator">+</span>x<span class="token punctuation">,</span> y0<span class="token operator">-</span>y<span class="token punctuation">,</span>x0<span class="token operator">+</span>x<span class="token punctuation">,</span> y0<span class="token operator">+</span>y<span class="token operator">+</span><span class="token number">1</span><span class="token operator">+</span>delta<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      		<span class="token function">LCD_fill</span><span class="token punctuation">(</span>x0<span class="token operator">+</span>y<span class="token punctuation">,</span> y0<span class="token operator">-</span>x<span class="token punctuation">,</span>x0<span class="token operator">+</span>y<span class="token punctuation">,</span> y0<span class="token operator">+</span>x<span class="token operator">+</span><span class="token number">1</span><span class="token operator">+</span>delta<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	<span class="token punctuation">}</span>
+    	<span class="token keyword">if</span> <span class="token punctuation">(</span>cornername <span class="token operator">&amp;</span> <span class="token number">0x2</span><span class="token punctuation">)</span> 
+		<span class="token punctuation">{</span>
+      		<span class="token function">LCD_fill</span><span class="token punctuation">(</span>x0<span class="token operator">-</span>x<span class="token punctuation">,</span> y0<span class="token operator">-</span>y<span class="token punctuation">,</span> x0<span class="token operator">-</span>x<span class="token punctuation">,</span> y0<span class="token operator">+</span>y<span class="token operator">+</span><span class="token number">1</span><span class="token operator">+</span>delta<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      		<span class="token function">LCD_fill</span><span class="token punctuation">(</span>x0<span class="token operator">-</span>y<span class="token punctuation">,</span> y0<span class="token operator">-</span>x<span class="token punctuation">,</span> x0<span class="token operator">-</span>y<span class="token punctuation">,</span> y0<span class="token operator">+</span>x<span class="token operator">+</span><span class="token number">1</span><span class="token operator">+</span>delta<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	<span class="token punctuation">}</span>
+  	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/32825f67071c44ba9673f8d8c1ccbe76" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/32825f67071c44ba9673f8d8c1ccbe76"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_writeByte—LCD_writeHalfword</span></span></h3><pre id="https://www.notion.so/192d41f6280a4ce2b7b5523d1f126d11" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：LCD 写入1字节
+      入口数据：data 写入的数据
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_writeByte</span><span class="token punctuation">(</span>UINT8 data<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">LCD_CS_SEL</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">CH549SPIMasterWrite</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">//使用CH549的SPI写入1字节数据</span>
+	<span class="token function">LCD_CS_DSEL</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/******************************************************************************
+      函数说明：LCD 写入半字
+      入口数据：data 写入的数据
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>UINT16 data<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">LCD_writeByte</span><span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_writeByte</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/024c8f6cebb04d0bb6c928d38cbb4e09" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/024c8f6cebb04d0bb6c928d38cbb4e09"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_writeCmd</span></span></h3><pre id="https://www.notion.so/e10916030dd8495a9d45f6c65906cd85" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：LCD写入命令
+      入口数据：cmd 写入的命令
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_writeCmd</span><span class="token punctuation">(</span>UINT8 cmd<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">LCD_DC_CMD</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写命令</span>
+	<span class="token function">LCD_writeByte</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_DC_DATA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写数据</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/d89904d358224d758cdf332a520bb286" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/d89904d358224d758cdf332a520bb286"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_fill</span></span></h3><pre id="https://www.notion.so/09dfaedb6aa34a5fb518050722727b9b" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：在指定区域填充前景颜色
+      入口数据：x0,y0   起始坐标
+                x1,y1   终止坐标
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_fill</span><span class="token punctuation">(</span>UINT16 x0<span class="token punctuation">,</span>UINT16 y0<span class="token punctuation">,</span>UINT16 x1<span class="token punctuation">,</span>UINT16 y1<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>   
+	UINT32 cnt<span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>x0 <span class="token operator">></span> x1<span class="token punctuation">)</span><span class="token function">SWAP_HW</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span>x1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>y0 <span class="token operator">></span> y1<span class="token punctuation">)</span><span class="token function">SWAP_HW</span><span class="token punctuation">(</span>y0<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token function">LCD_setAddrWindow</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x1<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cnt <span class="token operator">=</span> <span class="token punctuation">(</span>x1<span class="token operator">-</span>x0<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>y1<span class="token operator">-</span>y0<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>								   	 	
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span>cnt <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span>cnt<span class="token operator">--</span><span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span> 
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/a34b3b7de225439281e58022a54f1488" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/a34b3b7de225439281e58022a54f1488"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_drawPixel</span></span></h3><pre id="https://www.notion.so/3cc69681325c42ac8675f001b03badb5" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：在指定位置画点
+      入口数据：x,y 画点坐标
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>UINT16 x<span class="token punctuation">,</span>UINT16 y<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">LCD_setAddrWindow</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//设置光标位置 </span>
+	<span class="token function">LCD_writeHalfword</span><span class="token punctuation">(</span>LCD_parameter<span class="token punctuation">.</span>color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/1eb4495f5e1c40748b2ae88ffe289639" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/1eb4495f5e1c40748b2ae88ffe289639"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_drawLine</span></span></h3><pre id="https://www.notion.so/cd3b940d963e4ea1afaf1c2696986002" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：画线
+      入口数据：x0,y0   起始坐标
+                x1,y1   终止坐标
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_drawLine</span><span class="token punctuation">(</span>UINT16 x0<span class="token punctuation">,</span>UINT16 y0<span class="token punctuation">,</span>UINT16 x1<span class="token punctuation">,</span>UINT16 y1<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	UINT16 t<span class="token punctuation">;</span> 
+	<span class="token keyword">int</span> xErr<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>yErr<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>dx<span class="token punctuation">,</span>dy<span class="token punctuation">,</span>dist<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> incX<span class="token punctuation">,</span>incY<span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token punctuation">;</span>
+	dx<span class="token operator">=</span>x1<span class="token operator">-</span>x0<span class="token punctuation">;</span> <span class="token comment">//计算坐标增量 </span>
+	dy<span class="token operator">=</span>y1<span class="token operator">-</span>y0<span class="token punctuation">;</span>
+	x<span class="token operator">=</span>x0<span class="token punctuation">;</span><span class="token comment">//画线起点坐标</span>
+	y<span class="token operator">=</span>y0<span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>dx<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span>incX<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">//设置单步方向 </span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>dx<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>incX<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//垂直线 </span>
+	<span class="token keyword">else</span> <span class="token punctuation">{</span>incX<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>dx<span class="token operator">=</span><span class="token operator">-</span>dx<span class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>dy<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span>incY<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>dy<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>incY<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//水平线 </span>
+	<span class="token keyword">else</span> <span class="token punctuation">{</span>incY<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>dy<span class="token operator">=</span><span class="token operator">-</span>dy<span class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>dx<span class="token operator">></span>dy<span class="token punctuation">)</span>dist<span class="token operator">=</span>dx<span class="token punctuation">;</span> <span class="token comment">//选取基本增量坐标轴 </span>
+	<span class="token keyword">else</span> dist<span class="token operator">=</span>dy<span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span>t<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>t<span class="token operator">&lt;</span>dist<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>t<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//画点</span>
+		xErr<span class="token operator">+=</span>dx<span class="token punctuation">;</span>
+		yErr<span class="token operator">+=</span>dy<span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>xErr<span class="token operator">></span>dist<span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			xErr<span class="token operator">-=</span>dist<span class="token punctuation">;</span>
+			x<span class="token operator">+=</span>incX<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>yErr<span class="token operator">></span>dist<span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			yErr<span class="token operator">-=</span>dist<span class="token punctuation">;</span>
+			y<span class="token operator">+=</span>incY<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/0c6998a4aabf4735baed6de517e88994" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/0c6998a4aabf4735baed6de517e88994"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_drawRectangle</span></span></h3><pre id="https://www.notion.so/5064c2385aa34c8e9c5f69986c7e7301" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：画矩形
+      入口数据：x1,y0   起始坐标
+                x1,y1   终止坐标
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_drawRectangle</span><span class="token punctuation">(</span>UINT16 x0<span class="token punctuation">,</span> UINT16 y0<span class="token punctuation">,</span> UINT16 x1<span class="token punctuation">,</span> UINT16 y1<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">LCD_drawLine</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x1<span class="token punctuation">,</span>y0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_drawLine</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x0<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_drawLine</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span>y1<span class="token punctuation">,</span>x1<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_drawLine</span><span class="token punctuation">(</span>x1<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x1<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><h3 id="https://www.notion.so/1df16afdf2f9470aaeaa5472dcd2eb8f" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/1df16afdf2f9470aaeaa5472dcd2eb8f"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">LCD_drawCircle</span></span></h3><pre id="https://www.notion.so/35dabbacca9547638772d0ce91bedac1" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">/******************************************************************************
+      函数说明：画圆
+      入口数据：x0,y0   圆心坐标
+                r       半径
+      返回值：  无
+******************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">LCD_drawCircle</span><span class="token punctuation">(</span>UINT16 x0<span class="token punctuation">,</span>UINT16 y0<span class="token punctuation">,</span>UINT8 r<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">,</span>b<span class="token punctuation">;</span>
+	a<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>b<span class="token operator">=</span>r<span class="token punctuation">;</span>	  
+	<span class="token keyword">while</span><span class="token punctuation">(</span>a<span class="token operator">&lt;=</span>b<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">-</span>b<span class="token punctuation">,</span>y0<span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//3           </span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">+</span>b<span class="token punctuation">,</span>y0<span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//0           </span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">-</span>a<span class="token punctuation">,</span>y0<span class="token operator">+</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//1                </span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">-</span>a<span class="token punctuation">,</span>y0<span class="token operator">-</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//2             </span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">+</span>b<span class="token punctuation">,</span>y0<span class="token operator">+</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//4               </span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">+</span>a<span class="token punctuation">,</span>y0<span class="token operator">-</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//5</span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">+</span>a<span class="token punctuation">,</span>y0<span class="token operator">+</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//6 </span>
+		<span class="token function">LCD_drawPixel</span><span class="token punctuation">(</span>x0<span class="token operator">-</span>b<span class="token punctuation">,</span>y0<span class="token operator">+</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//7</span>
+		a<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token operator">*</span>a<span class="token operator">+</span>b<span class="token operator">*</span>b<span class="token punctuation">)</span><span class="token operator">></span><span class="token punctuation">(</span>r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//判断要画的点是否过远</span>
+		<span class="token punctuation">{</span>
+			b<span class="token operator">--</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/e519c201ec6542ae9516ad90e436881d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/0032bcc3cd1f49de824bbeb4911bccc3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>

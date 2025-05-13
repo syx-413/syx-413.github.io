@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>OneDrive-跨域转存&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="OneDrive-跨域转存">
+  
+    <meta name="description" content="https://www.chirmyram.top/archives/onedrivewebdav">
+    <meta property="og:description" content="https://www.chirmyram.top/archives/onedrivewebdav">
+  
+  
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="homre.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🌈&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>413’s Website bar</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"></span>
+      </div>
+    
+    <h1 class="Header__Title">OneDrive-跨域转存</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, May 13, 2025</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--blue">
+            <a href="tag/Ondrive.html">Ondrive</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/Refer.html">Refer</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/1b24d4a7a60c45a29523df7bf7b478b2" class="PageRoot"><div id="https://www.notion.so/e91e646ab8b14bd3a6cff3d855f36829" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">       九月的阿里社区接近癫狂，点燃这堆干柴烈火的，除了两年10T的分享活动，还因阿里云盘便捷快速的分享方式。然而，这显然是一个资本收割的阳谋，收割的是白嫖控的点击量与用户惯性。可以预见两年之后或者更快，各种收费策略，或大量资源变3秒。那么有没有一种备选方案，既能自由分享各种资源（敏感，音频，压缩包），又能确保屯的粮食不被3秒呢?</span></span></p></div><div id="https://www.notion.so/13c77c244d52483691bfb9fc3ed48bdb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">没错，唯有onedrive。</span></span></p></div><div id="https://www.notion.so/c7c8b91ac9f34aa0a3248a527c2bfd56" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">      大家知道，Microsoft免费订阅中的A1，E5和Team exploratory 都有5T的onedrive，其中1ove社区有两个免费的</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bbs.1ove.club/gowild.htm?url=https_3A_2F_2Ffreems_2e1ove_2eclub_2F&amp;u=862&amp;fr=https_3A_2F_2Fbbs_2e1ove_2eclub_2Fthread_2d5706_2ehtm_3Fuser_3D662">A1域</a></span><span class="SemanticString">，用户可以自行注册，并能扩容至25T(近期更新：其中“薅羊毛大学”已翻车，后增“白白大学”与“探索大学”，注册需要邀请码)。而E5订阅可以开25个子号，总容量即5×25=125T，可去</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bbs.1ove.club/gowild.htm?url=https_3A_2F_2Fdeveloper_2emicrosoft_2ecom_2Fzh_2dcn_2Fmicrosoft_2d365_2Fprofile&amp;u=862&amp;fr=https_3A_2F_2Fbbs_2e1ove_2eclub_2Fthread_2d5706_2ehtm_3Fuser_3D662">开发者官网</a></span><span class="SemanticString">注册全局账号，并</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bbs.1ove.club/gowild.htm?url=https_3A_2F_2Fblog_2ecsdn_2enet_2Fqq_5f33212020_2Farticle_2Fdetails_2F109437936&amp;u=862&amp;fr=https_3A_2F_2Fbbs_2e1ove_2eclub_2Fthread_2d5706_2ehtm_3Fuser_3D662">设置程序</a></span><span class="SemanticString">调用API自动续期。</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bbs.1ove.club/thread-5791.htm">Team exploratory</a></span><span class="SemanticString">有 100个子号，是低配版的A1，虽然有效期只有一年，但它是相对稳定的订阅，不会像A1莫名炸链和翻车。因此相对于阿里盘的什么福利码200GB，两年10T之流，微软简直太大方了。然并卵，onedrive只支持域内转存，跨域分享需要先下载本地再上传，看着其它域分享的几百GB甚至几个T的资源，想到下载就脑壳疼。</span></span></p></div><div id="https://www.notion.so/e993c1d63ae7463b96c680992f4edc53" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">        幸好微软为离线转存留了一个后门，即</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bbs.1ove.club/gowild.htm?url=https_3A_2F_2Fapp_2emover_2eio_2F&amp;u=862&amp;fr=https_3A_2F_2Fbbs_2e1ove_2eclub_2Fthread_2d5706_2ehtm_3Fuser_3D662">mover</a></span><span class="SemanticString"> ，所以才有了我们TG试验区</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bbs.1ove.club/gowild.htm?url=https_3A_2F_2Ft_2eme_2FFree_5f1oveTeamchat&amp;u=862&amp;fr=https_3A_2F_2Fbbs_2e1ove_2eclub_2Fthread_2d5706_2ehtm_3Fuser_3D662">群组</a></span><span class="SemanticString"> 和</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bbs.1ove.club/gowild.htm?url=https_3A_2F_2Ft_2eme_2FFree_5f1oveTeam&amp;u=862&amp;fr=https_3A_2F_2Fbbs_2e1ove_2eclub_2Fthread_2d5706_2ehtm_3Fuser_3D662">频道</a></span><span class="SemanticString">。</span></span></p></div><div id="https://www.notion.so/b4a3bd9f9d9b42b1b38bfdfb1d6344dd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">         该方案是共享一个或多个账号的SharePoint（25T空间）或 onedrive(5T空间)，把它作为转存资源的中转站。分享者需进入账号的SharePoint主页新建网站文件夹，然后登录mover账号挂载该SharePoint，并将资源转存到网站文件夹，至此完成分享操作，关闭网页等着转存完成即可。而被分享者转存文件时也是把共享账号挂载到mover，然后搬运至自己的OneDrive。</span></span></p></div><div id="https://www.notion.so/f1a30bbaa6aa430dbadf232dfcba6d98" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">         若采用共享OneDrive账号的方式，挂载mover将更容易。起初担心这种方式账号会被滥用、恶意修改密码或者删除文件之类。然而，我们不应拿最坏的恶意度人。并且资源分享出去之后，定会被其他人转存，这就像把一个篮子的鸡蛋复制了几份分发到不同的篮子中，因此资源的种子仍在，希望就未熄灭！而采用OneDrive共享方式，则建议每人都注册一个Team exploratory的全局账号，并另开一个子号共享出去。若资源平时存放在全局账号的OD盘（基本不会翻车），分享时采用域内分享链接方式，一键转存到共享账号就可以了。因此分享的繁琐步骤被简化成了域内分享！这样比用mover转存要方便。</span></span></p></div><div id="https://www.notion.so/d22bfd410b95469e89cd3f920d6e7468" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">         这是一种跨域转存的尝试，如果可行则可推广到整个1ove社区，每人注册一个Team free(或Team exploratory) 全局账号，并拿出一个子号用于分享。希望有一天，今天或明天，大家都来参与这个试验并反馈意见，探索出一种高效的跨域转存方式，以此为A1域分流。</span></span></p></div><div id="https://www.notion.so/6b0ae871ddf54aa381e8fb5a78359443" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedBg SemanticString__Fragment--BgPink">希望有一天，群里不会再出现炸链，或翻车的字眼</mark></span></span></p></div><div id="https://www.notion.so/4d6f69ccaf42493cb47cdd5c86da43d9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedBg SemanticString__Fragment--BgPink">希望有一天，分享者可以尽情分享，白嫖族可以自由囤货</mark></span></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
