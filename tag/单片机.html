@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base href="../">
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>#单片机 | 413’s Website
+  </title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="#单片机 | 413’s Website">
+  <meta name="description" content="Posts with tag #单片机">
+  <meta property="og:description" content="Posts with tag #单片机">
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="homre.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🌈&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>413’s Website bar</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    <div class="Header__Spacer--NoCover"></div>
+    <h1 class="Header__Title">#单片机
+    </h1>
+  </header>
+  <article class="ArticleList">
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <a href="Struct.html">
+        结构体的不同形式
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, May 13, 2025</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🐧&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="-ch32v208-ch32v208-ubuntu2204-makefile-vscode---milton----4cdfee.html">
+        沁恒 CH32V208(三): CH32V208 Ubuntu22.04 Makefile VSCode环境配置 - Milton - 博客园
+      </a>
+    </h3>
+    
+    <p class="Article__Desc">
+      <span class="SemanticStringArray"><span class="SemanticString">硬件部分 软件部分 下载</span></span>
+    </p>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, May 13, 2025</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+        <a href="tag/环境.html">
+          环境
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="https://avatars.githubusercontent.com/u/125767602?s=200&amp;v=4"></span>
+      
+      <a href="ch32v307.html">
+        CH32V307的配置痛点
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, May 13, 2025</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="rust-golden-196fc3.html">
+        Rust golden
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Feb 10, 2025</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="https://user-images.githubusercontent.com/4464295/41629747-1914b230-7423-11e8-8b0d-23f83c442556.jpg"></span>
+      
+      <a href="Config-rust-esp32.html">
+        RustEmbedded 配置
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Fri, Dec 27, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+        <a href="tag/环境.html">
+          环境
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust15.html">
+        Rust 驱动 Audio - 播放和录音
+      </a>
+    </h3>
+    
+    <p class="Article__Desc">
+      <span class="SemanticStringArray"><span class="SemanticString">PCM DAC ADC</span></span>
+    </p>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust14.html">
+        Rust 驱动 Camera - 采集和播放
+      </a>
+    </h3>
+    
+    <p class="Article__Desc">
+      <span class="SemanticStringArray"><span class="SemanticString">流媒体 控制协议 视频捕获</span></span>
+    </p>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust13.html">
+        Rust 驱动 Touch - 触摸板
+      </a>
+    </h3>
+    
+    <p class="Article__Desc">
+      <span class="SemanticStringArray"><span class="SemanticString">触摸屏 校准 驱动</span></span>
+    </p>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust12.html">
+        Rust 驱动 LCD - 显示图片
+      </a>
+    </h3>
+    
+    <p class="Article__Desc">
+      <span class="SemanticStringArray"><span class="SemanticString">JPEG解码 硬件编码 解码</span></span>
+    </p>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust11.html">
+        Rust 驱动 LCD - 显示中英文
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust10.html">
+        使用 USB-JTAG/probe-rs 调试应用
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust9.html">
+        分析 ESP32 固件和分区表
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust8.html">
+        使用 cargo run 和 espflash 烧写固件
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust7.html">
+        配置 cargo workspace
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust6.html">
+        esp-rs 常见问题
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust5.html">
+        开发 Rust/C/C++ cmake 混合应用
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust4.html">
+        开发 Rust no_std 应用
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust3.html">
+        开发 Rust std 应用
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust2.html">
+        使用 Rust 开发 ESP32 应用
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="Rust1.html">
+        安装 ESP32 Rust 开发工具链 esp-rs
+      </a>
+    </h3>
+    
+    <p class="Article__Desc">
+      <span class="SemanticStringArray"><span class="SemanticString">安装 ESP32 Rust 开发工具链 esp-rs 适用很多Rust嵌入</span></span>
+    </p>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+        <a href="tag/Rust.html">
+          Rust
+        </a>
+      </span>
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <a href="ESP32-Addon.html">
+        ESP32中的输出信息
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Sun, May 5, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <a href="timeline.html">
+        时钟时序线
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Sat, Feb 17, 2024</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📒&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="CH549-note.html">
+        CH549的笔记
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Thu, Dec 28, 2023</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+  <article class="Article">
+    <h3 class="Article__Title">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;💡&lt;/text&gt;&lt;/svg&gt;"></span>
+      
+      <a href="LCD.html">
+        ILI9225笔记
+      </a>
+    </h3>
+    
+    <div class="DateTagBar">
+      
+      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Feb 6, 2023</span>
+      
+      
+      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+        <a href="tag/单片机.html">
+          单片机
+        </a>
+      </span>
+      
+    </div>
+  </article>
+  
+</article>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
