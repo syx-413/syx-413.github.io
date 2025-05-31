@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>VHDL learning&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="VHDL learning">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="homre.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🌈&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>413’s Website bar</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+      <div class="Header__Cover">
+        <img src="https://is3-ssl.mzstatic.com/image/thumb/Purple124/v4/41/e5/c6/41e5c6ba-2868-669c-fc06-8a7b004751fe/AppIcon-0-0-1x_U007emarketing-0-0-0-4-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png">
+      </div>
+    
+    <div class="Header__Spacer ">
+    </div>
+    
+    <h1 class="Header__Title">VHDL learning</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Sat, May 31, 2025</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--blue">
+            <a href="tag/VHDL.html">VHDL</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/204fc3f52a888059854bc7dc0aabbc2e" class="PageRoot"><div id="https://www.notion.so/204fc3f52a88807886f1cf861b786ceb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">https://miyo.github.io/learning_fpga/docs/book01/languages/</span></span></p></div><h2 id="https://www.notion.so/204fc3f52a888089bc3be4089aa90f2e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/204fc3f52a888089bc3be4089aa90f2e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">语法注意点</span></span></h2><div id="https://www.notion.so/204fc3f52a8880549cf9d7eb9052c72b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">变量可以具有字母数字名称：它们必须以字母或 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">“_”</code></span><span class="SemanticString"> 开头</span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">，并且不能以 </em></span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">“_” </code></span><span class="SemanticString">结尾。 Verilog HDL 区分大小写。</span></span></p></div><div id="https://www.notion.so/204fc3f52a8880b8bab3de43023e710b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">常常使用的数值 包括 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">0</code></span><span class="SemanticString"> </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">1</code></span><span class="SemanticString">  </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">z / Z</code></span><span class="SemanticString">(高阻关断)  </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">x  X(0/1)</code></span></span></p></div><div id="https://www.notion.so/204fc3f52a88801a88aaf6dae8a13b64" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">;</code></span><span class="SemanticString">  非常重要</span></span></p></div><div id="https://www.notion.so/204fc3f52a8880cc90dfca1571ad6503" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/204fc3f52a888070bfc7cfcd7044bca6" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a888070bfc7cfcd7044bca6"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">library and package</span></span></h3><pre id="https://www.notion.so/204fc3f52a8880e38762c49f3daa7de9" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">LIBRARY</span> IEEE<span class="token punctuation">;</span>
+<span class="token keyword">USE</span> IEEE<span class="token punctuation">.</span>STD_LOGIC_1164<span class="token punctuation">.</span><span class="token keyword">ALL</span><span class="token punctuation">;</span>
+<span class="token keyword">USE</span> IEEE<span class="token punctuation">.</span>STD_LOGIC_1164<span class="token punctuation">.</span><span class="token keyword">ALL</span><span class="token punctuation">;</span>
+<span class="token keyword">USE</span> IEEE<span class="token punctuation">.</span>STD_LOGIC_1164<span class="token punctuation">.</span><span class="token keyword">ALL</span><span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/204fc3f52a8880749166dafc4912fc88" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/204fc3f52a88802b881fe7c0ebc48c67" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a88802b881fe7c0ebc48c67"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">entity</span></span></h3><div id="https://www.notion.so/204fc3f52a8880698b41d01ed5483422" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">entity</code></span><span class="SemanticString"> 定义电路的轮廓，例如连接到外部的 input/output 端口的声明</span></span></p></div><h3 id="https://www.notion.so/204fc3f52a88805d874edab3748be264" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a88805d874edab3748be264"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">architecture</span></span></h3><div id="https://www.notion.so/204fc3f52a88807696d5d6fb5049516d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">architecture</code></span><span class="SemanticString"> 定义电路的内部，例如要使用的函数的定义和处理内容</span></span></p></div><div id="https://www.notion.so/204fc3f52a8880ee8d5aea03733bb41c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/204fc3f52a8880519c1af7c5bf1269a1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"> VHDL 中可以描述的常数的例子</span></span></p></div><div id="https://www.notion.so/204fc3f52a888084baf0e7b8cd9a71af" class="CollectionInline"><h3><a class="Anchor" href="#https://www.notion.so/204fc3f52a888084baf0e7b8cd9a71af"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Untitled</span></span></h3><div class="Table"><table><thead><tr><th style="width:276px">说明</th><th>例子</th></tr></thead><tbody><tr><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a88803cafe5fba382d1b644"><span class="SemanticStringArray"><span class="SemanticString">1 条信号线所取的信号值</span></span></a></td><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;1&#x27;</code></span><span class="SemanticString">，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;0&#x27;</code></span><span class="SemanticString"> ，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;Z&#x27;</code></span><span class="SemanticString">，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;X&#x27;</code></span></span></td></tr><tr><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a8880008b6ff6258472d24e"><span class="SemanticStringArray"><span class="SemanticString">多条信号线所取的信号值</span></span></a></td><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&quot;111&quot;</code></span><span class="SemanticString">，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&quot;0100&quot;</code></span><span class="SemanticString"> ，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">X&quot;10&quot;</code></span></span></td></tr><tr><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a88807587a5ec0e7f49f166"><span class="SemanticStringArray"><span class="SemanticString">整数</span></span></a></td><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">32</code></span><span class="SemanticString">，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">8</code></span><span class="SemanticString"> ，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">1000</code></span></span></td></tr><tr><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a88806189e1fca58e27d6be"><span class="SemanticStringArray"><span class="SemanticString">布尔值</span></span></a></td><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">true</code></span><span class="SemanticString">，</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">false</code></span></span></td></tr></tbody></table></div></div><h2 id="https://www.notion.so/204fc3f52a8880a18dfeffa88c3cce71" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/204fc3f52a8880a18dfeffa88c3cce71"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">VHDL 中的变量都有类型。</span></span></h2><div id="https://www.notion.so/204fc3f52a88806996f9df6e9f20358d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">定义了很多种类型，也可以定义自己的类型。常用的五种类型。</span></span></p></div><div id="https://www.notion.so/204fc3f52a8880e8b98accc83b9176bc" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"> </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic</code></span><span class="SemanticString"> 、 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector</code></span><span class="SemanticString"> 对应硬件信号类型， </span></span></p></div><div id="https://www.notion.so/204fc3f52a8880fdace9c54e29503b97" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">signed</code></span><span class="SemanticString"> 和 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">unsigned</code></span><span class="SemanticString"> 用于表示可以进行加减运算的值， </span></span></p></div><div id="https://www.notion.so/204fc3f52a888034bde7d406fc704e32" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">integer</code></span><span class="SemanticString"> 可以表示一般数值</span></span></p></div><div id="https://www.notion.so/204fc3f52a8880df8e7fc96807512fa4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/204fc3f52a88800fa208f5cae29ea6ec" class="CollectionInline"><h3><a class="Anchor" href="#https://www.notion.so/204fc3f52a88800fa208f5cae29ea6ec"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Untitled</span></span></h3><div class="Table"><table><thead><tr><th style="width:352px">说明</th><th style="width:276px"> 类型名</th></tr></thead><tbody><tr><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic</code></span></span></td><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a88807a95adc11f2481946e"><span class="SemanticStringArray"><span class="SemanticString">1 位信号线</span></span></a></td></tr><tr><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector(n-1 downto 0)</code></span></span></td><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a888034a3f9f220437eb529"><span class="SemanticStringArray"><span class="SemanticString">n 位信号线</span></span></a></td></tr><tr><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">unsigned(n-1 downto 0)</code></span></span></td><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a888066937cfafa95e66f10"><span class="SemanticStringArray"><span class="SemanticString">n 位无符号的算术可操作值</span></span></a></td></tr><tr><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">signed(n-1 downto 0)</code></span></span></td><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a8880e1b52ae5af3cc77461"><span class="SemanticStringArray"><span class="SemanticString">n 位有符号的算术可操作值</span></span></a></td></tr><tr><td class="Table__CellText"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">integer n to m</code></span></span></td><td class="Table__CellTitle"><a href="https://www.notion.so/204fc3f52a888016ba52e083027a10b8"><span class="SemanticStringArray"><span class="SemanticString">从 n 到 m 的整数</span></span></a></td></tr></tbody></table></div></div><h3 id="https://www.notion.so/204fc3f52a88801a9860d30c6e1c50ef" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a88801a9860d30c6e1c50ef"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">1-bitの信号</strong></span></span></h3><div id="https://www.notion.so/204fc3f52a88808391defac5516c11a9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic</code></span><span class="SemanticString"> 是 VHDL 的基本 1 位信号类型。 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;0&#x27;</code></span><span class="SemanticString"> ， </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;1&#x27;</code></span><span class="SemanticString"> ，以及高阻态的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;Z&#x27;</code></span><span class="SemanticString"> ，不定值的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">&#x27;X&#x27;</code></span><span class="SemanticString"> 都可以作为其值。这些值直接对应硬件。</span></span></p></div><h3 id="https://www.notion.so/204fc3f52a88802e8a2fda5acceee13a" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a88802e8a2fda5acceee13a"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">n 位信号</strong></span></span></h3><div id="https://www.notion.so/204fc3f52a88800db87af354547675c6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector(n downto 0)</code></span><span class="SemanticString"> 是 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic</code></span><span class="SemanticString"> 个 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logi_vector</code></span><span class="SemanticString"> 并排组成的 n 位信号线类型，称为 n 位 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logi_vector</code></span><span class="SemanticString"> 类型。 </span></span></p></div><div id="https://www.notion.so/204fc3f52a8880ac86a3d31fe27aa264" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector</code></span><span class="SemanticString"> 类型的变量 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">a</code></span><span class="SemanticString"> 中的元素可以取出 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">a(3)</code></span><span class="SemanticString"> ， </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">a(4 downto 2)</code></span><span class="SemanticString"> 等。前者是 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic</code></span><span class="SemanticString"> 类型，后者是 3 位的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector</code></span><span class="SemanticString"> 类型。</span></span></p></div><div id="https://www.notion.so/204fc3f52a88800f8ba7d490178e47f9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"> </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">downto</code></span><span class="SemanticString"> 表示 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic</code></span><span class="SemanticString"> 的序列，从 MSB 降序编号。也就是说，对于 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector(n-1 downto 0)</code></span><span class="SemanticString"> 的位序列，MSB 是 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector(n-1)</code></span><span class="SemanticString"> ，LSB 是 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector(0)</code></span><span class="SemanticString"> 。</span></span></p></div><div id="https://www.notion.so/204fc3f52a8880659d46da0afd1bf090" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">也可以使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">to</code></span><span class="SemanticString"> 逆序排列，这时可以像 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector(n to 0)</code></span><span class="SemanticString"> 这样表示。</span></span></p></div><div id="https://www.notion.so/204fc3f52a88803087f3cd7c7f1a3d90" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/204fc3f52a888063b28cf9bee40a2046" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/204fc3f52a888063b28cf9bee40a2046"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">模块的外部描述 — entity</strong></span></span></h2><div id="https://www.notion.so/204fc3f52a8880d1bc66d77734803d11" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">entity</code></span><span class="SemanticString"> 代表模块的外框，通过模块名称和输入输出信号来定义。例如，以下描述相当于定义了一个名为 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">test</code></span><span class="SemanticString"> ，输入信号为 pClk 和 pReset，输出信号为 Q 的模块的外框。</span></span></p></div><div id="https://www.notion.so/204fc3f52a88808791ddda761dc971da" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/204fc3f52a8880bfb3a3ffaffdb91bfe" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">entity</span> test <span class="token keyword">is</span>
+ <span class="token keyword">port</span> <span class="token punctuation">(</span>
+   pClk   <span class="token punctuation">:</span> <span class="token keyword">in</span> std_logic<span class="token punctuation">;</span>
+   Q      <span class="token punctuation">:</span> <span class="token keyword">out</span> std_logic<span class="token punctuation">;</span>
+   pReset <span class="token punctuation">:</span> <span class="token keyword">in</span> std_logic <span class="token comment">-- 在最后一个之后不加</span>
+ <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span> <span class="token keyword">entity</span><span class="token punctuation">;</span></span></span></span></code></pre><h3 id="https://www.notion.so/204fc3f52a888005b040d0cbf7a56bdf" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a888005b040d0cbf7a56bdf"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">定义端口</strong></span></span></h3><div id="https://www.notion.so/204fc3f52a88802d81d8f4d0f12e4663" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">端口是硬件模块的输入输出。在 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">entity</code></span><span class="SemanticString"> 的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">port(~);</code></span><span class="SemanticString"> 中，通过指定信号的方向和类型来定义。</span></span></p></div><div id="https://www.notion.so/204fc3f52a88809aad75d2fd768e8bbc" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">信号方向有 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">in</code></span><span class="SemanticString"> （输入）、 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">out</code></span><span class="SemanticString"> （输出）和 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">inout</code></span><span class="SemanticString"> （输入输出）三种。</span></span></p></div><div id="https://www.notion.so/204fc3f52a8880079cc6dddeba1ac7ac" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">每个端口通过</span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorBlue">“名称 : 方向 类型”</mark></span><span class="SemanticString">来定义。例如</span></span></p></div><pre id="https://www.notion.so/204fc3f52a88808f8d12e8b1dd3c2879" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>pClk <span class="token punctuation">:</span> <span class="token keyword">in</span> std_logic
+<span class="token comment">-- or together definate</span>
+pR<span class="token punctuation">,</span> pG<span class="token punctuation">,</span> pB <span class="token punctuation">:</span> <span class="token keyword">in</span> std_logic</span></span></span></code></pre><div id="https://www.notion.so/204fc3f52a88804bac88da867b125fa6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这样的描述相当于定义了 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">pClk</code></span><span class="SemanticString"> 的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic</code></span><span class="SemanticString"> 输入端口（ </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">in</code></span><span class="SemanticString"> ）。相同方向和类型的多个端口名也可以用“,”来并列定义。例如，</span></span></p></div><div id="https://www.notion.so/204fc3f52a88806b812fcb4b318c9982" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">可以将 3 个输入信号 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">pR</code></span><span class="SemanticString"> ， </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">pG</code></span><span class="SemanticString"> ， </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">pB</code></span><span class="SemanticString"> 一起定义。</span></span></p></div><h3 id="https://www.notion.so/204fc3f52a8880768cebf20965270c82" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a8880768cebf20965270c82"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">定义常量</strong></span></span></h3><div id="https://www.notion.so/204fc3f52a888092b4e8ffd61f4ba14a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">可以在 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">entity</code></span><span class="SemanticString"> 中定义模块内使用的常量</span></span></p></div><pre id="https://www.notion.so/204fc3f52a8880cf87f1fd44322d6d4e" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">entity</span> test <span class="token keyword">is</span>
+  <span class="token keyword">generic</span> <span class="token punctuation">(</span>
+    width  <span class="token punctuation">:</span> integer <span class="token operator">:=</span> <span class="token number">640</span><span class="token punctuation">;</span>
+    height <span class="token punctuation">:</span> integer <span class="token operator">:=</span> <span class="token number">480</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">port</span> <span class="token punctuation">(</span>
+    pClk <span class="token punctuation">:</span> <span class="token keyword">in</span> std_logic<span class="token punctuation">;</span>
+    Q <span class="token punctuation">:</span> <span class="token keyword">out</span> std_logic<span class="token punctuation">;</span>
+    pReset <span class="token punctuation">:</span> <span class="token keyword">in</span> std_logic
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span> test<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/204fc3f52a8880a8bfe9cbd797e09856" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/204fc3f52a88801c9b16c8580813d1d9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这个以 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">width</code></span><span class="SemanticString"> 的名称定义了一个值为 640 的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">integer</code></span><span class="SemanticString"> 类型，即整数的常量。这个常量可以在 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">entity</code></span><span class="SemanticString"> 内部，以及内部处理描述的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">architecture</code></span><span class="SemanticString"> 中使用</span></span></p></div><h3 id="https://www.notion.so/204fc3f52a8880809e7fcec8b1ad8e1c" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a8880809e7fcec8b1ad8e1c"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">内部处理描述 — architecture  </strong></span></span></h3><div id="https://www.notion.so/204fc3f52a88801f80d0c2fb329ebef2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在 VHDL 中， </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">architecture</code></span><span class="SemanticString"> 用于描述模块的处理内容。描述的基本流程如下：</span></span></p></div><pre id="https://www.notion.so/204fc3f52a88801a8a00cc710235ccf6" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">architecture</span> RTL <span class="token keyword">of</span> test <span class="token keyword">is</span>
+  <span class="token punctuation">(</span>在这里写变量的定义等。<span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+  <span class="token punctuation">(</span>在这里描述处理内容。<span class="token punctuation">)</span>
+<span class="token keyword">end</span> RTL<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/204fc3f52a888080abb3c710c778ed96" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">上述是用于描述名为 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">test</code></span><span class="SemanticString"> 的模块内容的块。</span></span></p></div><h3 id="https://www.notion.so/204fc3f52a8880c3a93cfa4b08e403f0" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a8880c3a93cfa4b08e403f0"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">变量的定义</strong></span></span></h3><div id="https://www.notion.so/204fc3f52a888091b62ff4d628f6b2e5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">变量的定义</strong></span></span></p></div><pre id="https://www.notion.so/204fc3f52a8880f58fcbc723aa23a698" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">signal</span> 名前 <span class="token punctuation">:</span> 型 <span class="token operator">:=</span> 初期値<span class="token punctuation">;</span>
+<span class="token comment">-- second</span>
+<span class="token keyword">signal</span> counter <span class="token punctuation">:</span> <span class="token function">std_logic_vector</span><span class="token punctuation">(</span><span class="token number">9</span> <span class="token keyword">downto</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">--third</span>
+<span class="token keyword">signal</span> counter <span class="token punctuation">:</span> <span class="token function">std_logic_vector</span><span class="token punctuation">(</span>width<span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">downto</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/204fc3f52a8880528b98c7f2f1f37512" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">例如，10 位的数组可以这样定义。(—&gt; second)</span></span></p></div><div id="https://www.notion.so/204fc3f52a888086a15fc6de31bc0d6d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/204fc3f52a88804d93d7c49151cab4c6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">此外，可以使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">generic</code></span><span class="SemanticString"> 定义的值 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">width</code></span><span class="SemanticString"> 来定义宽度为 width 的 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">std_logic_vector</code></span><span class="SemanticString"> 型的信号。这里 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">width−1</code></span><span class="SemanticString"> 的值在综合时确定.</span></span></p></div><h3 id="https://www.notion.so/204fc3f52a88806fb18ae5847e402a52" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/204fc3f52a88806fb18ae5847e402a52"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">运算符和运算</strong></span></span></h3><div id="https://www.notion.so/204fc3f52a88807bac7cda5559321fa7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>

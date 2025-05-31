@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>结构体的不同形式&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="结构体的不同形式">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="homre.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🌈&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>413’s Website bar</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">结构体的不同形式</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, May 13, 2025</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/4b41fd811c93457fa7b06ad75465f2a1" class="PageRoot PageRoot--FullWidth"><div id="https://www.notion.so/fc10bc911ddc46a38a81f4449e14c5bd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/02f67a5f6110446f8efa8682c6a879ea" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/02f67a5f6110446f8efa8682c6a879ea"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">1. 包含指针成员的结构体</strong></span></span></h3><pre id="https://www.notion.so/6abd60e2811a4facba4ebe958ea4d576" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> <span class="token operator">*</span>scores<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Student<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/1e51f5efdd9845f486ebe43d51a7f21d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/9c707e6b52384f39961a8208d689f5fd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/bd51ebc62c1b4fdf842f3f48097cebb3" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/bd51ebc62c1b4fdf842f3f48097cebb3"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">2. 嵌套结构体</strong></span></span></h3><pre id="https://www.notion.so/a5b242c4917d44bfa745d403b3e0ce3b" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">float</span> x<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Point<span class="token punctuation">;</span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    Point start<span class="token punctuation">;</span>
+    Point end<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Line<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/f3a031e34ca14681a9c0455e1b8b47ad" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/a21e4f7e907448a59239d46c6ae18478" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/a21e4f7e907448a59239d46c6ae18478"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">3. 带有位字段的结构体</strong></span></span></h3><pre id="https://www.notion.so/059e3db22f594326a984e9dbdf7a5c5a" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> red <span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> green <span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> blue <span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Color<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/795533c708c143569b9705ad534e0606" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/4235d0a2823e427b8358145d4d570ad1" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/4235d0a2823e427b8358145d4d570ad1"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">4. 含有数组成员的结构体</strong></span></span></h3><pre id="https://www.notion.so/b3a3d9ab79c1440f8aba7b4fdcbd764c" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> name<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">float</span> scores<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Student<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/fffa47c67563482caaef398606983298" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/101e6810eec6472aac77749ef747e11f" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/101e6810eec6472aac77749ef747e11f"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">5. 包含函数指针成员的结构体</strong></span></span></h3><pre id="https://www.notion.so/fbf49b691a1b449a959edf16cf895752" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>draw<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>move<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Shape<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/5ebed2326eb64424b54b5d2d0b5598ac" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/096d17c955df44af8fa6c7148dd6be7e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/096d17c955df44af8fa6c7148dd6be7e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">6. 使用匿名结构体</strong></span></span></h3><pre id="https://www.notion.so/e8a8843ba3b647fcb481a3ef595220aa" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Point<span class="token punctuation">;</span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    Point start<span class="token punctuation">;</span>
+    Point end<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Line<span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/10a8d861339d49c0b5ae4a8c494a6677" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这些是结构体在C语言中的一些不同形式的例子，展示了结构体的灵活性和多样性。</span></span></p></div><div id="https://www.notion.so/285c73d7965b4264be0baadebebbdee0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><ul id="https://www.notion.so/400ed2a708d8459886de0f6c2485de6d" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/02f67a5f6110446f8efa8682c6a879ea"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">1. 包含指针成员的结构体</strong></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/bd51ebc62c1b4fdf842f3f48097cebb3"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">2. 嵌套结构体</strong></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/a21e4f7e907448a59239d46c6ae18478"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">3. 带有位字段的结构体</strong></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/4235d0a2823e427b8358145d4d570ad1"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">4. 含有数组成员的结构体</strong></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/101e6810eec6472aac77749ef747e11f"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">5. 包含函数指针成员的结构体</strong></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/096d17c955df44af8fa6c7148dd6be7e"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">6. 使用匿名结构体</strong></span></span></div></a></li></ul></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
