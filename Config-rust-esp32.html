@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>RustEmbedded 配置&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="RustEmbedded 配置">
+  
+  
+    <meta property="og:image" content="https://user-images.githubusercontent.com/4464295/41629747-1914b230-7423-11e8-8b0d-23f83c442556.jpg">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+      <div class="Header__Cover">
+        <img src="https://images.unsplash.com/photo-1611663806011-b37e091090f0?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb">
+      </div>
+    
+    <div class="Header__Spacer ">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="https://user-images.githubusercontent.com/4464295/41629747-1914b230-7423-11e8-8b0d-23f83c442556.jpg"></span>
+      </div>
+    
+    <h1 class="Header__Title">RustEmbedded 配置</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Fri, Dec 27, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/环境.html">环境</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/169fc3f52a8880bc9cf1e64276ec8f53" class="PageRoot PageRoot--FullWidth"><ul id="https://www.notion.so/ce2d300d18da4e919c693c238827fd6e" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/169fc3f52a8880b4b7fff002882bac36"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">操作环境</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/169fc3f52a888012b70fd3da7359e757"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">安装Rust</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/169fc3f52a8880c3a1e5f112200252a9"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">设定RISC-V </span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/169fc3f52a8880139e63f763db71273d"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">no_std库</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/b506731a1d25476d879b39ad74bc35e2"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">std 推荐使用 espup 下载rust对于xtensa</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/c84b3754045441ca8ad6d5d8d9e98acf"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">第一步 idf 下载</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/17cfc3f52a8880628ffdd1309e0e9c58"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString">Debug </span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/17cfc3f52a8880fb9a65dc423345dc72"><div style="margin-left:48px"><span class="SemanticStringArray"><span class="SemanticString">prob-rs</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/17cfc3f52a8880c3aeebd971ec87158e"><div style="margin-left:48px"><span class="SemanticStringArray"><span class="SemanticString">open</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/b7a0518aef1c4d9788908b72fb45aa36"><div style="margin-left:48px"><span class="SemanticStringArray"><span class="SemanticString">解决 一些内存的问题</span></span></div></a></li></ul><h2 id="https://www.notion.so/169fc3f52a8880b4b7fff002882bac36" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/169fc3f52a8880b4b7fff002882bac36"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">操作环境</span></span></h2><div id="https://www.notion.so/169fc3f52a8880bea6efc76503038623" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">使用的是</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">wsl2</code></span><span class="SemanticString"> </span></span></p></div><div id="https://www.notion.so/169fc3f52a8880dbb1b0f3484219232b" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2Fad12373d-ff3a-410d-8592-e1411b649bf0%2F%25E5%259B%25BE%25E7%2589%2587.png?width=528&amp;table=block&amp;id=169fc3f5-2a88-80db-b1b0-f3484219232b"><img src="https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F64aa22e9-0197-4842-9162-b3bb3494db5f%2Fad12373d-ff3a-410d-8592-e1411b649bf0%2F%25E5%259B%25BE%25E7%2589%2587.png?width=528&amp;table=block&amp;id=169fc3f5-2a88-80db-b1b0-f3484219232b" style="width:528px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/169fc3f52a88803999f9f6566a78c31b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/169fc3f52a8880f7aae0cbac3f71aa83" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>s413@Shaox ~<span class="token operator">></span> neofetch
+                   -<span class="token variable"><span class="token variable">`</span>                    s413@Shaox
+                  .o+<span class="token variable">`</span></span>                   ----------
+                 <span class="token variable"><span class="token variable">`</span>ooo/                   OS: Arch Linux on Windows <span class="token number">10</span> x86_64
+                <span class="token variable">`</span></span>+oooo:                  Kernel: <span class="token number">5.15</span>.167.4-microsoft-standard-WSL2
+               <span class="token variable"><span class="token variable">`</span>+oooooo:                 Uptime: <span class="token number">44</span> mins
+               -+oooooo+:                Packages: <span class="token number">202</span> <span class="token punctuation">(</span>pacman<span class="token punctuation">)</span>
+             <span class="token variable">`</span></span>/:-:++oooo+:               Shell: fish <span class="token number">3.7</span>.1
+            <span class="token variable"><span class="token variable">`</span>/++++/+++++++:              Terminal: Windows Terminal
+           <span class="token variable">`</span></span>/++++++++++++++:             CPU: AMD Ryzen <span class="token number">5</span> 5600H with Radeon Graphics <span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span> @ <span class="token number">3</span>.293GHz
+          <span class="token variable"><span class="token variable">`</span>/+++ooooooooooooo/<span class="token variable">`</span></span>           GPU: 0bac:00:00.0 Microsoft Corporation Basic Render Driver
+         ./ooosssso++osssssso+<span class="token variable"><span class="token variable">`</span>          Memory: 482MiB / 6859MiB
+        .oossssso-<span class="token variable">`</span></span>``<span class="token variable"><span class="token variable">`</span>/ossssss+<span class="token variable">`</span></span>
+       -osssssso.      :ssssssso.
+      :osssssss/        osssso+++.
+     /ossssssss/        +ssssooo/-
+   <span class="token variable"><span class="token variable">`</span>/ossssso+/:-        -:/+osssso+-
+  <span class="token variable">`</span></span>+sso+:-<span class="token variable"><span class="token variable">`</span>                 <span class="token variable">`</span></span>.-/+oso:
+ <span class="token variable"><span class="token variable">`</span>++:.                           <span class="token variable">`</span></span>-/+/
+ <span class="token builtin class-name">.</span><span class="token variable"><span class="token variable">`</span>                                 <span class="token variable">`</span></span>/</span></span></span></code></pre><div id="https://www.notion.so/169fc3f52a888050a7b8c387f29f9876" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/169fc3f52a888012b70fd3da7359e757" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/169fc3f52a888012b70fd3da7359e757"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">安装Rust</span></span></h2><div id="https://www.notion.so/169fc3f52a8880d58651dd28a10900ee" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><span class="SemanticString__Fragment SemanticString__Fragment--Unknown">‣</span></span></span></p></div><div id="https://www.notion.so/3356b0ff31cc4c5e8befa1eb2fcdf573" class="Bookmark"><a href="https://www.rust-lang.org/tools/install"><h5 class="Bookmark__Title">Install Rust</h5><p class="Bookmark__Desc">A language empowering everyone to build reliable and efficient software.</p><p class="Bookmark__Link">https://www.rust-lang.org/tools/install</p></a></div><pre id="https://www.notion.so/169fc3f52a88803f9210d8ae25d0347f" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token function">curl</span> <span class="token parameter variable">--proto</span> <span class="token string">'=https'</span> <span class="token parameter variable">--tlsv1.2</span> <span class="token parameter variable">-sSf</span> https://sh.rustup.rs <span class="token operator">|</span> <span class="token function">sh</span>
+<span class="token comment">## switch nightly</span>
+rustup default nightly
+<span class="token comment">## 安装工具链 </span>
+<span class="token function">cargo</span> <span class="token function">install</span> ldproxy
+<span class="token comment">## espflash espmonitor</span>
+<span class="token function">cargo</span> <span class="token function">install</span> cargo-espflash
+
+<span class="token function">cargo</span> <span class="token function">install</span> espflash
+
+<span class="token function">cargo</span> <span class="token function">install</span> cargo-espmonitor
+
+<span class="token function">cargo</span> <span class="token function">install</span> espmonitor</span></span></span></code></pre><div id="https://www.notion.so/169fc3f52a8880f88c04eb8ea14f1cc6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/169fc3f52a88802daee8f4aec9cfb8ee" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/169fc3f52a8880c3a1e5f112200252a9" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/169fc3f52a8880c3a1e5f112200252a9"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">设定RISC-V </span></span></h2><div id="https://www.notion.so/169fc3f52a888080a66fc7f1301ea421" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/169fc3f52a8880e89864ed4c3629b83c" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>rustup toolchain <span class="token function">install</span> nightly <span class="token parameter variable">--component</span> rust-src
+
+rustup default nightly</span></span></span></code></pre><div id="https://www.notion.so/169fc3f52a8880abb9abd994af7d9042" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/169fc3f52a8880d6af4ae52b15b1427e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/169fc3f52a8880d6bb31dab7729d8ec6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"> 查阅 </span><span class="SemanticString"><span class="SemanticString__Fragment SemanticString__Fragment--Unknown">‣</span></span></span></p></div><div id="https://www.notion.so/94d7a871673b43499bf8d35e56c1888a" class="Bookmark"><a href="https://doc.rust-lang.org/nightly/rustc/platform-support/esp-idf.html"><h5 class="Bookmark__Title">*-espidf - The rustc book</h5><p class="Bookmark__Desc">Targets for the ESP-IDF development framework running on RISC-V and Xtensa CPUs.</p><p class="Bookmark__Link">https://doc.rust-lang.org/nightly/rustc/platform-support/esp-idf.html</p></a></div><div id="https://www.notion.so/169fc3f52a88801bb8eee73a93351828" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/169fc3f52a8880ffbd46f29c2b2b4b74" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">riscv32imc-esp-espidf</code></span><span class="SemanticString"> -C3</span></span></p></div><div id="https://www.notion.so/169fc3f52a888005a93dc074cf3d25a0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">xtensa-esp32s3-espidf</code></span><span class="SemanticString"> -S3</span></span></p></div><h3 id="https://www.notion.so/169fc3f52a8880139e63f763db71273d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/169fc3f52a8880139e63f763db71273d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">no_std库</span></span></h3><pre id="https://www.notion.so/169fc3f52a8880718556fcbd42b856b7" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>rustup target <span class="token function">add</span> riscv32imc-esp-espidf <span class="token comment"># 针对 ESP32-C3</span>
+rustup target <span class="token function">add</span> xtensa-esp32s3-espidf <span class="token comment"># 针对 ESP32-S3</span></span></span></span></code></pre><h3 id="https://www.notion.so/b506731a1d25476d879b39ad74bc35e2" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/b506731a1d25476d879b39ad74bc35e2"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">std 推荐使用 espup 下载rust对于xtensa</span></span></h3><div><pre id="https://www.notion.so/2390868124744ad7b02b9a53b0f6f566" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token function">cargo</span> <span class="token function">install</span> espup
+espup <span class="token function">install</span> <span class="token parameter variable">-t</span> esp32s3,esp32c3
+rustup component <span class="token function">add</span> rust-analyzer *** 智能提示
+
+<span class="token comment"># 链接analyer</span>
+<span class="token function">ln</span> <span class="token parameter variable">-sf</span> ~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rust-analyzer  ~/.rustup/toolchains/esp/bin/rust-analyzer
+<span class="token function">sudo</span> <span class="token function">usermod</span> <span class="token parameter variable">-aG</span> uucp <span class="token environment constant">$USER</span> <span class="token comment">#0r</span>
+<span class="token function">sudo</span> <span class="token function">usermod</span> <span class="token parameter variable">-aG</span> dialout <span class="token environment constant">$USER</span> <span class="token comment">#or</span>
+newgrp dialout</span></span></span></code></pre></div><div id="https://www.notion.so/f48d0266e95146cd8c88f88feed91b9e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/5ba7062c1c3745849372ee74e7d396fa" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/faf2e11e477e4c14a16f895bb8415f5b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">配置环境变量</span></span></p></div><pre id="https://www.notion.so/951202f4ef7a4017ac073d0065e8b0af" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">## config.fish</span>
+<span class="token builtin class-name">alias</span> <span class="token assign-left variable">er</span><span class="token operator">=</span><span class="token string">'. $HOME/esp/esp-idf/export.fish'</span>
+<span class="token comment">#set -gx IDF_TOOLS_PATH $HOME/.espressif/</span>
+<span class="token keyword">if</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-e</span> <span class="token environment constant">$HOME</span>/export-esp.sh
+    <span class="token builtin class-name">source</span> <span class="token environment constant">$HOME</span>/export-esp.sh
+end</span></span></span></code></pre><div id="https://www.notion.so/17cfc3f52a8880799a09f9cda104e6fd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">
+ </span></span></p></div><div id="https://www.notion.so/7d6cfcf74bf6440ba51dedb3135e4b0d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/a077889660ef4b70b89cfd6022d4be15" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h1 id="https://www.notion.so/c84b3754045441ca8ad6d5d8d9e98acf" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/c84b3754045441ca8ad6d5d8d9e98acf"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">第一步 idf 下载</span></span></h1><div id="https://www.notion.so/17cfc3f52a8880178eaaf36557934944" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">如果使用idf 参阅</span><span class="SemanticString"><span class="SemanticString__Fragment SemanticString__Fragment--Unknown">‣</span></span><span class="SemanticString"> 注意下载的时候网络条件, 如果不全部安装可能会有一些bug建议不要单独安装</span></span></p></div><div id="https://www.notion.so/17cfc3f52a8880428030e3d151ac907f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"> </span></span></p></div><div id="https://www.notion.so/f8bf123893ad40789faafbb2fcf6a8ef" class="Bookmark"><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#get-started-how-to-get-esp-idf"><h5 class="Bookmark__Title">快速入门 - ESP32 -  — ESP-IDF 编程指南 latest 文档</h5><p class="Bookmark__Desc">本文档旨在指导用户搭建 ESP32 硬件开发的软件环境，通过一个简单的示例展示如何使用 ESP-IDF (Espressif IoT Development Framework) 配置菜单，并编译、下载固件至 ESP32 开发板等步骤。</p><p class="Bookmark__Link">https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#get-started-how-to-get-esp-idf</p></a></div><div id="https://www.notion.so/17cfc3f52a888094a45cf09bdaf3bba5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/17cfc3f52a8880da9486f2db6e33f076" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/b9206a18126b439ea206985548e3e187" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/17cfc3f52a88801baff4d61beebbbf3a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/17cfc3f52a8880628ffdd1309e0e9c58" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/17cfc3f52a8880628ffdd1309e0e9c58"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Debug </span></span></h2><h3 id="https://www.notion.so/17cfc3f52a8880fb9a65dc423345dc72" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/17cfc3f52a8880fb9a65dc423345dc72"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">prob-rs</span></span></h3><h3 id="https://www.notion.so/17cfc3f52a8880c3aeebd971ec87158e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/17cfc3f52a8880c3aeebd971ec87158e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">open</span></span></h3><div id="https://www.notion.so/196fc3f52a88808c9fcbe7bde8386542" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/b7a0518aef1c4d9788908b72fb45aa36" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/b7a0518aef1c4d9788908b72fb45aa36"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">解决 一些内存的问题</span></span></h3><div id="https://www.notion.so/196fc3f52a888082951df3fed7c9c603" class="Bookmark"><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html"><h5 class="Bookmark__Title">项目配置 - ESP32-S3 -  — ESP-IDF 编程指南 v5.4 文档</h5><p class="Bookmark__Desc">ESP-IDF 使用基于 kconfiglib 的 esp-idf-kconfig 包，而 kconfiglib 是 Kconfig 系统的 Python 扩展。Kconfig 提供了编译时的项目配置机制，以及多种类型的配置选项（如整数、字符串和布尔值等）。Kconfig 文件指定了选项之间的依赖关系、默认值、组合方式等。</p><p class="Bookmark__Link">https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html</p></a></div><div id="https://www.notion.so/61d95b8eeafd40bdb3bb236fc4b321d6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/afa9b2fcb8b841329b8d583163fb31a7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">通常不是espressif 官方的板子 可能会遇见使用espflash 去烧写固件的时候内存对不上，这个时候就需要配置</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">sdkconfig.defaults</code></span><span class="SemanticString"> 这个文件 也许也靠分区表来识别</span></span></p></div><div id="https://www.notion.so/196fc3f52a8880f3ac15dd70ffd4dc00" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/17cfc3f52a8880a1b052e43c7aaecccd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">配置 选项有很多</span></span></p></div><div id="https://www.notion.so/196fc3f52a88800fad7dcefbd813dfb1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">例如 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">Build type</code></span><span class="SemanticString"> 相关</span></span></p></div><pre id="https://www.notion.so/196fc3f52a88807a99fde8905f7b89cb" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>CONFIG_APP_BUILD_TYPE
+
+CONFIG_APP_BUILD_TYPE_PURE_RAM_APP
+
+CONFIG_APP_REPRODUCIBLE_BUILD
+
+CONFIG_APP_NO_BLOBS
+</span></span></span></code></pre><div id="https://www.notion.so/17cfc3f52a8880b390b4e79e6b9bd598" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/17cfc3f52a888093824ee8d932559e70" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">但是 我是来找</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">flash-size</code></span><span class="SemanticString"> 相关的内容</span></span></p></div><div id="https://www.notion.so/196fc3f52a888000962fc09b07d4b85d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">CONFIG_ESPTOOLPY_FLASHSIZE</span></span></p></div><div id="https://www.notion.so/196fc3f52a88808b8f74ef1d5cbfb340" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/196fc3f52a88800c8031d1564760640d" class="Bookmark"><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html#serial-flasher-config"><h5 class="Bookmark__Title">项目配置 - ESP32-S3 -  — ESP-IDF 编程指南 v5.4 文档</h5><p class="Bookmark__Desc">ESP-IDF 使用基于 kconfiglib 的 esp-idf-kconfig 包，而 kconfiglib 是 Kconfig 系统的 Python 扩展。Kconfig 提供了编译时的项目配置机制，以及多种类型的配置选项（如整数、字符串和布尔值等）。Kconfig 文件指定了选项之间的依赖关系、默认值、组合方式等。</p><p class="Bookmark__Link">https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html#serial-flasher-config</p></a></div><pre id="https://www.notion.so/196fc3f52a88802ab258e7e911d0e5ae" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>SPI flash size<span class="token punctuation">,</span> in megabytes
+
+Available options<span class="token operator">:</span>
+
+        <span class="token number">1</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_1MB<span class="token punctuation">)</span>
+
+        <span class="token number">2</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_2MB<span class="token punctuation">)</span>
+
+        <span class="token number">4</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_4MB<span class="token punctuation">)</span>
+
+        <span class="token number">8</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_8MB<span class="token punctuation">)</span>
+
+        <span class="token number">16</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_16MB<span class="token punctuation">)</span>
+
+        <span class="token number">32</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_32MB<span class="token punctuation">)</span>
+
+        <span class="token number">64</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_64MB<span class="token punctuation">)</span>
+
+        <span class="token number">128</span> <span class="token function">MB</span> <span class="token punctuation">(</span>CONFIG_ESPTOOLPY_FLASHSIZE_128MB<span class="token punctuation">)</span>
+</span></span></span></code></pre><div id="https://www.notion.so/1e3fc3f52a8880dcba89e09ce1ef4ae5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/196fc3f52a88805cb96acb4fb1c77547" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">sometime enconter this </span></span></p></div><pre id="https://www.notion.so/1e3fc3f52a888048a1acea071ead6001" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token punctuation">[</span>DEBUG<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> wlink::probe: Opening serial port: <span class="token string">"/dev/ttyACM0"</span>
+Error: Serial port error: Permission denied
+Caused by:
+    Permission denied</span></span></span></code></pre><div id="https://www.notion.so/1e3fc3f52a8880449329cd1ee64edb15" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/1e3fc3f52a888072978fe643203ab78b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">
+run this command </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">stat /dev/ttyACM0</code></span></span></p></div><pre id="https://www.notion.so/1e3fc3f52a8880cb9050fb6cf8045cce" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>s413@Shaox ~/E/C/blink <span class="token punctuation">(</span>main<span class="token punctuation">)</span> <span class="token punctuation">[</span>SIGINT<span class="token punctuation">]</span><span class="token operator">></span> <span class="token function">stat</span> /dev/ttyACM0
+  File: /dev/ttyACM0
+  Size: <span class="token number">0</span>               Blocks: <span class="token number">0</span>          IO Block: <span class="token number">4096</span>   character special <span class="token function">file</span>
+Device: <span class="token number">0,5</span>     Inode: <span class="token number">414</span>         Links: <span class="token number">1</span>     Device type: <span class="token number">166,0</span>
+Access: <span class="token punctuation">(</span>0660/crw-rw----<span class="token punctuation">)</span>  Uid: <span class="token punctuation">(</span>    <span class="token number">0</span>/    root<span class="token punctuation">)</span>   Gid: <span class="token punctuation">(</span>  <span class="token number">986</span>/    uucp<span class="token punctuation">)</span>
+Access: <span class="token number">2025</span>-04-28 <span class="token number">18</span>:49:12.483272344 +0800
+Modify: <span class="token number">2025</span>-04-28 <span class="token number">18</span>:48:59.483272344 +0800
+Change: <span class="token number">2025</span>-04-28 <span class="token number">18</span>:48:59.483272344 +0800
+ Birth: <span class="token number">2025</span>-04-28 <span class="token number">18</span>:48:59.479272346 +0800</span></span></span></code></pre><div id="https://www.notion.so/1e3fc3f52a8880f39639dc812b8082c9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">add Group</span></span></p></div><div></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
