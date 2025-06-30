@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>CH32V307/CH32V203 IO翻转速度测试 - Wahahahehehe - 博客园&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="CH32V307/CH32V203 IO翻转速度测试 - Wahahahehehe - 博客园">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">CH32V307/CH32V203 IO翻转速度测试 - Wahahahehehe - 博客园</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, May 13, 2025</span>
+        
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/3d01ef4cc9ac487f951befa8f6a8688f" class="PageRoot"><div id="https://www.notion.so/62c1c2064ecc463fa4e5b6e291f016ca" class="Image Image--Normal"><figure><a href="#"><img src="#" style="width:-1px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><h2 id="https://www.notion.so/5c9d03d22f604c24808635c90f4a0424" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/5c9d03d22f604c24808635c90f4a0424"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">CH32V307/CH32V203 IO极限翻转测试</mark></span></span></h2><div id="https://www.notion.so/5953b93eb24849ae9d2f34a3f51fdf88" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">记录RISC-V MCU CH32V307/CH32V203 在144MHz主频、-Os优化下，IO极限翻转频率。</mark></span></span></p></div><div id="https://www.notion.so/2b4ef46c6a50401b98fac62589fdebfb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">GPIO初始化代码如下：</mark></span></span></p></div><pre id="https://www.notion.so/fc95c56c0f1d429096e7c4bbdb7f5c2b" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><span> * @fn      GPIO_Toggle_INIT * * @brief   Initializes GPIOA.0 * * @return  none */void GPIO_Toggle_INIT(void){    GPIO_InitTypeDef GPIO_InitStructure = {0};     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;    GPIO_Init(GPIOA, &amp;GPIO_InitStructure);} int main(void){      Delay_Init();    USART_Printf_Init(115200);    printf(&quot;ch32v307 hello world\r\n&quot;);     GPIO_Toggle_INIT();     while(1)    {        GPIOA-&gt;OUTDR |= GPIO_Pin_0;        GPIOA-&gt;OUTDR &amp;= ~GPIO_Pin_0;    }}</span></mark></span></span></code></pre><div id="https://www.notion.so/dd998e1018b84a9a8359384cdb6c74c8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">使用A0作为测试IO口，初始化为</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">推挽输出</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">模式，翻转速度设置为50MHz。</mark></span></span></p></div><div id="https://www.notion.so/45fc9524905f4e8faf2487861f610a98" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">翻转频率为 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">9.6MHz</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">，测试结果如下：</mark></span></span></p></div><div id="https://www.notion.so/620cc1f4a5854334a69c84332db78927" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/31c57a0b9a894b32acef7a96a773ff07" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">9.6MHz 的速度与预估差距有点大，看下反汇编结果如下：</mark></span></span></p></div><div id="https://www.notion.so/d88bafe9ff3b44dba1c494de26746a1b" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/360becab4c084680825f0b7b401fafbc" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">两条C语言代码，需要翻译成7条汇编指令执行，速度当然快不起来。</mark></span></span></p></div><div id="https://www.notion.so/8107abe5e63a4adebc9de3e349bf3ce5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">7条汇编指令，共花费 144MHz / 9.6MHz = </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">15</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 个周期，</mark></span></span></p></div><div id="https://www.notion.so/504f09eb88e94d4f85f2a6bb7df712f3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">换个方式，采用异或的方式翻转IO </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">GPIOA-&gt;OUTDR ^= GPIO_Pin_0;</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">反汇编只有4条指令。</mark></span></span></p></div><div id="https://www.notion.so/f1db3cc8755942e2a51e31bd8e59c927" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/c33d2e1353964bd5b62862050db3173d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">测试结果如下：</mark></span></span></p></div><div id="https://www.notion.so/5b107a7ab3df4b9ca692e3655937a9a5" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/ca7b4d8da4b24e16af99711208d92dc1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">只有 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">9MHz</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">，虽然执行指令数量只有 4 条，但是翻转速度竟然变慢了，共花费 144Mhz / 9MHz = </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">16</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 个周期。</mark></span></span></p></div><div id="https://www.notion.so/a43366c8e58f4cb796f3a8b2478e5caa" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">我猜测是 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">xori</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 这条异或指令的执行周期比 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">ori</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 或 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">addi</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 指令执行周期长导致的。</mark></span></span></p></div><div id="https://www.notion.so/9bf8029317e149c2af1a500473377b99" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">为了测试 IO 的极限翻转速度，将执行指令压缩至最短，不用 ori 或 addi 指令，共3条汇编指令，代码如下：</mark></span></span></p></div><div id="https://www.notion.so/39bde2cff6034d97b459d91498239ebc" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/a75345e79c2a4740a7ebce8cab1586a2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">测试结果如下：</mark></span></span></p></div><div id="https://www.notion.so/9898e077fad444c9a7c3a02356bcc604" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/d05984b12d0e440381a7ddf3d3e12f4d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">IO翻转速度提高到 24MHz， 3条汇编指令共花费 144Mhz / 24MHz = </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">6</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 个周期。</mark></span></span></p></div><div id="https://www.notion.so/9fa1a4738087469288b4582388c3697d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">上面测试的是GPIO的极限翻转速率，即通过GPIO引脚模拟通信协议波特率最高不会超过 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">24Mbps</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">。</mark></span></span></p></div><div id="https://www.notion.so/7a31a9702e3f4e03ac68de35ef0f00c4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">如需更高频率，可以通过 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">SPI</strong></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 等外设模拟。</mark></span></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
