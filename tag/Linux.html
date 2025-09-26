@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
   <base href="../">
   <meta charset="utf-8">
@@ -26,14 +25,97 @@
     font-size: 20px;
   }
 </style>
-  <title>#Linux | 413’s Website
-  </title>
+  <title>#Linux | 413’s Website</title>
   <meta property="og:type" content="blog">
   <meta property="og:title" content="#Linux | 413’s Website">
   <meta name="description" content="Posts with tag #Linux">
   <meta property="og:description" content="Posts with tag #Linux">
-</head>
 
+  <style>
+    body {
+      background: #fafafa;
+    }
+
+    /* 顶部标签信息 */
+    .TagHeader {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: white;   /* 去掉渐变，改成纯白或透明 */
+      color: #333;
+      border-radius: 8px;
+      margin: 1rem auto;
+      max-width: 900px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* 轻微阴影增加层次感 */
+    }
+    .TagHeader h1 {
+      font-size: 2rem;
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .TagHeader h1::before {
+      content: "🏷️";
+      font-size: 1.5rem;
+    }
+
+    /* 卡片列表 */
+    .TagArticleList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .TagArticleCard {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: all 0.25s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .TagArticleCard:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .TagArticleCard__Cover img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .TagArticleCard__Content {
+      padding: 1rem;
+      flex: 1;
+    }
+    .TagArticleCard__Title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .TagArticleCard__Title a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .TagArticleCard__Meta {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    .TagArticleCard__Description {
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .TagHeader h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
 <body>
   <nav class="Navbar">
   <a href="index.html">
@@ -44,6 +126,8 @@
       <span>Home</span>
     </div>
   </a>
+  
+  
   
   
   
@@ -260,36 +344,36 @@
   
   
 </nav>
-  <header class="Header">
-    <div class="Header__Spacer--NoCover"></div>
-    <h1 class="Header__Title">#Linux
-    </h1>
-  </header>
-  <article class="ArticleList">
-  
-  <article class="Article">
-    <h3 class="Article__Title">
-      
-      <a href="Hyprland-arch.html">
-        Hyprland 设置
-      </a>
-    </h3>
+
+  <!-- 标签标题 (纯白底) -->
+  <div class="TagHeader">
+    <h1>#Linux</h1>
+  </div>
+
+  <!-- 卡片式文章列表 -->
+  <div class="TagArticleList">
     
-    <div class="DateTagBar">
-      
-      <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Apr 28, 2025</span>
-      
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--blue">
-        <a href="tag/Linux.html">
-          Linux
-        </a>
-      </span>
-      
-    </div>
-  </article>
-  
-</article>
+      <article class="TagArticleCard">
+        
+          <div class="TagArticleCard__Cover">
+            <a href="Hyprland-arch.html">
+              <img src="https://repository-images.githubusercontent.com/470730648/c4c69fe5-dc70-42b8-aae1-3a6d303656c0" alt="Hyprland 设置">
+            </a>
+          </div>
+        
+        <div class="TagArticleCard__Content">
+          <div class="TagArticleCard__Title">
+            <a href="Hyprland-arch.html">Hyprland 设置</a>
+          </div>
+          <div class="TagArticleCard__Meta">
+             Mon, Apr 28, 2025
+          </div>
+          
+        </div>
+      </article>
+    
+  </div>
+
   <footer class="Footer">
   <div>
     &copy; 413’s Website 2020~2025
@@ -303,5 +387,4 @@
   </div>
 </footer>
 </body>
-
 </html>

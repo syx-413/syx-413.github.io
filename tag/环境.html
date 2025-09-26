@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
   <base href="../">
   <meta charset="utf-8">
@@ -26,14 +25,97 @@
     font-size: 20px;
   }
 </style>
-  <title>#环境 | 413’s Website
-  </title>
+  <title>#环境 | 413’s Website</title>
   <meta property="og:type" content="blog">
   <meta property="og:title" content="#环境 | 413’s Website">
   <meta name="description" content="Posts with tag #环境">
   <meta property="og:description" content="Posts with tag #环境">
-</head>
 
+  <style>
+    body {
+      background: #fafafa;
+    }
+
+    /* 顶部标签信息 */
+    .TagHeader {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: white;   /* 去掉渐变，改成纯白或透明 */
+      color: #333;
+      border-radius: 8px;
+      margin: 1rem auto;
+      max-width: 900px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* 轻微阴影增加层次感 */
+    }
+    .TagHeader h1 {
+      font-size: 2rem;
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .TagHeader h1::before {
+      content: "🏷️";
+      font-size: 1.5rem;
+    }
+
+    /* 卡片列表 */
+    .TagArticleList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .TagArticleCard {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: all 0.25s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .TagArticleCard:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .TagArticleCard__Cover img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .TagArticleCard__Content {
+      padding: 1rem;
+      flex: 1;
+    }
+    .TagArticleCard__Title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .TagArticleCard__Title a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .TagArticleCard__Meta {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    .TagArticleCard__Description {
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .TagHeader h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
 <body>
   <nav class="Navbar">
   <a href="index.html">
@@ -44,6 +126,8 @@
       <span>Home</span>
     </div>
   </a>
+  
+  
   
   
   
@@ -260,112 +344,72 @@
   
   
 </nav>
-  <header class="Header">
-    <div class="Header__Spacer--NoCover"></div>
-    <h1 class="Header__Title">#环境
-    </h1>
-  </header>
-  <article class="ArticleList">
-  
-  <article class="Article">
-    <h3 class="Article__Title">
-      
-      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🐧&lt;/text&gt;&lt;/svg&gt;"></span>
-      
-      <a href="-ch32v208-ch32v208-ubuntu2204-makefile-vscode---milton----4cdfee.html">
-        沁恒 CH32V208(三): CH32V208 Ubuntu22.04 Makefile VSCode环境配置 - Milton - 博客园
-      </a>
-    </h3>
+
+  <!-- 标签标题 (纯白底) -->
+  <div class="TagHeader">
+    <h1>#环境</h1>
+  </div>
+
+  <!-- 卡片式文章列表 -->
+  <div class="TagArticleList">
     
-    <p class="Article__Desc">
-      <span class="SemanticStringArray"><span class="SemanticString">硬件部分 软件部分 下载</span></span>
-    </p>
+      <article class="TagArticleCard">
+        
+        <div class="TagArticleCard__Content">
+          <div class="TagArticleCard__Title">
+            <a href="-ch32v208-ch32v208-ubuntu2204-makefile-vscode---milton----4cdfee.html">沁恒 CH32V208(三): CH32V208 Ubuntu22.04 Makefile VSCode环境配置 - Milton - 博客园</a>
+          </div>
+          <div class="TagArticleCard__Meta">
+             Tue, May 13, 2025
+          </div>
+          
+            <div class="TagArticleCard__Description">硬件部分 软件部分 下载</div>
+          
+        </div>
+      </article>
     
-    <div class="DateTagBar">
-      
-      <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, May 13, 2025</span>
-      
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
-        <a href="tag/单片机.html">
-          单片机
-        </a>
-      </span>
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
-        <a href="tag/环境.html">
-          环境
-        </a>
-      </span>
-      
-    </div>
-  </article>
-  
-  <article class="Article">
-    <h3 class="Article__Title">
-      
-      <span><img class="inline-img-icon" src="https://user-images.githubusercontent.com/4464295/41629747-1914b230-7423-11e8-8b0d-23f83c442556.jpg"></span>
-      
-      <a href="Config-rust-esp32.html">
-        RustEmbedded 配置
-      </a>
-    </h3>
+      <article class="TagArticleCard">
+        
+          <div class="TagArticleCard__Cover">
+            <a href="Config-rust-esp32.html">
+              <img src="https://images.unsplash.com/photo-1611663806011-b37e091090f0?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" alt="RustEmbedded 配置">
+            </a>
+          </div>
+        
+        <div class="TagArticleCard__Content">
+          <div class="TagArticleCard__Title">
+            <a href="Config-rust-esp32.html">RustEmbedded 配置</a>
+          </div>
+          <div class="TagArticleCard__Meta">
+             Fri, Dec 27, 2024
+          </div>
+          
+        </div>
+      </article>
     
-    <div class="DateTagBar">
-      
-      <span class="DateTagBar__Item DateTagBar__Date">Posted on Fri, Dec 27, 2024</span>
-      
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
-        <a href="tag/单片机.html">
-          单片机
-        </a>
-      </span>
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
-        <a href="tag/环境.html">
-          环境
-        </a>
-      </span>
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
-        <a href="tag/Rust.html">
-          Rust
-        </a>
-      </span>
-      
-    </div>
-  </article>
-  
-  <article class="Article">
-    <h3 class="Article__Title">
-      
-      <span><img class="inline-img-icon" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Clash_Logo.png"></span>
-      
-      <a href="Clash-Tun.html">
-        Clash Tun 共享网络
-      </a>
-    </h3>
+      <article class="TagArticleCard">
+        
+          <div class="TagArticleCard__Cover">
+            <a href="Clash-Tun.html">
+              <img src="https://www.notion.so/images/page-cover/met_william_morris_1875.jpg" alt="Clash Tun 共享网络">
+            </a>
+          </div>
+        
+        <div class="TagArticleCard__Content">
+          <div class="TagArticleCard__Title">
+            <a href="Clash-Tun.html">Clash Tun 共享网络</a>
+          </div>
+          <div class="TagArticleCard__Meta">
+             Sat, Apr 13, 2024
+          </div>
+          
+            <div class="TagArticleCard__Description">Clash Tun 共享网络代理信息</div>
+          
+        </div>
+      </article>
     
-    <p class="Article__Desc">
-      <span class="SemanticStringArray"><span class="SemanticString">Clash Tun 共享网络代理信息</span></span>
-    </p>
-    
-    <div class="DateTagBar">
-      
-      <span class="DateTagBar__Item DateTagBar__Date">Posted on Sat, Apr 13, 2024</span>
-      
-      
-      <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
-        <a href="tag/环境.html">
-          环境
-        </a>
-      </span>
-      
-    </div>
-  </article>
-  
-</article>
+  </div>
+
   <footer class="Footer">
   <div>
     &copy; 413’s Website 2020~2025
@@ -379,5 +423,4 @@
   </div>
 </footer>
 </body>
-
 </html>

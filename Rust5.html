@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>开发 Rust/C/C++ cmake 混合应用&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="开发 Rust/C/C++ cmake 混合应用">
+  
+  
+    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      </div>
+    
+    <h1 class="Header__Title">开发 Rust/C/C++ cmake 混合应用</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/853550177536422e92cb8471dbaa3e31" class="PageRoot PageRoot--FullWidth"><div id="https://www.notion.so/c258340531f8470a84357702a45bc824" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">esp-idf 支持链接 C/C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs/esp-idf-template cmake来创建 Rust + C/C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~/esp/esp-idf/v5.2.1/ 中的idf.py 和 cmake 来构建。</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/fcad0c4f7fa444c99a500e0e8c41e110" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Rust 代码作为一个 component 来集成：components/rust-xxx；</mark></span></span></li><li id="https://www.notion.so/c56a2abd724a4823b363174cbb1964b9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Rust Component 目录的 CMakeLists.txt 文件会调用 cargo build 来将 Rust 代码编译为 esp-idf C 库可以调用的静态库。</mark></span></span></li><li id="https://www.notion.so/87c3a41a62a5462cb19bc07de90741d5" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">该 Rust Compoent 可以是 std 或 non_std 类型。由于 idf.py 已经提供了 esp-idf 库，所以 Rust 代码的 build.rs 不会向 std 应用那样 by 项目下载、编译和链接新的 esp-idf 库，而是直接链接 idf.py 所在的 esp-idf 库。</mark></span></span></li></ul><div id="https://www.notion.so/8839a870b18540efaee1bcfce47bba02" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">默认创建启用 HAL（ esp-idf-svc）的 std 应用。</mark></span></span></p></div><div id="https://www.notion.so/091988adc815451e9f9e3c443fc3d9df" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Rust cmake 读取和使用的参数：</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/921835712f504f59b7029946ffc00ada" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">RUST_DEPS</mark></span></span></li><li id="https://www.notion.so/d1dc9e0295254f2e9ef1ee993efba732" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">CONFIG_IDF_TARGET_ARCH_RISCV</mark></span></span></li><li id="https://www.notion.so/e4da5a14c16a4eec87f927822bf50f7e" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">SDKCONFIG</mark></span></span></li><li id="https://www.notion.so/bc382047565f44a292c195057a4eb8d5" class="NumberedList" value="4"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">IDF_PATH</mark></span></span></li></ol><div id="https://www.notion.so/f6899389e1a44fbaa8696d4c44cba107" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">使用 cargo generate esp-rs/esp-idf-template cmake 创建应用：</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/c38279ff7edd4b9da8b2ccc4743b24b2" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">components/rust-mycmake/CMakeLists.txt 文件封装了构建该 Rust component 的 cargo 命令和参数（没有了.cargo/config.toml 配置，相当于替换了该文件的功能）：</mark></span></span><ul class="BulletedListWrapper"><li id="https://www.notion.so/c1405b58669041f49192d4f86a4995d2" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Rust target：xtensa-esp32s3-espidf</mark></span></span></li><li id="https://www.notion.so/c700f2a8607f45c990a62363dec495ee" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Rust flags： –cfg espidf_time64</mark></span></span></li></ul></li><li id="https://www.notion.so/a77f00fa58a642ddb1d6f15a3e234184" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">与 std 默认启用所有 esp-idf components 相比，cmake 项目默认只启用了很少的几个 components，需要在 components/rust-{{project-name}}/CMakeLists.txt 文件中设置 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">RUST_DEPS</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 来启用 Rust 依赖的 component；</mark></span></span></li></ul><div id="https://www.notion.so/07f142b86d574e238e733338335e25d2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">构建前需要 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">同时 source</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> esp-idf 的 export.h 和 export-esp.sh。</mark></span></span></p></div><div id="https://www.notion.so/b94bc8f714484826ac1467468048dc5f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">构建命令是 idf.py build 而非 cargo build。</mark></span></span></p></div><div id="https://www.notion.so/4c454d22b610469cb668a58ba6b34f99" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">创建项目，默认是 std 应用</mark></span></span></p></div><div id="https://www.notion.so/e17352a268ca4cf998acc1dfddefa575" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/eeba248a46054799871494d64f111867" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32$ <span class="token function">cargo</span> generate esp-rs/esp-idf-template cmake
+⚠️   Favorite <span class="token variable"><span class="token variable">`</span>esp-rs/esp-idf-template<span class="token variable">`</span></span> not found <span class="token keyword">in</span> config, using it as a <span class="token function">git</span> repository: https://github.com/esp-rs/esp-idf-template.git
+🤷   Project Name: mycmake
+🔧   Destination: /Users/alizj/code/esp32/mycmake <span class="token punctuation">..</span>.
+🔧   project-name: mycmake <span class="token punctuation">..</span>. 
+🔧   Generating template <span class="token punctuation">..</span>.
+✔ 🤷   Configure advanced template options? · <span class="token boolean">true</span>
+✔ 🤷   Rust toolchain <span class="token punctuation">(</span>beware: nightly works only <span class="token keyword">for</span> riscv MCUs<span class="token operator">!</span><span class="token punctuation">)</span> · esp
+✔ 🤷   Enable HAL support? · <span class="token boolean">true</span>
+✔ 🤷   Enable STD support? · <span class="token boolean">true</span>
+🔧   Moving generated files into: <span class="token variable"><span class="token variable">`</span>/Users/alizj/code/esp32/mycmake<span class="token variable">`</span></span><span class="token punctuation">..</span>.
+🔧   Initializing a fresh Git repository
+✨   Done<span class="token operator">!</span> New project created /Users/alizj/code/esp32/mycmake
+
+zj@a:~/code/esp32/mycmake$ <span class="token function">ls</span>
+CMakeLists.txt  components/  diagram.json  main/  sdkconfig.defaults  wokwi.toml
+
+zj@a:~/code/esp32/mycmake$ <span class="token function">ls</span> main/
+CMakeLists.txt  main.c</span></span></span></code></pre><div id="https://www.notion.so/ecc73abdf8754783a1ff33de266c103f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Rust 代码作为一个 component 被集成：</mark></span></span></p></div><div id="https://www.notion.so/14511a9c3d10439d852411254067d0eb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/505911a1ada44d65a8c30e2b5e7b9120" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/mycmake$ <span class="token function">ls</span> components/rust-mycmake/
+CMakeLists.txt  Cargo.toml  build.rs  placeholder.c  rust-toolchain.toml  src/
+
+zj@a:~/code/esp32/mycmake$ <span class="token function">ls</span> components/rust-mycmake/src/
+lib.rs </span></span></span></code></pre><div id="https://www.notion.so/018ad7751e4d409089391e164fa21db1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Rust componet 的 CMakeLists.txt 文件封装了构建该 Rust 代码的 cargo 命令和配置参数。</mark></span></span></p></div><div id="https://www.notion.so/79405423cd7f406fbb1b435e9bb8a0ed" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/eb5360f9c1d643d09f17b4b9176aad4e" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat CMakeLists.txt
+# If this component depends on other components - be it ESP-IDF or project-specific ones - enumerate those in the double-quotes below, separated by spaces
+# Note that pthread should always be there, or else STD will not work
+set(RUST_DEPS &quot;pthread&quot; &quot;driver&quot; &quot;vfs&quot;)
+# Here&#x27;s a non-minimal, reasonable set of ESP-IDF components that one might want enabled for Rust:
+#set(RUST_DEPS &quot;pthread&quot; &quot;esp_http_client&quot; &quot;esp_http_server&quot; &quot;espcoredump&quot; &quot;app_update&quot; &quot;esp_serial_slave_link&quot; &quot;nvs_flash&quot; &quot;spi_flash&quot; &quot;esp_adc_cal&quot; &quot;mqtt&quot;)
+ 
+idf_component_register(
+    SRCS &quot;placeholder.c&quot;
+    INCLUDE_DIRS &quot;&quot;
+    PRIV_REQUIRES &quot;${RUST_DEPS}&quot;
+)
+
+if(CONFIG_IDF_TARGET_ARCH_RISCV)
+    if (CONFIG_IDF_TARGET_ESP32C6 OR CONFIG_IDF_TARGET_ESP32C5 OR CONFIG_IDF_TARGET_ESP32H2)
+        set(RUST_TARGET &quot;riscv32imac-esp-espidf&quot;)
+    else ()
+        set(RUST_TARGET &quot;riscv32imc-esp-espidf&quot;)
+    endif()
+elseif(CONFIG_IDF_TARGET_ESP32)
+    set(RUST_TARGET &quot;xtensa-esp32-espidf&quot;)
+elseif(CONFIG_IDF_TARGET_ESP32S2)
+    set(RUST_TARGET &quot;xtensa-esp32s2-espidf&quot;)
+elseif(CONFIG_IDF_TARGET_ESP32S3)
+    set(RUST_TARGET &quot;xtensa-esp32s3-espidf&quot;)
+else()
+    message(FATAL_ERROR &quot;Unsupported target ${CONFIG_IDF_TARGET}&quot;)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL &quot;Debug&quot;)
+    set(CARGO_BUILD_TYPE &quot;debug&quot;)
+    set(CARGO_BUILD_ARG &quot;&quot;)
+else()
+    set(CARGO_BUILD_TYPE &quot;release&quot;)
+    set(CARGO_BUILD_ARG &quot;--release&quot;)
+endif()
+
+
+set(CARGO_BUILD_STD_ARG -Zbuild-std=std,panic_abort)
+
+
+if(IDF_VERSION_MAJOR GREATER &quot;4&quot;)
+set(ESP_RUSTFLAGS &quot;--cfg espidf_time64&quot;)
+endif()
+
+set(CARGO_PROJECT_DIR &quot;${CMAKE_CURRENT_LIST_DIR}&quot;)
+set(CARGO_BUILD_DIR &quot;${CMAKE_CURRENT_BINARY_DIR}&quot;)
+set(CARGO_TARGET_DIR &quot;${CARGO_BUILD_DIR}/target&quot;)
+
+set(RUST_INCLUDE_DIR &quot;${CARGO_TARGET_DIR}&quot;)
+set(RUST_STATIC_LIBRARY &quot;${CARGO_TARGET_DIR}/${RUST_TARGET}/${CARGO_BUILD_TYPE}/librust_mycmake.a&quot;)
+
+# if this component uses CBindGen to generate a C header, uncomment the lines below and adjust the header name accordingly
+#set(RUST_INCLUDE_HEADER &quot;${RUST_INCLUDE_DIR}/RustApi.h&quot;)
+#set_source_files_properties(&quot;${RUST_INCLUDE_HEADER}&quot; PROPERTIES GENERATED true)
+
+idf_build_get_property(sdkconfig SDKCONFIG)
+idf_build_get_property(idf_path IDF_PATH)
+
+ExternalProject_Add(
+    project_rust_mycmake
+    PREFIX &quot;${CARGO_PROJECT_DIR}&quot;
+    DOWNLOAD_COMMAND &quot;&quot;
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
+        cargo clean --target ${RUST_TARGET} --target-dir ${CARGO_TARGET_DIR}
+    USES_TERMINAL_BUILD true
+    BUILD_COMMAND ${CMAKE_COMMAND} -E env
+        CARGO_CMAKE_BUILD_INCLUDES=$&lt;TARGET_PROPERTY:${COMPONENT_LIB},INCLUDE_DIRECTORIES&gt;
+        CARGO_CMAKE_BUILD_LINK_LIBRARIES=$&lt;TARGET_PROPERTY:${COMPONENT_LIB},LINK_LIBRARIES&gt;
+        CARGO_CMAKE_BUILD_SDKCONFIG=${sdkconfig}
+        CARGO_CMAKE_BUILD_ESP_IDF=${idf_path}
+        CARGO_CMAKE_BUILD_COMPILER=${CMAKE_C_COMPILER}
+        RUSTFLAGS=${ESP_RUSTFLAGS}
+        MCU=${CONFIG_IDF_TARGET}
+        cargo build --target ${RUST_TARGET} --target-dir ${CARGO_TARGET_DIR} ${CARGO_BUILD_ARG} ${CARGO_BUILD_STD_ARG}
+    INSTALL_COMMAND &quot;&quot;
+    BUILD_ALWAYS TRUE
+    TMP_DIR &quot;${CARGO_BUILD_DIR}/tmp&quot;
+    STAMP_DIR &quot;${CARGO_BUILD_DIR}/stamp&quot;
+    DOWNLOAD_DIR &quot;${CARGO_BUILD_DIR}&quot;
+    SOURCE_DIR &quot;${CARGO_PROJECT_DIR}&quot;
+    BINARY_DIR &quot;${CARGO_PROJECT_DIR}&quot;
+    INSTALL_DIR &quot;${CARGO_BUILD_DIR}&quot;
+    BUILD_BYPRODUCTS
+        &quot;${RUST_INCLUDE_HEADER}&quot;
+        &quot;${RUST_STATIC_LIBRARY}&quot;
+)
+
+add_prebuilt_library(library_rust_mycmake &quot;${RUST_STATIC_LIBRARY}&quot; PRIV_REQUIRES &quot;${RUST_DEPS}&quot;)
+add_dependencies(library_rust_mycmake project_rust_mycmake)
+
+target_include_directories(${COMPONENT_LIB} PUBLIC &quot;${RUST_INCLUDE_DIR}&quot;)
+target_link_libraries(${COMPONENT_LIB} PRIVATE library_rust_mycmake)</span></span></span></code></pre><div id="https://www.notion.so/8372399c876342f69ce73b45387c514b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">配置了 crate-type 为 staticlib，故会被编译为 esp-idf 可以链接的 C 库</mark></span></span></p></div><div id="https://www.notion.so/a70eb57241fb45d1a6c65749ea7b177c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/690866645d2343c785061838d2d9fdcb" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat Cargo<span class="token punctuation">.</span>toml
+<span class="token punctuation">[</span><span class="token table class-name">package</span><span class="token punctuation">]</span>
+<span class="token key property">name</span> <span class="token punctuation">=</span> <span class="token string">"rust-mycmake"</span>
+<span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.1.0"</span>
+<span class="token key property">authors</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"alizj"</span><span class="token punctuation">]</span>
+<span class="token key property">edition</span> <span class="token punctuation">=</span> <span class="token string">"2021"</span> 
+<span class="token key property">resolver</span> <span class="token punctuation">=</span> <span class="token string">"2"</span>
+<span class="token key property">rust-version</span> <span class="token punctuation">=</span> <span class="token string">"1.71"</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">lib</span><span class="token punctuation">]</span>
+<span class="token key property">crate-type</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"staticlib"</span><span class="token punctuation">]</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">profile.release</span><span class="token punctuation">]</span>
+<span class="token key property">opt-level</span> <span class="token punctuation">=</span> <span class="token string">"s"</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">profile.dev</span><span class="token punctuation">]</span>
+<span class="token key property">debug</span> <span class="token punctuation">=</span> <span class="token boolean">true</span> <span class="token comment"># Symbols are nice and they don't increase the size on Flash</span>
+<span class="token key property">opt-level</span> <span class="token punctuation">=</span> <span class="token string">"z"</span>
+<span class="token punctuation">[</span><span class="token table class-name">features</span><span class="token punctuation">]</span>
+<span class="token key property">default</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"std"</span><span class="token punctuation">,</span> <span class="token string">"embassy"</span><span class="token punctuation">,</span> <span class="token string">"esp-idf-svc/native"</span><span class="token punctuation">]</span>
+
+<span class="token key property">pio</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"esp-idf-svc/pio"</span><span class="token punctuation">]</span>
+<span class="token key property">std</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"alloc"</span><span class="token punctuation">,</span> <span class="token string">"esp-idf-svc/std"</span><span class="token punctuation">]</span>
+<span class="token key property">alloc</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"esp-idf-svc/alloc"</span><span class="token punctuation">]</span>
+<span class="token key property">nightly</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"esp-idf-svc/nightly"</span><span class="token punctuation">]</span>
+<span class="token key property">experimental</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"esp-idf-svc/experimental"</span><span class="token punctuation">]</span>
+<span class="token key property">embassy</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"esp-idf-svc/embassy-sync"</span><span class="token punctuation">,</span> <span class="token string">"esp-idf-svc/critical-section"</span><span class="token punctuation">,</span> <span class="token string">"esp-idf-svc/embassy-time-driver"</span><span class="token punctuation">]</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">dependencies</span><span class="token punctuation">]</span>
+<span class="token key property">log</span> <span class="token punctuation">=</span> <span class="token punctuation">{</span> <span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.4"</span><span class="token punctuation">,</span> <span class="token key property">default-features</span> <span class="token punctuation">=</span> <span class="token boolean">false</span> <span class="token punctuation">}</span>
+<span class="token key property">esp-idf-svc</span> <span class="token punctuation">=</span> <span class="token punctuation">{</span> <span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.48"</span><span class="token punctuation">,</span> <span class="token key property">default-features</span> <span class="token punctuation">=</span> <span class="token boolean">false</span> <span class="token punctuation">}</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">build-dependencies</span><span class="token punctuation">]</span>
+<span class="token key property">embuild</span> <span class="token punctuation">=</span> <span class="token string">"0.31.3"</span>
+
+<span class="token comment"># 编译为 staticlib，可以被 C 库调用的 Rust 代码</span>
+zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat src/lib<span class="token punctuation">.</span>rs
+<span class="token comment">#[no_mangle]</span>
+extern <span class="token string">"C"</span> fn rust_main() -> i32 <span class="token punctuation">{</span>
+    // It is necessary to call this function once<span class="token punctuation">.</span> Otherwise some patches to the runtime
+    // implemented by esp-idf-sys might not link properly<span class="token punctuation">.</span> See https://github<span class="token punctuation">.</span>com/esp-rs/esp-idf-template/issues/<span class="token number">71</span>
+    esp_idf_svc::sys::link_patches();
+
+    // Bind the log crate to the ESP Logging facilities
+    esp_idf_svc::log::EspLogger::initialize_default();
+
+    log::info!(<span class="token string">"Hello, world!"</span>);
+    <span class="token number">42</span>
+<span class="token punctuation">}</span>
+
+zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat placeholder<span class="token punctuation">.</span>c
+/* Hello World Example
+
+   This example code is in the Public Domain (or CC0 licensed<span class="token punctuation">,</span> at your option<span class="token punctuation">.</span>)
+
+   Unless required by applicable law or agreed to in writing<span class="token punctuation">,</span> this
+   software is distributed on an <span class="token string">"AS IS"</span> BASIS<span class="token punctuation">,</span> WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND<span class="token punctuation">,</span> either express or implied<span class="token punctuation">.</span>
+*/
+
+/* This is an empty source file to force the build of a CMake library that
+   can participate in the CMake dependency graph<span class="token punctuation">.</span> This placeholder library
+   will depend on the actual library generated by external Rust build<span class="token punctuation">.</span>
+*/
+
+<span class="token comment"># main.c 中调用 Rust 的 rust_main() 函数代码</span>
+zj@a:~/code/esp32/mycmake$ cat main/main<span class="token punctuation">.</span>c
+/* Hello World Example
+
+   This example code is in the Public Domain (or CC0 licensed<span class="token punctuation">,</span> at your option<span class="token punctuation">.</span>)
+
+   Unless required by applicable law or agreed to in writing<span class="token punctuation">,</span> this
+   software is distributed on an <span class="token string">"AS IS"</span> BASIS<span class="token punctuation">,</span> WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND<span class="token punctuation">,</span> either express or implied<span class="token punctuation">.</span>
+*/
+<span class="token comment">#include &lt;stdio.h></span>
+
+extern int rust_main(void);
+
+void app_main(void) <span class="token punctuation">{</span>
+    printf(<span class="token string">"Hello world from C!\n"</span>);
+
+    int result <span class="token punctuation">=</span> rust_main();
+
+    printf(<span class="token string">"Rust returned code: %d\n"</span><span class="token punctuation">,</span> result);
+<span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/c48106f35f3f4468b4830cda09317b33" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">构建前需要 source esp-idf 的 export.h 和 export-esp.sh：</mark></span></span></p></div><div id="https://www.notion.so/345501c6422c44aa868aad83d9e59774" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/0cd49f4b6b06491f8e625aabd1a33c87" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/mycmake$ <span class="token builtin class-name">source</span> ~/esp/esp-idf/v5.2.1/export.sh   <span class="token comment"># esp idf</span>
+zj@a:~/code/esp32/mycmake$ <span class="token builtin class-name">source</span> ~/export-esp.sh   <span class="token comment"># esp rs，因为后续会 build Rust component </span></span></span></span></code></pre><div id="https://www.notion.so/23512f23975c4705a97d29e56451835b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">构建：</mark></span></span></p></div><div id="https://www.notion.so/b7d5d11db45d42d2a268f5d88e695a97" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/5dc6bfde63d2409eab25f5fa9867adf2" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">#idf.py set-target [esp32|esp32s2|esp32s3|esp32c2|esp32c3|esp32c6|esp32h2]</span>
+zj@a<span class="token punctuation">:</span><span class="token operator">~</span><span class="token operator">/</span>code<span class="token operator">/</span>esp32<span class="token operator">/</span>mycmake$ idf<span class="token punctuation">.</span>py build 
+Executing action<span class="token punctuation">:</span> <span class="token builtin">all</span> <span class="token punctuation">(</span>aliases<span class="token punctuation">:</span> build<span class="token punctuation">)</span>
+Running ninja <span class="token keyword">in</span> directory <span class="token operator">/</span>Users<span class="token operator">/</span>alizj<span class="token operator">/</span>code<span class="token operator">/</span>esp32<span class="token operator">/</span>mycmake<span class="token operator">/</span>build
+Executing <span class="token string">"ninja all"</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">/</span><span class="token number">9</span><span class="token punctuation">]</span> Performing build step <span class="token keyword">for</span> <span class="token string">'project_rust_mycmake'</span>    Finished release <span class="token punctuation">[</span>optimized<span class="token punctuation">]</span> target<span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token number">0</span><span class="token punctuation">.</span>25s
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">/</span><span class="token number">1</span><span class="token punctuation">]</span> cd <span class="token operator">/</span>Users<span class="token operator">/</span>alizj<span class="token operator">/</span>code<span class="token operator">/</span>esp32<span class="token operator">/</span>mycmake<span class="token operator">/</span>build<span class="token operator">/</span>bootloader<span class="token operator">/</span>esp<span class="token operator">-</span>idf<span class="token operator">/</span>esptool_py <span class="token operator">&amp;</span><span class="token operator">&amp;</span> <span class="token operator">/</span>Users<span class="token operator">/</span>alizj<span class="token operator">/</span><span class="token punctuation">.</span>espressif<span class="token operator">/</span>p<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>izes<span class="token punctuation">.</span>py <span class="token operator">-</span><span class="token operator">-</span>offset <span class="token number">0x8000</span> bootloader <span class="token number">0x1000</span> <span class="token operator">/</span>Users<span class="token operator">/</span>alizj<span class="token operator">/</span>code<span class="token operator">/</span>esp32<span class="token operator">/</span>mycmake<span class="token operator">/</span>build<span class="token operator">/</span>bootloader<span class="token operator">/</span>bootloader<span class="token punctuation">.</span>bi
+Bootloader binary size <span class="token number">0x6860</span> <span class="token builtin">bytes</span><span class="token punctuation">.</span> <span class="token number">0x7a0</span> <span class="token builtin">bytes</span> <span class="token punctuation">(</span><span class="token number">7</span><span class="token operator">%</span><span class="token punctuation">)</span> free<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token number">3</span><span class="token operator">/</span><span class="token number">3</span><span class="token punctuation">]</span> cd <span class="token operator">/</span>Users<span class="token operator">/</span>alizj<span class="token operator">/</span>code<span class="token operator">/</span>esp32<span class="token operator">/</span>mycmake<span class="token operator">/</span>build<span class="token operator">/</span>esp<span class="token operator">-</span>idf<span class="token operator">/</span>esptool_py <span class="token operator">&amp;</span><span class="token operator">&amp;</span> <span class="token operator">/</span>Users<span class="token operator">/</span>alizj<span class="token operator">/</span><span class="token punctuation">.</span>espressif<span class="token operator">/</span>python_env<span class="token operator">/</span>i<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>esp32<span class="token operator">/</span>mycmake<span class="token operator">/</span>build<span class="token operator">/</span>partition_table<span class="token operator">/</span>partition<span class="token operator">-</span>table<span class="token punctuation">.</span><span class="token builtin">bin</span> <span class="token operator">/</span>Users<span class="token operator">/</span>alizj<span class="token operator">/</span>code<span class="token operator">/</span>esp32<span class="token operator">/</span>mycmake<span class="token operator">/</span>build<span class="token operator">/</span>mycmake<span class="token punctuation">.</span>bi
+mycmake<span class="token punctuation">.</span><span class="token builtin">bin</span> binary size <span class="token number">0x5b770</span> <span class="token builtin">bytes</span><span class="token punctuation">.</span> Smallest app partition <span class="token keyword">is</span> <span class="token number">0x100000</span> <span class="token builtin">bytes</span><span class="token punctuation">.</span> <span class="token number">0xa4890</span> <span class="token builtin">bytes</span> <span class="token punctuation">(</span><span class="token number">64</span><span class="token operator">%</span><span class="token punctuation">)</span> free<span class="token punctuation">.</span>
+
+Project build complete<span class="token punctuation">.</span> To flash<span class="token punctuation">,</span> run<span class="token punctuation">:</span>
+ idf<span class="token punctuation">.</span>py flash
+<span class="token keyword">or</span>
+ idf<span class="token punctuation">.</span>py <span class="token operator">-</span>p PORT flash
+<span class="token keyword">or</span>
+ python <span class="token operator">-</span>m esptool <span class="token operator">-</span><span class="token operator">-</span>chip esp32 <span class="token operator">-</span>b <span class="token number">460800</span> <span class="token operator">-</span><span class="token operator">-</span>before default_reset <span class="token operator">-</span><span class="token operator">-</span>after hard_reset write_flash <span class="token operator">-</span><span class="token operator">-</span>flash_mode dio <span class="token operator">-</span><span class="token operator">-</span>flash_size 2MB <span class="token operator">-</span><span class="token operator">-</span>flash_freq 40m <span class="token number">0x1000</span> build<span class="token operator">/</span>bootloader<span class="token operator">/</span>bootloader<span class="token punctuation">.</span><span class="token builtin">bin</span> <span class="token number">0x8000</span> build<span class="token operator">/</span>partition_table<span class="token operator">/</span>partition<span class="token operator">-</span>table<span class="token punctuation">.</span><span class="token builtin">bin</span> <span class="token number">0x10000</span> build<span class="token operator">/</span>mycmake<span class="token punctuation">.</span><span class="token builtin">bin</span>
+<span class="token keyword">or</span> <span class="token keyword">from</span> the <span class="token string">"/Users/alizj/code/esp32/mycmake/build"</span> directory
+ python <span class="token operator">-</span>m esptool <span class="token operator">-</span><span class="token operator">-</span>chip esp32 <span class="token operator">-</span>b <span class="token number">460800</span> <span class="token operator">-</span><span class="token operator">-</span>before default_reset <span class="token operator">-</span><span class="token operator">-</span>after hard_reset write_flash <span class="token string">"@flash_args"</span>
+
+<span class="token comment"># 构建的产物位于 build 目录下 。</span></span></span></span></code></pre><div id="https://www.notion.so/3990b32b9e4042e6841fa5b7537d042c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">烧录到设备 flash</mark></span></span></p></div><div id="https://www.notion.so/c21a10feced74a469acf1a062edc0499" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/75334e2c782a4068b669fc22627a7aca" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>idf.py <span class="token parameter variable">-p</span> /dev/cu.usbmodem2101 flash monitor</span></span></span></code></pre><div id="https://www.notion.so/8066a0d06bcc49dea71c7c5731cd13c3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">参考:</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/5250b87c5b304bba9a0a90268c4c6dad" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/esp-idf-template/blob/master/README-cmake.md">esp-idf-template 的 cmake 文档</a></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">;</mark></span></span></li><li id="https://www.notion.so/7a2dcb71348d4427b8d8babef9816c07" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/esp-idf-template/blob/master/README-cmake-details">Integrating a Rust Component into an ESP-IDF Project</a></mark></span></span></li></ol></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
