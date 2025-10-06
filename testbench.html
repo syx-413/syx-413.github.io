@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>Testbench 测试文件写法&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Testbench 测试文件写法">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">Testbench 测试文件写法</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Jun 3, 2025</span>
+        
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/207fc3f52a88807fa4b5f168f4ec8ca4" class="PageRoot"><h1 id="https://www.notion.so/25ffc3f52a888082b31af0512a4b39fa" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a888082b31af0512a4b39fa"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">iVerilog 与 ModelSim 的差异：开源与商业仿真器的全面对比</span></span></h1><div id="https://www.notion.so/25ffc3f52a888022b961e80ffa23e732" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在数字电路设计和验证领域，仿真器是不可或缺的工具。iVerilog（Icarus Verilog）和 ModelSim 是两个广泛使用的 Verilog 仿真器，它们分别代表了开源和商业解决方案的典型。本文将深入探讨这两个工具的差异，帮助工程师根据项目需求做出合适的选择。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88808d8e82c52c96407561" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88808d8e82c52c96407561"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">基本概述</span></span></h2><div id="https://www.notion.so/25ffc3f52a8880499e95f7eccaf6ce45" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">iVerilog</strong></span><span class="SemanticString"> 是一个开源的 Verilog 仿真器，由 Stephen Williams 开发并维护。它遵循 GPL 许可证，完全免费使用。iVerilog 的设计目标是提供一个符合 IEEE 1364 标准的 Verilog 编译器和仿真器，支持从 Verilog-95 到部分 SystemVerilog 的语法。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880ba8ec7eb3826f0517a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">ModelSim</strong></span><span class="SemanticString"> 是 Mentor Graphics（现为 Siemens EDA）开发的商业仿真器，在业界享有很高的声誉。它提供了完整的 HDL 仿真解决方案，支持 Verilog、VHDL 和 SystemVerilog，并且有多个版本可供选择，从学生版到企业版都有覆盖。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a8880448b81cdb7f34f3da8" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880448b81cdb7f34f3da8"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">功能特性对比</span></span></h2><h3 id="https://www.notion.so/25ffc3f52a88807385d1dd6bfdba6608" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88807385d1dd6bfdba6608"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">语言支持</span></span></h3><div id="https://www.notion.so/25ffc3f52a8880cf8a05dcc761d2d4af" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">iVerilog 主要支持 Verilog-95、Verilog-2001 和 Verilog-2005 标准，对 SystemVerilog 的支持相对有限。它能够处理大多数常见的 Verilog 构造，包括模块、任务、函数、generate 语句等。然而，一些高级的 SystemVerilog 特性，如类、接口、断言等，支持并不完整。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88809bb97dc176ab3f0440" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ModelSim 提供了更全面的语言支持。除了完整的 Verilog 支持外，它还支持 VHDL 和 SystemVerilog 的大部分特性。这种多语言支持使得 ModelSim 在混合语言项目中特别有用，可以同时仿真 Verilog 和 VHDL 模块。</span></span></p></div><h3 id="https://www.notion.so/25ffc3f52a8880029bb0ead3eeb24ce5" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880029bb0ead3eeb24ce5"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">仿真性能</span></span></h3><div id="https://www.notion.so/25ffc3f52a888071bf36f30157f5b0d4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在仿真性能方面，两者存在明显差异。iVerilog 的仿真速度对于小到中等规模的设计来说是可以接受的，但在处理大型设计时可能会显得力不从心。它采用解释执行的方式，这在一定程度上限制了其性能。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880d3bf56c7fb1ae85864" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ModelSim 采用了优化的编译技术，能够将 HDL 代码编译成高效的机器码，因此在仿真大型设计时具有明显的性能优势。特别是 ModelSim SE（Special Edition）和 PE（Professional Edition）版本，包含了更多的性能优化特性。</span></span></p></div><h3 id="https://www.notion.so/25ffc3f52a8880f2bd61cf8d715aeae9" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880f2bd61cf8d715aeae9"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">调试功能</span></span></h3><div id="https://www.notion.so/25ffc3f52a888099851fed50abe731b8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">iVerilog 的调试功能相对基础。它主要通过 VCD（Value Change Dump）文件输出波形数据，需要配合外部波形查看器（如 GTKWave）使用。虽然这种组合能够满足基本的调试需求，但在交互式调试方面不如集成解决方案方便。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880be956cd9498f0e7817" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ModelSim 内置了强大的图形化调试环境，包括：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/25ffc3f52a8880bdad60eb9805ac4493" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">集成的波形查看器，支持多种显示格式和测量功能</span></span></li><li id="https://www.notion.so/25ffc3f52a88804abef1d9550c22e6d4" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">源代码调试器，可以设置断点、单步执行</span></span></li><li id="https://www.notion.so/25ffc3f52a888020be0ff56f6994d1b8" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">数据流窗口，显示信号之间的连接关系</span></span></li><li id="https://www.notion.so/25ffc3f52a8880d79e86df7cddd62f64" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">内存查看器，方便查看和修改存储器内容</span></span></li><li id="https://www.notion.so/25ffc3f52a888013a02bcab184e08805" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">代码覆盖率分析工具</span></span></li></ul><h2 id="https://www.notion.so/25ffc3f52a8880a686f2d613ae4dd00d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880a686f2d613ae4dd00d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">使用体验差异</span></span></h2><h3 id="https://www.notion.so/25ffc3f52a8880938ebefbc18fecaa4e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880938ebefbc18fecaa4e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">安装和配置</span></span></h3><div id="https://www.notion.so/25ffc3f52a888043a1f6ef0a2133e482" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">iVerilog 的安装非常简单。在 Linux 系统上，通常可以通过包管理器直接安装；在 Windows 上也有预编译的安装包。配置过程minimal，基本上安装完成后就可以直接使用。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88809fae74d2d339e79361" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ModelSim 的安装过程相对复杂，需要处理许可证配置。商业版本需要购买许可证，而免费的学生版虽然不需要付费，但有功能和性能限制。安装包体积也比 iVerilog 大得多。</span></span></p></div><h3 id="https://www.notion.so/25ffc3f52a8880aaa4b7f8136ff7d090" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880aaa4b7f8136ff7d090"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">命令行与图形界面</span></span></h3><div id="https://www.notion.so/25ffc3f52a88806c8410e9095e4352fa" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">iVerilog 主要通过命令行使用，这对于熟悉 Linux 环境的用户来说非常自然。典型的使用流程是：</span></span></p></div><pre id="https://www.notion.so/25ffc3f52a8880f49e0ac0673301fc3e" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>iverilog -o testbench.vvp testbench.v design.v
+vvp testbench.vvp
+gtkwave waveform.vcd
+</span></span></span></code></pre><div id="https://www.notion.so/25ffc3f52a8880c289e0f2f555b75836" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ModelSim 提供了完整的图形用户界面，同时也支持命令行和脚本操作。GUI 环境对新手更友好，而经验丰富的用户可以通过 TCL 脚本实现自动化仿真流程。</span></span></p></div><h3 id="https://www.notion.so/25ffc3f52a8880f6ab97c9144d4ae7d3" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880f6ab97c9144d4ae7d3"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">与其他工具的集成</span></span></h3><div id="https://www.notion.so/25ffc3f52a88804e9bc0cb75c2ea9cb4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">iVerilog 作为开源工具，很容易与其他开源 EDA 工具集成。它可以与 Yosys（综合工具）、GTKWave（波形查看器）等工具无缝配合，形成完整的开源 EDA 工具链。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a888072a5ecdd2c525c3927" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ModelSim 与商业 EDA 工具的集成更加紧密，特别是与 Mentor/Siemens 的其他工具。它也被许多 FPGA 厂商选为默认的仿真器，如 Intel（Altera）和 Lattice 都提供了定制版本的 ModelSim。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88807e847cd79b5f221837" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88807e847cd79b5f221837"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">适用场景分析</span></span></h2><h3 id="https://www.notion.so/25ffc3f52a8880bcbed1eaf91c1603b0" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880bcbed1eaf91c1603b0"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">iVerilog 适合的场景</span></span></h3><div id="https://www.notion.so/25ffc3f52a8880a880a2e4954391c1fc" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">教育和学习</strong></span><span class="SemanticString">：对于学习 Verilog 语言和数字电路设计的学生，iVerilog 是理想选择。免费、轻量级、易于安装的特点降低了学习门槛。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880128420ed38d82f67f0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">小型项目和原型验证</strong></span><span class="SemanticString">：对于个人项目或小规模的设计验证，iVerilog 完全能够胜任。它的快速迭代能力在概念验证阶段特别有用。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88804e8f90d5eaa350b854" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">开源项目</strong></span><span class="SemanticString">：如果你的项目是开源的，使用 iVerilog 可以确保其他贡献者无需购买昂贵的商业工具就能参与开发。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880afaad1c13b9613122f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">自动化测试</strong></span><span class="SemanticString">：在持续集成环境中，iVerilog 的命令行特性和免许可证要求使其成为自动化测试的好选择。</span></span></p></div><h3 id="https://www.notion.so/25ffc3f52a8880c38cfbf17657485656" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880c38cfbf17657485656"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">ModelSim 适合的场景</span></span></h3><div id="https://www.notion.so/25ffc3f52a88801883bffbb0cc1d02ed" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">商业项目</strong></span><span class="SemanticString">：对于需要可靠性保证和技术支持的商业项目，ModelSim 是更稳妥的选择。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a888025a67dd6666559a52a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">大型复杂设计</strong></span><span class="SemanticString">：当设计规模增大，仿真性能成为瓶颈时，ModelSim 的优化引擎能够显著提高工作效率。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88803da5b1d6f162afc58b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">混合语言项目</strong></span><span class="SemanticString">：如果项目中同时使用 Verilog 和 VHDL，ModelSim 的多语言支持能够避免工具切换的麻烦。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88800d9e01f5bfc303de5e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">高级验证</strong></span><span class="SemanticString">：需要使用 SystemVerilog 的高级验证特性（如 UVM）时，ModelSim 的完整语言支持是必需的。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a8880c0bba7f10c5e4cab36" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880c0bba7f10c5e4cab36"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">实际使用建议</span></span></h2><div id="https://www.notion.so/25ffc3f52a88806dbcb3c112de63875c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">对于初学者，建议从 iVerilog 开始。它能够帮助你专注于 Verilog 语言本身，而不被复杂的工具配置分散注意力。配合 GTKWave，可以完成大部分基础的设计和验证工作。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a888020b925d893e693129e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">随着项目复杂度的增加，可以考虑过渡到 ModelSim。许多 FPGA 厂商提供的免费版本（如 ModelSim-Intel FPGA Starter Edition）是很好的中间选择，既提供了商业工具的功能，又不需要高昂的许可费用。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a888073b7e2e94365e30f68" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">对于专业工程师，建议同时掌握两种工具。iVerilog 可以用于快速原型验证和脚本化测试，而 ModelSim 用于详细的调试和最终验证。这种组合可以充分发挥两者的优势。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88802aad37c44a4bcb05b7" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88802aad37c44a4bcb05b7"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">性能优化技巧</span></span></h2><div id="https://www.notion.so/25ffc3f52a8880e4b91cd7d4b7350034" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">使用 iVerilog 时，可以通过以下方式提高性能：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/25ffc3f52a888042968dec6d301a8272" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">减少不必要的信号转储，只记录关键信号</span></span></li><li id="https://www.notion.so/25ffc3f52a88807ba014fd7181ef9f9f" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">$dumpvars</code></span><span class="SemanticString"> 的深度参数限制记录范围</span></span></li><li id="https://www.notion.so/25ffc3f52a88802487fce423b726d7f9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">合理使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">$dumpoff</code></span><span class="SemanticString"> 和 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">$dumpon</code></span><span class="SemanticString"> 控制记录时段</span></span></li></ul><div id="https://www.notion.so/25ffc3f52a888080a7d6e512f94af7a9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">使用 ModelSim 时的优化建议：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/25ffc3f52a88804997e2ec5036dc3718" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">使用优化编译选项（-O2 或更高）</span></span></li><li id="https://www.notion.so/25ffc3f52a88806888eeeedf2780eed8" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">对于大型设计，考虑使用增量编译</span></span></li><li id="https://www.notion.so/25ffc3f52a88809baaa0d225044f81e2" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">合理设置仿真分辨率，避免过度精确</span></span></li><li id="https://www.notion.so/25ffc3f52a8880ac94e6db2178ed0fca" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">使用 </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">vsim -novopt</code></span><span class="SemanticString"> 可以加快编译速度（牺牲一些运行性能）</span></span></li></ul><h2 id="https://www.notion.so/25ffc3f52a8880b9945ed0cb381e102d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880b9945ed0cb381e102d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">总结</span></span></h2><div id="https://www.notion.so/25ffc3f52a888094b936ec080ee2579c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">iVerilog 和 ModelSim 代表了两种不同的设计理念：开源免费 vs 商业专业。iVerilog 以其简洁、免费、开源的特点，成为学习和小型项目的首选；而 ModelSim 凭借全面的功能、优秀的性能和专业的支持，在商业项目中占据重要地位。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a888040a13dd761577e8c56" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">选择哪个工具并没有绝对的对错，关键是要根据项目需求、预算限制和团队技能来做决定。在很多情况下，两者可以互补使用：用 iVerilog 进行日常开发和回归测试，用 ModelSim 进行最终验证和复杂调试。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880bb8884e394b7ac996f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/207fc3f52a888071b3cbe1316b629837" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/207fc3f52a8880979f4cd45133d9591c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/207fc3f52a8880f68ad0c8f3278795cf" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/207fc3f52a88800b81efc3395eb4c870" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/207fc3f52a888049920fd75ba7cb3ec4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>

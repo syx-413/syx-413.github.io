@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>Rust 驱动 Touch - 触摸板&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Rust 驱动 Touch - 触摸板">
+  
+    <meta name="description" content="触摸屏 校准 驱动">
+    <meta property="og:description" content="触摸屏 校准 驱动">
+  
+  
+    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      </div>
+    
+    <h1 class="Header__Title">Rust 驱动 Touch - 触摸板</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/3d91aadb284b4beeb09a14b2a740e732" class="PageRoot PageRoot--FullWidth"><div id="https://www.notion.so/c42f29be996840bbb724c716b396787c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">参考： </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://docs.espressif.com/projects/espressif-esp-iot-solution/zh_CN/latest/input_device/touch_panel.html">https://docs.espressif.com/projects/espressif-esp-iot-solution/zh_CN/latest/input_device/touch_panel.html</a></mark></span></span></p></div><h1 id="https://www.notion.so/ccab34fc144943a18be3afeeffb11736" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/ccab34fc144943a18be3afeeffb11736"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Rust 驱动 Touch - 触摸板</span></span></h1><h2 id="https://www.notion.so/a2db805ffa24486381a6b5775803978b" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/a2db805ffa24486381a6b5775803978b"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">start
+</mark></span></span></h2><div id="https://www.notion.so/9705bd11e5b940dda214f99b03bb7497" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">在实际应用中，电阻触摸屏必须在使用前进行校准，而电容触摸屏则一般由控制芯片完成该工作，无需额外的校准步骤。驱动中已经集成了电阻触摸屏的校准算法，校准过程使用了三个点来校准，用一个点来验证，当最后验证的误差大于某个阈值将导致校准失败，然后自动重新进行校准，直到校准成功。</mark></span></span></p></div><div id="https://www.notion.so/4f4dfbaf9bf64082a6243b4a8ee4a381" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">调用校准函数 calibration_run() 将会在屏幕上开始校准的过程，校准完成后，参数将 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">保存在 NVS</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 中用于下次启动，避免每次使用前的重复校准。</mark></span></span></p></div><div id="https://www.notion.so/97b6e5729f5348a1895b7716f7e02bf9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">触摸屏按下：不论是电阻还是电容触摸屏，通常的触摸屏控制芯片会有一个用于 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">通知触摸事件的中断引脚</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 。但是驱动中没有使用该信号，一方面是因为对于有屏幕的应用需要尽量节省出 IO 给其他外设；另一方面是触摸控制器给出的该信号 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">不如程序通过寄存器数据判断的准确性高</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 。对于电阻触摸屏来说，判断按下的依据是 Z 方向的压力大于配置的阈值；对于电容触摸屏则是判断至少有一个触摸点存在。</mark></span></span></p></div><div id="https://www.notion.so/a168dff731524c63a38c7995c3e7b2b7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">触摸屏的旋转：触摸屏具有与显示屏一样的 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">8 个方向</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> ，定义在 touch_panel_dir_t 中。这里的旋转是通过软件换算来实现的，通常把二者的方向设置为相同。但这并不是一成不变的，例如：在使用电容触摸屏时，有可能触摸屏固有的方向与显示屏原始显示方向不一致，如果简单的将这两个方向设置为相同后，将无法正确的点击屏幕内容，这时需要根据实际情况调整。</mark></span></span></p></div><div id="https://www.notion.so/dec75bb0b52043f6a2031eb0a1684720" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">触摸屏的分辨率设置也是很重要的，因为触摸屏旋转后的换算依赖于触摸屏的宽和高分辨率大小，设置不当将无法得到正确的旋转效果。</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/dca93c4dbcbb48f29f9c5c4edd900d76" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">电阻触摸：需要校正；</mark></span></span></li><li id="https://www.notion.so/bd38aead800242eea4e78d960539128d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">电容触摸：不需要校正，支持多点触摸，而且有些支持固定速率的触摸按钮。</mark></span></span></li><li id="https://www.notion.so/76242293e8294bb2b94bd3124684580e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">NS2009 电阻触摸：提供 press + position 功能； </mark></span></span></li><li id="https://www.notion.so/100fc3f52a8880dab451d77b37dd7783" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">FT6X36: 电容触摸：只能提供 position 功能；</mark></span></span></li></ul><div id="https://www.notion.so/4b5e9fdabb0c42bcb6ac41b6b2e5a278" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/e5ea3eb77ff54a0783c110589220d3ca" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">初始化：</mark></span></span></p></div><pre id="https://www.notion.so/3c5d17c1e8684935a8c8a1b6cb10aa42" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">// https://docs.espressif.com/projects/espressif-esp-iot-solution/zh_CN/latest/input_device/touch_panel.html#id5</span>
+<span class="token class-name">touch_panel_driver_t</span> touch<span class="token punctuation">;</span> <span class="token comment">// a touch panel driver</span>
+
+<span class="token class-name">i2c_config_t</span> i2c_conf <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span>mode <span class="token operator">=</span> I2C_MODE_MASTER<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>sda_io_num <span class="token operator">=</span> <span class="token number">35</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>sda_pullup_en <span class="token operator">=</span> GPIO_PULLUP_ENABLE<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>scl_io_num <span class="token operator">=</span> <span class="token number">36</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>scl_pullup_en <span class="token operator">=</span> GPIO_PULLUP_ENABLE<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>master<span class="token punctuation">.</span>clk_speed <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token class-name">i2c_bus_handle_t</span> i2c_bus <span class="token operator">=</span> <span class="token function">i2c_bus_create</span><span class="token punctuation">(</span>I2C_NUM_0<span class="token punctuation">,</span> <span class="token operator">&amp;</span>i2c_conf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">touch_panel_config_t</span> touch_cfg <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span>interface_i2c <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span>i2c_bus <span class="token operator">=</span> i2c_bus<span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>clk_freq <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>i2c_addr <span class="token operator">=</span> <span class="token number">0x38</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>interface_type <span class="token operator">=</span> TOUCH_PANEL_IFACE_I2C<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>pin_num_int <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>direction <span class="token operator">=</span> TOUCH_DIR_LRTB<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>width <span class="token operator">=</span> <span class="token number">800</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>height <span class="token operator">=</span> <span class="token number">480</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* Initialize touch panel controller FT5x06 */</span>
+<span class="token function">touch_panel_find_driver</span><span class="token punctuation">(</span>TOUCH_PANEL_CONTROLLER_FT5X06<span class="token punctuation">,</span> <span class="token operator">&amp;</span>touch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+touch<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>touch_cfg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* start to run calibration */</span>
+touch<span class="token punctuation">.</span><span class="token function">calibration_run</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lcd<span class="token punctuation">,</span> false<span class="token punctuation">)</span><span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/554db88fcd3f4247906978aadc1b1548" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">获取触摸屏是否按下及其触点坐标：</mark></span></span></p></div><div id="https://www.notion.so/7ae21f391530420c9937bd9812ff7346" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/da7d758841c74655bfbab97e0375f16e" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token class-name">touch_panel_points_t</span> points<span class="token punctuation">;</span>
+touch<span class="token punctuation">.</span><span class="token function">read_point_data</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>points<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">int32_t</span> x <span class="token operator">=</span> points<span class="token punctuation">.</span>curx<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token class-name">int32_t</span> y <span class="token operator">=</span> points<span class="token punctuation">.</span>cury<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>TOUCH_EVT_PRESS <span class="token operator">==</span> points<span class="token punctuation">.</span>event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"Pressed, Touch point at (%d, %d)"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/a92826ffc955428ba04de238bb9a5c5a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">ESP32 Flappy Bird：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/Makerfabs/Project_ESP32-Flappy-Bird/tree/master">https://github.com/Makerfabs/Project_ESP32-Flappy-Bird/tree/master</a></mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/33aa19639afb4129a61333b91c60b02d" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">LCD 3.5 inch Amorphous-TFT-LCD (Thin Film Transistor Liquid Crystal Display) for mobile-phone or handy electrical equipments.</mark></span></span></li><li id="https://www.notion.so/b5013870cb5249fc8f97066bdc90089b" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">NS2009 is A 4-wire resistive touch screen control circuit with I2C interface, which contains A 12-bit resolution A/D converter.</mark></span></span></li><li id="https://www.notion.so/b066af8b4468422e8968bcd6c8e22132" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">The FT6X36 Series ICs are single-chip capacitive touch panel controller IC with a built-in 16 bit enhanced Micro-controller unit (MCU).</mark></span></span></li></ol><div id="https://www.notion.so/721c8d7461074ae59516cd15096c0bce" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">touch controller 一般是通过 I2C/SPI 接口来读取的：</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/fde9ef6f2eea4c71913cba46eeacb8b2" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">SPI 接口： 如 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/espressif/esp-idf/tree/master/examples/peripherals/lcd/spi_lcd_touch">STMPE610</a></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> ，一般和 LCD SPI 接口复用，通过 CS 信号来区分；</mark></span></span></li></ul><div id="https://www.notion.so/a2a4c784843b40ce9eaaedbbb93e50e9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">NS2009: </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/Makerfabs/Project_Touch-Screen-Camera/blob/master/example/touch_draw_v2/NS2009.cpp">https://github.com/Makerfabs/Project_Touch-Screen-Camera/blob/master/example/touch_draw_v2/NS2009.cpp</a></mark></span></span></p></div><div id="https://www.notion.so/165651f4ed4541b3a88d099f35109848" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/3aad3ef76a46487db05e4164a84f49e5" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"NS2009.h"</span></span>
+
+<span class="token comment">//I2C receive</span>
+<span class="token keyword">void</span> <span class="token function">ns2009_recv</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">uint8_t</span> <span class="token operator">*</span>send_buf<span class="token punctuation">,</span> size_t send_buf_len<span class="token punctuation">,</span> <span class="token keyword">uint8_t</span> <span class="token operator">*</span>receive_buf<span class="token punctuation">,</span>
+                 size_t receive_buf_len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Wire<span class="token punctuation">.</span><span class="token function">beginTransmission</span><span class="token punctuation">(</span>NS2009_ADDR<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>send_buf<span class="token punctuation">,</span> send_buf_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">endTransmission</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">requestFrom</span><span class="token punctuation">(</span>NS2009_ADDR<span class="token punctuation">,</span> receive_buf_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>Wire<span class="token punctuation">.</span><span class="token function">available</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token operator">*</span>receive_buf<span class="token operator">++</span> <span class="token operator">=</span> Wire<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//read 12bit data</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">ns2009_read</span><span class="token punctuation">(</span><span class="token keyword">uint8_t</span> cmd<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">uint8_t</span> buf<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">ns2009_recv</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cmd<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>buf<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>buf<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">>></span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//Press maybe not correct</span>
+<span class="token keyword">int</span> <span class="token function">ns2009_get_press</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">ns2009_read</span><span class="token punctuation">(</span>NS2009_LOW_POWER_READ_Z1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">ns2009_pos</span><span class="token punctuation">(</span><span class="token keyword">int</span> pos<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> press <span class="token operator">=</span> <span class="token function">ns2009_read</span><span class="token punctuation">(</span>NS2009_LOW_POWER_READ_Z1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> x<span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    x <span class="token operator">=</span> <span class="token function">ns2009_read</span><span class="token punctuation">(</span>NS2009_LOW_POWER_READ_X<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    y <span class="token operator">=</span> <span class="token function">ns2009_read</span><span class="token punctuation">(</span>NS2009_LOW_POWER_READ_Y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    pos<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> x <span class="token operator">*</span> SCREEN_X_PIXEL <span class="token operator">/</span> <span class="token number">4096</span><span class="token punctuation">;</span> <span class="token comment">//4096 = 2 ^ 12</span>
+    pos<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> y <span class="token operator">*</span> SCREEN_Y_PIXEL <span class="token operator">/</span> <span class="token number">4096</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//pos[0] = x;</span>
+    <span class="token comment">//pos[1] = y;</span>
+    <span class="token keyword">return</span> press<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/fec799bb240049a494c06c831c5fc2df" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">FT6236:</mark></span></span></p></div><div id="https://www.notion.so/5f3bb547dc6043f0a9b4fde091ec9f29" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/e6fdb86c18df4500b8e09d2b49ebdeaf" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment">// https://github.com/Makerfabs/Makerfabs-ESP32-S3-Parallel-TFT-with-Touch/blob/main/example/touch_keyboard_v2/FT6236.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FT6236.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span><span class="token keyword">int</span> reg<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> data <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">beginTransmission</span><span class="token punctuation">(</span>TOUCH_I2C_ADD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>reg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">endTransmission</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">requestFrom</span><span class="token punctuation">(</span>TOUCH_I2C_ADD<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Wire<span class="token punctuation">.</span><span class="token function">available</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        data <span class="token operator">=</span> Wire<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> data<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/*
+int getTouchPointX()
+{
+    int XL = 0;
+    int XH = 0;
+
+    XH = readTouchReg(TOUCH_REG_XH);
+    XL = readTouchReg(TOUCH_REG_XL);
+
+    return ((XH &amp; 0x0F) &lt;&lt; 8) | XL;
+}
+*/</span>
+
+<span class="token keyword">int</span> <span class="token function">getTouchPointX</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> XL <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> XH <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    XH <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_XH<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//Serial.println(XH >> 6,HEX);</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>XH <span class="token operator">>></span> <span class="token number">6</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    XL <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_XL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>XH <span class="token operator">&amp;</span> <span class="token number">0x0F</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> XL<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">getTouchPointY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> YL <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> YH <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    YH <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_YH<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    YL <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_YL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>YH <span class="token operator">&amp;</span> <span class="token number">0x0F</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> YL<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">ft6236_pos</span><span class="token punctuation">(</span><span class="token keyword">int</span> pos<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> XL <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> XH <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> YL <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> YH <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    XH <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_XH<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>XH <span class="token operator">>></span> <span class="token number">6</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        pos<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        pos<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    XL <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_XL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    YH <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_YH<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    YL <span class="token operator">=</span> <span class="token function">readTouchReg</span><span class="token punctuation">(</span>TOUCH_REG_YL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    pos<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>XH <span class="token operator">&amp;</span> <span class="token number">0x0F</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> XL<span class="token punctuation">;</span>
+    pos<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>YH <span class="token operator">&amp;</span> <span class="token number">0x0F</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> YL<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></span></span></span></code></pre><div id="https://www.notion.so/447b8cc200ee4552b44de788c22cdeb2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Makerfabs ESP32-S3 Parallel TFT with Touch: </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/Makerfabs/Makerfabs-ESP32-S3-Parallel-TFT-with-Touch">https://github.com/Makerfabs/Makerfabs-ESP32-S3-Parallel-TFT-with-Touch</a></mark></span></span></p></div><div id="https://www.notion.so/67ecae3f6cdf410ea49fdcd3f5b9fb24" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">ESP32 3.5&quot; TFT Touch with Camera: </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://wiki.makerfabs.com/ESP32_3.5_TFT_Touch_with_Camera.html">https://wiki.makerfabs.com/ESP32_3.5_TFT_Touch_with_Camera.html</a></mark></span></span></p></div><div id="https://www.notion.so/944357a182cc4f98b2624458952afaf2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">大量 LCD+Touch 的例子：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/Makerfabs/Project_Touch-Screen-Camera">https://github.com/Makerfabs/Project_Touch-Screen-Camera</a></mark></span></span></p></div><div id="https://www.notion.so/4e61455fdc054ef99a6fa01f51ba6a5a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><ul id="https://www.notion.so/4441d9b7520d41289e99d3c30750e316" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/ccab34fc144943a18be3afeeffb11736"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString">Rust 驱动 Touch - 触摸板</span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/a2db805ffa24486381a6b5775803978b"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">start
+</mark></span></span></div></a></li></ul><div id="https://www.notion.so/1892661ae51d43f3b2323525ebd90a11" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>

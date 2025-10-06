@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>开发 Rust no_std 应用&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="开发 Rust no_std 应用">
+  
+  
+    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      </div>
+    
+    <h1 class="Header__Title">开发 Rust no_std 应用</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/c1a1977be6c34dbd952afcf3945a2a41" class="PageRoot"><h2 id="https://www.notion.so/2a46249282e54c85a2beeddab08dc9e6" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/2a46249282e54c85a2beeddab08dc9e6"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">no_std 应用</mark></span></span></h2><div id="https://www.notion.so/130003ccda8643298a953d1abcbef330" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">
+no_std 应用是 bare-metal 实现，不依赖 esp-idf 及其提供的 FreeRTOS 操作系统和 Rust std 标注库，而是使用 std 的一个子集 core 库，core 库不支持 heap 内存分配和线程。当前支持 HAL/WIFI/BLE/ESP-NOW/Backtrace/Storage 等。</mark></span></span></p></div><div id="https://www.notion.so/d2374fed4c2e4fb6b32a5b86c27d047f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">no_std </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">不依赖于</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> C/C++ 开发的 esp-idf 及其提供的 FreeRTOS 操作系统环境，而是基于 esp-pacs/esp-hal 开发的 xtensa-esp32s3-none-elf 应用。</mark></span></span></p></div><div id="https://www.notion.so/e72646a41d7d4d90b8135943ff77e9f6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">esp-alloc crate 为 no_std 提供了 heap 内存分配的支持；例子：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/danclive/esp-examples/blob/main/alloc/src/main.rs">esp-examples/alloc</a></mark></span></span></p></div><div id="https://www.notion.so/2fbfa51746ac4e63bf3f3a0971dc298a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/f411c30d55114b17907b72ceaf15777e" class="Image Image--Normal"><figure><a href="#?width=384"><img src="#?width=384" style="width:384px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><h3 id="https://www.notion.so/fc7edc5c335047c6b2fe092a6c34c017" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/fc7edc5c335047c6b2fe092a6c34c017"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">no_std 相关的库：</mark></span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/60b3d8eb186543b480713255bb755205" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-pacs</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : Peripheral access crates，是根据处理的 SVD 描述文件生成的 Peripheral Access Crates (PACs) ，它是低级的处理器寄存器定义 unsafe 封装。理论上可以直接基于 esp-pacs 开发 no_std 应用，但是因为层次太低级，开发效率不高，所以一般使用 esp-hal 等高层封装来开发。</mark></span></span></li><li id="https://www.notion.so/6cb864fd472d49b28f3677568e2272d9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-hal</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : Hardware abstraction layer. async traits from the various packages in the </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">embedded-hal</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> repository.</mark></span></span><ul class="BulletedListWrapper"><li id="https://www.notion.so/f63a2df2efc440d39db37df2ca23e596" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">相比 esp-pacs crate，esp-hal 是高层次的封装，一般实现了 embedded-hal 和 async trait，底层基于 esp-pacs；</mark></span></span></li><li id="https://www.notion.so/5cd0de8171f84842abe0e5edea93d52b" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">esp-hal 为 embassy 提供了实现，可以通过 embassy async task 来实现 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">并发任务</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 。</mark></span></span></li><li id="https://www.notion.so/80a7a7bffcaa47d28b09a3b80447b286" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">2024.03.08 发布的 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/esp-hal/releases/tag/v0.16.0">0.16.0 版本</a></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">开始，将以前芯片相关的 esp32-hal, esp32c3-hal 等 crate 合并为一个单独的 esp-hal crate。使用时在 features 中指定 CPU 类型，如: </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-hal = { version = &quot;0.17.0&quot;, features = [ &quot;esp32s3&quot; ] }</code></mark></span></span></li></ul></li></ul><div id="https://www.notion.so/da67d793cfe44f0f869a04b19b6427c2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">说明：esp-pacs 和 esp-hal 是 no_std 应用开发的基础。</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/9d7b966b6b964072b0def55a82a038c5" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-wifi</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : Wi-Fi, BLE and ESP-NOW support</mark></span></span></li><li id="https://www.notion.so/62ebe26cce584dd59dd071e492065e3e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-alloc</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">Simple heap allocator</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">. This allocator is built on top of the phil-opp/linked-list-allocator crate, which does most of the heavy lifting. While it’s often advisable to avoid allocations in such limited environments, there are scenarios when an allocator is still required and/or desirable.</mark></span></span></li><li id="https://www.notion.so/1d2a725c800e40d880ab50871fff8c7e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-println</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">print!, println!</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">. esp-println allows for printing over UART, USB Serial JTAG, or RTT without any required dependencies. 实现 log crate 的 trait，用于打印日志到串口；</mark></span></span></li><li id="https://www.notion.so/f5e918f3726e4b9fb5ed2e988ab2fe44" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-backtrace</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : Exception and panic handlers. As the name implies, esp-backtrace </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">enables backtraces</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> in no_std applications. It additionally provides </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">a panic handler and exception handler</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> , both behind features. This crate makes debugging issues much easier.</mark></span></span><ul class="BulletedListWrapper"><li id="https://www.notion.so/6f7b2f76a01e40b18d9e2ebc46c13796" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">为了正确显示 panic 的行号和函数符号，需要确保在 release profile 中配置 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">debug = true</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 参数（dev profile 缺省是该值）。</mark></span></span></li></ul></li><li id="https://www.notion.so/595ad4b6c430443e929ca4c31e52659c" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-storage</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : Embedded-storage traits to access unencrypted flash memory</mark></span></span></li><li id="https://www.notion.so/2983e476565d462eac8b6b214b0bbdb7" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-ieee802154</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : Low-level IEEE802.15.4 driver for the ESP32-C6 and ESP32-H2</mark></span></span></li><li id="https://www.notion.so/96d651890fd14ff8affe8601863dde9d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-openthread</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> : A bare-metal Thread implementation using esp-ieee802154</mark></span></span><ul class="BulletedListWrapper"><li id="https://www.notion.so/5e0d4555810843c4846caf02a7afd64d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">这里的 thread 不是线程，而是一个为低功耗物联网（IEEE 802.15.4-2006 WPAN）设备设计的基于 IPv6 的网络协议。参考：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://openthread.io/guides/thread-primer?hl=zh-cn">https://openthread.io/guides/thread-primer?hl=zh-cn</a></mark></span></span></li></ul></li></ul><div id="https://www.notion.so/913d1c69eedd42608d2c85933616558f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">对比：</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/1c1ebca9bf80409a8360f1edf96174b5" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">std 的 esp-idf-hal 实现了 embeded-hal 和 async trait，底层基于 C/C++ esp-idf；</mark></span></span></li><li id="https://www.notion.so/e675adc740f54dc78ee15991e555030c" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">no_std 的 esp-hal 实现了 embeded-hal 和 async trait，底层基于 esp-pacs；</mark></span></span></li></ol><div id="https://www.notion.so/c5196f7d297d47569b6017ce402389ae" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/014ec3c1636f4e20b268b11cd75d1a29" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">其它开源的 no_std 库(embedded-* 是 Rust 嵌入式工作组或社区提供的 no_std 应用项目):</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/8cd9021f3af945ffbbe729d682b0c86a" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">embedded-graphics: Embedded-graphics is a 2D graphics library that is focused on memory constrained embedded devices.</mark></span></span></li><li id="https://www.notion.so/bbf8668850a24c58b5ffb634a04e56eb" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">embedded-layout: Simple layout/alignment functions</mark></span></span></li><li id="https://www.notion.so/546df08ecbb6401295e23629ea93450b" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">embedded-text: TextBox with text alignment options</mark></span></span></li></ol><div id="https://www.notion.so/a82069595c5b4e14b8a12b7dcec51cf0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">embassy 是支持 async 的 no_std 库。</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/258234c496354614ad24a0cf4233e8cc" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">embassy 为嵌入式 Rust 提供了一个 async task 的 embassy-executor 实现，有两种实现方式：</mark></span></span><ol class="NumberedListWrapper"><li id="https://www.notion.so/de85a5b3f6184b89a0a0ef9927e60040" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">多线程模式：在 ESP32-S3 芯片上可以实现并发执行异步任务的多线程实现。</mark></span></span></li><li id="https://www.notion.so/6f9bd9f156c647f4bd8f9248876cd8c7" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">中断模式：如单核芯片上实现并发；</mark></span></span></li></ol></li><li id="https://www.notion.so/efdbc183907a4a438b0342443d8dbbdc" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">thread aware executor on multicore systems；</mark></span></span></li><li id="https://www.notion.so/579a14ceac55495cbedc997ac56b2c3d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">并发异步任务示例：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/esp-hal/blob/main/examples/src/bin/embassy_multicore.rs">https://github.com/esp-rs/esp-hal/blob/main/examples/src/bin/embassy_multicore.rs</a></mark></span></span></li><li id="https://www.notion.so/20c3c6cfa56e46adb1037d22e44ace00" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">embassy 开发举例：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://blog.theembeddedrustacean.com/series/rust-embassy">https://blog.theembeddedrustacean.com/series/rust-embassy</a></mark></span></span></li><li id="https://www.notion.so/e383d3cde20c42e9b87cf42b44ca4c7d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/apollolabsdev/ESP32C3/tree/41efd9d1bbdf8d2e071332af610bae0515407d07/embassy_examples">https://github.com/apollolabsdev/ESP32C3/tree/41efd9d1bbdf8d2e071332af610bae0515407d07/embassy_examples</a></mark></span></span></li></ul><div id="https://www.notion.so/6d762c5c5e3148c28a176b039325ad1f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">使用 esp-rs/esp-template 模板来快速创建 no_std 类型项目：</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/5c31469d96274ce3974439c42200ee96" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">为了在 panic 时打印代码行和符号，需要在 release profile 中添加配置 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">debug = 2 # 2/full/true</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> ：full debug info, 虽然二进制包含 debuginfo，但是烧写时会被去掉，并不会增加 flash app 体积。</mark></span></span></li><li id="https://www.notion.so/51e6f3acc7b84d26a62d5be4c14c8fbf" class="BulletedList"><span class="SemanticStringArray"></span></li></ul><div id="https://www.notion.so/5211d71f1a7f4ebcab0b6b69caeadd68" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">创建一个 no_std Bare-Metal 项目, 自定义是否使用 WiFi/Bluetooth/ESP-NOW via the esp-wifi crate；</mark></span></span></p></div><div id="https://www.notion.so/f3307fbeb9af4fe49c1b901af2d12fae" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> </mark></span></span></p></div><pre id="https://www.notion.so/7d5d6a4df0bc47ae86043d4ccb63aaa0" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32$ cargo generate esp-rs/esp-template 
+
+# no_std 应用需要声明 no_std 和 no_main 宏，这样编译器才不会导入 std 库。
+# #![no_std] 告诉编译器不导入和链接 libstd 库。
+# #![no_main] 告诉编译器不使用标准的 main 接口，而是使用 esp 提供的 main 入口。
+zj@a:~/code/esp32/non_std$ cat myesp-nonstd/src/main.rs
+#![no_std]
+#![no_main]
+
+# in a bare-metal environment, we need a panic handler that runs if a panic occurs in code There are
+# a few different crates you can use (e.g panic-halt) but esp-backtrace provides an implementation
+# that prints _the address of a backtrace_ - together with espflash these addresses can get decoded
+# into source code locations
+use esp_backtrace as _;
+
+use esp_hal::{clock::ClockControl, peripherals::Peripherals, prelude::*, delay::Delay};
+
+#[entry]
+fn main() -&gt; ! {
+    let peripherals = Peripherals::take();
+    let system = peripherals.SYSTEM.split();
+
+    let clocks = ClockControl::max(system.clock_control).freeze();
+    let delay = Delay::new(&amp;clocks);
+
+    esp_println::logger::init_logger_from_env();
+
+    loop {
+        log::info!(&quot;Hello world!&quot;);
+        delay.delay(500.millis());
+    }
+}</span></span></span></code></pre><h3 id="https://www.notion.so/2158faf7e1b54e6e9e5dff94441bc939" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/2158faf7e1b54e6e9e5dff94441bc939"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">按需配置 Cargo.toml：</mark></span></span></h3><div id="https://www.notion.so/d740469a774a4d3b8cbc65df002b8265" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> </mark></span></span></p></div><pre id="https://www.notion.so/8639ca632d4b404a90602b63bcd76039" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/non_std$ cat myesp-nonstd/Cargo<span class="token punctuation">.</span>toml
+<span class="token punctuation">[</span><span class="token table class-name">package</span><span class="token punctuation">]</span> 
+<span class="token key property">name</span> <span class="token punctuation">=</span> <span class="token string">"myesp-nonstd"</span>
+<span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.1.0"</span>
+<span class="token key property">authors</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"alizj"</span><span class="token punctuation">]</span>
+<span class="token key property">edition</span> <span class="token punctuation">=</span> <span class="token string">"2021"</span>
+<span class="token key property">license</span> <span class="token punctuation">=</span> <span class="token string">"MIT OR Apache-2.0"</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">dependencies</span><span class="token punctuation">]</span>
+<span class="token comment"># esp-has 是 no_std 类型 crate, features 中指定了 CPU 类型</span>
+<span class="token key property">esp-hal</span> <span class="token punctuation">=</span> <span class="token punctuation">{</span> <span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.17.0"</span><span class="token punctuation">,</span> <span class="token key property">features</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span> <span class="token string">"esp32s3"</span> <span class="token punctuation">]</span> <span class="token punctuation">}</span>
+
+<span class="token comment"># bare-metal 环境下，当程序 panic 时打印调用栈</span>
+<span class="token key property">esp-backtrace</span> <span class="token punctuation">=</span> <span class="token punctuation">{</span> <span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.11.0"</span><span class="token punctuation">,</span> <span class="token key property">features</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span>
+    <span class="token string">"esp32s3"</span><span class="token punctuation">,</span>
+    <span class="token string">"exception-handler"</span><span class="token punctuation">,</span>
+    <span class="token string">"panic-handler"</span><span class="token punctuation">,</span>
+    <span class="token string">"println"</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span> <span class="token punctuation">}</span>
+
+<span class="token comment"># esp-println 启用 log feature 后，为 log 提供具体的实现</span>
+<span class="token key property">esp-println</span> <span class="token punctuation">=</span> <span class="token punctuation">{</span> <span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.9.0"</span><span class="token punctuation">,</span> <span class="token key property">features</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"esp32s3"</span><span class="token punctuation">,</span> <span class="token string">"log"</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
+
+<span class="token comment"># 向终端打印日志。esp_println 提供了 log 的具体实现</span>
+<span class="token key property">log</span> <span class="token punctuation">=</span> <span class="token punctuation">{</span> <span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"0.4.20"</span> <span class="token punctuation">}</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">profile.dev</span><span class="token punctuation">]</span>
+<span class="token comment"># Rust debug is too slow.  For debug builds always builds with some optimization</span>
+<span class="token key property">opt-level</span> <span class="token punctuation">=</span> <span class="token string">"s"</span> <span class="token comment"># optimize for binary size</span>
+
+<span class="token comment"># dev profile 的 debug 参数默认为 2，表示 full debug info，</span>
+<span class="token comment"># release profile 的 debug 参数默认为 0，表示关闭 debug info；</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">profile.release</span><span class="token punctuation">]</span>
+<span class="token key property">codegen-units</span> <span class="token punctuation">=</span> <span class="token number">1</span> <span class="token comment"># LLVM can perform better optimizations using a single thread</span>
+<span class="token key property">debug</span> <span class="token punctuation">=</span> <span class="token number">2</span> <span class="token comment"># 2/full/true：full debug info, 虽然二进制包含 debuginfo，但是烧写时会被去掉，所以不会增加 flash app 体积</span>
+<span class="token key property">debug-assertions</span> <span class="token punctuation">=</span> <span class="token boolean">false</span>
+<span class="token key property">incremental</span> <span class="token punctuation">=</span> <span class="token boolean">false</span>
+<span class="token key property">lto</span> <span class="token punctuation">=</span> <span class="token string">'fat'</span>
+<span class="token key property">opt-level</span> <span class="token punctuation">=</span> <span class="token string">'s'</span>
+<span class="token key property">overflow-checks</span> <span class="token punctuation">=</span> <span class="token boolean">false</span></span></span></span></code></pre><h3 id="https://www.notion.so/3e4d25f709674723ae85c9ebb7e8240d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/3e4d25f709674723ae85c9ebb7e8240d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">按需配置 rust-toolchain.toml </mark></span></span></h3><div id="https://www.notion.so/c4fb7541d1b144319fec3e8dc48e7e65" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> </mark></span></span></p></div><pre id="https://www.notion.so/bd3b7ee59b6845d8966fdbd8ce94bb55" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/myesp-nonstd$ cat rust-toolchain<span class="token punctuation">.</span>toml
+<span class="token punctuation">[</span><span class="token table class-name">toolchain</span><span class="token punctuation">]</span>
+<span class="token key property">channel</span> <span class="token punctuation">=</span> <span class="token string">"esp"</span> <span class="token comment"># 使用 esp channel 工具链 </span></span></span></span></code></pre><h3 id="https://www.notion.so/99b4e557dca946f7b961efd9f7e2cdd8" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/99b4e557dca946f7b961efd9f7e2cdd8"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">按需配置 .cargo/config.toml </mark></span></span></h3><div id="https://www.notion.so/02d32c4efafa4712a18f8880d6aea4e1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/514b90d3b7cd41ef87c2d0a5ee50b891" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/myesp-nonstd$ cat <span class="token punctuation">.</span>cargo/config<span class="token punctuation">.</span>toml
+<span class="token punctuation">[</span><span class="token table class-name">target.xtensa-esp32s3-none-elf</span><span class="token punctuation">]</span>
+<span class="token key property">runner</span> <span class="token punctuation">=</span> <span class="token string">"espflash flash --monitor"</span>  <span class="token comment"># cargo run 会烧录 flash 和读终端日志</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">env</span><span class="token punctuation">]</span> 
+<span class="token key property">ESP_LOGLEVEL</span><span class="token punctuation">=</span><span class="token string">"INFO"</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">build</span><span class="token punctuation">]</span>
+<span class="token key property">rustflags</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span>
+  <span class="token string">"-C"</span><span class="token punctuation">,</span> <span class="token string">"link-arg=-nostartfiles"</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span>
+
+<span class="token key property">target</span> <span class="token punctuation">=</span> <span class="token string">"xtensa-esp32s3-none-elf"</span> <span class="token comment"># 使用不链接 esp-idf 的 none-elf 工具链</span>
+
+<span class="token punctuation">[</span><span class="token table class-name">unstable</span><span class="token punctuation">]</span>
+<span class="token key property">build-std</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"core"</span><span class="token punctuation">]</span>  <span class="token comment"># 使用 core 库而非 std 库！</span></span></span></span></code></pre><h3 id="https://www.notion.so/05c76299ac9344f8a8a9f3cc710089a8" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/05c76299ac9344f8a8a9f3cc710089a8"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">构建和烧录：</mark></span></span></h3><div id="https://www.notion.so/6d5ee8e4d992403f87cf468375809559" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> </mark></span></span></p></div><pre id="https://www.notion.so/edd650e11a0346f8bc97e7106498641b" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32$ <span class="token builtin class-name">cd</span> myesp-nonstd/
+
+zj@a:~/code/esp32/myesp-nonstd$ <span class="token builtin class-name">source</span> ~/esp/export-esp.sh
+
+<span class="token comment"># 构建，只使用 --release profile </span>
+zj@a:~/code/esp32/myesp-nonstd$ <span class="token function">cargo</span> build <span class="token parameter variable">--release</span>
+
+<span class="token comment"># cargo 会运行 espflash 来烧写 binary</span>
+zj@a:~/code/esp32/myesp-nonstd$ <span class="token function">cargo</span> run</span></span></span></code></pre><div id="https://www.notion.so/3ac8e5cba1784463bed515122c8bf46b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">no_std 构建结果 </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">只有二进制</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> myesp-nonstd, 不包含构建 std 应用时生成的 bootloader.bin 和 partition-table.bin：</mark></span></span></p></div><div id="https://www.notion.so/496eea0ae84c42cd815537856f8d5039" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> </mark></span></span></p></div><pre id="https://www.notion.so/07d70a70707d4dc99e77155584e73c12" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/code/esp32/non_std$ <span class="token function">ls</span> <span class="token parameter variable">-l</span> target/xtensa-esp32s3-none-elf/debug/
+total <span class="token number">2</span>.0M
+drwxr-xr-x  <span class="token number">27</span> alizj  <span class="token number">864</span>  <span class="token number">5</span>  <span class="token number">9</span> <span class="token number">12</span>:20 build/ 
+drwxr-xr-x <span class="token number">338</span> alizj  11K  <span class="token number">5</span> <span class="token number">10</span> <span class="token number">15</span>:27 deps/
+drwxr-xr-x   <span class="token number">2</span> alizj   <span class="token number">64</span>  <span class="token number">5</span>  <span class="token number">8</span> <span class="token number">15</span>:06 examples/
+drwxr-xr-x   <span class="token number">5</span> alizj  <span class="token number">160</span>  <span class="token number">5</span>  <span class="token number">9</span> <span class="token number">12</span>:21 incremental/
+-rwxr-xr-x   <span class="token number">1</span> alizj <span class="token number">2</span>.0M  <span class="token number">5</span> <span class="token number">10</span> <span class="token number">15</span>:27 myesp-nonstd*
+-rw-r--r--   <span class="token number">1</span> alizj  <span class="token number">194</span>  <span class="token number">5</span>  <span class="token number">8</span> <span class="token number">15</span>:06 myesp-nonstd.d</span></span></span></code></pre><div id="https://www.notion.so/3b3f9eb90ace4df7985ea028622e67c9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">参考：</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/7899ff96e93541a6927502ac62bbb003" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://docs.esp-rs.org/no_std-training/">官方文档：Embedded Rust (no_std) on Espressif</a></mark></span></span></li><li id="https://www.notion.so/8ee54d577d574ddb85e41b9c71d583b9" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">官方 non_std 示例：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/no_std-training">https://github.com/esp-rs/no_std-training</a></mark></span></span></li><li id="https://www.notion.so/5c0da0b2e8724008bd4348fe509600ba" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://apollolabsblog.hashnode.dev/series/esp32c3-embedded-rust-hal">https://apollolabsblog.hashnode.dev/series/esp32c3-embedded-rust-hal</a></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> 强烈推荐。</mark></span></span></li><li id="https://www.notion.so/953296971c8e4a66b9864aaff63aad3b" class="NumberedList" value="4"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/apollolabsdev/ESP32C3">https://github.com/apollolabsdev/ESP32C3</a></mark></span></span></li><li id="https://www.notion.so/25e4d2ebcc4f4d7cb14ce43c842e7602" class="NumberedList" value="5"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://beta7.io/posts/bare-metal-rust-on-esp32/">Bare-Metal Rust on ESP32: A Brief Overview</a></mark></span></span></li><li id="https://www.notion.so/d73a39acb59a4726be200d6d027788c2" class="NumberedList" value="6"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem">https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem</a></mark></span></span></li></ol><h2 id="https://www.notion.so/280c4094232945a3ae698f3c0fae8776" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/280c4094232945a3ae698f3c0fae8776"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">1 在 Rust no_std 应用中使用 defmt 日志框架 </mark></span></span></h2><div id="https://www.notion.so/d1722a3044aa4f32a638490979f967c3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">defmt 是一种 no_std 应用的 logging framework，它将 ESP32 芯片中应用打印的日志延迟到 host server 上格式化，从而降低 ESP32 芯片应用的内存开销。</mark></span></span></p></div><div id="https://www.notion.so/84d913a2705742fa9f8d4b7db2e84c50" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">ESP32 no_std book 的 defmt 例子：</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://docs.esp-rs.org/no_std-training/03_7_defmt.html">https://docs.esp-rs.org/no_std-training/03_7_defmt.html</a></mark></span></span></p></div><div id="https://www.notion.so/beb12f908fcf43caaf27579f8031d08e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">对于 ESP32 no_std 应用来说， </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">esp-println, esp-backtrace and espflash/cargo-espflash provide mechanisms to use defmt</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> :</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/6bc7aab5c65f446599aae3d240464a5b" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">espflash has support for different logging formats, one of them being defmt.</mark></span></span><ul class="BulletedListWrapper"><li id="https://www.notion.so/36741f9f9a2243eeb080efec434aeda3" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">espflash requires framming bytes as when using defmt it also needs to print non-defmt messages, like the bootloader prints. It’s important to note that other defmt-enabled tools like probe-rs won’t be able to parse these messages due to the extra framing bytes. Uses </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">rzcobs encoding</code></mark></span></span></li></ul></li><li id="https://www.notion.so/c236d6a68472499da0d5b460b4e4fa3d" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">esp-println has a defmt-espflash feature, which adds framming bytes so espflash knows that is a defmt message.</mark></span></span></li><li id="https://www.notion.so/e7ee7736766b44f3a4d622ef14e022c6" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">esp-backtrace has a defmt feature that </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><code class="SemanticString__Fragment SemanticString__Fragment--Code">uses defmt logging</code></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"> to print panic and exception handler messages.</mark></span></span></li></ol><div id="https://www.notion.so/11f055a04719401d8677087f4a74524e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">在代码里使用 defmt::println!() 等宏来打印日志。</mark></span></span></p></div><div id="https://www.notion.so/9f5deeafd966465dbaa9683a6d64dfb0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">If you want to use any of the logging macros like info, debug</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/38a6d0622a6e4125a6db1c0d596a54ae" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Enable the log feature of esp-println</mark></span></span></li><li id="https://www.notion.so/dbe631655a324e1f899db4423f71e584" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">When building the app, set DEFMT_LOG level.</mark></span></span></li></ul><div id="https://www.notion.so/21525bca0d534340bc3e53adc77b6eb1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">defmt-rtt：Transmit defmt log messages over the RTT (Real-Time Transfer) protocol </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/knurling-rs/defmt/tree/main/firmware/defmt-rtt">https://github.com/knurling-rs/defmt/tree/main/firmware/defmt-rtt</a></mark></span></span></p></div><div id="https://www.notion.so/f8f301355f1a4fad8aa2f119768d69f4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">embassy 依赖于 defmt 和 defmt-rtt：</mark></span></span></p></div><ol class="NumberedListWrapper"><li id="https://www.notion.so/6e71ce519e234990b15dea2f4265f706" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://embassy.dev/book/dev/project_structure.html">https://embassy.dev/book/dev/project_structure.html</a></mark></span></span></li><li id="https://www.notion.so/a8898c4aa3cb4e90b34358c47b3553b9" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://embassy.dev/book/dev/basic_application.html">https://embassy.dev/book/dev/basic_application.html</a></mark></span></span></li></ol><div id="https://www.notion.so/d0486494cbc64c7995c6fc4d4d71135d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><ul id="https://www.notion.so/184c14cb7424464f82758f8711292799" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/2a46249282e54c85a2beeddab08dc9e6"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">no_std 应用</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/fc7edc5c335047c6b2fe092a6c34c017"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">no_std 相关的库：</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/2158faf7e1b54e6e9e5dff94441bc939"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">按需配置 Cargo.toml：</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/3e4d25f709674723ae85c9ebb7e8240d"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">按需配置 rust-toolchain.toml </mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/99b4e557dca946f7b961efd9f7e2cdd8"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">按需配置 .cargo/config.toml </mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/05c76299ac9344f8a8a9f3cc710089a8"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">构建和烧录：</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/280c4094232945a3ae698f3c0fae8776"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">1 在 Rust no_std 应用中使用 defmt 日志框架 </mark></span></span></div></a></li></ul><div id="https://www.notion.so/911ff4a16f7e4610963081b0c5e4f433" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>

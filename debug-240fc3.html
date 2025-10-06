@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>通用嵌入式debug方式&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="通用嵌入式debug方式">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">通用嵌入式debug方式</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Wed, Jul 30, 2025</span>
+        
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/240fc3f52a888097bb4de2014e04de85" class="PageRoot"><div id="https://www.notion.so/240fc3f52a888041a462c77ecfe6cc8c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">嵌入式调试接口详解：JTAG、ST-LINK、DAP-Link 与 CMSIS-DAP</strong></span></span></p></div><div id="https://www.notion.so/25ffc3f52a88803e87b1c70e181e1e7b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在嵌入式开发中，调试接口是连接开发主机与目标微控制器的关键桥梁。本文将深入介绍四种常见的调试接口技术，帮助开发者更好地理解和选择适合自己项目的调试工具。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88805187d8d6de12aa4e9d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88805187d8d6de12aa4e9d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">JTAG：经典的边界扫描测试接口</span></span></h2><div id="https://www.notion.so/25ffc3f52a888099b74cc0ce34441969" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">JTAG（Joint Test Action Group）最初是为了解决复杂电路板的测试问题而开发的IEEE 1149.1标准。随着时间推移，它已经成为嵌入式系统调试的重要工具。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88805abd8dfd3af6f04da9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">JTAG接口通常包含以下信号线：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/25ffc3f52a888088b835f49d8fbc2ba6" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">TCK（Test Clock）：测试时钟</span></span></li><li id="https://www.notion.so/25ffc3f52a88806ab09df9f8ed80545e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">TMS（Test Mode Select）：测试模式选择</span></span></li><li id="https://www.notion.so/25ffc3f52a88802d87a5cea73a73a8d1" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">TDI（Test Data In）：测试数据输入</span></span></li><li id="https://www.notion.so/25ffc3f52a888051aeeed7287b379cc9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">TDO（Test Data Out）：测试数据输出</span></span></li><li id="https://www.notion.so/25ffc3f52a888013918fde856b0a6ad3" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">TRST（Test Reset）：测试复位（可选）</span></span></li></ul><div id="https://www.notion.so/25ffc3f52a8880c6a940ef632fcbb111" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">JTAG的主要优势在于其通用性和成熟度。几乎所有的ARM处理器、FPGA和复杂的微控制器都支持JTAG接口。通过JTAG，开发者可以进行程序下载、单步调试、断点设置、寄存器和内存查看等操作。然而，JTAG接口需要较多的引脚，在某些空间受限的应用中可能不太适用。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88801c9457e5335a26e6bd" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88801c9457e5335a26e6bd"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">ST-LINK：STM32专属的调试利器</span></span></h2><div id="https://www.notion.so/25ffc3f52a88808a9e3bf1ad7b8165f9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ST-LINK是意法半导体（STMicroelectronics）专门为STM32系列微控制器开发的调试编程器。它支持JTAG和SWD（Serial Wire Debug）两种调试协议，其中SWD只需要两根信号线（SWDIO和SWCLK），大大减少了所需的引脚数量。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880678e28d7b0eef95170" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ST-LINK的演进历程包括：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/25ffc3f52a88807c925ee781e341041a" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">ST-LINK/V1：早期版本，功能相对基础</span></span></li><li id="https://www.notion.so/25ffc3f52a88805c8e74d75be4082ace" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">ST-LINK/V2：改进了性能和稳定性，支持更多STM32系列</span></span></li><li id="https://www.notion.so/25ffc3f52a8880749b98c8fdd87877bd" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">ST-LINK/V2-1：增加了虚拟串口功能</span></span></li><li id="https://www.notion.so/25ffc3f52a88805bb12cd704225a56b7" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">ST-LINK/V3：最新版本，支持更高的通信速度和更多功能</span></span></li></ul><div id="https://www.notion.so/25ffc3f52a8880c5baa9e1dcf7d3ad3e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ST-LINK与STM32CubeIDE、Keil MDK、IAR等主流开发环境都有良好的集成，使得STM32的开发变得更加便捷。许多STM32开发板（如Nucleo和Discovery系列）都内置了ST-LINK调试器，进一步降低了开发门槛。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a8880aead46fd029c751ee9" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a8880aead46fd029c751ee9"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">DAP-Link：开源的通用调试解决方案</span></span></h2><div id="https://www.notion.so/25ffc3f52a8880bc849bea092cff3ba5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">DAP-Link是ARM公司开发的开源调试器固件，可以将支持的硬件平台转换为CMSIS-DAP兼容的调试器。它的设计理念是提供一个标准化、低成本的调试解决方案。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88801d9026e9a3f876eb65" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">DAP-Link的特点包括：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/25ffc3f52a88808d9574da7c2583c00a" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">完全开源，可以自由修改和定制</span></span></li><li id="https://www.notion.so/25ffc3f52a888034b4e8d045b450a434" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">支持拖放式编程，将固件文件直接拖到虚拟U盘即可烧录</span></span></li><li id="https://www.notion.so/25ffc3f52a88802caefff2785f463327" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">内置虚拟串口功能，方便调试输出</span></span></li><li id="https://www.notion.so/25ffc3f52a88804e812ec0070fa9a630" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">支持多种目标平台，不限于特定厂商</span></span></li></ul><div id="https://www.notion.so/25ffc3f52a8880e89a30e9bc0afa98e9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">DAP-Link通常运行在低成本的微控制器上，如NXP的LPC11U35或STM32F103等。这使得制作自定义调试器变得非常容易，许多开发板制造商都选择集成DAP-Link作为板载调试器。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88804d8bc3db80d19f6d88" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88804d8bc3db80d19f6d88"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">CMSIS-DAP：ARM的标准化调试协议</span></span></h2><div id="https://www.notion.so/25ffc3f52a8880c69d7ed0db6344e659" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">CMSIS-DAP（Cortex Microcontroller Software Interface Standard - Debug Access Port）是ARM定义的标准调试协议，旨在为Cortex-M系列微控制器提供统一的调试接口。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880cdb5c0f63a780885ce" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">CMSIS-DAP协议定义了主机与调试器之间的通信方式，支持通过USB HID或USB Bulk传输。这种标准化带来了几个重要优势：</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/25ffc3f52a8880768512cdf5e7ec104c" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">无需安装专用驱动程序（使用HID模式时）</span></span></li><li id="https://www.notion.so/25ffc3f52a88804faabaf462f60e24fc" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">跨平台支持，可在Windows、Linux、macOS上使用</span></span></li><li id="https://www.notion.so/25ffc3f52a88803c865ad254f4515d53" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">统一的API接口，简化了调试工具的开发</span></span></li></ul><div id="https://www.notion.so/25ffc3f52a8880ef9233eddc22f20a7d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">CMSIS-DAP可以看作是一个协议规范，而DAP-Link是这个规范的一个具体实现。除了DAP-Link，许多商业调试器也支持CMSIS-DAP协议，如SEGGER J-Link、Keil ULINKplus等。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a888058b756f60ffd0c53da" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a888058b756f60ffd0c53da"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">如何选择合适的调试接口</span></span></h2><div id="https://www.notion.so/25ffc3f52a88804590d5ca096b23de54" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">选择调试接口时，需要考虑以下因素：</span></span></p></div><div id="https://www.notion.so/25ffc3f52a888001b388c65bf9fc624d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">目标微控制器</strong></span><span class="SemanticString">：如果使用STM32，ST-LINK是最直接的选择；对于其他ARM Cortex-M系列，CMSIS-DAP兼容的调试器通用性更好。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880d28915f7119d7b91be" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">开发环境</strong></span><span class="SemanticString">：确保选择的调试器与你的IDE兼容。大多数现代IDE都支持CMSIS-DAP协议。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880e7b6fff3fd4db01f34" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">成本考虑</strong></span><span class="SemanticString">：如果预算有限，基于DAP-Link的开源方案是不错的选择；如果需要更专业的功能和技术支持，商业调试器可能更合适。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880de904bf51d2599965e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">调试需求</strong></span><span class="SemanticString">：简单的程序下载和基础调试，任何调试器都能满足；但如果需要高速下载、实时跟踪等高级功能，则需要选择更专业的工具。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88807f9f98e5eb95775b32" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">引脚限制</strong></span><span class="SemanticString">：在引脚资源紧张的情况下，支持SWD的调试器（如ST-LINK、CMSIS-DAP）比传统JTAG更有优势。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88801785d5cdfc7a6f952d" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88801785d5cdfc7a6f952d"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">实践建议</span></span></h2><div id="https://www.notion.so/25ffc3f52a8880aabd3affe285faf9e2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">对于初学者，建议从集成调试器的开发板开始，如STM32 Nucleo系列（内置ST-LINK）或各种带有DAP-Link的开发板。这样可以立即开始编程和调试，无需额外购买调试器。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a8880b7a326d9f6e3e5d443" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">随着项目复杂度的增加，可能需要独立的调试器。这时可以考虑购买或制作一个基于CMSIS-DAP的调试器，它具有良好的通用性和性价比。</span></span></p></div><div id="https://www.notion.so/25ffc3f52a88803e8bf4fe36dd644822" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">对于专业开发者或企业用户，投资一个高质量的商业调试器（如J-Link）可能是值得的，因为它们通常提供更好的性能、稳定性和技术支持。</span></span></p></div><h2 id="https://www.notion.so/25ffc3f52a88803d8e93df9f22ec8790" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/25ffc3f52a88803d8e93df9f22ec8790"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">总结</span></span></h2><div id="https://www.notion.so/25ffc3f52a888069b997fffbfd490423" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">JTAG、ST-LINK、DAP-Link和CMSIS-DAP代表了嵌入式调试技术的不同发展阶段和理念。JTAG是经典的通用标准，ST-LINK是厂商专用的优化方案，而DAP-Link和CMSIS-DAP则代表了开源和标准化的趋势。理解这些技术的特点和适用场景，将帮助你在嵌入式开发中做出更好的工具选择，提高开发效率。</span></span></p></div><div id="https://www.notion.so/240fc3f52a8880b299bedcbc1371b54d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/240fc3f52a88803aad41d192ebf4c39b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">openocd 多种</span></span></p></div><div id="https://www.notion.so/27afc3f52a8880e2a3d8f87f6550271c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">D:\Rarely\risv\MounRiver_Studio2\resources\app\resources\win32\components\WCH\OpenOCD\OpenOCD\bin</span></span></p></div><div id="https://www.notion.so/27afc3f52a88806eb433f0e792cd1aae" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
