@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>esp-rs 常见问题&nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="esp-rs 常见问题">
+  
+  
+    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;"></span>
+      </div>
+    
+    <h1 class="Header__Title">esp-rs 常见问题</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Mon, Sep 2, 2024</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--gray">
+            <a href="tag/Rust.html">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/e50cb94726ac4ce7b5e7c07f27481b64" class="PageRoot PageRoot--FullWidth"><h2 id="https://www.notion.so/dbd81b21b668417fb1bddd0aba4d27b7" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/dbd81b21b668417fb1bddd0aba4d27b7"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</mark></span></span></h2><ol class="NumberedListWrapper"><li id="https://www.notion.so/7b5a0f31d62e41fc84eb27d025b925f5" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/esp-rs/esp-idf-template/issues/165">https://github.com/esp-rs/esp-idf-template/issues/165</a></mark></span></span></li></ol><div id="https://www.notion.so/dcfffed330944be0b35c90bd5d6a531a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">Copy</mark></span></span></p></div><pre id="https://www.notion.so/6234f343e2d7412a82259149c78345f6" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>  Using managed esp-idf repository: RemoteSdk <span class="token punctuation">{</span> repo_url: None, git_ref: Tag<span class="token punctuation">(</span><span class="token string">"v5.1.2"</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>
+  Using esp-idf v5.1.2 at <span class="token string">'/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2'</span>
+  ERROR: /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/espidf.constraints.v5.1.txt doesn<span class="token string">'t exist. Perhaps you'</span>ve forgotten to run the <span class="token function">install</span> scripts. Please check the installation guide <span class="token keyword">for</span> <span class="token function">more</span> information.
+  CMake Error at /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/cmake/build.cmake:363 <span class="token punctuation">(</span>message<span class="token punctuation">)</span>:
+    Some Python dependencies must be installed.  Check above message <span class="token keyword">for</span>
+    details.
+  Call Stack <span class="token punctuation">(</span>most recent call first<span class="token punctuation">)</span>:
+    /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/cmake/build.cmake:498 <span class="token punctuation">(</span>__build_check_python<span class="token punctuation">)</span>
+    /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/cmake/project.cmake:547 <span class="token punctuation">(</span>idf_build_process<span class="token punctuation">)</span>
+    CMakeLists.txt:28 <span class="token punctuation">(</span>project<span class="token punctuation">)</span>
+
+
+  thread <span class="token string">'main'</span> panicked at /Users/zhangjun/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cmake-0.1.50/src/lib.rs:1098:5:
+
+  <span class="token builtin class-name">command</span> did not execute successfully, got: <span class="token builtin class-name">exit</span> status: <span class="token number">1</span>
+
+  build script failed, must <span class="token builtin class-name">exit</span> now
+  note: run with <span class="token variable"><span class="token variable">`</span><span class="token assign-left variable">RUST_BACKTRACE</span><span class="token operator">=</span><span class="token number">1</span><span class="token variable">`</span></span> environment variable to display a backtrace</span></span></span></code></pre><div id="https://www.notion.so/76a2c569e3b349af8b8ab6df74c6a9ca" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">解决办法:</mark></span></span></p></div><div id="https://www.notion.so/00ad2f41d9d543a5bb0a1009aa4a6e86" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/c8df690c14664916a72e737c71d97164" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token function">cargo</span> clean <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> <span class="token parameter variable">-rf</span> .embuild <span class="token operator">&amp;&amp;</span> <span class="token function">cargo</span> build </span></span></span></code></pre><h3 id="https://www.notion.so/5ebd3cd374d74a118c0626e28aba40aa" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/5ebd3cd374d74a118c0626e28aba40aa"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">报错: Missing dependencies for SOCKS support.</mark></span></span></h3><div id="https://www.notion.so/0dddc5930d24457a9b4eccd81859466c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/0bc96966af7e4c5bbf7ba5fe8678f246" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>  来自 https://github.com/ThrowTheSwitch/Unity 
+   * branch            7d2bf62b7e6afaf38153041a9d53c21aeeca9a25 -<span class="token operator">></span> FETCH_HEAD
+  ERROR: Could not <span class="token function">install</span> packages due to an OSError: Missing dependencies <span class="token keyword">for</span> SOCKS support.
+
+  WARNING: There was an error checking the latest version of pip.
+  Error: Command <span class="token string">'['</span>/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/python_env/idf5.1_py3.12_env/bin/python3<span class="token string">', '</span>-m<span class="token string">', '</span>pip<span class="token string">', '</span><span class="token function">install</span><span class="token string">', '</span>--upgrade<span class="token string">', '</span>pip<span class="token string">']'</span> returned non-zero <span class="token builtin class-name">exit</span> status <span class="token number">1</span>.
+  Traceback <span class="token punctuation">(</span>most recent call last<span class="token punctuation">)</span>:
+    File <span class="token string">"/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py"</span>, line <span class="token number">2687</span>, <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+      main<span class="token punctuation">(</span>sys.argv<span class="token punctuation">[</span><span class="token number">1</span>:<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    File <span class="token string">"/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py"</span>, line <span class="token number">2679</span>, <span class="token keyword">in</span> main
+      action_func<span class="token punctuation">(</span>args<span class="token punctuation">)</span>
+    File <span class="token string">"/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py"</span>, line <span class="token number">2098</span>, <span class="token keyword">in</span> action_install_python_env
+      subprocess.check_call<span class="token punctuation">(</span><span class="token punctuation">[</span>sys.executable, <span class="token string">'-m'</span>, <span class="token string">'venv'</span>,
+    File <span class="token string">"/Users/zhangjun/.pyenv/versions/3.12.1/lib/python3.12/subprocess.py"</span>, line <span class="token number">413</span>, <span class="token keyword">in</span> check_call
+      raise CalledProcessError<span class="token punctuation">(</span>retcode, cmd<span class="token punctuation">)</span>
+  subprocess.CalledProcessError: Command <span class="token string">'['</span>/Users/zhangjun/.pyenv/versions/3.12.1/bin/python3<span class="token string">', '</span>-m<span class="token string">', '</span>venv<span class="token string">', '</span>--clear<span class="token string">', '</span>--upgrade-deps<span class="token string">', '</span>/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/python_env/idf5.1_py3.12_env<span class="token string">']'</span> returned non-zero <span class="token builtin class-name">exit</span> status <span class="token number">1</span>.
+  Error: Could not <span class="token function">install</span> esp-idf
+
+  Caused by:
+      <span class="token builtin class-name">command</span> <span class="token string">'env -u IDF_PYTHON_ENV_PATH -u MSYSTEM IDF_TOOLS_PATH="/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif" "python3" "/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py" "--idf-path" "/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2" "--non-interactive" "install-python-env"'</span> exited with non-zero status code <span class="token number">1</span>
+zj@a:~/codes/esp32/esp-demo$</span></span></span></code></pre><div id="https://www.notion.so/a94672b3f7d549e7af52b981eeae88f1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">解决办法: 不使用 socks5 代理, 而是使用 https/http 代理:</mark></span></span></p></div><div id="https://www.notion.so/32e64c1d07014f408db4eb3fba1b294d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/c8462e2851624a39aa5e5d07ead460f7" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token comment"># 将下列内容添加到 ~/esp/export.sh 和 ~/esp/export-esp.sh 中</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">all_proxy</span><span class="token operator">=</span><span class="token string">"http://192.168.3.2:1080"</span> <span class="token assign-left variable">ALL_PROXY</span><span class="token operator">=</span><span class="token string">"http://192.168.3.2:1080"</span>
+
+<span class="token comment"># 在 ~/.bashrc 中添加如下内容， 用于手动切换： </span>
+<span class="token builtin class-name">alias</span> <span class="token assign-left variable">enable_http_proxy</span><span class="token operator">=</span><span class="token string">'export all_proxy="http://192.168.3.2:1080" ALL_PROXY="http://192.168.3.2:1080"'</span>
+<span class="token builtin class-name">alias</span> <span class="token assign-left variable">enable_socks_proxy</span><span class="token operator">=</span><span class="token string">'export all_proxy="socks5h://192.168.3.2:1080" ALL_PROXY="socks5h://192.168.3.2:1080"'</span>
+<span class="token builtin class-name">alias</span> <span class="token assign-left variable">disable_proxy</span><span class="token operator">=</span><span class="token string">'unset all_proxy ALL_PROXY'</span></span></span></span></code></pre><h3 id="https://www.notion.so/1951903e30c24167976dff02972b65ac" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/1951903e30c24167976dff02972b65ac"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">rust-analyzer 报错，不能正常解析和补全。</mark></span></span></h3><div id="https://www.notion.so/8b66361195214e938c8fb42bf89eec21" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">解决办法：</mark></span></span></p></div><div id="https://www.notion.so/173144ca77e941768c9c80081c27ebbd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/62d6f0f2391940829b4f72eea59176b7" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>zj@a:~/codes/esp32/esp-demo2/myesp$ <span class="token builtin class-name">cd</span> 
+
+zj@a:~$ rustup component <span class="token function">add</span> rust-analyzer
+info: downloading component <span class="token string">'rust-analyzer'</span>
+info: installing component <span class="token string">'rust-analyzer'</span>
+
+zj@a:~$ <span class="token function">ls</span> <span class="token parameter variable">-l</span> ~/.rustup/toolchains/
+esp/                         nightly-x86_64-apple-darwin/
+
+zj@a:~$ <span class="token function">ls</span> <span class="token parameter variable">-l</span> ~/.rustup/toolchains/nightly-x86_64-apple-darwin/bin/
+total 95M
+-rwxr-xr-x <span class="token number">1</span> zhangjun  29M  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:48 cargo*
+-rwxr-xr-x <span class="token number">1</span> zhangjun <span class="token number">1</span>.1M  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:48 cargo-clippy*
+-rwxr-xr-x <span class="token number">1</span> zhangjun <span class="token number">1</span>.5M  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:49 cargo-fmt*
+-rwxr-xr-x <span class="token number">1</span> zhangjun  11M  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:48 clippy-driver*
+-rwxr-xr-x <span class="token number">1</span> zhangjun  36M  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">16</span>:57 rust-analyzer*
+-rwxr-xr-x <span class="token number">1</span> zhangjun  <span class="token number">980</span>  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:48 rust-gdb*
+-rwxr-xr-x <span class="token number">1</span> zhangjun <span class="token number">2</span>.2K  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:49 rust-gdbgui*
+-rwxr-xr-x <span class="token number">1</span> zhangjun <span class="token number">1</span>.1K  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:48 rust-lldb*
+-rwxr-xr-x <span class="token number">1</span> zhangjun 598K  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:49 rustc*
+-rwxr-xr-x <span class="token number">1</span> zhangjun  11M  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:49 rustdoc*
+-rwxr-xr-x <span class="token number">1</span> zhangjun <span class="token number">6</span>.6M  <span class="token number">2</span>  <span class="token number">8</span> <span class="token number">14</span>:49 rustfmt*
+
+zj@a:~$ <span class="token function">ln</span> <span class="token parameter variable">-sf</span> ~/.rustup/toolchains/nightly-x86_64-apple-darwin/bin/rust-analyzer ~/.rustup/toolchains/esp/bin/rust-analyzer
+z</span></span></span></code></pre><h3 id="https://www.notion.so/c95692e81495463eb0c6d808b4ec4120" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/c95692e81495463eb0c6d808b4ec4120"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">报错：warning: </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="mailto:esp-idf-sys@0.34.1">esp-idf-sys@0.34.1</a></mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</mark></span></span></h3><div id="https://www.notion.so/885410831593434498a876a63f764fcf" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">这是因为同时 source 了 export.sh 和 export-esp.sh，当构建纯 Rust std/non_std 应用时，只需要 source export-esp.sh 即可。</mark></span></span></p></div><div id="https://www.notion.so/d9276cf032804d70b3ffc2e4878d9519" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/05ce001c5fbc4dbfa43c78063ab2330d" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>   zj@a:~/code/esp32/std$ <span class="token builtin class-name">source</span> ~/esp/esp-idf/v5.2.1/export.sh
+   zj@a:~/code/esp32/std$ <span class="token builtin class-name">source</span> ~/esp/export-esp.sh
+ 
+   zj@a:~/code/esp32/std$ <span class="token function">cargo</span> build
+   warning: profiles <span class="token keyword">for</span> the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myesp/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   warning: profiles <span class="token keyword">for</span> the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myespv2/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   warning: profiles <span class="token keyword">for</span> the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myespv3/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   warning: profiles <span class="token keyword">for</span> the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myespv4/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   Compiling esp-idf-sys v0.34.1
+   The following warnings were emitted during compilation:
+
+   warning: esp-idf-sys@0.34.1: could not identify the root crate and <span class="token variable"><span class="token variable">`</span>ESP_IDF_SYS_ROOT_CRATE<span class="token variable">`</span></span> not specified
+
+   error: failed to run custom build <span class="token builtin class-name">command</span> <span class="token keyword">for</span> <span class="token variable"><span class="token variable">`</span>esp-idf-sys v0.34.1<span class="token variable">`</span></span>
+
+   Caused by:
+   process didn't <span class="token builtin class-name">exit</span> successfully: <span class="token variable"><span class="token variable">`</span>/Users/alizj/code/esp32/std/target/debug/build/esp-idf-sys-eac13132720836e4/build-script-build<span class="token variable">`</span></span> <span class="token punctuation">(</span>exit status: <span class="token number">101</span><span class="token punctuation">)</span>
+     --- stdout
+     cargo:rerun-if-env-changed<span class="token operator">=</span>ESP_IDF_TOOLS_INSTALL_DIR
+     cargo:rerun-if-env-changed<span class="token operator">=</span>ESP_IDF_SDKCONFIG
+     cargo:rerun-if-env-changed<span class="token operator">=</span>ESP_IDF_SDKCONFIG_DEFAULTS
+     cargo:rerun-if-env-changed<span class="token operator">=</span>MCU</span></span></span></code></pre><div id="https://www.notion.so/b92b6ddb06d443f590b317eb5bdec8b6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><ul id="https://www.notion.so/b716e3cfb43140fd8c1edae65fe47b3e" class="ColorfulBlock ColorfulBlock--ColorGray TableOfContents"><li class="TableOfContents__Item"><a href="#https://www.notion.so/dbd81b21b668417fb1bddd0aba4d27b7"><div style="margin-left:0px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/5ebd3cd374d74a118c0626e28aba40aa"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">报错: Missing dependencies for SOCKS support.</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/1951903e30c24167976dff02972b65ac"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">rust-analyzer 报错，不能正常解析和补全。</mark></span></span></div></a></li><li class="TableOfContents__Item"><a href="#https://www.notion.so/c95692e81495463eb0c6d808b4ec4120"><div style="margin-left:24px"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">报错：warning: </mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">esp-idf-sys@0.34.1</mark></span><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorDefault">: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</mark></span></span></div></a></li></ul></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>

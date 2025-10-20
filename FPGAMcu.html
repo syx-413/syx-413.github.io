@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<!-- ------- for latex ↑  -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<link rel="stylesheet" type="text/css" href="css/CustomSetting.css">
+<!-- Favicon -->
+
+<link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>开源工具链学习 &nbsp;|&nbsp;413’s Website</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="开源工具链学习 ">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥥&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="Note.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🎶&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="reference.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;😷&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="About.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="OV-start.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;☁️&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="blog-collection.html">
+    <div class="Navbar__Btn">
+      
+      <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🥅&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">开源工具链学习 </h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Fri, Sep 26, 2025</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--red">
+            <a href="tag/单片机.html">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--blue">
+            <a href="tag/VHDL.html">VHDL</a>
+          </span>
+        
+      </div>
+    
+  </header>
+    <div id="content-html"></div>
+  <article id="https://www.notion.so/27afc3f52a8880b7ace8fc6f66c48f51" class="PageRoot"><div id="https://www.notion.so/27afc3f52a8880eaa56ae5e03d48dabb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/27afc3f52a888026b85fd48902239886" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="FPGA ">https://github.com/YosysHQ/oss-cad-suite-build?tab=readme-ov-file#installation</a></span></span></p></div><h1 id="https://www.notion.so/27afc3f52a888088bad2e50c241349f9" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/27afc3f52a888088bad2e50c241349f9"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">OSS CAD Suite</span></span></h1><h2 id="https://www.notion.so/27afc3f52a8880058cd9f423dcdd00d3" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880058cd9f423dcdd00d3"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Introduction</span></span></h2><div id="https://www.notion.so/27afc3f52a88805291bcd48991b607fa" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">OSS CAD Suite is a binary software distribution for a number of </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://en.wikipedia.org/wiki/Open-source_software">open source software</a></span><span class="SemanticString"> used in digital logic design.
+You will find tools for RTL synthesis, formal hardware verification, place &amp; route, FPGA programming, and testing with support for HDLs like Verilog, Migen, and Amaranth.</span></span></p></div><div id="https://www.notion.so/27afc3f52a8880ee84a5ef79fc6f1329" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">OSS CAD Suite is a component of YosysHQ&#x27;s Tabby CAD Suite:</span></span></p></div><div id="https://www.notion.so/27afc3f52a88806db00bee72f69a2330" class="Image Image--PageWidth"><figure><a href="#"><img src="#" style="width:100%"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/27afc3f52a8880419549e8c7d636f339" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">See </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://www.yosyshq.com/tabby-cad-datasheet">Tabby CAD Datasheet</a></span><span class="SemanticString"> for details on Tabby CAD Suite; see </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/oss-cad-suite-build/">OSS CAD Suite GitHub</a></span><span class="SemanticString"> (this page) for details on OSS CAD Suite.</span></span></p></div><h3 id="https://www.notion.so/27afc3f52a8880cba436c7021c864ac0" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880cba436c7021c864ac0"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">RTL Synthesis</span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/27afc3f52a88802aa94bc1e80f7b3b7b" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/yosys">Yosys</a></span><span class="SemanticString"> RTL synthesis with extensive Verilog 2005 support</span></span></li><li id="https://www.notion.so/27afc3f52a88802991d8e54297522e50" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/amaranth-lang/amaranth">Amaranth</a></span><span class="SemanticString"> refreshed Python toolbox for building complex digital hardware</span></span></li><li id="https://www.notion.so/27afc3f52a88809fbc05c85670fe2e87" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/m-labs/migen">Migen</a></span><span class="SemanticString"> Python toolbox for building complex digital hardware</span></span></li><li id="https://www.notion.so/27afc3f52a88804a8915c13c869e44d0" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://people.eecs.berkeley.edu/~alanmi/abc/">ABC</a></span><span class="SemanticString"> A System for Sequential Synthesis and Verification</span></span></li><li id="https://www.notion.so/27afc3f52a88806dbee6f2abfd40965d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/ghdl/ghdl">GHDL</a></span><span class="SemanticString"> VHDL 2008/93/87 simulator (linux-x64, darwin-x64 and darwin-arm64 platforms only)</span></span></li></ul><div id="https://www.notion.so/27afc3f52a8880e7b0ddcff18dd69521" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Did you know that the Tabby CAD version of yosys supports industry standard SystemVerilog, VHDL and SVA?
+Contact us at </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="mailto:contact@yosyshq.com">contact@yosyshq.com</a></span><span class="SemanticString"> to arrange a free evaluation license.</span></span></p></div><h3 id="https://www.notion.so/27afc3f52a8880e2b947ee949f56feed" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880e2b947ee949f56feed"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Plugins</span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/27afc3f52a88809586b0e1a9d90c023c" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/ghdl/ghdl-yosys-plugin">GHDL plugin</a></span><span class="SemanticString"> VHDL synthesis based on GHDL (linux-x64, darwin-x64 and darwin-arm64 platforms only)</span></span></li><li id="https://www.notion.so/27afc3f52a88805ebe72ffabbdac6542" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/povik/yosys-slang">Slang plugin</a></span><span class="SemanticString"> SystemVerilog synthesis based on Slang</span></span></li></ul><h3 id="https://www.notion.so/27afc3f52a888044a96ddf02c1cfbe6b" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a888044a96ddf02c1cfbe6b"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Formal Tools</span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/27afc3f52a8880c7830ae0dbebb0fc7a" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/sby">sby (formerly SymbiYosys)</a></span><span class="SemanticString"> a front-end driver program for Yosys-based formal hardware verification flows.</span></span></li><li id="https://www.notion.so/27afc3f52a888025849ec71056ea21d9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/mcy">mcy</a></span><span class="SemanticString"> Mutation Cover with Yosys</span></span></li><li id="https://www.notion.so/27afc3f52a888073a26ac26e757288ba" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/eqy">eqy</a></span><span class="SemanticString"> Equivalence Checking with Yosys</span></span></li><li id="https://www.notion.so/27afc3f52a88809c81c5db939c28e3b5" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/sby-gui">sby-gui</a></span><span class="SemanticString"> GUI for sby (formerly SymbiYosys)</span></span></li><li id="https://www.notion.so/27afc3f52a88808b9ea5fc86dab25718" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/arminbiere/aiger">aiger</a></span><span class="SemanticString"> AIGER tools including bounded model checker</span></span></li><li id="https://www.notion.so/27afc3f52a88808683d1d9a877ddfa44" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://bitbucket.org/arieg/extavy">avy</a></span><span class="SemanticString"> Interpolating Property Directed Reachability tool</span></span></li><li id="https://www.notion.so/27afc3f52a8880a39f23ff51ecea142f" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/Boolector/boolector">Boolector</a></span><span class="SemanticString"> SMT solver and BTOR model checker</span></span></li><li id="https://www.notion.so/27afc3f52a8880f2a89de4821f2a05db" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/SRI-CSL/yices2">Yices 2</a></span><span class="SemanticString"> SMT solver</span></span></li><li id="https://www.notion.so/27afc3f52a88800889f7c47703511386" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/sterin/super-prove-build">Super prove</a></span><span class="SemanticString"> ABC-based AIGER hardware model checker (linux-x64 platform only)</span></span></li><li id="https://www.notion.so/27afc3f52a8880f6bb97d71e8678ef9d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/upscale-project/pono">Pono</a></span><span class="SemanticString"> an SMT-based model checker built on </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/makaimann/smt-switch">smt-switch</a></span></span></li><li id="https://www.notion.so/27afc3f52a8880b58bf3e22725e40458" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/Z3Prover/z3">Z3</a></span><span class="SemanticString"> SMT solver</span></span></li><li id="https://www.notion.so/27afc3f52a88803f9d59e8ca7ecc6e0a" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/bitwuzla/bitwuzla">Bitwuzla</a></span><span class="SemanticString"> SMT solver</span></span></li></ul><h3 id="https://www.notion.so/27afc3f52a8880549960dcc64eecf681" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880549960dcc64eecf681"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">PnR (Place and Route)</span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/27afc3f52a8880f58ce6e7c6dd29dd6e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/nextpnr">nextpnr</a></span><span class="SemanticString"> a portable FPGA place and route tool (generic, ice40, ecp5, machxo2, nexus, gowin)</span></span></li><li id="https://www.notion.so/27afc3f52a8880b79342e7b9a4fb4ca3" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/icestorm">Project IceStorm</a></span><span class="SemanticString"> tools for working with Lattice ICE40 bitstreams</span></span></li><li id="https://www.notion.so/27afc3f52a8880ccae37cc5e3fe73b74" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/prjtrellis">Project Trellis</a></span><span class="SemanticString"> tools for working with Lattice ECP5 bitstreams</span></span></li><li id="https://www.notion.so/27afc3f52a888065b021e29b8f5ec1e7" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/gatecat/prjoxide">Project Oxide</a></span><span class="SemanticString"> tools for working with Lattice Nexus bitstreams</span></span></li><li id="https://www.notion.so/27afc3f52a888063a416da5a2034281d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/apicula">Project Apicula</a></span><span class="SemanticString"> tools for working with Gowin bitstreams</span></span></li><li id="https://www.notion.so/27afc3f52a8880d69057ca237e9bc4bf" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/prjpeppercorn">Project Peppercorn</a></span><span class="SemanticString"> tools for working with Cologne Chip GateMate bitstreams</span></span></li></ul><h3 id="https://www.notion.so/27afc3f52a88805bbf40ed92a25e1e98" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a88805bbf40ed92a25e1e98"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">FPGA board programming tools</span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/27afc3f52a8880648b31dbfcf7d7efd7" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/trabucayre/openFPGALoader">openFPGALoader</a></span><span class="SemanticString"> universal utility for programming FPGA</span></span></li><li id="https://www.notion.so/27afc3f52a888036bb90d7785d250771" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://dfu-util.sourceforge.net/">dfu-util</a></span><span class="SemanticString"> Device Firmware Upgrade Utilities</span></span></li><li id="https://www.notion.so/27afc3f52a888083b09be1bc7b7c34dc" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/gregdavill/ecpprog">ecpprog</a></span><span class="SemanticString"> basic driver for FTDI based JTAG probes, to program ECP5 FPGAs</span></span></li><li id="https://www.notion.so/27afc3f52a88803db6dbd06d2338718e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/adamgreig/ecpdap">ecpdap</a></span><span class="SemanticString"> program ECP5 FPGAs and attached SPI flash using CMSIS-DAP probes in JTAG mode</span></span></li><li id="https://www.notion.so/27afc3f52a888042b684e51371e2fdb6" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/kost/fujprog">fujprog</a></span><span class="SemanticString"> ULX2S / ULX3S JTAG programmer</span></span></li><li id="https://www.notion.so/27afc3f52a8880459f22e43a33459975" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://openocd.org/">openocd</a></span><span class="SemanticString"> Open On-Chip Debugger</span></span></li><li id="https://www.notion.so/27afc3f52a88801fa117d8872d19c07d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/wuxx/icesugar/tree/master/tools/src">icesprog</a></span><span class="SemanticString"> iCESugar FPGA board programmer</span></span></li><li id="https://www.notion.so/27afc3f52a8880ab8033d039f7f75734" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/OLIMEX/iCE40HX1K-EVB/tree/master/programmer/iceprogduino">iceprogduino</a></span><span class="SemanticString"> Olinuxino based programmer for iCE40HX1K-EVB</span></span></li><li id="https://www.notion.so/27afc3f52a8880948357e1cbfdaef973" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/tinyfpga/TinyFPGA-Bootloader">TinyFPGA</a></span><span class="SemanticString"> USB Bootloader</span></span></li><li id="https://www.notion.so/27afc3f52a88801fbcb4dbc3e8f825a8" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/tinyfpga/TinyFPGA-B-Series">TinyFPGA-B</a></span><span class="SemanticString"> TinyFPGA B2 Board programmer</span></span></li><li id="https://www.notion.so/27afc3f52a888079b703ff860432d9f5" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/pitrz/icefunprog">iceFUN</a></span><span class="SemanticString"> iceFUN Programmer</span></span></li></ul><h3 id="https://www.notion.so/27afc3f52a88805eb20bfb47931fd459" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a88805eb20bfb47931fd459"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Simulation/Testing</span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/27afc3f52a88809ebce3d34418935d6c" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/gtkwave/gtkwave">GTK Wave</a></span><span class="SemanticString"> fully featured GTK+ based wave viewer</span></span></li><li id="https://www.notion.so/27afc3f52a8880c18070db1831e31562" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://gitlab.com/surfer-project/surfer">Surfer</a></span><span class="SemanticString"> A waveform viewer with a focus on a snappy usable interface, and extensibility.</span></span></li><li id="https://www.notion.so/27afc3f52a88800ab6faf1e6fe7879c9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/verilator/verilator">verilator</a></span><span class="SemanticString"> Verilog/SystemVerilog simulator</span></span></li><li id="https://www.notion.so/27afc3f52a888016a11bd00a2fb5eded" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/steveicarus/iverilog">iverilog</a></span><span class="SemanticString"> Verilog compilation system</span></span></li><li id="https://www.notion.so/27afc3f52a8880d08599c8f82a8e2917" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/cocotb/cocotb">cocotb</a></span><span class="SemanticString"> coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python</span></span></li></ul><h3 id="https://www.notion.so/27afc3f52a888078aa4dead02632aa56" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a888078aa4dead02632aa56"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Support libraries</span></span></h3><ul class="BulletedListWrapper"><li id="https://www.notion.so/27afc3f52a888012a0f7ce1a7b46005c" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/python/cpython">Python 3</a></span><span class="SemanticString"> language interpreter is provided in all supported platforms.</span></span></li><li id="https://www.notion.so/27afc3f52a8880f0828ed54dd945afe3" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/python/cpython">Python 2</a></span><span class="SemanticString"> language interpreter is provided in Linux platforms in form of library only.</span></span></li><li id="https://www.notion.so/27afc3f52a88804b957fe9b8a8163d05" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://ubuntu.com/">Ubuntu 22.04</a></span><span class="SemanticString"> distribution development packages are used and shared libraries used are provided in package.</span></span></li><li id="https://www.notion.so/27afc3f52a88801792ccdb8bf123858f" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://www.macports.org/">macports</a></span><span class="SemanticString"> distribution system for macOS is used to obtain all libraries used, and they are provided in package.</span></span></li><li id="https://www.notion.so/27afc3f52a88808e8ce7c028bbd7d303" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://sourceforge.net/projects/mingw">MinGW</a></span><span class="SemanticString"> Minimalist GNU for Windows library packages from Fedora 39 are used in compilation and provided in package.</span></span></li></ul><h2 id="https://www.notion.so/27afc3f52a8880478046fd68f23be5b3" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880478046fd68f23be5b3"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Installation</span></span></h2><ol class="NumberedListWrapper"><li id="https://www.notion.so/27afc3f52a8880c79f09cbb20101d19c" class="NumberedList" value="1"><span class="SemanticStringArray"><span class="SemanticString">Download an archive matching your OS from </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/YosysHQ/oss-cad-suite-build/releases/latest">the releases page</a></span><span class="SemanticString">.</span></span></li><li id="https://www.notion.so/27afc3f52a88802db631e63e25b445e4" class="NumberedList" value="2"><span class="SemanticStringArray"><span class="SemanticString">Extract the archive to a location of your choice (for Windows it is recommended that path does not contain spaces)</span></span></li><li id="https://www.notion.so/27afc3f52a8880209535f09ba2117f0c" class="NumberedList" value="3"><span class="SemanticStringArray"><span class="SemanticString">On macOS to allow execution of quarantined files </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">xattr -d com.apple.quarantine oss-cad-suite-darwin-x64-yyymmdd.tgz</code></span><span class="SemanticString"> on downloaded file, or run: </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">./activate</code></span><span class="SemanticString"> in extracted location once.</span></span></li><li id="https://www.notion.so/27afc3f52a888087b2a5f6f36f01eac4" class="NumberedList" value="4"><span class="SemanticStringArray"><span class="SemanticString">Set the environment as described below.</span></span></li></ol><div id="https://www.notion.so/27afc3f52a8880cb9af6e9d64ec9563a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Linux and macOS</span></span></p></div><pre id="https://www.notion.so/27afc3f52a888072a63ccea3f4676496" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token string">"&lt;extracted_location>/oss-cad-suite/bin:<span class="token environment constant">$PATH</span>"</span>
+
+<span class="token comment"># or</span>
+
+<span class="token builtin class-name">source</span> <span class="token operator">&lt;</span>extracted_location<span class="token operator">></span>/oss-cad-suite/environment
+</span></span></span></code></pre><div id="https://www.notion.so/27afc3f52a8880b08e60f02305780f06" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Linux and macOS (fish shell)</span></span></p></div><pre id="https://www.notion.so/27afc3f52a8880368b48cf4115c462d2" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>fish_add_path <span class="token string">"&lt;extracted_location>/oss-cad-suite/bin"</span>
+
+<span class="token comment"># or</span>
+
+<span class="token builtin class-name">source</span> <span class="token operator">&lt;</span>extracted_location<span class="token operator">></span>/oss-cad-suite/environment.fish
+</span></span></span></code></pre><div id="https://www.notion.so/27afc3f52a8880829c91fd5d8e0eb7f5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Windows</span></span></p></div><pre id="https://www.notion.so/27afc3f52a8880ebb024e904617b5e8b" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">from</span> existing CMD prompt:
+&lt;extracted_location>\\oss-cad-suite\\environment<span class="token punctuation">.</span>bat
+
+<span class="token keyword">from</span> existing PowerShell prompt:
+<span class="token punctuation">.</span> &lt;extracted_location>\\oss-cad-suite\\environment<span class="token punctuation">.</span>ps1
+
+to create new CMD prompt:
+&lt;extracted_location>\\oss-cad-suite\\<span class="token function">start</span><span class="token punctuation">.</span>bat
+</span></span></span></code></pre><div id="https://www.notion.so/27afc3f52a888009ad29f080b56ccb33" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">NOTE:</strong></span><span class="SemanticString"> when environment is set, </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">python3</code></span><span class="SemanticString"> from package becomes available as well, this enables usage of </span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">Migen</em></span><span class="SemanticString"> and </span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">Amaranth</em></span><span class="SemanticString"> HDL and </span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">LiteX</em></span><span class="SemanticString"> libraries scripts as usual. When OSS CAD Suite is just added in PATH to use packaged python3 use </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">tabbypy3</code></span><span class="SemanticString"> to start python environment. For Windows, there are no wrappers and using environment.bat is only choice.</span></span></p></div><h2 id="https://www.notion.so/27afc3f52a8880a98f46d7b9b7850356" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880a98f46d7b9b7850356"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Using LiteX</span></span></h2><div id="https://www.notion.so/27afc3f52a888096adb2f2da1cae7384" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">We provide you with Python 3.11 and all required software to be able to use LiteX. After activating </span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">environment</code></span><span class="SemanticString"> it is possible to perform installation same as usual:</span></span></p></div><pre id="https://www.notion.so/27afc3f52a8880b8a400cf49ab065e51" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> litex
+<span class="token builtin class-name">cd</span> litex
+<span class="token function">wget</span> <span class="token operator">&lt;</span>https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py<span class="token operator">></span>
+python3 litex_setup.py init
+python3 litex_setup.py <span class="token function">install</span>
+</span></span></span></code></pre><div id="https://www.notion.so/27afc3f52a888014b7d9de15c4aa8c63" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/27afc3f52a8880c4a3d3fe71d381e5c6" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880c4a3d3fe71d381e5c6"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">嵌入式ARM RISV </span></span></h3><div id="https://www.notion.so/27afc3f52a888012ab0fddbaf90fd263" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/27afc3f52a8880a59814f52f692b728a" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/27afc3f52a8880a59814f52f692b728a"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Openocd</span></span></h3><div id="https://www.notion.so/27afc3f52a888007afccf70af74d5bac" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/27afc3f52a8880568c48f2a0de531626" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">wezterm 配置文件</span></span></p></div><pre id="https://www.notion.so/27afc3f52a8880178423c4931f98f4b7" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>-- 引入 wezterm API
+local wezterm = require(&quot;wezterm&quot;)
+local act = wezterm.action
+-- 初始化 config
+local config = wezterm.config_builder()
+
+-- ===== 默认启动 PowerShell Core =====
+config.default_prog = { &quot;pwsh.exe&quot;, &quot;-NoLogo&quot; }
+-- 如果要用 Windows PowerShell 5.x：
+-- config.default_prog = { &quot;powershell.exe&quot;, &quot;-NoLogo&quot; }
+
+-- ===== 启动菜单 =====
+config.launch_menu = {
+	{ label = &quot;WSL Arch 🤓&quot;, args = { &quot;wsl.exe&quot;, &quot;-d&quot;, &quot;Arch&quot; } }, -- 换成你的发行版名
+	{
+		label = &quot;OFPGA&quot;,
+		args = {
+			&quot;pwsh.exe&quot;,
+			&quot;-NoLogo&quot;,
+			&quot;-NoExit&quot;, -- 保证执行完不自动关闭窗口
+			&quot;-Command&quot;,
+			&quot;. &#x27;.\\environment.ps1&#x27;&quot;, -- 注意：双引号和转义
+		},
+		cwd = &quot;E:/oss-cad-suite&quot;,
+	},
+	{ label = &quot;Windows PowerShell&quot;, args = { &quot;powershell.exe&quot;, &quot;-NoLogo&quot; } },
+	{ label = &quot;PowerShell Core&quot;, args = { &quot;pwsh.exe&quot;, &quot;-NoLogo&quot; } },
+	{ label = &quot;Command Prompt&quot;, args = { &quot;cmd.exe&quot; } },
+}
+
+-- ===== 颜色主题 =====
+local scheme = wezterm.get_builtin_color_schemes()[&quot;Bamboo&quot;]
+config.color_scheme = &quot;Bamboo&quot;
+
+-- config.use_fancy_tab_bar = false
+config.use_fancy_tab_bar = false
+config.exit_behavior = &quot;CloseOnCleanExit&quot;
+config.show_new_tab_button_in_tab_bar = false
+config.colors = {
+	tab_bar = {
+		-- 避免某些版本没有 bg_trans
+		background = scheme.background or &quot;#0b0b0b&quot;,
+		new_tab = { bg_color = &quot;#B5D0C0&quot;, fg_color = scheme.ansi[8], intensity = &quot;Bold&quot; },
+		new_tab_hover = { bg_color = scheme.ansi[1], fg_color = scheme.brights[8], intensity = &quot;Bold&quot; },
+		active_tab = { bg_color = &quot;#27850b&quot;, fg_color = &quot;#FCE8C3&quot;, intensity = &quot;Bold&quot; },
+		inactive_tab = { bg_color = scheme.ansi[2], fg_color = &quot;#FCE8C3&quot; },
+		inactive_tab_hover = { bg_color = scheme.ansi[1], fg_color = &quot;#FCE8C3&quot; },
+	},
+}
+
+-- ===== 外观与字体 =====
+config.window_decorations = &quot;RESIZE&quot;
+-- config.window_decorations = &quot;TITLE|RESIZE&quot;
+-- config.tab_bar_at_bottom = true
+config.hide_tab_bar_if_only_one_tab = true
+
+config.font_size = 12
+config.font = wezterm.font_with_fallback({
+	&quot;Maple Mono NF CN&quot;,
+	&quot;JetBrains Mono&quot;,
+})
+config.window_frame = {
+	font = wezterm.font({ family = &quot;Maple Mono NF CN&quot;, weight = &quot;ExtraLight&quot; }),
+	inactive_titlebar_bg = &quot;#000000&quot;,
+	active_titlebar_bg = &quot;none&quot;,
+	font_size = 10,
+}
+
+config.initial_cols = 140
+config.initial_rows = 80
+config.window_background_opacity = 0.44
+config.window_padding = {
+	left = 20,
+	right = 20,
+	top = 6,
+	bottom = 5,
+}
+
+-- ===== 快捷键 =====
+config.leader = { key = &quot;a&quot;, mods = &quot;CTRL&quot;, timeout_milliseconds = 1000 }
+
+config.keys = {
+	-- 切换透明度
+	{ key = &quot;O&quot;, mods = &quot;CTRL|SHIFT&quot;, action = act.EmitEvent(&quot;toggle-opacity&quot;) },
+
+	-- 新标签启动 pwsh
+	{
+		key = &quot;t&quot;,
+		mods = &quot;SHIFT&quot;,
+		action = act.SpawnCommandInNewTab({ args = { &quot;pwsh.exe&quot;, &quot;-NoLogo&quot; }, cwd = &quot;D:/Desktop&quot; }),
+	},
+
+	-- Ctrl+Tab 切换标签
+	{ key = &quot;Tab&quot;, mods = &quot;CTRL&quot;, action = act.ActivateTabRelative(1) },
+	-- Ctrl+Shift+W 关闭当前 Tab（无确认）
+	{ key = &quot;c&quot;, mods = &quot;ALT&quot;, action = act.CloseCurrentTab({ confirm = true }) },
+	-- Ctrl+Shift+X 关闭当前 Pane（无确认）
+	{ key = &quot;x&quot;, mods = &quot;ALT&quot;, action = act.CloseCurrentPane({ confirm = true }) },
+	-- Leader + q 关闭 Tab（Vim 风格）
+
+	{
+		key = &quot;|&quot;,
+		mods = &quot;ALT|SHIFT&quot;,
+		action = act.SplitHorizontal({ domain = &quot;CurrentPaneDomain&quot;, args = { &quot;pwsh.exe&quot;, &quot;-NoLogo&quot; } }),
+	},
+	{ key = &quot;-&quot;, mods = &quot;ALT&quot;, action = act.SplitVertical({ domain = &quot;CurrentPaneDomain&quot; }) },
+	-- Leader + 字体大小调整
+	{ key = &quot;=&quot;, mods = &quot;CTRL&quot;, action = act.IncreaseFontSize },
+	{ key = &quot;-&quot;, mods = &quot;CTRL&quot;, action = act.DecreaseFontSize },
+	-- Leader + h/j/k/l 切换 Pane
+	{ key = &quot;h&quot;, mods = &quot;SHIFT&quot;, action = act.ActivatePaneDirection(&quot;Left&quot;) },
+	{ key = &quot;l&quot;, mods = &quot;SHIFT&quot;, action = act.ActivatePaneDirection(&quot;Right&quot;) },
+	{ key = &quot;k&quot;, mods = &quot;SHIFT&quot;, action = act.ActivatePaneDirection(&quot;Up&quot;) },
+	{ key = &quot;j&quot;, mods = &quot;SHIFT&quot;, action = act.ActivatePaneDirection(&quot;Down&quot;) },
+	{ key = &quot;l&quot;, mods = &quot;ALT&quot;, action = act.ShowLauncherArgs({ flags = &quot;LAUNCH_MENU_ITEMS&quot; }) },
+}
+
+-- Alt+数字 切换对应标签（Alt+1 → 第1个，Alt+2 → 第2个 ... Alt+9）
+for i = 1, 9 do
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = &quot;ALT&quot;,
+		action = act.ActivateTab(i - 1),
+	})
+end
+
+-- ===== 自定义事件 =====
+-- 切换透明度
+wezterm.on(&quot;toggle-opacity&quot;, function(window)
+	local overrides = window:get_config_overrides() or {}
+	if not overrides.window_background_opacity then
+		overrides.window_background_opacity = 1.0
+	else
+		overrides.window_background_opacity = nil
+	end
+	window:set_config_overrides(overrides)
+end)
+
+-- 窗口启动居中
+wezterm.on(&quot;gui-startup&quot;, function(cmd)
+	local screen = wezterm.gui.screens().active
+	local width = math.floor(screen.width * 0.75)
+	local height = math.floor(screen.height * 0.75)
+
+	local tab, pane, win = wezterm.mux.spawn_window(cmd or {
+		position = {
+			x = math.floor((screen.width - width) / 2),
+			y = math.floor((screen.height - height) / 2),
+			origin = { Named = screen.name },
+		},
+	})
+	win:gui_window():set_inner_size(width, height)
+end)
+
+-- 返回配置
+return config</span></span></span></code></pre></article>
+    <aside class="UDAside">
+        <a href="#content-html"><div id="up">⬆️</div></a>
+        <a href="#message-board"><div id="down">⬇️</div></a>
+    </aside>
+    <div id="message-board"></div>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="boxy-light"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+  <footer class="Footer">
+  <div>
+    &copy; 413’s Website 2020~2025
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/syx-413" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
