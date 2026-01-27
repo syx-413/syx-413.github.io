@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>Notion文章免费&amp;自动发布到GitHub Pages &nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Notion文章免费&amp;自动发布到GitHub Pages ">
+  
+    <meta name="description" content=" 摘要 本方案需要依赖： 1. Notion - One workspace. Every team 2. github.com&#x2F;dragonman225 3. docs.github.com&#x2F;cn&#x2F;acti 最终可以实现： 1. 有一个自己的免费网页 Github Pages 2. 在Notion...">
+    <meta property="og:description" content=" 摘要 本方案需要依赖： 1. Notion - One workspace. Every team 2. github.com&#x2F;dragonman225 3. docs.github.com&#x2F;cn&#x2F;acti 最终可以实现： 1. 有一个自己的免费网页 Github Pages 2. 在Notion...">
+  
+  
+    <meta property="og:image" content="📝">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./Note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./OneDrive_Vercel__立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog_mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./About.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">📝</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">Notion文章免费&amp;自动发布到GitHub Pages </h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-10-08</span>
+        
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class=""></p>
+<h2 class="">摘要</h2>
+<h3 class="">本方案需要依赖：</h3>
+<p class="">1. Notion - One workspace. Every team</p>
+<p class="">2. github.com/dragonman225</p>
+<p class="">3. docs.github.com/cn/acti</p>
+<h3 class="">最终可以实现：</h3>
+<p class="">1. 有一个自己的<strong>免费</strong>网页 <code>Github Pages</code></p>
+<p class="">2. 在Notion中写完任何文章后的一天内<strong>免费&自动</strong>发布到 <code>Github Pages</code> 中，</p>
+<p class="">3. 成品请参考我的网页：</p>
+<p class="">FizzerYufizzeryu.github.io/</p>
+<h2 class="">步骤</h2>
+<p class="">1. 首先你要有个Github账号和Notion账号，如果你是学生的话可以免费领取 GitHub Student Developer Pack 和 Notion for Education</p>
+<p class="">2. 创建一个新仓库，需要给这个仓库一个比较特殊的名字，比如说 userName.github.io，注意这里的 userName 可以是任意你喜欢的名字，但是<strong>强烈推荐使用自己的github用户名</strong></p>
+<p class="">3. 把这个 Notion表格模板 复制到自己的Notion账号中【右上角的 <code>Duplicate</code> 按钮】，把这个表格设置为公开【 点击右上角的 <code>Share</code> 按钮→ <code>Share to web</code> 打开 】，然后点击 <code>Copy</code> 按钮复制网址</p>
+<p class="">3.1 比如说我复制出来的网址是 <code>https://www.notion.so/2c4dc4affe68463da4f61f8fa93406e0</code>，打开这个网址检查一下是不是对应的表格模板</p>
+<p class="">4. fork仓库 github.com/dragonman225 ，修改 <code>config.json</code> 文件中的 <code>url</code></p>
+<p class="">1. 原始的url为：</p>
+<pre><code class="language-bash">https://xxxx.notion.site/xxxxxxxxxx?v=b2d8ec9e232144e596f40037707d674e&pvs=4</code></pre>
+<pre><code class="language-bash">"url": "https://www.notion.so/b6fcf809ca5047b89f423948dce013a0?v=03ddc4d6130a47f8b68e74c9d0061de2",</code></pre>
+<p class="">2. 将 b6fc...de2 这段字符修改为 <code>步骤3.1</code> 中的网址后缀(也就是 2c4dc...b594)</p>
+<p class="">3. 对应到本文中也就是修改为：</p>
+<pre><code class="language-bash">"url": "https://www.notion.so/2c4dc4affe68463da4f61f8fa93406e0?v=9ad1da13a555443598a33b3bfc3db594"</code></pre>
+<p class="">5. 创建 <code>Personal access token</code></p>
+<p class="">5.1. 打开 Github.com，依次点击 右上角头像 → Settings → Developer settings → Personal Access Tokens → 右上角Generate new token → 按照示例修改下面</p>
+<p class="">5.2. 最后点击最下方的 Generate token ，就会生成一个字符串，复制这个字符串备用【<u><strong>注意千万别泄露这个字符串，有安全风险</strong></u>】</p>
+<p class="">6. 回到你在 <code>步骤4</code> 中fork的名为 <code>notablog-starter</code> 仓库，依次点击 <code>settings</code> → <code>secrets</code> → <code>actions</code> → <code>New repository secret</code>， Name 填为 <code>ACCESS_TOKEN</code> ，Value 就是上一步( <code>步骤5.2</code> )生成的字符串，具体如图所示：</p>
+<p class="">7. 回到你在 <code>步骤4</code> 中fork的名为 <code>notablog-starter</code> 仓库，依次点击 <code>Actions</code> → <code>New workflow</code> → <code>set up a workflow yourself</code></p>
+<p class="">7.1. 使用下方代码覆盖原始文件，注意代码需要修改两处位置：</p>
+<pre><code class="language-yaml">    # This is a basic workflow to help you get started with Actions
+
+    name: Github Pages
+
+    # Controls when the workflow will run
+    on:
+      schedule:
+    		# 下一行是说在每天的国际标准时间23点（北京时间早上7点）触发该任务
+    		# 你可以随意修改
+        - cron: '0 23 * * *'
+      # Allows you to run this workflow manually from the Actions tab
+      workflow_dispatch:
+
+    # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    jobs:
+      # This workflow contains a single job called "build"
+      build:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+          # 拉取代码
+          - name: Checkout
+            uses: actions/checkout@v2
+          # 1、生成静态文件
+          - name: Build
+            run: npm i -g notablog && notablog generate .
+          # 2、部署到 GitHub Pages
+          - name: Deploy
+            uses: JamesIves/github-pages-deploy-action@v4.2.5
+            with:
+              token: ${{ secrets.ACCESS_TOKEN }}
+              repository-name: FizzerYu/FizzerYu.github.io # 修改这里
+              BRANCH: main  # 如果你的仓库默认分支是 master 记得修改这里
+              FOLDER: public</code></pre>
+<p class="">7.2. 上方代码需要修改 <code>repository-name</code> ，具体就是步骤2中创建的仓库的 `git clone` 地址，比如说：</p>
+<pre><code class="language-bash"># git clone 地址为：
+git@github.com:FizzerYu/FizzerYu.github.io.git
+# 因此 repository-name 为：
+FizzerYu/FizzerYu.github.io</code></pre>
+<p class="">7.3. 注意 <code>步骤2</code> 中创建的仓库默认分支名是否与 <code>BRANCH</code> 参数一致</p>
+<p class="">7.4. 按照要求修改完成后保存：</p>
+<p class="">8. 按照下图要求依次点击：</p>
+<p class="">9. 稍等片刻(大概10min内)，就可以打开你的github pages查看啦！比如说网址 `FizzerYu.github.io`</p>
+<h2 class="">测试</h2>
+<p class="">1. 在notion中找到复制出来的模板，复制一行数据</p>
+<p class="">2. 然后随便写点东西，再重复步骤8、9，或者等待一天，就可以看到新的文章啦！</p>
+<p class="">原文 ->https://zhuanlan.zhihu.com/p/469320294</p>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

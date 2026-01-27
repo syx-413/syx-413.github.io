@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>时钟时序线&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="时钟时序线">
+  
+    <meta name="description" content="https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;ba49d3e3-3362-480e-b81d-ba4684b6ac6f&#x2F;Untitled.png?X-Amz-Algo...">
+    <meta property="og:description" content="https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;ba49d3e3-3362-480e-b81d-ba4684b6ac6f&#x2F;Untitled.png?X-Amz-Algo...">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./Note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./OneDrive_Vercel__立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog_mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./About.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">时钟时序线</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-02-17</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-some(red)">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/ba49d3e3-3362-480e-b81d-ba4684b6ac6f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=44aef38a1472d4a92a624d3578d10454516ddd8cc0e7bfda72feef79f56d770e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class="">缘由</h3>
+<p class="">突发有一天想要一个高质量的时序图来表达自己的想法，就找到了一个开源的方案.</p>
+<p class="">WAVEDROM</p>
+<p class="">效果很好，语法简单，易于上手</p>
+<p class=""></p>
+<p class=""></p>
+<h3 class="">信号的不同种类</h3>
+<p class=""><code>wave</code> 后面的每一个都是一个波形甚至<code>.</code> 都是一种表示方式</p>
+<pre><code class="language-json">{name:'Alfa',wave:'01.zx=ud.23.45678'},</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/ab5e0c17-8d4c-4005-b983-c72080a2c6e6/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=bc418f8874e9cf89b7d24deab19c7b4a58a30577f39ed74fa28d11607a76f809&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class="">时钟线的不同形式</h3>
+<p class=""></p>
+<pre><code class="language-json">{ signal: [
+  { name: "pclk", wave: 'p.......' },
+  { name: "Pclk", wave: 'P.......' },
+  { name: "nclk", wave: 'n.......' },
+  { name: "Nclk", wave: 'N.......' },
+  {},
+  { name: 'clk0', wave: 'phnlPHNL' },
+  { name: 'clk1', wave: 'xhlhLHl.' },
+  { name: 'clk2', wave: 'hpHplnLn' },
+  { name: 'clk3', wave: 'nhNhplPl' },
+  { name: 'clk4', wave: 'xlh.L.Hx' },
+]}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/1122fa8d-d39e-48ba-8aae-54ad271d6150/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=db9c8be08d8acd3f3cc120859b3dcac682e66dddb9ad5e89e41d9de20d982a19&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<p class=""></p>
+<h3 class="">文字镶嵌</h3>
+<pre><code class="language-json">{ signal: [
+  { name: "clk",  wave: "P......" },
+  { name: "bus",  wave: "x.==.=x", data: ["head", "body", "tail", "data"] },
+  { name: "wire", wave: "0.1..0." }
+]}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/73fc16a2-84e6-4990-98ad-3ecadfab5242/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=dddbcf262a0e37382533c9d6c6ae7e153cbe43fa0a9d6319edbc2c5914f86493&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class="">截断中间不必要的部分</h3>
+<p class="">使用 <code>|</code></p>
+<pre><code class="language-json">{ signal: [
+  { name: "clk",         wave: "p.....|..." },
+  { name: "Data",        wave: "x.345x|=.x", data: ["head", "body", "tail", "data"] },
+  { name: "Request",     wave: "0.1..0|1.0" },
+  {},
+  { name: "Acknowledge", wave: "1.....|01." }
+]}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/33c78957-35e7-4e74-8cb7-db1a6d4a7fc0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=a8b64e12bfd0d3d1ec5616429b6a282f22465580cf229c84768be99113e36ef5&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class="">对于文字的标注</h3>
+<p class=""><code>['group name', {...}, {...}, ...]</code> 这样的方式</p>
+<pre><code class="language-json">{ signal: [
+   {name: 'clk',   wave: 'p..Pp..P'},
+  ['Master',
+    ['ctrl',
+      {name: 'write', wave: '01.0....'},
+      {name: 'read',  wave: '0...1..0'}
+    ],
+    {  name: 'addr',  wave: 'x3.x4..x', data: 'A1 A2'},
+    {  name: 'wdata', wave: 'x3.x....', data: 'D1'   },
+  ],
+  {},
+  ['Slave',
+    ['ctrl',
+      {name: 'ack',   wave: 'x01x0.1x'},
+    ],
+    {  name: 'rdata', wave: 'x.....4x', data: 'Q2'},
+  ]
+]}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/87567c7e-e020-4563-ac8f-271fb1bdc8f5/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=0b63b410acfb72f5e53d3c2ea605c6ffc1a4e8c3907505e3f8a5fab20384ff53&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class="">周期和相位的调整</h3>
+<p class=""><code><strong>Period </strong></code><strong> &</strong><code><strong>Phase</strong></code><strong> </strong> 关键字来调整</p>
+<pre><code class="language-json">{ signal: [
+  { name: "CK",   wave: "P.......",                                              period: 2  },
+  { name: "CMD",  wave: "x.3x=x4x=x=x=x=x", data: "RAS NOP CAS NOP NOP NOP NOP", phase: 0.5 },
+  { name: "ADDR", wave: "x.=x..=x........", data: "ROW COL",                     phase: 0.5 },
+  { name: "DQS",  wave: "z.......0.1010z." },
+  { name: "DQ",   wave: "z.........5555z.", data: "D0 D1 D2 D3" }
+]}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6e4a13dc-ba92-41cd-95d1-3929236fed18/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=0d1d77280ee3968fbb51d94bbb60c89e9bc081ba4370425225426bd47d3d5dde&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<p class=""><code>{signal: [</code><code>  </code><code>{name:</code><code>'clk'</code><code>,         wave: </code><code>'p....'</code> <code>},</code><code>  </code><code>{name:</code><code>'Data'</code><code>,        wave: </code><code>'x345x'</code><code>, data: </code><code>'a b c'</code> <code>},</code><code>  </code><code>{name:</code><code>'Request'</code><code>,     wave: </code><code>'01..0'</code> <code>}</code><code>],</code><code> </code><code>head:{</code><code>   </code><code>text:</code><code>'WaveDrom example'</code><code>,</code><code>   </code><code>tick:0,</code><code>   </code><code>every:2</code><code> </code><code>},</code><code> </code><code>foot:{</code><code>   </code><code>text:</code><code>'Figure 100'</code><code>,</code><code>   </code><code>tock:9</code><code> </code><code>},</code><code>}</code></p>
+<h2 class="">个性化的特别参数</h2>
+<h3 class=""><code><strong>config:{...}</strong></code></h3>
+<p class=""></p>
+<p class=""><code><strong>hscale</strong></code><strong> —></strong><code><strong>config: { hscale: number }</strong></code></p>
+<p class=""><code><strong>skin</strong></code><strong> —> </strong><code><strong>config:{skin:'...'}</strong></code><strong>  </strong><code><strong>'default'</strong></code> &<code><strong>'narrow'</strong></code></p>
+<p class=""><code><strong>head/foot</strong></code><strong> —></strong><code><strong>head:{...}</strong></code><strong>&</strong><code><strong>foot:{...}</strong></code></p>
+<p class=""><code><strong>tick</strong></code></p>
+<p class=""><code><strong>tock</strong></code></p>
+<p class=""><code><strong>text</strong></code></p>
+<p class=""><code><strong>every</strong></code></p>
+<pre><code class="language-json">{signal: [
+  {name:'clk',         wave: 'p....' },
+  {name:'Data',        wave: 'x345x', data: 'a b c' },
+  {name:'Request',     wave: '01..0' }
+],
+ head:{
+   text:'WaveDrom example',
+   tick:0,
+	   every:2
+ },
+ foot:{
+   text:'Figure 100',
+   tock:9
+ },
+}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/640a8f2b-47bc-4d50-8c14-b6245d167bb2/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=f676cdd2a549dccb5d8144abfbf94599e17070065c9a93023c2eeb5dc16278f8&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<hr style="border: none; border-top: 1px solid #eaeaea; margin: 2em 0;" />
+<p class=""><code><strong>tspan</strong></code></p>
+<pre><code class="language-json">{signal: [
+  {name:'clk', wave: 'p.....PPPPp....' },
+  {name:'dat', wave: 'x....2345x.....', data: 'a b c d' },
+  {name:'req', wave: '0....1...0.....' }
+],
+head: {text:
+  ['tspan',
+    ['tspan', {class:'error h1'}, 'error '],
+    ['tspan', {class:'warning h2'}, 'warning '],
+    ['tspan', {class:'info h3'}, 'info '],
+    ['tspan', {class:'success h4'}, 'success '],
+    ['tspan', {class:'muted h5'}, 'muted '],
+    ['tspan', {class:'h6'}, 'h6 '],
+    'default ',
+    ['tspan', {fill:'pink', 'font-weight':'bold', 'font-style':'italic'}, 'pink-bold-italic']
+  ]
+},
+foot: {text:
+  ['tspan', 'E=mc',
+    ['tspan', {dy:'-5'}, '2'],
+    ['tspan', {dy: '5'}, '. '],
+    ['tspan', {'font-size':'25'}, 'B '],
+    ['tspan', {'text-decoration':'overline'},'over '],
+    ['tspan', {'text-decoration':'underline'},'under '],
+    ['tspan', {'baseline-shift':'sub'}, 'sub '],
+    ['tspan', {'baseline-shift':'super'}, 'super ']
+  ],tock:-5
+}
+}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/038be59a-9ed3-4f0c-9961-00f9fd991ce1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152818Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=fe28b941f5dc7e60c20b370561ad9d53b2ed8dd8b5fefdbcc86cbae24e820e67&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class="">箭头指向</h3>
+<pre><code class="language-json">~    -~
+<~>  <-~>
+ ~>   -~>  ~-></code></pre>
+<pre><code class="language-json">{ signal: [
+  { name: 'A', wave: '01........0....',  node: '.a........j' },
+  { name: 'B', wave: '0.1.......0.1..',  node: '..b.......i' },
+  { name: 'C', wave: '0..1....0...1..',  node: '...c....h..' },
+  { name: 'D', wave: '0...1..0.....1.',  node: '....d..g...' },
+  { name: 'E', wave: '0....10.......1',  node: '.....ef....' }
+  ],
+  edge: [
+    'a~b t1', 'c-~a t2', 'c-~>d time 3', 'd~-e',
+    'e~>f', 'f->g', 'g-~>h', 'h~>i some text', 'h~->j'
+  ]
+}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/a95be6a3-d95f-452f-84bb-dcfa10081620/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152819Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=4f68f4501cd351eea17c11819f53d0e176fca25f021abcf493ae321b2f39399c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class=""><strong>Sharp lines</strong></h3>
+<pre><code class="language-json">-   -|   -|-
+<-> <-|> <-|->
+ ->  -|>  -|->  |->
+ +</code></pre>
+<pre><code class="language-json">{ signal: [
+  { name: 'A', wave: '01..0..',  node: '.a..e..' },
+  { name: 'B', wave: '0.1..0.',  node: '..b..d.', phase:0.5 },
+  { name: 'C', wave: '0..1..0',  node: '...c..f' },
+  {                              node: '...g..h' },
+  {                              node: '...I..J',  phase:0.5 },
+  { name: 'D', wave: '0..1..0',  phase:0.5 }
+  ],
+  edge: [
+    'b-|a t1', 'a-|c t2', 'b-|-c t3', 'c-|->e t4', 'e-|>f more text',
+    'e|->d t6', 'c-g', 'f-h', 'g<->h 3 ms', 'I+J 5 ms'
+  ]
+}</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/63ccf6df-db99-44d5-9d1d-c900373bbbdd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152819Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=063c5b843712f507a41012c0c630f1507664ae5c6d7785819b68a7e1be9aa565&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<h3 class="">可以镶嵌函数代替</h3>
+<pre><code class="language-json">(function (bits, ticks) {
+  var i, t, gray, state, data = [], arr = [];
+  for (i = 0; i < bits; i++) {
+    arr.push({name: i + '', wave: ''});
+    state = 1;
+    for (t = 0; t < ticks; t++) {
+      data.push(t + '');
+      gray = (((t >> 1) ^ t) >> i) & 1;
+      arr[i].wave += (gray === state) ? '.' : gray + '';
+      state = gray;
+    }
+  }
+  arr.unshift('gray');
+  return {signal: [
+    {name: 'bin', wave: '='.repeat(ticks), data: data}, arr
+  ]};
+})(5, 16)</code></pre>
+<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/df90e2eb-5641-45af-a7a6-ed5762d73970/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZOCZGFAJ%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152819Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDOt0Sl6dL17nv3Sph1FDr2aNJdtwiCnKaP5WtuHogxtwIgRnYTjlE7ZTfOhckyC3gUY3e%2Bi9P9laZ%2F%2BZ7w3n98Ic4q%2FwMIVxAAGgw2Mzc0MjMxODM4MDUiDI1SpGdYMBtJ3QN36SrcAxcCLLjJfpxH5cg7m0n2kbbRSIgkjPOusYJ7NV%2BYWpp1ssdZ6sHnWXUd7wAOF0aHZck%2ByzqMzRW2DRTMn7Rrir3%2Bdf5fg%2BoeSXb%2Bhw%2FGzqufB3Bd5nMawP8NZoj4k0Fl9oZo6yNQ%2FIFQlhQNcy0cHw0hHxD55qMxtK2zu36EhDkAMYkimriVEqFY2F49QalkNw1twGX553zI7HJqu6UN64a1vQOaAe7lk3TCOp%2F0ZjlE1Kct%2BSXALALGhOYbuTzIubIBEuwwuDtSHbFGWJqRDKLne1NYxcso0XNaFYhK1B4Z4TeF4AWWl%2BkJMDjY7N%2BKoDSQjJbRzX3%2FPEwi8sTFQ0Ofs0PZq7pJWOdCIhxOm3sWLsPpf4nvHuSMa9GbN0fWobSIjx%2BXgWhNxqTkERa0vgY67Gj3o8C2mX1qUIt1UadF%2BELITJloWmp3qkJxsJmWjPadfpMWBnVIoCsTIX1IfUga9O0BrJKVxBBQTTsccwQi7GJ51RMfvusZChb%2FBRMhgR%2F8tVB4Vppq9xiW60EY3xv31Ls%2BYz71%2FQBFkaTzLf3%2BxVpI2p47i7WHh%2FlkgqyUujczY7k9wmQbHYikoR%2Bv6p5QtuGw1ZNu8Ilici0fe354UrUONoIgCDxn06Z2MOuY48sGOqUBLCVnKfdFf2hXCZFrsexEl8hHDsXbNrHU9B75JgQ1IhsrHSTmK3HAXTaPGcXBasLgp43LVmbtxRiGUo4gF%2FjsSBG88gbNVa1FjDvKbsGJ8pigub2kya2uNvxOw8omtE3CMq6IQF755%2FH9KsP0%2F%2B9hRemzBHrY32CpUS7wElI80%2FFrJo1%2FW2sfA8a0eQcs6Pi4J4k%2FWiLkwnNOj9xHM7fDEl27eiZv&X-Amz-Signature=7824f5baa48651cc36f1da0db8650369a5996739648cef4b06aa90fb64f7f7ba&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
+<p class=""></p>
+<a href="https://wavedrom.com/tutorial.html" class="bookmark" target="_blank" style="display: block; border: 1px solid #ddd; padding: 12px; border-radius: 4px; margin: 10px 0; text-decoration: none; color: inherit;">
+                        <div style="font-weight: bold;">https://wavedrom.com/tutorial.html</div>
+                        <div style="font-size: 0.9em; color: #666; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">https://wavedrom.com/tutorial.html</div>
+                    </a>
+<p class=""></p>
+<!-- Unsupported block type -->
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  
