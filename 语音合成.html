@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>语音合成&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="语音合成">
+  
+    <meta name="description" content="关于人工合成语音&amp;人工合成视频的思考  最近被盗了QQ号,于是有了这篇文章，也是用来去科普一些关于语音合成，图像合成的一些知识。 {} 先说一下关于语音合成 ">
+    <meta property="og:description" content="关于人工合成语音&amp;人工合成视频的思考  最近被盗了QQ号,于是有了这篇文章，也是用来去科普一些关于语音合成，图像合成的一些知识。 {} 先说一下关于语音合成 ">
+  
+  
+    <meta property="og:image" content="🗣️">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🗣️</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">语音合成</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2022-12-07</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/web.html" class="tag tag-green">Web</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <h2 class="Heading Heading--2 "><span class="SemanticString__Fragment--BgBlue">关于人工合成语音&人工合成视频的思考</span></h2>
+<p class="Paragraph "></p>
+<p class="Paragraph ">最近被盗了QQ号,于是有了这篇文章，也是用来去科普一些关于<span class="SemanticString__Fragment--BgRed"><strong>语音合成</strong></span>，<span class="SemanticString__Fragment--BgRed"><strong>图像合成</strong></span>的一些知识。</p>
+<div class="Divider"></div>
+<p class="Paragraph ">先说一下关于<strong>语音合成</strong></p>
+<div class="Callout ColorfulBlock--BgGray"><div class="Callout__Icon">💡</div><div class="Callout__Content">语音合成是一种技术，可以将文本转换为语音。它被广泛应用在各种场景中，例如语音助手、自动售货机、电话客服等等。现在最先进的语音合成技术使用神经网络来生成语音，从而使其更接近自然人类语言。</div></div>
+<p class="Paragraph ">历史上，人类一直在探索如何将文字转化为语音，以便更加方便地传播信息。而随着科技的发展，语音合成技术也得到了极大的提升。从最初的机械式语音合成，到后来的数字化语音合成，再到现在的基于深度学习的语音合成技术，其发展速度可谓飞快。</p>
+<p class="Paragraph ">现在的语音合成技术已经<span class="SemanticString__Fragment--ColorRed"><strong>非常成熟</strong></span>，不仅可以模仿人类自然的语音表达方式，还可以通过模拟不同的说话风格、情感和语气来增强语音的表现力。此外，它还具备多语言支持和智能性，可以根据特定场景和用户需求进行定制和优化。</p>
+<p class="Paragraph ">由于这种技术的发展和应用，现在甚至可以使用语音合成技术代替文本阅读的全部工作，包括<strong>电子书籍、新闻报道、商业文件、通知公告</strong>等内容的朗读。这无疑会给人们的生活带来很大的便利和舒适。</p>
+<div class="Divider"></div>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 "><span class="SemanticString__Fragment--BgYellow"><strong>关于语音合成的一些素材:</strong></span></h3>
+<div class="ColumnList"><div class="Column" style="flex: 1; min-width: 0;"><p class="Paragraph "><strong>关于虚拟歌姬：</strong></p>
+<div class="Bookmark"><a href="https://www.bilibili.com/video/BV1Yy4y1d7Cg" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://www.bilibili.com/video/BV1Yy4y1d7Cg</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=www.bilibili.com&sz=64" />
+                                <span class="Bookmark__Link">www.bilibili.com/video/BV1Yy4y1d7Cg</span>
+                            </div>
+                        </div>
+                    </a></div>
+<p class="Paragraph "></p>
+</div>
+<div class="Column" style="flex: 1; min-width: 0;"><p class="Paragraph ">关于微软的语音合成</p>
+<div class="Bookmark"><a href="https://azure.microsoft.com/zh-cn/products/cognitive-services/text-to-speech/#get-started" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://azure.microsoft.com/zh-cn/products/cognitive-services/text-to-speech/#get-started</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=azure.microsoft.com&sz=64" />
+                                <span class="Bookmark__Link">azure.microsoft.com/zh-cn/products/cognitive-services/text-to-speech/#get-started</span>
+                            </div>
+                        </div>
+                    </a></div>
+<p class="Paragraph ">关于对自己的音源采样训练出来的例子</p>
+<div class="Bookmark"><a href="https://www.bilibili.com/opus/753510943811436680?spm_id_from=333.999.list.card_opus.click" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://www.bilibili.com/opus/753510943811436680?spm_id_from=333.999.list.card_opus.click</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=www.bilibili.com&sz=64" />
+                                <span class="Bookmark__Link">www.bilibili.com/opus/753510943811436680?spm_id_from=333.999.list.card_opus.click</span>
+                            </div>
+                        </div>
+                    </a></div>
+</div>
+</div>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">当然，除了使用现有唱片和音频资源进行训练外，您还可以<strong>采集自己的声音</strong>，并将其用于模型训练。此外，您甚至可以保存已故亲人的声音，让他们的声音永存于世，并将其用于模型训练。</p>
+<p class="Paragraph ">训练数据不仅限于<strong>歌唱</strong>和<strong>说话</strong>，您也可以使用它来学习其他语言。这使得该技术不仅在音乐产业中有用，也可以被应用于各种领域，如<strong>语音识别</strong>、<strong>机器翻译</strong>等等。无论用途如何，这项技术都为我们提供了一个强大而多功能的工具，可以更好地理解并处理声音数据。</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">确实，如果这项技术被<strong>不道德或恶意</strong>的人滥用，后果将是<strong>不堪设想</strong>的。例如，<span class="SemanticString__Fragment--BgRed"><strong>有些人可能利用它来伪造声音文件和视频，并制造虚假的证据</strong></span>。这种滥用可能会导致<strong>无辜者</strong>受到指控或<strong>损失信誉。</strong></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<div class="Divider"></div>
+<h3 class="Heading Heading--3 ">QQ被盗如何解决</h3>
+<ol class="NumberedListWrapper">
+<li class="NumberedList "><span class="SemanticString__Fragment--BgBlue"><strong>冻结账号</strong></span>：如果您的QQ号被盗，第一时间要冻结账号以防止进一步的损失。可以通过微信登录QQ并在设置中进行账号冻结。</li>
+<li class="NumberedList "><span class="SemanticString__Fragment--BgBlue"><strong>广而告之</strong></span>：及时告知您的朋友和联系人，让他们知道您的QQ号已经被盗。这样可以避免黑客利用您的身份进行诈骗等行为。</li>
+<li class="NumberedList "><span class="SemanticString__Fragment--BgBlue"><strong>总结经验</strong></span>：在处理了QQ号被盗事件后，应该总结经验，思考如何加强账号保护措施，例如启用双重验证、不使用弱密码、定期更改密码等。</li>
+</ol>
+<div class="Divider"></div>
+<h3 class="Heading Heading--3 ">关于图像合成</h3>
+<p class="Paragraph ">图像合成技术在过去几年得到了长足的发展。这种技术通过将多个图像或视频片段组合在一起，以创建新的视觉效果。它可以用于各种应用程序，例如特效制作、虚拟现实和增强现实。</p>
+<p class="Paragraph ">图像合成技术的发展离不开人工智能和机器学习的进步。利用深度学习和计算机视觉技术，能够让计算机自动地学习如何识别和处理图像数据，并生成高质量的合成图像。</p>
+<p class="Paragraph ">目前，图像合成技术已经被广泛应用于影视制作、游戏开发、医疗成像等领域。</p>
+<div class="Divider"></div>
+<p class="Paragraph "><strong>资源链接</strong></p>
+<h3 class="Heading Heading--3 "><em><strong>ACE Studio</strong></em></h3>
+<p class="Paragraph "><span class="SemanticString__Fragment--ColorRed"><strong>关于ACE_Studio-从多维度AI演唱参数到高质量的合成效果，我们使用毫不妥协的全流程AI技术，不断追求提升虚拟歌手的歌声自然度与表现力</strong></span></p>
+<h3 class="Heading Heading--3 "><em><strong>SV</strong></em></h3>
+<p class="Paragraph "><span class="SemanticString__Fragment--ColorRed"><strong>逼真无暇的歌声 弹指可得 顷刻呈现</strong></span></p>
+<h3 class="Heading Heading--3 "><em><strong>DiffSinger</strong></em></h3>
+<p class="Paragraph "><span class="SemanticString__Fragment--ColorRed"><strong>自制声库教程</strong></span></p>
+<p class="Paragraph "><span class="SemanticString__Fragment--ColorRed"><strong>Github开源地址</strong></span></p>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>ESP32中的输出信息&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="ESP32中的输出信息">
+  
+    <meta name="description" content="在写(shui)论文的时候发现，在ESP32输出调试信息关键很少，没有说服力 https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;a3230e1f-8f7f-486c-a6...">
+    <meta property="og:description" content="在写(shui)论文的时候发现，在ESP32输出调试信息关键很少，没有说服力 https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;a3230e1f-8f7f-486c-a6...">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">ESP32中的输出信息</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-05-05</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">在写(shui)论文的时候发现，在<code>ESP32</code>输出调试信息关键很少，没有说服力</p>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/a3230e1f-8f7f-486c-a60c-b0e48bc6e59c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46652EPWYVY%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T162626Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGEPfCnfVdlhhcht%2BEActUbI%2FWa1pivh%2BWrpGrKJ8%2BxfAiBmDHj9nyveEeu%2FCROoE4%2BhhpmIBWOlBykFPrcFtSPnkCr%2FAwhvEAAaDDYzNzQyMzE4MzgwNSIMFoKQa%2Fdo5e%2BPHUH%2BKtwDyuqs7RoVAs3Ed1C%2BLJhgG8suhP2sA%2BEPsunuro3zn09dAwSvuoXE120kKdhvF6svS%2FCGl%2BRaQVa9kwC3wXj2fQeSUyrjYFGBArJ9dIwIQhR%2FzNRSREFmApTp79IwZ7WWbsMelIQ1scTHJSwNwt0Nx4d0Eti3EnBgKqJOobxy1S6nSMw4RbaEJvmmM1yuexWIScf63ifFpaJH79rykrG3mb%2BrWmhNb1CtnIFy9gG798FXP5xCLGFLdw%2Bx%2B6dMX4swpqYrEXB7aA1uNp9xKNgA%2B7%2B7XuaoXAkKN9jgkqJ%2Bf3c%2FPvK%2FVRUMlgVsdy37q2FzXybf%2Brb1oTpSNp9Pw%2BZpfnJJq0xjUQVC3plBJX7IfTFEqFlIoap5juxDPj72xgZCjjqcumeV1Tsg%2FMb7Ix%2B2Ma%2Fn27cUFEHqNK8XWwsyTkabLQbPXKWkVCoC2AQJo6PCvntIx35jbPmKUesHObHPEmTv99izawHumok5u95H6OijkWvPhtXwCfvntrvat2w2rrKz7Co6bdiVNQ4GBnVLF2r6UPpWFebWu0s3UhoMb8TKODA05isGbQszOanJFqgSz36Xg%2FxxaGuZ7Qd4K6j6zOIccDvhb5o7h2uT%2FGIPMsD6LzZ6yJFff3p2sIYw6K%2FoywY6pgEOxd4zSCFtIrI7KZuqNQ09wEaMaEikrzRVEgcuLV74VHEtrHScuCzxFd39Zu6cKnF6JVFpVm8K31pxtnsNi0qeU3ZuE9tmeSp7257mEuTRRHtC4fafNQXk%2FFdCexjlnZ0CSLyS7S0crTY%2FZmy4Te5QWYomp3MMtq6d6nufPA0hEkA8PqldWKj7Wk1R35moDykAwSzyTN529wVH88hkPx9RPdGQ2oGw&X-Amz-Signature=f486dee26f2200cac38700ce9e3ff2f63c1663f140704e8b8fad0c50949623f8&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">于是在<code>boot.py </code>寻找相关的解决方法 （GPT）</p>
+<h2 class="Heading Heading--2 "><strong>启用 ESP32 MicroPython 调试信息</strong></h2>
+<p class="Paragraph ">您提供的代码片段展示了如何禁用 ESP32 MicroPython 的调试信息。要启用调试信息，您需要进行以下操作：</p>
+<pre class="Code"><code>import esp
+esp.osdebug(None)</code></pre>
+<p class="Paragraph "><strong>2. (可选) 设置调试级别:</strong></p>
+<p class="Paragraph ">您可以使用 <code>esp.osdebug()</code> 函数设置调试信息的级别。默认级别为 <code>0</code>，表示不输出任何调试信息。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList "><code>esp.osdebug(None)</code>: 禁用调试信息 (与注释掉代码行相同)</li>
+<li class="BulletedList "><code>esp.osdebug(0)</code>: 无调试信息 (默认)</li>
+<li class="BulletedList "><code>esp.osdebug(1)</code>: 错误信息</li>
+<li class="BulletedList "><code>esp.osdebug(2)</code>: 错误信息和警告</li>
+<li class="BulletedList "><code>esp.osdebug(3)</code>: 错误信息、警告和调试信息</li>
+</ul>
+<p class="Paragraph ">例如，要启用错误信息和警告，可以使用以下代码:</p>
+<pre class="Code"><code>import esp
+esp.osdebug(2)</code></pre>
+<h3 class="Heading Heading--3 "><strong>查看 ESP32 MicroPython 调试信息</strong></h3>
+<p class="Paragraph ">启用 ESP32 MicroPython 调试信息后，您可以通过以下步骤查看这些信息：</p>
+<h3 class="Heading Heading--3 "><strong>1. 连接串口</strong>:</h3>
+<p class="Paragraph ">使用 USB 线将 ESP32 连接到您的电脑。 确保您已安装所需的 USB 驱动程序。</p>
+<h3 class="Heading Heading--3 "><strong>2. 确定串口</strong></h3>
+<p class="Paragraph ">:您需要确定 ESP32 连接到哪个串口。 在 Windows 上，您可以使用设备管理器查看可用串口。 在 macOS 或 Linux 上，您可以使用 <code>ls /dev/tty*</code> 命令列出可用串口。</p>
+<h3 class="Heading Heading--3 "><strong>3. 选择串口监视器</strong>:</h3>
+<p class="Paragraph ">选择并打开一个串口监视器应用程序，例如：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList "><strong>PuTTY (Windows):</strong> 免费且易于使用的串口监视器。</li>
+<li class="BulletedList "><strong>screen (macOS/Linux):</strong> 终端应用程序，提供串口监视功能。</li>
+<li class="BulletedList "><strong>Arduino IDE 串口监视器:</strong> 如果您使用 Arduino IDE 进行开发，可以直接使用内置的串口监视器。</li>
+</ul>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">关于监视器的选择</h3>
+<p class="Paragraph "><code><strong>pyserial</strong></code><code>-miniterm -f direct</code> 是一个Putty的替代方案</p>
+<p class="Paragraph "><code>pip install pyserial</code> 就可以安装，不过要设置一下相关的波特率，一般micropython也是115200</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">效果展示</h3>
+<p class="Paragraph ">相对于原来的显示内容变多了😈 </p>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/c8298e52-a219-434c-91ae-1ddb61b9d0a9/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46652EPWYVY%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T162626Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGEPfCnfVdlhhcht%2BEActUbI%2FWa1pivh%2BWrpGrKJ8%2BxfAiBmDHj9nyveEeu%2FCROoE4%2BhhpmIBWOlBykFPrcFtSPnkCr%2FAwhvEAAaDDYzNzQyMzE4MzgwNSIMFoKQa%2Fdo5e%2BPHUH%2BKtwDyuqs7RoVAs3Ed1C%2BLJhgG8suhP2sA%2BEPsunuro3zn09dAwSvuoXE120kKdhvF6svS%2FCGl%2BRaQVa9kwC3wXj2fQeSUyrjYFGBArJ9dIwIQhR%2FzNRSREFmApTp79IwZ7WWbsMelIQ1scTHJSwNwt0Nx4d0Eti3EnBgKqJOobxy1S6nSMw4RbaEJvmmM1yuexWIScf63ifFpaJH79rykrG3mb%2BrWmhNb1CtnIFy9gG798FXP5xCLGFLdw%2Bx%2B6dMX4swpqYrEXB7aA1uNp9xKNgA%2B7%2B7XuaoXAkKN9jgkqJ%2Bf3c%2FPvK%2FVRUMlgVsdy37q2FzXybf%2Brb1oTpSNp9Pw%2BZpfnJJq0xjUQVC3plBJX7IfTFEqFlIoap5juxDPj72xgZCjjqcumeV1Tsg%2FMb7Ix%2B2Ma%2Fn27cUFEHqNK8XWwsyTkabLQbPXKWkVCoC2AQJo6PCvntIx35jbPmKUesHObHPEmTv99izawHumok5u95H6OijkWvPhtXwCfvntrvat2w2rrKz7Co6bdiVNQ4GBnVLF2r6UPpWFebWu0s3UhoMb8TKODA05isGbQszOanJFqgSz36Xg%2FxxaGuZ7Qd4K6j6zOIccDvhb5o7h2uT%2FGIPMsD6LzZ6yJFff3p2sIYw6K%2FoywY6pgEOxd4zSCFtIrI7KZuqNQ09wEaMaEikrzRVEgcuLV74VHEtrHScuCzxFd39Zu6cKnF6JVFpVm8K31pxtnsNi0qeU3ZuE9tmeSp7257mEuTRRHtC4fafNQXk%2FFdCexjlnZ0CSLyS7S0crTY%2FZmy4Te5QWYomp3MMtq6d6nufPA0hEkA8PqldWKj7Wk1R35moDykAwSzyTN529wVH88hkPx9RPdGQ2oGw&X-Amz-Signature=fbfa5f6c7b1c61adba5b03426c3e28d33a442259671f8aa907a94c556ebbb93a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/8191416a-4b00-4ac6-b657-1d91a3c3c244/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46652EPWYVY%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T162626Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGEPfCnfVdlhhcht%2BEActUbI%2FWa1pivh%2BWrpGrKJ8%2BxfAiBmDHj9nyveEeu%2FCROoE4%2BhhpmIBWOlBykFPrcFtSPnkCr%2FAwhvEAAaDDYzNzQyMzE4MzgwNSIMFoKQa%2Fdo5e%2BPHUH%2BKtwDyuqs7RoVAs3Ed1C%2BLJhgG8suhP2sA%2BEPsunuro3zn09dAwSvuoXE120kKdhvF6svS%2FCGl%2BRaQVa9kwC3wXj2fQeSUyrjYFGBArJ9dIwIQhR%2FzNRSREFmApTp79IwZ7WWbsMelIQ1scTHJSwNwt0Nx4d0Eti3EnBgKqJOobxy1S6nSMw4RbaEJvmmM1yuexWIScf63ifFpaJH79rykrG3mb%2BrWmhNb1CtnIFy9gG798FXP5xCLGFLdw%2Bx%2B6dMX4swpqYrEXB7aA1uNp9xKNgA%2B7%2B7XuaoXAkKN9jgkqJ%2Bf3c%2FPvK%2FVRUMlgVsdy37q2FzXybf%2Brb1oTpSNp9Pw%2BZpfnJJq0xjUQVC3plBJX7IfTFEqFlIoap5juxDPj72xgZCjjqcumeV1Tsg%2FMb7Ix%2B2Ma%2Fn27cUFEHqNK8XWwsyTkabLQbPXKWkVCoC2AQJo6PCvntIx35jbPmKUesHObHPEmTv99izawHumok5u95H6OijkWvPhtXwCfvntrvat2w2rrKz7Co6bdiVNQ4GBnVLF2r6UPpWFebWu0s3UhoMb8TKODA05isGbQszOanJFqgSz36Xg%2FxxaGuZ7Qd4K6j6zOIccDvhb5o7h2uT%2FGIPMsD6LzZ6yJFff3p2sIYw6K%2FoywY6pgEOxd4zSCFtIrI7KZuqNQ09wEaMaEikrzRVEgcuLV74VHEtrHScuCzxFd39Zu6cKnF6JVFpVm8K31pxtnsNi0qeU3ZuE9tmeSp7257mEuTRRHtC4fafNQXk%2FFdCexjlnZ0CSLyS7S0crTY%2FZmy4Te5QWYomp3MMtq6d6nufPA0hEkA8PqldWKj7Wk1R35moDykAwSzyTN529wVH88hkPx9RPdGQ2oGw&X-Amz-Signature=211f7d25f5ca5a08137d6f2cf4f482c0daff8e9c70acf73d1d93a7c797af774a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<p class="Paragraph "></p>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

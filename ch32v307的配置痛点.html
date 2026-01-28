@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>CH32V307的配置痛点&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="CH32V307的配置痛点">
+  
+    <meta name="description" content="VScode 配置 CH32V307(使用MRS) + Cortex-Debug(1.4.4)  可以参考这两篇 沁恒 CH32V208(三): CH32V208 Ubuntu22.04 Makefile VSCode环境配置 - Milton - 博客园 &amp;&amp; VSCode+EIDE开发CH32V...">
+    <meta property="og:description" content="VScode 配置 CH32V307(使用MRS) + Cortex-Debug(1.4.4)  可以参考这两篇 沁恒 CH32V208(三): CH32V208 Ubuntu22.04 Makefile VSCode环境配置 - Milton - 博客园 &amp;&amp; VSCode+EIDE开发CH32V...">
+  
+  
+    <meta property="og:image" content="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;125767602?s=200&amp;v=4">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span><img class="inline-img-icon" src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;125767602?s=200&amp;v=4"></span>
+        
+      </div>
+    
+    <h1 class="Header__Title">CH32V307的配置痛点</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2025-05-13</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <h2 class="Heading Heading--2 ">VScode 配置 CH32V307(使用MRS) + Cortex-Debug(1.4.4)</h2>
+<p class="Paragraph "></p>
+<p class="Paragraph ">可以参考这两篇  &&  </p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">唯一注意到的一点是 如果需要 <code>Debug</code>  的话，需要注意<code>Debug</code>的时候 连接<code>ch32v307</code>和 <code>Cortex-Debug</code>(1.4.4)的版本</p>
+<h2 class="Heading Heading--2 ">Cortex Debug 降级到 1.4.4</h2>
+<p class="Paragraph ">首先是 Cortex Debug 的版本, 当前版本是 1.10.0, 这个版本运行沁恒的 gdb client 会提示如下错误</p>
+<pre class="Code"><code>ERROR: GDB major version should be >= 9, yours is 8; GDB could not start as expected. Bad installation or version mismatch. See if you can start gdb from a shell prompt and check its version (Must be >= 9)</code></pre>
+<p class="Paragraph ">沁恒定制的这个gcc已经8.3很久了, 等着沁恒升级不太现实, 只能将 <code>Cortex Debug</code> 降级到 1.4.4 使用, 这是支持gcc 8的最后一个版本. 在 <code>VSCode </code>的扩展中打开 Cortex Debug 的介绍页, 在 <code>Uninstall</code> <span class="SemanticString__Fragment--ColorRed"><strong>右侧的小箭头点击展开</strong></span>, 能看到 Install Another Version 的菜单, 在里面选择 1.4.4 安装</p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">为什么(stem32)32bit 这么多结构体</h2>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "><span class="SemanticString__Fragment--BgBlue"> </span></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">如何对于GPIO端口的复杂配置</h2>
+<p class="Paragraph ">芯片通用接口外接引脚的对应关系</p>
+<p class="Paragraph ">PC12—TAMPER-RTC</p>
+<p class="Paragraph ">PC14—-OSC32_IN</p>
+<p class="Paragraph ">PC15—-OSC32_OUT</p>
+<p class="Paragraph ">PC0~PC3—-ADC10~ADC13</p>
+<p class="Paragraph ">PA0~PA7—-ADC0~ADC7 </p>
+<p class="Paragraph ">PA4~PA5—-DAC0~DAC1</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">外设</h3>
+<p class="Paragraph ">KEY 高电平3.3V</p>
+<p class="Paragraph ">NREST 高电平</p>
+<p class="Paragraph ">LED1~LED2 低电平0V</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "><strong>GPIO的不同状态</strong></p>
+<p class="Paragraph ">软件配置成输出(推挽或开漏)</p>
+<p class="Paragraph ">推挽→ </p>
+<p class="Paragraph ">开漏→高阻 上拉5V</p>
+<p class="Paragraph ">特性	推挽输出 (Push-Pull)	                          开漏输出 (Open-Drain)
+驱动能力	强	                                                   弱 (需要上拉电阻)
+输出速度	快	                                                   慢
+电平转换	困难	                                           容易
+需要上拉电阻	否	                                           是
+应用场景	普通输出，驱动LED等	           I2C总线，电平转换，线与逻辑</p>
+<p class="Paragraph ">输入(带或不带上拉或下拉)</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">或复用的外设功能端口</p>
+<p class="Paragraph ">GPIO_Init</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">使用</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">重映射(复用)</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h1 class="Heading Heading--1 ">IIC (硬件驱动)驱动 OLED (128x66)</h1>
+<p class="Paragraph ">CH32V307EVT-R1</p>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/0aa8e6d6-6b95-4dd3-9907-4dce760790a3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466WG3G2QUQ%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T162612Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIBRocudlJ%2FH8OS6bNH%2FC3EIXF6ba0OHImGHxcntTD2x5AiByBWYMLaR6Vf9GNjnv81LXJYfhhbVC%2BbwxfK1hXIgOwSr%2FAwhvEAAaDDYzNzQyMzE4MzgwNSIMPVeTMjCXh9%2FSUCgsKtwDJISjJZNFPXisznjTmgelx7oeFqLTc2nAUpNLltQ4SlZfbaQxazsUWgmHw%2FG7wur4NBSFPgGZXNEf3KK2H4yor%2FzZSHKN%2Fgv7v%2Bco10FLTYHXT9D2KkKy4lhaqgyPEMK3w%2BBEcOf914Dcf9VlwweYvQl%2BcBpnpPpBT4byvdgKnNYQ48TGTKQG4EtbhYebq66%2FxCXU0xRF7eRuklEw8vRWWrj3tw%2Fgb%2BPzrKH1%2Fvh68fTlvM4rkIEnkfFNFgQ4eh8uSYN5XBf08%2BwSYqAfV2lN0segYWXHr7FNij8Una8Giy3rh1%2F7c6Cbj4kZgiN0X26wci4qlnPh3P8jUJ7D3atWmjK4Gc%2Bz%2BNrJLsdT8hHjnGxmvpnkZggY6aGlUWLtcWtW2xNpZQtbMpzWRNBBlMpZwhmD1ypAk8REsWejlFEID7AFLYw4BCZUQEuEZWS1rXeJ7jplRc3owweMafk4sfC72hFCXOBuo0twbp%2BgkipyvAphBAiGf5jG%2BJvoKLEohMzumzeT3O1%2FGKF2iYD2N9hGifnxl06ET0G9HZGjUyesr5GQryH2YVjfnqEaYs%2BXy4zx8f7xIPCSsEttSYKtKLp%2Bdo57mbcURhBJkor%2FAOzyJxVIdSxp60ftKRrKPoowt7DoywY6pgFjfLyZP8J%2B1e%2BbnHYbtcB1Uolkq9p2OcYcjs4kPDXZf5IcWPz5Vwp7eJ%2BtFI43BuuirF25ihHNqRhIyzWLfYrQGJ8SnSpqmVU5ajAi7P0An1YcIJbSh2vXtfroswxRLadoSYCvVCuFeRPr8pPt6oF%2BdwXGllfBl97OMW9q64jGrYHkkfI1XNUkGi%2F0fKNTNPrT0kSr%2FBhNTTkck%2F6X12KqN5IGbPog&X-Amz-Signature=41d2e987931173a8a5bcb96ddffd1131b8049ede0a3462e3c98a4dcbafe8f071&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/d4309cb8-4705-43ff-8b51-2ccd8cd0cd6f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466WG3G2QUQ%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T162612Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIBRocudlJ%2FH8OS6bNH%2FC3EIXF6ba0OHImGHxcntTD2x5AiByBWYMLaR6Vf9GNjnv81LXJYfhhbVC%2BbwxfK1hXIgOwSr%2FAwhvEAAaDDYzNzQyMzE4MzgwNSIMPVeTMjCXh9%2FSUCgsKtwDJISjJZNFPXisznjTmgelx7oeFqLTc2nAUpNLltQ4SlZfbaQxazsUWgmHw%2FG7wur4NBSFPgGZXNEf3KK2H4yor%2FzZSHKN%2Fgv7v%2Bco10FLTYHXT9D2KkKy4lhaqgyPEMK3w%2BBEcOf914Dcf9VlwweYvQl%2BcBpnpPpBT4byvdgKnNYQ48TGTKQG4EtbhYebq66%2FxCXU0xRF7eRuklEw8vRWWrj3tw%2Fgb%2BPzrKH1%2Fvh68fTlvM4rkIEnkfFNFgQ4eh8uSYN5XBf08%2BwSYqAfV2lN0segYWXHr7FNij8Una8Giy3rh1%2F7c6Cbj4kZgiN0X26wci4qlnPh3P8jUJ7D3atWmjK4Gc%2Bz%2BNrJLsdT8hHjnGxmvpnkZggY6aGlUWLtcWtW2xNpZQtbMpzWRNBBlMpZwhmD1ypAk8REsWejlFEID7AFLYw4BCZUQEuEZWS1rXeJ7jplRc3owweMafk4sfC72hFCXOBuo0twbp%2BgkipyvAphBAiGf5jG%2BJvoKLEohMzumzeT3O1%2FGKF2iYD2N9hGifnxl06ET0G9HZGjUyesr5GQryH2YVjfnqEaYs%2BXy4zx8f7xIPCSsEttSYKtKLp%2Bdo57mbcURhBJkor%2FAOzyJxVIdSxp60ftKRrKPoowt7DoywY6pgFjfLyZP8J%2B1e%2BbnHYbtcB1Uolkq9p2OcYcjs4kPDXZf5IcWPz5Vwp7eJ%2BtFI43BuuirF25ihHNqRhIyzWLfYrQGJ8SnSpqmVU5ajAi7P0An1YcIJbSh2vXtfroswxRLadoSYCvVCuFeRPr8pPt6oF%2BdwXGllfBl97OMW9q64jGrYHkkfI1XNUkGi%2F0fKNTNPrT0kSr%2FBhNTTkck%2F6X12KqN5IGbPog&X-Amz-Signature=537881bd74299f4f199118ee033f29e44ae1b947bd8be38fcec40e7b0b8d2a03&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<p class="Paragraph "></p>
+<p class="Paragraph ">对于默认的端口映射就是 <code>PB6</code> ——>SLC  </p>
+<div style="margin-left: 20px;"><p class="Paragraph ">                                   <code>PB7</code> ——>SDA  </p>
+</div>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">主机模式</h3>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+<p class="Paragraph "></p>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

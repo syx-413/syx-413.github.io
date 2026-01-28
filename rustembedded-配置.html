@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>RustEmbedded 配置&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="RustEmbedded 配置">
+  
+    <meta name="description" content="gray 操作环境 使用的是wsl2  https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;ad12373d-ff3a-410d-8592-e1411b649bf0&#x2F;%E5...">
+    <meta property="og:description" content="gray 操作环境 使用的是wsl2  https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;ad12373d-ff3a-410d-8592-e1411b649bf0&#x2F;%E5...">
+  
+  
+    <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;4464295&#x2F;41629747-1914b230-7423-11e8-8b0d-23f83c442556.jpg">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+      <div class="Header__Cover">
+        <img src="https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1611663806011-b37e091090f0?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb">
+      </div>
+    
+    <div class="Header__Spacer ">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span><img class="inline-img-icon" src="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;4464295&#x2F;41629747-1914b230-7423-11e8-8b0d-23f83c442556.jpg"></span>
+        
+      </div>
+    
+    <h1 class="Header__Title">RustEmbedded 配置</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-12-27T19:32:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/环境.html" class="tag tag-purple">环境</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+<h2 class="Heading Heading--2 ">操作环境</h2>
+<p class="Paragraph ">使用的是<code>wsl2</code> </p>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/ad12373d-ff3a-410d-8592-e1411b649bf0/%E5%9B%BE%E7%89%87.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XZI4L3I4%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T162552Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQCmf7eEw55zD%2B5Pmp7eZUdFXkd6msd6x2gGqLhduyO6fAIhAMTN6JdANv3gqnVzHwpT8pSXFIRjXqOvl1yRNMWINi8pKv8DCG8QABoMNjM3NDIzMTgzODA1Igzb2vhkzxT2rKAVFqgq3APM3LyJtIUU5c4yFdXLkKp%2BTPuTEr6xx6r4dfUp%2FtBW%2FeXi54%2Fwq499scbEs5lR5zJnW6Vypyk8nQXt8LYL4NoxQJG2MwYX2Tem3kw3fmBtLMv1njEifRu%2BzUx%2BpKfT%2B26LLa%2FIe26mrG4onqFXYXDDHjMf65Hz%2ByOP7fyabozKbWDAXKLn4bSSr1D%2BGImsybsjFq4Vktv96CeIpL1d5p7CFQzZ95dItuVyTA9I52yCveatIV%2BEWv9TDGDibSUZccwQMwKGpo882DuMkk%2FcudcuGSEGjrZVWJNR2scNBHPBy8JrXMQBUxVzAGG%2BM9MCpi6B48AlLeS%2BGAtW%2FuqIwlSRYf%2Fe3%2FhtnJ3YnZJTy2HPUOMaZdkn4qAViRprDGLdlCU3348ixlGhHE%2FDh9rqvkhp37IT52nEF9eLkmticrwKnLbxBkgJGXV%2B1gP2i8ospeuyjIQdzbqhQ5B2k%2B%2BPwH7bCD25t07zra7CHK1HEe1fqA7X%2Bg4lnRYdzJQZg3HEJihDse56t%2FUOh9MiFbgjZpcsTcybat%2B9LJhB2ZzbeHGGglLEx9HMw4CP25bPpx52Jh0rCM40DAQ6yRKrrcuYFgnvZrbwp5l8iHR5Aj3xCfow9osxq53nsbJV34%2FvwDDrsejLBjqkAaq9tCi4dOlmR83p3X%2F1xlp8HmrT7ah86e045ACvoFYb8pjUqpkdUjSG8d1esJlzHdPu7X3csKA55ydhdxsFUfkABiQ%2Fgk2L7LGHzwTd%2BIwqXnUZJaK6a0V7aTyv5Lg8pfXXBy0XYOHlEfItyfU3vWBDoBDkl4bvgeQ5oG1Oqm6XMnVI3yiAXOgIkSyXq85QVG42HG5P%2BYdjWq7runEixq4QgGt%2B&X-Amz-Signature=df76e3c26cc7b4f2db95b71c2059788f6c4eee3481fa82c47dcef9e61ac8ae9a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<p class="Paragraph "></p>
+<pre class="Code"><code>s413@Shaox ~> neofetch
+                   -`                    s413@Shaox
+                  .o+`                   ----------
+                 `ooo/                   OS: Arch Linux on Windows 10 x86_64
+                `+oooo:                  Kernel: 5.15.167.4-microsoft-standard-WSL2
+               `+oooooo:                 Uptime: 44 mins
+               -+oooooo+:                Packages: 202 (pacman)
+             `/:-:++oooo+:               Shell: fish 3.7.1
+            `/++++/+++++++:              Terminal: Windows Terminal
+           `/++++++++++++++:             CPU: AMD Ryzen 5 5600H with Radeon Graphics (12) @ 3.293GHz
+          `/+++ooooooooooooo/`           GPU: 0bac:00:00.0 Microsoft Corporation Basic Render Driver
+         ./ooosssso++osssssso+`          Memory: 482MiB / 6859MiB
+        .oossssso-````/ossssss+`
+       -osssssso.      :ssssssso.
+      :osssssss/        osssso+++.
+     /ossssssss/        +ssssooo/-
+   `/ossssso+/:-        -:/+osssso+-
+  `+sso+:-`                 `.-/+oso:
+ `++:.                           `-/+/
+ .`                                 `/</code></pre>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">安装Rust</h2>
+<p class="Paragraph "></p>
+<div class="Bookmark"><a href="https://www.rust-lang.org/tools/install" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://www.rust-lang.org/tools/install</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=www.rust-lang.org&sz=64" />
+                                <span class="Bookmark__Link">www.rust-lang.org/tools/install</span>
+                            </div>
+                        </div>
+                    </a></div>
+<pre class="Code"><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+## switch nightly
+rustup default nightly
+## 安装工具链 
+cargo install ldproxy
+## espflash espmonitor
+cargo install cargo-espflash
+
+cargo install espflash
+
+cargo install cargo-espmonitor
+
+cargo install espmonitor</code></pre>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">设定RISC-V </h2>
+<p class="Paragraph "></p>
+<pre class="Code"><code>rustup toolchain install nightly --component rust-src
+
+rustup default nightly</code></pre>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "> 查阅 </p>
+<div class="Bookmark"><a href="https://doc.rust-lang.org/nightly/rustc/platform-support/esp-idf.html" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://doc.rust-lang.org/nightly/rustc/platform-support/esp-idf.html</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=doc.rust-lang.org&sz=64" />
+                                <span class="Bookmark__Link">doc.rust-lang.org/nightly/rustc/platform-support/esp-idf.html</span>
+                            </div>
+                        </div>
+                    </a></div>
+<p class="Paragraph "></p>
+<p class="Paragraph "><code>riscv32imc-esp-espidf</code> -C3</p>
+<p class="Paragraph "><code>xtensa-esp32s3-espidf</code> -S3</p>
+<h3 class="Heading Heading--3 ">no_std库</h3>
+<pre class="Code"><code>rustup target add riscv32imc-esp-espidf # 针对 ESP32-C3
+rustup target add xtensa-esp32s3-espidf # 针对 ESP32-S3</code></pre>
+<h3 class="Heading Heading--3 ">std 推荐使用 espup 下载rust对于xtensa</h3>
+<!-- Unsupported block type: SyncedBlock { synced_block: SyncedBlock { synced_from: None, children: None } } -->
+<div style="margin-left: 20px;"><pre class="Code"><code>cargo install espup
+espup install -t esp32s3,esp32c3
+rustup component add rust-analyzer *** 智能提示
+
+# 链接analyer
+ln -sf ~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rust-analyzer  ~/.rustup/toolchains/esp/bin/rust-analyzer
+sudo usermod -aG uucp $USER #0r
+sudo usermod -aG dialout $USER #or
+newgrp dialout</code></pre>
+</div>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">配置环境变量</p>
+<pre class="Code"><code>## config.fish
+alias er='. $HOME/esp/esp-idf/export.fish'
+#set -gx IDF_TOOLS_PATH $HOME/.espressif/
+if test -e $HOME/export-esp.sh
+    source $HOME/export-esp.sh
+end</code></pre>
+<p class="Paragraph ">
+ </p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h1 class="Heading Heading--1 ">第一步 idf 下载</h1>
+<p class="Paragraph ">如果使用idf 参阅 注意下载的时候网络条件, 如果不全部安装可能会有一些bug建议不要单独安装</p>
+<p class="Paragraph "> </p>
+<div class="Bookmark"><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#get-started-how-to-get-esp-idf" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#get-started-how-to-get-esp-idf</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=docs.espressif.com&sz=64" />
+                                <span class="Bookmark__Link">docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#get-started-how-to-get-esp-idf</span>
+                            </div>
+                        </div>
+                    </a></div>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">Debug </h2>
+<h3 class="Heading Heading--3 ">prob-rs</h3>
+<h3 class="Heading Heading--3 ">open</h3>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">解决 一些内存的问题</h3>
+<div class="Bookmark"><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=docs.espressif.com&sz=64" />
+                                <span class="Bookmark__Link">docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html</span>
+                            </div>
+                        </div>
+                    </a></div>
+<p class="Paragraph "></p>
+<p class="Paragraph ">通常不是espressif 官方的板子 可能会遇见使用espflash 去烧写固件的时候内存对不上，这个时候就需要配置<code>sdkconfig.defaults</code> 这个文件 也许也靠分区表来识别</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">配置 选项有很多</p>
+<p class="Paragraph ">例如 <code>Build type</code> 相关</p>
+<pre class="Code"><code>CONFIG_APP_BUILD_TYPE
+
+CONFIG_APP_BUILD_TYPE_PURE_RAM_APP
+
+CONFIG_APP_REPRODUCIBLE_BUILD
+
+CONFIG_APP_NO_BLOBS
+</code></pre>
+<p class="Paragraph "></p>
+<p class="Paragraph ">但是 我是来找<code>flash-size</code> 相关的内容</p>
+<p class="Paragraph ">CONFIG_ESPTOOLPY_FLASHSIZE</p>
+<p class="Paragraph "></p>
+<div class="Bookmark"><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html#serial-flasher-config" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html#serial-flasher-config</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=docs.espressif.com&sz=64" />
+                                <span class="Bookmark__Link">docs.espressif.com/projects/esp-idf/zh_CN/v5.4/esp32s3/api-reference/kconfig.html#serial-flasher-config</span>
+                            </div>
+                        </div>
+                    </a></div>
+<pre class="Code"><code>SPI flash size, in megabytes
+
+Available options:
+
+        1 MB (CONFIG_ESPTOOLPY_FLASHSIZE_1MB)
+
+        2 MB (CONFIG_ESPTOOLPY_FLASHSIZE_2MB)
+
+        4 MB (CONFIG_ESPTOOLPY_FLASHSIZE_4MB)
+
+        8 MB (CONFIG_ESPTOOLPY_FLASHSIZE_8MB)
+
+        16 MB (CONFIG_ESPTOOLPY_FLASHSIZE_16MB)
+
+        32 MB (CONFIG_ESPTOOLPY_FLASHSIZE_32MB)
+
+        64 MB (CONFIG_ESPTOOLPY_FLASHSIZE_64MB)
+
+        128 MB (CONFIG_ESPTOOLPY_FLASHSIZE_128MB)
+</code></pre>
+<p class="Paragraph "></p>
+<p class="Paragraph ">sometime enconter this </p>
+<pre class="Code"><code>[DEBUG] (1) wlink::probe: Opening serial port: "/dev/ttyACM0"
+Error: Serial port error: Permission denied
+Caused by:
+    Permission denied</code></pre>
+<p class="Paragraph "></p>
+<p class="Paragraph ">
+run this command <code>stat /dev/ttyACM0</code></p>
+<pre class="Code"><code>s413@Shaox ~/E/C/blink (main) [SIGINT]> stat /dev/ttyACM0
+  File: /dev/ttyACM0
+  Size: 0               Blocks: 0          IO Block: 4096   character special file
+Device: 0,5     Inode: 414         Links: 1     Device type: 166,0
+Access: (0660/crw-rw----)  Uid: (    0/    root)   Gid: (  986/    uucp)
+Access: 2025-04-28 18:49:12.483272344 +0800
+Modify: 2025-04-28 18:48:59.483272344 +0800
+Change: 2025-04-28 18:48:59.483272344 +0800
+ Birth: 2025-04-28 18:48:59.479272346 +0800</code></pre>
+<p class="Paragraph ">add Group</p>
+<!-- Unsupported block type: SyncedBlock { synced_block: SyncedBlock { synced_from: Some(SyncedBlockParams { type: "block_id", block_id: "1e3fc3f5-2a88-8058-840f-d2c689703be0" }), children: None } } -->
+<div style="margin-left: 20px;"></div>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  
