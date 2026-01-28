@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -304,31 +304,34 @@
     
   </header>
   <main class="PageRoot">
-    <h1 class="">缓存</h1>
-<h2 class="">Super fast?</h2>
-<p class="">Yes! Folder listing, thumbnail, search, etc., are now cached with Vercel's edge function caching. You should experience extremely faster load speed for these routes, especially folder listings. <em>(Note: the thumbnails themselves are not cached to follow Vercel's fair use policy, only the URL pointing to the thumbnails are cached.)</em></p>
-<p class=""><strong>The cache is valid for 60 seconds on the edge</strong> - This means you won't see your newly added files for at least 60 seconds after your files are done uploading.</p>
-<p class="">If you want to manually purge the cache of your site, you can do so by triggering a redeployment manually.</p>
-<p class=""></p>
-<div style="margin-left: 20px;"><p class="">The cache is automatically purged upon a new deployment being created. If you ever need to invalidate the CDN cache, you can always re-deploy. Further reading: Caching - Vercel Docs.</p>
-</div><h2 class="">Technical details</h2>
-<p class="">Relevant headers:</p>
-<pre><code class="language-plain text">Cache-Control: max-age=0, s-maxage=60, stale-while-revalidate</code></pre>
-<li class=""><code>max-age=0</code> - no cache for your browser</li>
-<li class=""><code>s-maxage=60</code> - cache remains fresh for 60 seconds on the edge</li>
-<li class=""><code>stale-while-revalidate</code> - allow serving stale cache after 60 seconds while the edge revalidates the cache</li>
-<p class="">You can check for response headers <code>x-vercel-cache</code> to see whether your request is responsed by a cache hit (fast 🐰), or fresh revalidated data (slow 🐢).</p>
-<h3 class="">Cache miss</h3>
-<p class="">Most often, no cache is present at the edge when someone first visits a route. This is presented as <em>cache miss</em>, where the response header <code>x-vercel-cache</code> is set to <code>MISS</code>. In this scenario, fresh data is requested from the upstream API, and you will experience a slow load speed (compared to other scenarios).</p>
-<figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<h3 class="">Cache hit</h3>
-<p class="">After the route is requested, Vercel will cache the function response at the edge. When a second request on the same route is triggered, Vercel will respond with the cache instead of requesting data from the upstream for a second time. This is presented as <em>cache hit</em>, where the response header <code>x-vercel-cache</code> is set to <code>HIT</code>. You will experience an instant response.</p>
-<figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<h3 class="">Cache stale</h3>
-<p class="">If the cache is present for longer than 60 seconds, on the request triggered, Vercel will respond with the stale cache, setting <code>x-vercel-cache</code> to <code>STALE</code>, and perform a new request to the upstream API. In this case, the following response is most likely guaranteed to be fresh, and Vercel will update the cache on the edge accordingly. You will experience an instant response for both requests.</p>
-<figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">自定义配置</p>
-<p class="">高级</p>
+    <h1 class="Heading Heading--1 ">缓存</h1>
+<h2 class="Heading Heading--2 ">Super fast?</h2>
+<p class="Paragraph ">Yes! Folder listing, thumbnail, search, etc., are now cached with Vercel's edge function caching. You should experience extremely faster load speed for these routes, especially folder listings. <em>(Note: the thumbnails themselves are not cached to follow Vercel's fair use policy, only the URL pointing to the thumbnails are cached.)</em></p>
+<p class="Paragraph "><strong>The cache is valid for 60 seconds on the edge</strong> - This means you won't see your newly added files for at least 60 seconds after your files are done uploading.</p>
+<p class="Paragraph ">If you want to manually purge the cache of your site, you can do so by triggering a redeployment manually.</p>
+<p class="Paragraph "></p>
+<div style="margin-left: 20px;"><p class="Paragraph ">The cache is automatically purged upon a new deployment being created. If you ever need to invalidate the CDN cache, you can always re-deploy. Further reading: Caching - Vercel Docs.</p>
+</div>
+<h2 class="Heading Heading--2 ">Technical details</h2>
+<p class="Paragraph ">Relevant headers:</p>
+<pre class="Code"><code>Cache-Control: max-age=0, s-maxage=60, stale-while-revalidate</code></pre>
+<ul class="BulletedListWrapper">
+<li class="BulletedList "><code>max-age=0</code> - no cache for your browser</li>
+<li class="BulletedList "><code>s-maxage=60</code> - cache remains fresh for 60 seconds on the edge</li>
+<li class="BulletedList "><code>stale-while-revalidate</code> - allow serving stale cache after 60 seconds while the edge revalidates the cache</li>
+</ul>
+<p class="Paragraph ">You can check for response headers <code>x-vercel-cache</code> to see whether your request is responsed by a cache hit (fast 🐰), or fresh revalidated data (slow 🐢).</p>
+<h3 class="Heading Heading--3 ">Cache miss</h3>
+<p class="Paragraph ">Most often, no cache is present at the edge when someone first visits a route. This is presented as <em>cache miss</em>, where the response header <code>x-vercel-cache</code> is set to <code>MISS</code>. In this scenario, fresh data is requested from the upstream API, and you will experience a slow load speed (compared to other scenarios).</p>
+<figure class="Image Image--Normal"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /><figcaption></figcaption></figure>
+<h3 class="Heading Heading--3 ">Cache hit</h3>
+<p class="Paragraph ">After the route is requested, Vercel will cache the function response at the edge. When a second request on the same route is triggered, Vercel will respond with the cache instead of requesting data from the upstream for a second time. This is presented as <em>cache hit</em>, where the response header <code>x-vercel-cache</code> is set to <code>HIT</code>. You will experience an instant response.</p>
+<figure class="Image Image--Normal"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /><figcaption></figcaption></figure>
+<h3 class="Heading Heading--3 ">Cache stale</h3>
+<p class="Paragraph ">If the cache is present for longer than 60 seconds, on the request triggered, Vercel will respond with the stale cache, setting <code>x-vercel-cache</code> to <code>STALE</code>, and perform a new request to the upstream API. In this case, the following response is most likely guaranteed to be fresh, and Vercel will update the cache on the edge accordingly. You will experience an instant response for both requests.</p>
+<figure class="Image Image--Normal"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" /><figcaption></figcaption></figure>
+<p class="Paragraph ">自定义配置</p>
+<p class="Paragraph ">高级</p>
 
   </main>
     <aside class ="utterances">

@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -308,42 +308,48 @@
     
   </header>
   <main class="PageRoot">
-    <h2 class="">对于 std 应用</h2>
-<p class=""></p>
-<p class="">对于 std 应用, 核心是使用 esp-idf-sys 和它绑定链接到的 C/C++ 库 esp-idf。</p>
-<li class="">构建的 target 是 <code>xtensa-esp32s3-espidf</code>, 而 non_std 应用的 target 是 <code>xtensa-esp32s3-none-elf</code></li>
-<p class="">esp-idf 是 C/C++ 开发的，运行 FreeRTOS 操作系统，为 Rust std 提供了 newlib enviroment 实现（~/.rustup/toolchains/esp 目录），</p>
-<p class="">这样 std 应用可以使用 Rust 标准库的各种类型和特性，如 Vec/HashMap/Box，net，heap 内存分配、thread/Mutex 等；</p>
-<p class=""></p>
-<p class="">Rust std 应用与 esp-idf 之间的 3 种互操作方式（这些 std 库惯例是 esp-idf- 开头）：</p>
-<li class=""><code>esp-idf-sys</code> crate：esp-idf 的 unsafe binding，Gives <code>raw (unsafe) access</code> to drivers, Wi-Fi and more.</li>
-<li class=""><code>esp-idf-svc</code> crate：esp-idf 的 safe binding，抽象层次更高，实现了 embedded-svc trait。</li>
-<li class=""><code>esp-idf-hal</code> crate：实现了 <code>embedded-hal</code> trait，支持 async，底层也是基于 esp-idf；</li>
-<p class="">它们之间的层次关系: <code>esp-idf-svc -> esp-idf-hal -> esp-idf-sys(esp-idf 的 Rust binding).</code></p>
-<p class=""></p>
-<p class="">embedded-hal 和 embedded-svc 是 Rust embedded workgroup 定义的厂商中立的嵌入式规范.</p>
-<p class=""></p>
-<p class="">编译 esp-idf-sys 时, build.rs 会会自动下载/安装/配置/编译和链接 esp-idf 库，</p>
-<p class="">安装到 $ESP_IDF_TOOLS_INSTALL_DIR 位置，默认为 by 项目的 .embuild/espressif 目录。</p>
-<p class=""></p>
-<p class="">esp-idf-sys 默认启用 <code>esp-idf</code> 所有的 <code>Component</code>（静态库的形式） ，这样可以后续直接链接他们(后续也可以通过 <code>esp_idf_components</code>, $ESP_IDF_COMPONENTS 来配置）。</p>
-<p class=""></p>
-<p class="">esp-idf-sys 也支持添加本地和远程的 C/C++ Component，在构建 esp-idf-sys 时自动使用 bindgen 将它封装为Rust 接口，后续自动链接到可执行程序中。（参考后文）。</p>
-<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/fdc7d164-d9c5-45ee-a354-d0b025c45732/image%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666WFZXPJE%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152901Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCICosep0jbsteLj5gyB7hH2pNZj8kgvlwx6NpwioTZ5CgAiBg9oDz71m0eMg6T1FLO7tyoArlZ%2BusQHQgBx%2B7ALovxyr%2FAwhYEAAaDDYzNzQyMzE4MzgwNSIM46aJJFLAalhN9qOiKtwDU6NGH%2FTVLaJxa%2FKSsyyJi4u42zrOXFJ1ldfWP6zvYds8trxiVpDSlmgzL9ZuN418twZvTDQ0KGQ%2Fckn%2BDEJran1ZU8KSyXI%2Fj707%2F160orEk8xQqFTAJAY%2BIhWLM6y9hmX%2F0Fvp0yjQE5gY9QjdQBq8pz8TBUoJBb1COaTOVdGRVr%2Ff3hN8rL9vDx39fR33PIAAUemq%2FgUY4hhSNXqc5kfASeGqGnQ%2Fwwpk7OXj6vwS7qvprDcQhfBlH3gS30NP32H0uRkSLY8vaoLE7AQ8OBExUtHw0Dq%2Fuyr7%2B4FKGEUPEXs%2FXdO%2FCai2WZ7ObdmCSdsA2VyVrt2icW5jrknjb3vjNta2%2BtKV2uoy0qDKjLKYfjrIK8eGKnpwSsHYiLYx2fhfyEmTYdaG81ibtrfwkijIidxrehcszLyh37%2BN81YhVvLWO1wpdKAOiJPJxUlJRQd5gKYzivRG5R560gieS6HZVxHDFtePqmlBijDmM%2FgKehp%2FGlmqkivYI063aMwdKe%2Ffkyggnhh4r%2Fh1yCJOzWkcpLJW2ykhakKwJwywuprxF4kDnwB6erS%2FvBIs5VjEeVB6yJNiIbNDKgY88QHekTbxmsnfJ8fMZFyxi9G0zLNySROMb0mfv7qJj9qQwzpjjywY6pgGeuFhPx6ciLqmFO%2BMZRIY23S4cb0Y%2F9hVEozpS3OvpG8ALwwNLHrxN0d2Js3dYSJUUemBTy%2BjDLjo0IrvpgVI6j71zKPch5adNdB14TCClQYZCu5i7lN1qq0Nq5Y%2BUsQqieo7l09emztCDG5mh0fDEc2mFn0Z5wjR4UTfqAoZrS1bcO93RTQpJAhln2qtHuS2cx86xnXG0rZw8ziWo3hv7Nu0QnF2Y&X-Amz-Signature=2174e648d5829b84af4dbc1ba31d5329a3b9f07560d070c776726e95369dd02f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class=""></p>
-<p class="">如果 esp-idf-hal 不满足需求（如缺少一些 esp32 的寄存器的操作），可以使用 <code>esp-rs/esp-pacs</code> 下的esp32s3 create, 它是使用 svd2rust 工具来基于芯片的 svd 自动生成的库。</p>
-<p class=""></p>
-<p class="">https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem</p>
-<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/cae98e63-d9a9-4fff-86dd-709ef6f5834a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666WFZXPJE%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152901Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCICosep0jbsteLj5gyB7hH2pNZj8kgvlwx6NpwioTZ5CgAiBg9oDz71m0eMg6T1FLO7tyoArlZ%2BusQHQgBx%2B7ALovxyr%2FAwhYEAAaDDYzNzQyMzE4MzgwNSIM46aJJFLAalhN9qOiKtwDU6NGH%2FTVLaJxa%2FKSsyyJi4u42zrOXFJ1ldfWP6zvYds8trxiVpDSlmgzL9ZuN418twZvTDQ0KGQ%2Fckn%2BDEJran1ZU8KSyXI%2Fj707%2F160orEk8xQqFTAJAY%2BIhWLM6y9hmX%2F0Fvp0yjQE5gY9QjdQBq8pz8TBUoJBb1COaTOVdGRVr%2Ff3hN8rL9vDx39fR33PIAAUemq%2FgUY4hhSNXqc5kfASeGqGnQ%2Fwwpk7OXj6vwS7qvprDcQhfBlH3gS30NP32H0uRkSLY8vaoLE7AQ8OBExUtHw0Dq%2Fuyr7%2B4FKGEUPEXs%2FXdO%2FCai2WZ7ObdmCSdsA2VyVrt2icW5jrknjb3vjNta2%2BtKV2uoy0qDKjLKYfjrIK8eGKnpwSsHYiLYx2fhfyEmTYdaG81ibtrfwkijIidxrehcszLyh37%2BN81YhVvLWO1wpdKAOiJPJxUlJRQd5gKYzivRG5R560gieS6HZVxHDFtePqmlBijDmM%2FgKehp%2FGlmqkivYI063aMwdKe%2Ffkyggnhh4r%2Fh1yCJOzWkcpLJW2ykhakKwJwywuprxF4kDnwB6erS%2FvBIs5VjEeVB6yJNiIbNDKgY88QHekTbxmsnfJ8fMZFyxi9G0zLNySROMb0mfv7qJj9qQwzpjjywY6pgGeuFhPx6ciLqmFO%2BMZRIY23S4cb0Y%2F9hVEozpS3OvpG8ALwwNLHrxN0d2Js3dYSJUUemBTy%2BjDLjo0IrvpgVI6j71zKPch5adNdB14TCClQYZCu5i7lN1qq0Nq5Y%2BUsQqieo7l09emztCDG5mh0fDEc2mFn0Z5wjR4UTfqAoZrS1bcO93RTQpJAhln2qtHuS2cx86xnXG0rZw8ziWo3hv7Nu0QnF2Y&X-Amz-Signature=dd31869aba3408d7f8f8ef0a51492f44b30d554217fd28c7aa6dea0c6182f40a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class=""></p>
-<h2 class="">使用 esp-rs/esp-idf-template 模板</h2>
-<p class=""></p>
-<p class="">使用 esp-rs/esp-idf-template 模板来创建 std 应用:</p>
-<li class="">在编译 esp-idf-sys 时自动下载和安装 esp-idf 框架到项目的 .embuild/espressif/esp-idf 目录下;</li>
-<li class="">可以配置项目的 .cargo/config.toml 文件, 添加 env ESP_IDF_TOOLS_INSTALL_DIR = “global” 来使用全局 <code>~/.espressif/</code> 下的 esp-idf 工具链(建议).</li>
-<li class="">sdkconfig.defaults 文件为 esp-idf 的缺省参数提供 override 参数如 stack size, log level；</li>
-<p class=""></p>
-<pre><code class="language-bash">zj@a:~/codes/esp32/$ cargo generate esp-rs/esp-idf-template cargo
+    <h2 class="Heading Heading--2 ">对于 std 应用</h2>
+<p class="Paragraph "></p>
+<p class="Paragraph ">对于 std 应用, 核心是使用 esp-idf-sys 和它绑定链接到的 C/C++ 库 esp-idf。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">构建的 target 是 <code>xtensa-esp32s3-espidf</code>, 而 non_std 应用的 target 是 <code>xtensa-esp32s3-none-elf</code></li>
+</ul>
+<p class="Paragraph ">esp-idf 是 C/C++ 开发的，运行 FreeRTOS 操作系统，为 Rust std 提供了 newlib enviroment 实现（~/.rustup/toolchains/esp 目录），</p>
+<p class="Paragraph ">这样 std 应用可以使用 Rust 标准库的各种类型和特性，如 Vec/HashMap/Box，net，heap 内存分配、thread/Mutex 等；</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">Rust std 应用与 esp-idf 之间的 3 种互操作方式（这些 std 库惯例是 esp-idf- 开头）：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList "><code>esp-idf-sys</code> crate：esp-idf 的 unsafe binding，Gives <code>raw (unsafe) access</code> to drivers, Wi-Fi and more.</li>
+<li class="NumberedList "><code>esp-idf-svc</code> crate：esp-idf 的 safe binding，抽象层次更高，实现了 embedded-svc trait。</li>
+<li class="NumberedList "><code>esp-idf-hal</code> crate：实现了 <code>embedded-hal</code> trait，支持 async，底层也是基于 esp-idf；</li>
+</ol>
+<p class="Paragraph ">它们之间的层次关系: <code>esp-idf-svc -> esp-idf-hal -> esp-idf-sys(esp-idf 的 Rust binding).</code></p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">embedded-hal 和 embedded-svc 是 Rust embedded workgroup 定义的厂商中立的嵌入式规范.</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">编译 esp-idf-sys 时, build.rs 会会自动下载/安装/配置/编译和链接 esp-idf 库，</p>
+<p class="Paragraph ">安装到 $ESP_IDF_TOOLS_INSTALL_DIR 位置，默认为 by 项目的 .embuild/espressif 目录。</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">esp-idf-sys 默认启用 <code>esp-idf</code> 所有的 <code>Component</code>（静态库的形式） ，这样可以后续直接链接他们(后续也可以通过 <code>esp_idf_components</code>, $ESP_IDF_COMPONENTS 来配置）。</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">esp-idf-sys 也支持添加本地和远程的 C/C++ Component，在构建 esp-idf-sys 时自动使用 bindgen 将它封装为Rust 接口，后续自动链接到可执行程序中。（参考后文）。</p>
+<figure class="Image Image--Normal"><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/fdc7d164-d9c5-45ee-a354-d0b025c45732/image%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZPRIUDNX%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T142027Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIF4g7fI42MwFpu05sHktCtYOCbVGTqQWb8%2F7%2F2GhdIQcAiEAsuCbWfa6lWoufLOwAYxFTmrTniMlvSr6mdfzFqKuJ6kq%2FwMIbxAAGgw2Mzc0MjMxODM4MDUiDM6Q81uXlImbhE7deSrcA6Ep%2FSQy3LKSn64fdY43SeIg%2FzvLIBlGRSPq%2B7tQptgSrLEGmbw2PkF%2FiogUo%2BMCVKeyP41JzSntyvykvL2PxuwJ6GJjjAEYPInShDiVOMHzba3%2FX38zuMTMNU2KIMxRkvH3pLYCKBry4THEqhd2WwdBavrtjRpbb1K32egLz%2F8ivNmVBd4hgvXU3V47LIrql2iGnYe%2FZT8M0KcEtc6q%2B2oqtQHhwKGXlxmuOshjU5WKIRbvoezN4t%2FAx7mDx3lHrx3l4GHcza2x7nWCQu6pXCU9DuKr6o5QnPADpVhTtBOZcTm1JW5ZDcHSBRVrsUAyEnQCCWX7MhHAB4TOllpGQHrmAIMnjt9ldT9ajisu0PBP0%2BGXFGurU7wnWbX2ecRtHotg%2BTGi1gnccN3zDzyqCnxiTq3%2F6bvRjUZjzrMDGxMw2AgFTK4rbUNhC9xC0mh0pzJ6dvDhbqZyFXVwqKokqVK8rrVzTZv0dzZuyUYbCkOSgwkRIVEvYqOMMbw25ZAmYD5BirLQfN5xWFLvq2EHS78lnb%2B4n2oEkwPgXsZ0yRlbKWZWVFjSfiEvDlNBqr3l7TdCg4RlNkSKmyZdWd8%2BJFYJ8bQS9GzAct4j93n8v6rUalbvA5B%2FGLWfdA2eMMyw6MsGOqUBAqzrt%2BE6gomgHOiibH1do%2FmTZ3ss8m6Zt%2FD0dku%2BBuofD6Tzrw2W%2FaDqxROz%2F%2FjhoJjn7XUzADAXEtEM9fdbJxEXMjvRQ0SMtg3JGz9v6mqn%2FVCsuM%2F2iiQZw%2FOLYrJfALIg9%2Fb9Mx9LM10tnfajNDsWbzsA3To9zjTVH5fCQzebpF1C6Jnqnpy%2BVlOUiAf8FEa1JczVGM7Wt9Imxn41dI8BbNLT&X-Amz-Signature=15c1bbfbf623a2fe105a9c9a993ecb0b343edb237186d7d0d8cd80a07e7b3ecd&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure>
+<p class="Paragraph "></p>
+<p class="Paragraph ">如果 esp-idf-hal 不满足需求（如缺少一些 esp32 的寄存器的操作），可以使用 <code>esp-rs/esp-pacs</code> 下的esp32s3 create, 它是使用 svd2rust 工具来基于芯片的 svd 自动生成的库。</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem</p>
+<figure class="Image Image--Normal"><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/cae98e63-d9a9-4fff-86dd-709ef6f5834a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZPRIUDNX%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T142027Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIF4g7fI42MwFpu05sHktCtYOCbVGTqQWb8%2F7%2F2GhdIQcAiEAsuCbWfa6lWoufLOwAYxFTmrTniMlvSr6mdfzFqKuJ6kq%2FwMIbxAAGgw2Mzc0MjMxODM4MDUiDM6Q81uXlImbhE7deSrcA6Ep%2FSQy3LKSn64fdY43SeIg%2FzvLIBlGRSPq%2B7tQptgSrLEGmbw2PkF%2FiogUo%2BMCVKeyP41JzSntyvykvL2PxuwJ6GJjjAEYPInShDiVOMHzba3%2FX38zuMTMNU2KIMxRkvH3pLYCKBry4THEqhd2WwdBavrtjRpbb1K32egLz%2F8ivNmVBd4hgvXU3V47LIrql2iGnYe%2FZT8M0KcEtc6q%2B2oqtQHhwKGXlxmuOshjU5WKIRbvoezN4t%2FAx7mDx3lHrx3l4GHcza2x7nWCQu6pXCU9DuKr6o5QnPADpVhTtBOZcTm1JW5ZDcHSBRVrsUAyEnQCCWX7MhHAB4TOllpGQHrmAIMnjt9ldT9ajisu0PBP0%2BGXFGurU7wnWbX2ecRtHotg%2BTGi1gnccN3zDzyqCnxiTq3%2F6bvRjUZjzrMDGxMw2AgFTK4rbUNhC9xC0mh0pzJ6dvDhbqZyFXVwqKokqVK8rrVzTZv0dzZuyUYbCkOSgwkRIVEvYqOMMbw25ZAmYD5BirLQfN5xWFLvq2EHS78lnb%2B4n2oEkwPgXsZ0yRlbKWZWVFjSfiEvDlNBqr3l7TdCg4RlNkSKmyZdWd8%2BJFYJ8bQS9GzAct4j93n8v6rUalbvA5B%2FGLWfdA2eMMyw6MsGOqUBAqzrt%2BE6gomgHOiibH1do%2FmTZ3ss8m6Zt%2FD0dku%2BBuofD6Tzrw2W%2FaDqxROz%2F%2FjhoJjn7XUzADAXEtEM9fdbJxEXMjvRQ0SMtg3JGz9v6mqn%2FVCsuM%2F2iiQZw%2FOLYrJfALIg9%2Fb9Mx9LM10tnfajNDsWbzsA3To9zjTVH5fCQzebpF1C6Jnqnpy%2BVlOUiAf8FEa1JczVGM7Wt9Imxn41dI8BbNLT&X-Amz-Signature=059922a7fa2cf285a1b91966c3b62457b81c84b6231e598d8b51ab0dd8c8e30f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">使用 esp-rs/esp-idf-template 模板</h2>
+<p class="Paragraph "></p>
+<p class="Paragraph ">使用 esp-rs/esp-idf-template 模板来创建 std 应用:</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">在编译 esp-idf-sys 时自动下载和安装 esp-idf 框架到项目的 .embuild/espressif/esp-idf 目录下;</li>
+<li class="BulletedList ">可以配置项目的 .cargo/config.toml 文件, 添加 env ESP_IDF_TOOLS_INSTALL_DIR = “global” 来使用全局 <code>~/.espressif/</code> 下的 esp-idf 工具链(建议).</li>
+<li class="BulletedList ">sdkconfig.defaults 文件为 esp-idf 的缺省参数提供 override 参数如 stack size, log level；</li>
+</ul>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/codes/esp32/$ cargo generate esp-rs/esp-idf-template cargo
 ⚠️   Favorite `esp-rs/esp-idf-template` not found in config, using it as a git repository: https://github.com/esp-rs/esp-idf-template.git
 🔧   project-name: myesp ...
 🔧   Generating template ...
@@ -371,9 +377,9 @@ fn main() {
 
     log::info!("Hello, world!");
 }</code></pre>
-<h3 class="">按需修改 <code>Cargo.toml</code>：</h3>
-<p class=""></p>
-<pre><code class="language-toml">zj@a:~/code/esp32/std/myesp$ cat Cargo.toml
+<h3 class="Heading Heading--3 ">按需修改 <code>Cargo.toml</code>：</h3>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/code/esp32/std/myesp$ cat Cargo.toml
 [package]
 name = "myesp"
 version = "0.1.0"
@@ -413,11 +419,11 @@ esp-idf-svc = { version = "0.48", default-features = false }
 
 [build-dependencies] # build.rs 编译脚本的依赖
 embuild = "0.31.3"   # build.rs 依赖 embuild</code></pre>
-<h3 class="">修改 <code>.cargo/config.toml</code> </h3>
-<p class=""></p>
-<p class="">修改 <code>.cargo/config.toml</code>文件中的 <code>ESP_IDF_VERSION</code> 为最新版本，内容如下：</p>
-<p class=""></p>
-<pre><code class="language-toml">zj@a:~/codes/esp32/myesp$ cat .cargo/config.toml
+<h3 class="Heading Heading--3 ">修改 <code>.cargo/config.toml</code> </h3>
+<p class="Paragraph "></p>
+<p class="Paragraph ">修改 <code>.cargo/config.toml</code>文件中的 <code>ESP_IDF_VERSION</code> 为最新版本，内容如下：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/codes/esp32/myesp$ cat .cargo/config.toml
 [build]
 target = "xtensa-esp32s3-espidf"  # 要构建的 target，这里使用链接 esp-idf 的 target
  
@@ -436,11 +442,11 @@ MCU="esp32s3"
 ESP_IDF_VERSION = "v5.2.1"
 # 使用全局 ~/.espressif/ 工具链，默认是 by 项目 workspace 的。
 ESP_IDF_TOOLS_INSTALL_DIR = "global"</code></pre>
-<p class=""></p>
-<h3 class="">按需修改 esp-idf 的配置参数文件</h3>
-<p class=""></p>
-<p class="">按需修改 esp-idf 的配置参数文件：<code>sdkconfig.defaults</code></p>
-<pre><code class="language-bash">zj@a:~/docs$ cat ~/code/esp32/std/myespv2/sdkconfig.defaults
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">按需修改 esp-idf 的配置参数文件</h3>
+<p class="Paragraph "></p>
+<p class="Paragraph ">按需修改 esp-idf 的配置参数文件：<code>sdkconfig.defaults</code></p>
+<pre class="Code"><code>zj@a:~/docs$ cat ~/code/esp32/std/myespv2/sdkconfig.defaults
 # Rust often needs a bit of an extra main task stack size compared to C (the default is 3K)
 CONFIG_ESP_MAIN_TASK_STACK_SIZE=8000 
 
@@ -451,9 +457,9 @@ CONFIG_ESP_MAIN_TASK_STACK_SIZE=8000
 # Workaround for https://github.com/espressif/esp-idf/issues/7631
 #CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=n
 #CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=n</code></pre>
-<h3 class="">按需修改 <code>rust-toolchain.toml</code> </h3>
-<p class=""></p>
-<pre><code class="language-toml"># esp32 rust 项目通过 rust-toolchain.toml 来选择 channel 和 target
+<h3 class="Heading Heading--3 ">按需修改 <code>rust-toolchain.toml</code> </h3>
+<p class="Paragraph "></p>
+<pre class="Code"><code># esp32 rust 项目通过 rust-toolchain.toml 来选择 channel 和 target
 zj@a:~/code/esp32/myespv2$ cat rust-toolchain.toml
 [toolchain] 
 channel = "esp"  # ~/.rustup/toolchains/ 下的目录名称，这里使用 esp toolchain
@@ -464,12 +470,14 @@ zj@a:~/code/esp32/myespv2$ cat build.rs
 fn main() {
     embuild::espidf::sysenv::output();
 }</code></pre>
-<h2 class="">构建项目：</h2>
-<li class="">每次构建前都需要先 <span class="color-red"><code><strong>source ~/esp/export-esp.sh</strong></code></span><strong> </strong>脚本。</li>
-<li class="">不能启用 python env，不能使用 socks 代理，需要设置环境变量；</li>
-<li class="">构建过程中默认下载和安装 <code>esp-idf </code>到 <code>workspace </code>的 <code>.embuild/espressif/ </code>目录；</li>
-<p class=""> </p>
-<pre><code class="language-bash"># 构建 std 应用时，不能 source source ~/esp/esp-idf/v5.2.1/export.sh 文件，否则会构建失败。
+<h2 class="Heading Heading--2 ">构建项目：</h2>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">每次构建前都需要先 <span class="color-red"><code><strong>source ~/esp/export-esp.sh</strong></code></span><strong> </strong>脚本。</li>
+<li class="NumberedList ">不能启用 python env，不能使用 socks 代理，需要设置环境变量；</li>
+<li class="NumberedList ">构建过程中默认下载和安装 <code>esp-idf </code>到 <code>workspace </code>的 <code>.embuild/espressif/ </code>目录；</li>
+</ol>
+<p class="Paragraph "> </p>
+<pre class="Code"><code># 构建 std 应用时，不能 source source ~/esp/esp-idf/v5.2.1/export.sh 文件，否则会构建失败。
 zj@a:~/code/esp32/myesp$ source ~/esp/export-esp.sh
 zj@a:~/code/esp32/myesp$ cargo build 
 
@@ -531,9 +539,9 @@ drwxr-xr-x 47 alizj 1.5K  5  5 14:51 tools/
 
 zj@a:~/code/esp32/myesp$ ls target/
 CACHEDIR.TAG  debug/  xtensa-esp32s3-espidf/</code></pre>
-<p class="">构建结果位于 <code>target/xtensa-esp32s3-espidf </code>目录下：</p>
-<p class=""></p>
-<pre><code class="language-bash">zj@a:~/code/esp32/myesp$ ls -l target/xtensa-esp32s3-espidf/debug/
+<p class="Paragraph ">构建结果位于 <code>target/xtensa-esp32s3-espidf </code>目录下：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/code/esp32/myesp$ ls -l target/xtensa-esp32s3-espidf/debug/
 total 11M 
 -rw-r--r--   1 alizj  21K  5  5 14:45 bootloader.bin # bootloader
 drwxr-xr-x  18 alizj  576  5  5 14:39 build/
@@ -546,13 +554,15 @@ drwxr-xr-x   3 alizj   96  5  5 14:45 incremental/
 
 zj@a:~/code/esp32/myesp$ file target/xtensa-esp32s3-espidf/debug/myesp
 target/xtensa-esp32s3-espidf/debug/myesp: ELF 32-bit LSB executable, Tensilica Xtensa, version 1 (SYSV), statically linked, with debug_info, not stripped</code></pre>
-<p class=""><span class="color-red">构建失败的解决办法：</span></p>
-<li class="">cargo clen 清理 target 目录；</li>
-<li class="">手动清理 .embuild 目录；</li>
-<li class="">不能启用 socks 代理；</li>
-<li class="">不能开启 python venv；</li>
-<p class=""> </p>
-<pre><code class="language-bash">zj@a:~/code/esp32/myesp$ cargo clean
+<p class="Paragraph "><span class="color-red">构建失败的解决办法：</span></p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">cargo clen 清理 target 目录；</li>
+<li class="NumberedList ">手动清理 .embuild 目录；</li>
+<li class="NumberedList ">不能启用 socks 代理；</li>
+<li class="NumberedList ">不能开启 python venv；</li>
+</ol>
+<p class="Paragraph "> </p>
+<pre class="Code"><code>zj@a:~/code/esp32/myesp$ cargo clean
 zj@a:~/code/esp32/myesp$ rm -rf .embuild/
 zj@a:~/code/esp32/myesp$ ls
 Cargo.lock  Cargo.toml  build.rs  rust-toolchain.toml  sdkconfig.defaults  src/
@@ -568,20 +578,26 @@ zj@a:~/code/esp32/$ export PATH=$(echo $PATH | sed -e "s;:$DIR_TO_REMOVE;;" -e "
 # xtensa-esp-elf-gcc: error: unrecognized command-line option '--target=xtensa-esp32s3-espidf'
 # 参考：https://github.com/rust-lang/cc-rs/issues/1005
 zj@a:~/code/esp32/$ export CRATE_CC_NO_DEFAULTS=1</code></pre>
-<p class="">参考：</p>
-<li class="">https://docs.esp-rs.org/std-training/01_intro.html</li>
-<li class="">https://github.com/esp-rs/std-training</li>
-<li class="">https://github.com/danclive/esp-examples/tree/main</li>
-<p class=""></p>
-<h2 class="">1 为 Rust std 应用添加组件 component #</h2>
-<p class="">使用 <code>cargo build</code> 构建基于 <code>eps-idf-sys</code> 的 <code>std</code> 应用时, <code>build.rs</code> 构建脚本执行的 <code>embuild crate</code> 会下载 <code>esp-idf</code> 库，使用 <code>bindgen</code> 来生成<code> Rust</code> 接口，将编译后的 <code>component</code> 静态库链接到 Rust 可执行程序。</p>
-<li class="">Rust 习惯使用<code> xx-sys</code> 来命名其他语言<code> xx </code>项目的 <code>Rust wrapper</code>，所以 <code>esp-idf-sys</code> 是 C 项目<code> esp-idf</code> 的 <code>Rust wrapper</code>。</li>
-<div style="margin-left: 20px;"><p class=""><code>esp-idf</code> 内置了大量 <code>component</code>，同时社区和 <code>component registry </code>上还有大量其他 <code>component </code>可供使用。</p>
-</div><p class="">内置<code> component</code> 的 <code>bindgen</code> 由 <code>esp-idf-sys</code> 的 <code>bindings.h</code><code> </code>头文件定义。</p>
-<div style="margin-left: 20px;"><p class=""><code>esp-idf-sys</code> 默认启用了 所有内置<code> component</code> ，并链接到 <code>Rust</code> 可执行程序。可以通过配置 <code>esp_idf_components</code>, <code>$ESP_IDF_COMPONENTS </code>来指定要</p>
-</div><p class="">接的 <code>esp-id</code>f 内置 <code>component </code>列表。</p>
-<p class=""> </p>
-<pre><code class="language-bash">[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_common/libesp_common.a
+<p class="Paragraph ">参考：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">https://docs.esp-rs.org/std-training/01_intro.html</li>
+<li class="NumberedList ">https://github.com/esp-rs/std-training</li>
+<li class="NumberedList ">https://github.com/danclive/esp-examples/tree/main</li>
+</ol>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">1 为 Rust std 应用添加组件 component #</h2>
+<p class="Paragraph ">使用 <code>cargo build</code> 构建基于 <code>eps-idf-sys</code> 的 <code>std</code> 应用时, <code>build.rs</code> 构建脚本执行的 <code>embuild crate</code> 会下载 <code>esp-idf</code> 库，使用 <code>bindgen</code> 来生成<code> Rust</code> 接口，将编译后的 <code>component</code> 静态库链接到 Rust 可执行程序。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust 习惯使用<code> xx-sys</code> 来命名其他语言<code> xx </code>项目的 <code>Rust wrapper</code>，所以 <code>esp-idf-sys</code> 是 C 项目<code> esp-idf</code> 的 <code>Rust wrapper</code>。</li>
+<div style="margin-left: 20px;"><p class="Paragraph "><code>esp-idf</code> 内置了大量 <code>component</code>，同时社区和 <code>component registry </code>上还有大量其他 <code>component </code>可供使用。</p>
+</div>
+</ul>
+<p class="Paragraph ">内置<code> component</code> 的 <code>bindgen</code> 由 <code>esp-idf-sys</code> 的 <code>bindings.h</code><code> </code>头文件定义。</p>
+<div style="margin-left: 20px;"><p class="Paragraph "><code>esp-idf-sys</code> 默认启用了 所有内置<code> component</code> ，并链接到 <code>Rust</code> 可执行程序。可以通过配置 <code>esp_idf_components</code>, <code>$ESP_IDF_COMPONENTS </code>来指定要</p>
+</div>
+<p class="Paragraph ">接的 <code>esp-id</code>f 内置 <code>component </code>列表。</p>
+<p class="Paragraph "> </p>
+<pre class="Code"><code>[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_common/libesp_common.a
 [esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_timer/libesp_timer.a
 [esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/app_trace/libapp_trace.a
 [esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_event/libesp_event.a
@@ -601,14 +617,18 @@ zj@a:~/code/esp32/$ export CRATE_CC_NO_DEFAULTS=1</code></pre>
 // ...
 [esp32-camera-binding 0.1.0] cargo:rustc-link-arg=-Wl,--wrap=_Unwind_Backtrace
 [esp32-camera-binding 0.1.0] cargo:rustc-link-arg=-Wl,--wrap=__cxa_call_unexpected</code></pre>
-<p class="">为 esp-idf-sys 添加 外部额外的 <code>component</code> ，让 esp-idf-sys bindgen 它的头文件，并进行编译和链接。</p>
-<li class="">bindgen 为 C 生成的 Rust 接口会放到 esp-idf-sys module 中供 Rust 程序使用。</li>
-<p class="">esp-idf-sys crate 提供了一些影响 esp-idf bindgen、编译构建的配置参数和 .cargo/config.tom 环境变量：</p>
-<li class="">https://github.com/esp-rs/esp-idf-sys/blob/master/BUILD-OPTIONS.md</li>
-<li class="">https://docs.esp-rs.org/esp-idf-svc/esp_idf_sys/index.html</li>
-<p class="">添加 <code>extral component</code> 示例：</p>
-<p class=""> </p>
-<pre><code class="language-toml"># 在 workspace 的 members 列表里添加待创建的 crate package 目录名称
+<p class="Paragraph ">为 esp-idf-sys 添加 外部额外的 <code>component</code> ，让 esp-idf-sys bindgen 它的头文件，并进行编译和链接。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">bindgen 为 C 生成的 Rust 接口会放到 esp-idf-sys module 中供 Rust 程序使用。</li>
+</ul>
+<p class="Paragraph ">esp-idf-sys crate 提供了一些影响 esp-idf bindgen、编译构建的配置参数和 .cargo/config.tom 环境变量：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">https://github.com/esp-rs/esp-idf-sys/blob/master/BUILD-OPTIONS.md</li>
+<li class="BulletedList ">https://docs.esp-rs.org/esp-idf-svc/esp_idf_sys/index.html</li>
+</ul>
+<p class="Paragraph ">添加 <code>extral component</code> 示例：</p>
+<p class="Paragraph "> </p>
+<pre class="Code"><code># 在 workspace 的 members 列表里添加待创建的 crate package 目录名称
 zj@a:~/code/esp32/std$ cat Cargo.toml
 [workspace] 
 resolver = "2"
@@ -703,9 +723,9 @@ component_dirs = [ "esp32-camera" ]  # 本地 component 目录列表
 bindings_header = "bindings.h"  # bindgen 头文件，内容为 component 的头文件
 bindings_module = "camera"  # bindgen 转换后的 Rust 代码所属的 esp-idf-sys module
 zj@a:~/code/esp32/std/esp32-camera-binding$</code></pre>
-<p class="">上面是手动将 component 下载到本地，还可以添加 ESP-IDF component registry 中的 <code>remote component</code> ，这时 esp-idf 会自动下载到本地。</p>
-<p class=""> </p>
-<pre><code class="language-toml">[package.metadata.esp-idf-sys.extra_components.0.remote_component]
+<p class="Paragraph ">上面是手动将 component 下载到本地，还可以添加 ESP-IDF component registry 中的 <code>remote component</code> ，这时 esp-idf 会自动下载到本地。</p>
+<p class="Paragraph "> </p>
+<pre class="Code"><code>[package.metadata.esp-idf-sys.extra_components.0.remote_component]
 # The name of the remote component. Corresponds to a key in the dependencies of
 # `idf_component.yml`.
 name = "component_name"
@@ -732,9 +752,9 @@ path = "path/to/component"
 #
 # This field is optional.
 service_url = "https://componentregistry.company.com"</code></pre>
-<p class="">remote component 示例:</p>
-<p class=""> </p>
-<pre><code class="language-toml">zj@a:~/code/esp32/std/esp32-camera-binding$ cat Cargo.toml
+<p class="Paragraph ">remote component 示例:</p>
+<p class="Paragraph "> </p>
+<pre class="Code"><code>zj@a:~/code/esp32/std/esp32-camera-binding$ cat Cargo.toml
 [package] 
 name = "esp32-camera-binding"
 version = "0.1.0"
@@ -804,9 +824,9 @@ zj@a:~/code/esp32/std/esp32-camera-binding$
 zj@a:~/code/esp32/std/esp32-camera-binding$ cat bindings.h  # 两个 component 的头文件
 #include "esp_camera.h"
 #include "iot_button.h"</code></pre>
-<p class="">cargo build 会自动将 component 下载到本地，然后进行 bindgen 和链接：</p>
-<p class=""> </p>
-<pre><code class="language-bash">zj@a:~/code/esp32/std/esp32-camera-binding$ ls -l ../target/xtensa-esp32s3-espidf/debug/build/esp-idf-sys-7b038a52fa416f70/out
+<p class="Paragraph ">cargo build 会自动将 component 下载到本地，然后进行 bindgen 和链接：</p>
+<p class="Paragraph "> </p>
+<pre class="Code"><code>zj@a:~/code/esp32/std/esp32-camera-binding$ ls -l ../target/xtensa-esp32s3-espidf/debug/build/esp-idf-sys-7b038a52fa416f70/out
 total 5.3M
 -rw-r--r--  1 alizj 1.4K  7 24  2006 CMakeLists.txt
 -rw-r--r--  1 alizj 5.2M  5 24 12:36 bindings.rs  # eps-idf-sys 所有 component Rust 接口绑定
@@ -848,9 +868,11 @@ pub mod button {
     /* automatically generated by rust-bindgen 0.63.0 */
 
     #[repr(C)]</code></pre>
-<h2 class="">2 配置 <code>esp-rs</code> 项目的 <code>esp-idf-sys</code> 参数 </h2>
-<p class="">各<code> esp-idf-sys</code> 配置参数有环境变量和 metadata 两种方式（环境变量的优先级更高）：</p>
-<li class="">在 <code>.cargo/config.toml</code> 中配置 <code>env </code>环境变量、<code>rusts flags</code>；</li>
+<h2 class="Heading Heading--2 ">2 配置 <code>esp-rs</code> 项目的 <code>esp-idf-sys</code> 参数 </h2>
+<p class="Paragraph ">各<code> esp-idf-sys</code> 配置参数有环境变量和 metadata 两种方式（环境变量的优先级更高）：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">在 <code>.cargo/config.toml</code> 中配置 <code>env </code>环境变量、<code>rusts flags</code>；</li>
+</ol>
 
   </main>
     <aside class ="utterances">

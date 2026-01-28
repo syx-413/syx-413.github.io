@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -300,91 +300,107 @@
     
   </header>
   <main class="PageRoot">
-    <p class=""></p>
-<p class="">https://github.com/YosysHQ/oss-cad-suite-build?tab=readme-ov-file#installation</p>
-<h1 class="">OSS CAD Suite</h1>
-<h2 class="">Introduction</h2>
-<p class="">OSS CAD Suite is a binary software distribution for a number of open source software used in digital logic design.
+    <p class="Paragraph "></p>
+<p class="Paragraph ">https://github.com/YosysHQ/oss-cad-suite-build?tab=readme-ov-file#installation</p>
+<h1 class="Heading Heading--1 ">OSS CAD Suite</h1>
+<h2 class="Heading Heading--2 ">Introduction</h2>
+<p class="Paragraph ">OSS CAD Suite is a binary software distribution for a number of open source software used in digital logic design.
 You will find tools for RTL synthesis, formal hardware verification, place & route, FPGA programming, and testing with support for HDLs like Verilog, Migen, and Amaranth.</p>
-<p class="">OSS CAD Suite is a component of YosysHQ's Tabby CAD Suite:</p>
-<figure><img src="https://user-images.githubusercontent.com/59544343/119006798-f8786100-b990-11eb-9535-cef67420ccfb.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">See Tabby CAD Datasheet for details on Tabby CAD Suite; see OSS CAD Suite GitHub (this page) for details on OSS CAD Suite.</p>
-<h3 class="">RTL Synthesis</h3>
-<li class="">Yosys RTL synthesis with extensive Verilog 2005 support</li>
-<li class="">Amaranth refreshed Python toolbox for building complex digital hardware</li>
-<li class="">Migen Python toolbox for building complex digital hardware</li>
-<li class="">ABC A System for Sequential Synthesis and Verification</li>
-<li class="">GHDL VHDL 2008/93/87 simulator (linux-x64, darwin-x64 and darwin-arm64 platforms only)</li>
-<p class="">Did you know that the Tabby CAD version of yosys supports industry standard SystemVerilog, VHDL and SVA?
+<p class="Paragraph ">OSS CAD Suite is a component of YosysHQ's Tabby CAD Suite:</p>
+<figure class="Image Image--Normal"><img src="https://user-images.githubusercontent.com/59544343/119006798-f8786100-b990-11eb-9535-cef67420ccfb.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">See Tabby CAD Datasheet for details on Tabby CAD Suite; see OSS CAD Suite GitHub (this page) for details on OSS CAD Suite.</p>
+<h3 class="Heading Heading--3 ">RTL Synthesis</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">Yosys RTL synthesis with extensive Verilog 2005 support</li>
+<li class="BulletedList ">Amaranth refreshed Python toolbox for building complex digital hardware</li>
+<li class="BulletedList ">Migen Python toolbox for building complex digital hardware</li>
+<li class="BulletedList ">ABC A System for Sequential Synthesis and Verification</li>
+<li class="BulletedList ">GHDL VHDL 2008/93/87 simulator (linux-x64, darwin-x64 and darwin-arm64 platforms only)</li>
+</ul>
+<p class="Paragraph ">Did you know that the Tabby CAD version of yosys supports industry standard SystemVerilog, VHDL and SVA?
 Contact us at contact@yosyshq.com to arrange a free evaluation license.</p>
-<h3 class="">Plugins</h3>
-<li class="">GHDL plugin VHDL synthesis based on GHDL (linux-x64, darwin-x64 and darwin-arm64 platforms only)</li>
-<li class="">Slang plugin SystemVerilog synthesis based on Slang</li>
-<h3 class="">Formal Tools</h3>
-<li class="">sby (formerly SymbiYosys) a front-end driver program for Yosys-based formal hardware verification flows.</li>
-<li class="">mcy Mutation Cover with Yosys</li>
-<li class="">eqy Equivalence Checking with Yosys</li>
-<li class="">sby-gui GUI for sby (formerly SymbiYosys)</li>
-<li class="">aiger AIGER tools including bounded model checker</li>
-<li class="">avy Interpolating Property Directed Reachability tool</li>
-<li class="">Boolector SMT solver and BTOR model checker</li>
-<li class="">Yices 2 SMT solver</li>
-<li class="">Super prove ABC-based AIGER hardware model checker (linux-x64 platform only)</li>
-<li class="">Pono an SMT-based model checker built on smt-switch</li>
-<li class="">Z3 SMT solver</li>
-<li class="">Bitwuzla SMT solver</li>
-<h3 class="">PnR (Place and Route)</h3>
-<li class="">nextpnr a portable FPGA place and route tool (generic, ice40, ecp5, machxo2, nexus, gowin)</li>
-<li class="">Project IceStorm tools for working with Lattice ICE40 bitstreams</li>
-<li class="">Project Trellis tools for working with Lattice ECP5 bitstreams</li>
-<li class="">Project Oxide tools for working with Lattice Nexus bitstreams</li>
-<li class="">Project Apicula tools for working with Gowin bitstreams</li>
-<li class="">Project Peppercorn tools for working with Cologne Chip GateMate bitstreams</li>
-<h3 class="">FPGA board programming tools</h3>
-<li class="">openFPGALoader universal utility for programming FPGA</li>
-<li class="">dfu-util Device Firmware Upgrade Utilities</li>
-<li class="">ecpprog basic driver for FTDI based JTAG probes, to program ECP5 FPGAs</li>
-<li class="">ecpdap program ECP5 FPGAs and attached SPI flash using CMSIS-DAP probes in JTAG mode</li>
-<li class="">fujprog ULX2S / ULX3S JTAG programmer</li>
-<li class="">openocd Open On-Chip Debugger</li>
-<li class="">icesprog iCESugar FPGA board programmer</li>
-<li class="">iceprogduino Olinuxino based programmer for iCE40HX1K-EVB</li>
-<li class="">TinyFPGA USB Bootloader</li>
-<li class="">TinyFPGA-B TinyFPGA B2 Board programmer</li>
-<li class="">iceFUN iceFUN Programmer</li>
-<h3 class="">Simulation/Testing</h3>
-<li class="">GTK Wave fully featured GTK+ based wave viewer</li>
-<li class="">Surfer A waveform viewer with a focus on a snappy usable interface, and extensibility.</li>
-<li class="">verilator Verilog/SystemVerilog simulator</li>
-<li class="">iverilog Verilog compilation system</li>
-<li class="">cocotb coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python</li>
-<h3 class="">Support libraries</h3>
-<li class="">Python 3 language interpreter is provided in all supported platforms.</li>
-<li class="">Python 2 language interpreter is provided in Linux platforms in form of library only.</li>
-<li class="">Ubuntu 22.04 distribution development packages are used and shared libraries used are provided in package.</li>
-<li class="">macports distribution system for macOS is used to obtain all libraries used, and they are provided in package.</li>
-<li class="">MinGW Minimalist GNU for Windows library packages from Fedora 39 are used in compilation and provided in package.</li>
-<h2 class="">Installation</h2>
-<li class="">Download an archive matching your OS from the releases page.</li>
-<li class="">Extract the archive to a location of your choice (for Windows it is recommended that path does not contain spaces)</li>
-<li class="">On macOS to allow execution of quarantined files <code>xattr -d com.apple.quarantine oss-cad-suite-darwin-x64-yyymmdd.tgz</code> on downloaded file, or run: <code>./activate</code> in extracted location once.</li>
-<li class="">Set the environment as described below.</li>
-<p class="">Linux and macOS</p>
-<pre><code class="language-bash">export PATH="<extracted_location>/oss-cad-suite/bin:$PATH"
+<h3 class="Heading Heading--3 ">Plugins</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">GHDL plugin VHDL synthesis based on GHDL (linux-x64, darwin-x64 and darwin-arm64 platforms only)</li>
+<li class="BulletedList ">Slang plugin SystemVerilog synthesis based on Slang</li>
+</ul>
+<h3 class="Heading Heading--3 ">Formal Tools</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">sby (formerly SymbiYosys) a front-end driver program for Yosys-based formal hardware verification flows.</li>
+<li class="BulletedList ">mcy Mutation Cover with Yosys</li>
+<li class="BulletedList ">eqy Equivalence Checking with Yosys</li>
+<li class="BulletedList ">sby-gui GUI for sby (formerly SymbiYosys)</li>
+<li class="BulletedList ">aiger AIGER tools including bounded model checker</li>
+<li class="BulletedList ">avy Interpolating Property Directed Reachability tool</li>
+<li class="BulletedList ">Boolector SMT solver and BTOR model checker</li>
+<li class="BulletedList ">Yices 2 SMT solver</li>
+<li class="BulletedList ">Super prove ABC-based AIGER hardware model checker (linux-x64 platform only)</li>
+<li class="BulletedList ">Pono an SMT-based model checker built on smt-switch</li>
+<li class="BulletedList ">Z3 SMT solver</li>
+<li class="BulletedList ">Bitwuzla SMT solver</li>
+</ul>
+<h3 class="Heading Heading--3 ">PnR (Place and Route)</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">nextpnr a portable FPGA place and route tool (generic, ice40, ecp5, machxo2, nexus, gowin)</li>
+<li class="BulletedList ">Project IceStorm tools for working with Lattice ICE40 bitstreams</li>
+<li class="BulletedList ">Project Trellis tools for working with Lattice ECP5 bitstreams</li>
+<li class="BulletedList ">Project Oxide tools for working with Lattice Nexus bitstreams</li>
+<li class="BulletedList ">Project Apicula tools for working with Gowin bitstreams</li>
+<li class="BulletedList ">Project Peppercorn tools for working with Cologne Chip GateMate bitstreams</li>
+</ul>
+<h3 class="Heading Heading--3 ">FPGA board programming tools</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">openFPGALoader universal utility for programming FPGA</li>
+<li class="BulletedList ">dfu-util Device Firmware Upgrade Utilities</li>
+<li class="BulletedList ">ecpprog basic driver for FTDI based JTAG probes, to program ECP5 FPGAs</li>
+<li class="BulletedList ">ecpdap program ECP5 FPGAs and attached SPI flash using CMSIS-DAP probes in JTAG mode</li>
+<li class="BulletedList ">fujprog ULX2S / ULX3S JTAG programmer</li>
+<li class="BulletedList ">openocd Open On-Chip Debugger</li>
+<li class="BulletedList ">icesprog iCESugar FPGA board programmer</li>
+<li class="BulletedList ">iceprogduino Olinuxino based programmer for iCE40HX1K-EVB</li>
+<li class="BulletedList ">TinyFPGA USB Bootloader</li>
+<li class="BulletedList ">TinyFPGA-B TinyFPGA B2 Board programmer</li>
+<li class="BulletedList ">iceFUN iceFUN Programmer</li>
+</ul>
+<h3 class="Heading Heading--3 ">Simulation/Testing</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">GTK Wave fully featured GTK+ based wave viewer</li>
+<li class="BulletedList ">Surfer A waveform viewer with a focus on a snappy usable interface, and extensibility.</li>
+<li class="BulletedList ">verilator Verilog/SystemVerilog simulator</li>
+<li class="BulletedList ">iverilog Verilog compilation system</li>
+<li class="BulletedList ">cocotb coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python</li>
+</ul>
+<h3 class="Heading Heading--3 ">Support libraries</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">Python 3 language interpreter is provided in all supported platforms.</li>
+<li class="BulletedList ">Python 2 language interpreter is provided in Linux platforms in form of library only.</li>
+<li class="BulletedList ">Ubuntu 22.04 distribution development packages are used and shared libraries used are provided in package.</li>
+<li class="BulletedList ">macports distribution system for macOS is used to obtain all libraries used, and they are provided in package.</li>
+<li class="BulletedList ">MinGW Minimalist GNU for Windows library packages from Fedora 39 are used in compilation and provided in package.</li>
+</ul>
+<h2 class="Heading Heading--2 ">Installation</h2>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">Download an archive matching your OS from the releases page.</li>
+<li class="NumberedList ">Extract the archive to a location of your choice (for Windows it is recommended that path does not contain spaces)</li>
+<li class="NumberedList ">On macOS to allow execution of quarantined files <code>xattr -d com.apple.quarantine oss-cad-suite-darwin-x64-yyymmdd.tgz</code> on downloaded file, or run: <code>./activate</code> in extracted location once.</li>
+<li class="NumberedList ">Set the environment as described below.</li>
+</ol>
+<p class="Paragraph ">Linux and macOS</p>
+<pre class="Code"><code>export PATH="<extracted_location>/oss-cad-suite/bin:$PATH"
 
 # or
 
 source <extracted_location>/oss-cad-suite/environment
 </code></pre>
-<p class="">Linux and macOS (fish shell)</p>
-<pre><code class="language-bash">fish_add_path "<extracted_location>/oss-cad-suite/bin"
+<p class="Paragraph ">Linux and macOS (fish shell)</p>
+<pre class="Code"><code>fish_add_path "<extracted_location>/oss-cad-suite/bin"
 
 # or
 
 source <extracted_location>/oss-cad-suite/environment.fish
 </code></pre>
-<p class="">Windows</p>
-<pre><code class="language-powershell">from existing CMD prompt:
+<p class="Paragraph ">Windows</p>
+<pre class="Code"><code>from existing CMD prompt:
 <extracted_location>\\oss-cad-suite\\environment.bat
 
 from existing PowerShell prompt:
@@ -393,22 +409,22 @@ from existing PowerShell prompt:
 to create new CMD prompt:
 <extracted_location>\\oss-cad-suite\\start.bat
 </code></pre>
-<p class=""><strong>NOTE:</strong> when environment is set, <code>python3</code> from package becomes available as well, this enables usage of <em>Migen</em> and <em>Amaranth</em> HDL and <em>LiteX</em> libraries scripts as usual. When OSS CAD Suite is just added in PATH to use packaged python3 use <code>tabbypy3</code> to start python environment. For Windows, there are no wrappers and using environment.bat is only choice.</p>
-<h2 class="">Using LiteX</h2>
-<p class="">We provide you with Python 3.11 and all required software to be able to use LiteX. After activating <code>environment</code> it is possible to perform installation same as usual:</p>
-<pre><code class="language-bash">mkdir -p litex
+<p class="Paragraph "><strong>NOTE:</strong> when environment is set, <code>python3</code> from package becomes available as well, this enables usage of <em>Migen</em> and <em>Amaranth</em> HDL and <em>LiteX</em> libraries scripts as usual. When OSS CAD Suite is just added in PATH to use packaged python3 use <code>tabbypy3</code> to start python environment. For Windows, there are no wrappers and using environment.bat is only choice.</p>
+<h2 class="Heading Heading--2 ">Using LiteX</h2>
+<p class="Paragraph ">We provide you with Python 3.11 and all required software to be able to use LiteX. After activating <code>environment</code> it is possible to perform installation same as usual:</p>
+<pre class="Code"><code>mkdir -p litex
 cd litex
 wget <https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py>
 python3 litex_setup.py init
 python3 litex_setup.py install
 </code></pre>
-<p class=""></p>
-<h3 class="">嵌入式ARM RISV </h3>
-<p class=""></p>
-<h3 class="">Openocd</h3>
-<p class=""></p>
-<p class="">wezterm 配置文件</p>
-<pre><code class="language-lua">-- 引入 wezterm API
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">嵌入式ARM RISV </h3>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">Openocd</h3>
+<p class="Paragraph "></p>
+<p class="Paragraph ">wezterm 配置文件</p>
+<pre class="Code"><code>-- 引入 wezterm API
 local wezterm = require("wezterm")
 local act = wezterm.action
 -- 初始化 config

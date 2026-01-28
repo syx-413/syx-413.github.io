@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -314,9 +314,9 @@
     
   </header>
   <main class="PageRoot">
-    <h1 class="">部署时出现错误</h1>
-<h3 class="">ItemNotFound</h3>
-<pre><code class="language-plain text">{
+    <h1 class="Heading Heading--1 ">部署时出现错误</h1>
+<h3 class="Heading Heading--3 ">ItemNotFound</h3>
+<pre class="Code"><code>{
   "error": {
     "error": {
       "code": "itemNotFound",
@@ -329,30 +329,40 @@
     }
   }
 }</code></pre>
-<p class="">你没有指定一个有效的 OneDrive 进行共享。</p>
-<li class="">你分享的文件必须存放在 OneDrive 的一个文件夹里。</li>
-<li class="">你必须在 <code>site.config.js</code> 的 <code>baseDirectory</code> 处指定该文件夹的绝对路径。</li>
-<p class="">💬</p>
-<p class="">相关讨论：</p>
-<li class="">这是啥问题？#274</li>
-<li class="">部署完后报错 #240</li>
-<h3 class="">Error 504</h3>
-<pre><code class="language-plain text">{ "error": { "code": "504", "message": "An error occurred with your deployment" } }</code></pre>
-<p class="">这可能由多个错误引起，但可以确定的是你填错了 Redis URL 或者 <code>site.config.js</code> 里的内容。</p>
-<li class="">请检查 <code>baseDirectory</code>。如果你在旧版遇到了此问题，解决办法与上面的 <code>itemNotFound</code> 一致。</li>
-<li class="">请检查你在 Vercel 的 <code>REDIS_URL</code> 环境变量是否填好了 Redis URL。<strong>如果你使用 Upstash ，请启用 SSL</strong> 该 URL 长得很像 <code>rediss://:xxx@us1-xxx.upstash.io:xxx</code> ，请注意是 <code>rediss</code> 而非 <code>redis</code> ，是 <code>://:xx</code> 而非 <code>://xx</code>。</li>
-<p class="">💬</p>
-<p class="">相关讨论：</p>
-<li class="">这种怎么解决啊 #267</li>
-<li class="">在 Vercel 下部署遇到 504 错误，在本地运行没有问题 #261</li>
-<li class="">Oops, that's a four-oh-four. #238</li>
-<li class="">504 Error #247</li>
-<p class="">迁移到 2022 年的新版本</p>
-<p class="">Don't pretend to be the site owner</p>
-<p class="">On This Page</p>
-<li class="">ItemNotFound</li>
-<li class="">Error 504</li>
-<p class="">前往 GitHub 编辑此页</p>
+<p class="Paragraph ">你没有指定一个有效的 OneDrive 进行共享。</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">你分享的文件必须存放在 OneDrive 的一个文件夹里。</li>
+<li class="NumberedList ">你必须在 <code>site.config.js</code> 的 <code>baseDirectory</code> 处指定该文件夹的绝对路径。</li>
+</ol>
+<p class="Paragraph ">💬</p>
+<p class="Paragraph ">相关讨论：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">这是啥问题？#274</li>
+<li class="BulletedList ">部署完后报错 #240</li>
+</ul>
+<h3 class="Heading Heading--3 ">Error 504</h3>
+<pre class="Code"><code>{ "error": { "code": "504", "message": "An error occurred with your deployment" } }</code></pre>
+<p class="Paragraph ">这可能由多个错误引起，但可以确定的是你填错了 Redis URL 或者 <code>site.config.js</code> 里的内容。</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">请检查 <code>baseDirectory</code>。如果你在旧版遇到了此问题，解决办法与上面的 <code>itemNotFound</code> 一致。</li>
+<li class="NumberedList ">请检查你在 Vercel 的 <code>REDIS_URL</code> 环境变量是否填好了 Redis URL。<strong>如果你使用 Upstash ，请启用 SSL</strong> 该 URL 长得很像 <code>rediss://:xxx@us1-xxx.upstash.io:xxx</code> ，请注意是 <code>rediss</code> 而非 <code>redis</code> ，是 <code>://:xx</code> 而非 <code>://xx</code>。</li>
+</ol>
+<p class="Paragraph ">💬</p>
+<p class="Paragraph ">相关讨论：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">这种怎么解决啊 #267</li>
+<li class="BulletedList ">在 Vercel 下部署遇到 504 错误，在本地运行没有问题 #261</li>
+<li class="BulletedList ">Oops, that's a four-oh-four. #238</li>
+<li class="BulletedList ">504 Error #247</li>
+</ul>
+<p class="Paragraph ">迁移到 2022 年的新版本</p>
+<p class="Paragraph ">Don't pretend to be the site owner</p>
+<p class="Paragraph ">On This Page</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">ItemNotFound</li>
+<li class="BulletedList ">Error 504</li>
+</ul>
+<p class="Paragraph ">前往 GitHub 编辑此页</p>
 
   </main>
     <aside class ="utterances">

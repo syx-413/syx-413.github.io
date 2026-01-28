@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -304,16 +304,16 @@
     
   </header>
   <main class="PageRoot">
-    <h3 class="">使用Azure 的Openai 调用的时候需要注意的的一些地方</h3>
-<p class="">比如</p>
-<p class=""><code>model="gpt-4o"</code></p>
-<p class=""><code>api_version="2024-02-15-preview"</code></p>
-<p class=""></p>
-<p class=""><code>model</code> 一般为你部署的名字通常是<code>azure_endpoint</code>  <code>https://xxxx.openai.azure.com/</code> 的<code>xxx</code> 的名字</p>
-<p class=""><code>api_version</code> 并不是 <code>gpt</code>的版本 </p>
-<p class=""></p>
-<p class="">改动后前</p>
-<pre><code class="language-python">from openai import AzureOpenAI
+    <h3 class="Heading Heading--3 ">使用Azure 的Openai 调用的时候需要注意的的一些地方</h3>
+<p class="Paragraph ">比如</p>
+<p class="Paragraph "><code>model="gpt-4o"</code></p>
+<p class="Paragraph "><code>api_version="2024-02-15-preview"</code></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "><code>model</code> 一般为你部署的名字通常是<code>azure_endpoint</code>  <code>https://xxxx.openai.azure.com/</code> 的<code>xxx</code> 的名字</p>
+<p class="Paragraph "><code>api_version</code> 并不是 <code>gpt</code>的版本 </p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">改动后前</p>
+<pre class="Code"><code>from openai import AzureOpenAI
 
 
 client = AzureOpenAI(
@@ -337,10 +337,10 @@ completion = client.chat.completions.create(
 )
 
 print(completion.choices[0].message.content)</code></pre>
-<p class=""></p>
-<hr style="border: none; border-top: 1px solid #eaeaea; margin: 2em 0;" />
-<p class="">改动后</p>
-<pre><code class="language-python">from openai import AzureOpenAI
+<p class="Paragraph "></p>
+<div class="Divider"></div>
+<p class="Paragraph ">改动后</p>
+<pre class="Code"><code>from openai import AzureOpenAI
 
 client = AzureOpenAI(
   azure_endpoint = "https://swcgpt4.openai.azure.com/",
@@ -363,12 +363,12 @@ completion = client.chat.completions.create(
 )
 
 print(completion.choices[0].message.content)</code></pre>
-<p class=""></p>
-<hr style="border: none; border-top: 1px solid #eaeaea; margin: 2em 0;" />
-<p class="">参考</p>
-<p class="">stackoverflow同样的问题</p>
-<p class="">微软文档说明</p>
-<p class=""></p>
+<p class="Paragraph "></p>
+<div class="Divider"></div>
+<p class="Paragraph ">参考</p>
+<p class="Paragraph ">stackoverflow同样的问题</p>
+<p class="Paragraph ">微软文档说明</p>
+<p class="Paragraph "></p>
 
   </main>
     <aside class ="utterances">

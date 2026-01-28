@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -140,7 +140,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./Note.html">
+  <a href="./note.html">
     <div class="Navbar__Btn">
       
         
@@ -154,7 +154,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./OneDrive_Vercel__立即上手.html">
+  <a href="./onedrive-vercel--立即上手.html">
     <div class="Navbar__Btn">
       
         
@@ -178,7 +178,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./blog_mark.html">
+  <a href="./blog-mark.html">
     <div class="Navbar__Btn">
       
         
@@ -220,7 +220,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./About.html">
+  <a href="./about.html">
     <div class="Navbar__Btn">
       
         
@@ -289,52 +289,56 @@
         
         
           <span class="DateTagBar__Item DateTagBar__Tag">
-            <a href="./tag/单片机.html" class="tag tag-some(red)">单片机</a>
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
           </span>
         
       </div>
     
   </header>
   <main class="PageRoot">
-    <p class="">在写(shui)论文的时候发现，在<code>ESP32</code>输出调试信息关键很少，没有说服力</p>
-<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/a3230e1f-8f7f-486c-a60c-b0e48bc6e59c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TN2AR56S%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152846Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDxxSJ2zmafhmIXntheEUJgSj2nEjXpZJarfK7K8PEMKgIgefc%2FprG4JaP0caF0hqovGgL2NAZpxAghvfksLEP0Rv8q%2FwMIWBAAGgw2Mzc0MjMxODM4MDUiDOJJ5pgfwchuwlPokSrcA%2BHrOHwqAHnVnYAa6Vq0qBEMb9J4runfXgd0QjV6vmIKFKbyE1l1FYpNP23Mrm5XX7V%2Fkq8IAM4MkbAI%2FN%2B6P1E9HzaNMb%2FshizUcmIRCwagpzrsYh%2B5Zogj1AG6skeRgYqg5LctNJh6xiGc54lqbmf%2BhpAEkyc7nNrxKmpmA0o7qxL0%2FiWpH4v3%2BqPZj%2FLiGu9cR7bzab25Vf2IDmq1Bia3tl5FSnlOwKnmN4Qv0evFRG%2B3FkN%2B1OoJ0cSap%2F2kjMoVaSZCl9tGRMXieiqQZSkHWicdudXTguwJPBKze3Hj8uBQnXkX5RpRmMVKOR%2F3UBf26cwGS5y%2BvL5mCQhu8raZtCWee16Xa0NcmtKaIbceMkrFcgSn4BQfFfnj2PIupheR8N8mRyPHj1fb%2Bbn4dJvcCu5oua5EtND62Fx9gWcwHyeX5CjKKowg6DMif%2B4r5BJYPu1gPDjrVeR%2BGFmtmwmwH0%2FgLY%2BHDMrnmNm03%2BIBJ5JxDKjw%2FubSDiYaxv6NWesR7VFQDstdpwJps0YFoPU7ipMja2eRkV%2FWzz%2FmZJpSP%2Ff9Va5MoiLJQnKp7c4fscKjPK%2BgryJFYqijrLNZkTHzfy6TxgsASv9mcZwtsk70gJzJ6i9kd%2Bs1cor2MK2Z48sGOqUBeVjweYDc7M0daIeWL6g%2FiQ%2BH1y5fDvx0L8lj9hLojZgQ9k3k1RZpQylyCphTwkiKi7nVDUJEVEIP3XEV2E9aS84WZW7MxVifJ8CGyP4Pb0JdIhPM8VvMJfcviPeJuP3Aw2O4X4s8V77rtE4v%2BBSbhGUWoc%2Blg6mi6p9zBh8B2WltteJh7%2Fb58mIp7wrtFqOaCBsOFoNHNVcThZ%2FaGnQMO%2BpUnz2%2B&X-Amz-Signature=02072f3f08d0fe753ed7114ab4ab584b86a48961d204e287d67e8227ffba1df0&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">于是在<code>boot.py </code>寻找相关的解决方法 （GPT）</p>
-<h2 class=""><strong>启用 ESP32 MicroPython 调试信息</strong></h2>
-<p class="">您提供的代码片段展示了如何禁用 ESP32 MicroPython 的调试信息。要启用调试信息，您需要进行以下操作：</p>
-<pre><code class="language-python">import esp
+    <p class="Paragraph ">在写(shui)论文的时候发现，在<code>ESP32</code>输出调试信息关键很少，没有说服力</p>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/a3230e1f-8f7f-486c-a60c-b0e48bc6e59c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YZNXMZ4G%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T153102Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDMpT9keiVG3g6JaSCCn2nmWrj4FDoI6QvtuPM5oJfKzAIhALLggwR1B0EE9xemtod3HN1sFyVcD7CqzOcP7u0f4iBOKv8DCG8QABoMNjM3NDIzMTgzODA1IgxTQNgJaUTkOTfCeWEq3AM8HumTiwhsjmpdXLoI5qVJXjpqNpVh2w8qSUEYzGgJAL5woHQkqFdqodQKmhZGW154Vqa2FLDR%2FgyaIYzY0LiQpMN9V21GCkd9Ly99uAUhc8t8l6qX%2FD4mkkefGIgRQxPK4d8rpxk9mQN9M2SD7B4L%2FKZBROVBdzCScTJMc6QCORyZm20L5EIf8EMGvih1sJvdeFPXafhNwUREutgBj7RqDgFJyY238R%2B8z9Khi3Pqt6uDnQqaa6X%2FYNP8keXkZMY7QzaC19TSLzNxTbxJdXvIQ85l%2F4ddFbz0cnRvihWreKqv9frEBNWJ9j5qgbgEq2w1M4nu5hMicFhkolck71uYwIAe%2BKI4nSilPxvGXLiQgX6gTZFJ8xf6Y28jw6KMLYMH376%2FhYxgJwh2xNEvYuurBQ%2BXH3VoL6Rf97j7OStWmsyR57reUWlGx9eNJjquVqhbngQIc3%2BkHXjTYihZ8Bgc1jkDMDd7GZIwKUvFcfeny4G5Fn%2BXT2Ux1jOxoW9jUZrBP%2BYIk6C5LmfgNHoAe9SIpttbZYVFXeSXkSZpVYfLXPlS8WwZLuCFT10tAMhBWNovWnXDr3vrSTGsz0S81Kih%2Fz7QP9UEbS3yijjQDe%2BiUyokPYFMneYr1pfpQTDtr%2BjLBjqkAXYS5FKzvqFKOPOw0SAqN%2B6F9LUHDUKSVJKjQQVbofdf8w%2BMJHOSTPGQT0Y%2FG3cDeMuC0mMQsINKYbCSu0Y50AvusCxRhDa2KL%2B9Og83OZv%2B3RowBKQaSuWfyXoP429Gc8oWI3ANh3BOT9%2FUxf53Sy2ADa1kaWvPp9PixGo1u8que%2Bb%2FdFw%2BvlkgXiT%2FP1T1pMWZaLy9vadQsVDgX%2FY41TrVT1Vc&X-Amz-Signature=41af431b38023d2d5ad0881f3580a788135dae7ec61a4b7bb9b6a1ff11a358eb&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">于是在<code>boot.py </code>寻找相关的解决方法 （GPT）</p>
+<h2 class="Heading Heading--2 "><strong>启用 ESP32 MicroPython 调试信息</strong></h2>
+<p class="Paragraph ">您提供的代码片段展示了如何禁用 ESP32 MicroPython 的调试信息。要启用调试信息，您需要进行以下操作：</p>
+<pre class="Code"><code>import esp
 esp.osdebug(None)</code></pre>
-<p class=""><strong>2. (可选) 设置调试级别:</strong></p>
-<p class="">您可以使用 <code>esp.osdebug()</code> 函数设置调试信息的级别。默认级别为 <code>0</code>，表示不输出任何调试信息。</p>
-<li class=""><code>esp.osdebug(None)</code>: 禁用调试信息 (与注释掉代码行相同)</li>
-<li class=""><code>esp.osdebug(0)</code>: 无调试信息 (默认)</li>
-<li class=""><code>esp.osdebug(1)</code>: 错误信息</li>
-<li class=""><code>esp.osdebug(2)</code>: 错误信息和警告</li>
-<li class=""><code>esp.osdebug(3)</code>: 错误信息、警告和调试信息</li>
-<p class="">例如，要启用错误信息和警告，可以使用以下代码:</p>
-<pre><code class="language-python">import esp
+<p class="Paragraph "><strong>2. (可选) 设置调试级别:</strong></p>
+<p class="Paragraph ">您可以使用 <code>esp.osdebug()</code> 函数设置调试信息的级别。默认级别为 <code>0</code>，表示不输出任何调试信息。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList "><code>esp.osdebug(None)</code>: 禁用调试信息 (与注释掉代码行相同)</li>
+<li class="BulletedList "><code>esp.osdebug(0)</code>: 无调试信息 (默认)</li>
+<li class="BulletedList "><code>esp.osdebug(1)</code>: 错误信息</li>
+<li class="BulletedList "><code>esp.osdebug(2)</code>: 错误信息和警告</li>
+<li class="BulletedList "><code>esp.osdebug(3)</code>: 错误信息、警告和调试信息</li>
+</ul>
+<p class="Paragraph ">例如，要启用错误信息和警告，可以使用以下代码:</p>
+<pre class="Code"><code>import esp
 esp.osdebug(2)</code></pre>
-<h3 class=""><strong>查看 ESP32 MicroPython 调试信息</strong></h3>
-<p class="">启用 ESP32 MicroPython 调试信息后，您可以通过以下步骤查看这些信息：</p>
-<h3 class=""><strong>1. 连接串口</strong>:</h3>
-<p class="">使用 USB 线将 ESP32 连接到您的电脑。 确保您已安装所需的 USB 驱动程序。</p>
-<h3 class=""><strong>2. 确定串口</strong></h3>
-<p class="">:您需要确定 ESP32 连接到哪个串口。 在 Windows 上，您可以使用设备管理器查看可用串口。 在 macOS 或 Linux 上，您可以使用 <code>ls /dev/tty*</code> 命令列出可用串口。</p>
-<h3 class=""><strong>3. 选择串口监视器</strong>:</h3>
-<p class="">选择并打开一个串口监视器应用程序，例如：</p>
-<li class=""><strong>PuTTY (Windows):</strong> 免费且易于使用的串口监视器。</li>
-<li class=""><strong>screen (macOS/Linux):</strong> 终端应用程序，提供串口监视功能。</li>
-<li class=""><strong>Arduino IDE 串口监视器:</strong> 如果您使用 Arduino IDE 进行开发，可以直接使用内置的串口监视器。</li>
-<p class=""></p>
-<h3 class="">关于监视器的选择</h3>
-<p class=""><code><strong>pyserial</strong></code><code>-miniterm -f direct</code> 是一个Putty的替代方案</p>
-<p class=""><code>pip install pyserial</code> 就可以安装，不过要设置一下相关的波特率，一般micropython也是115200</p>
-<p class=""></p>
-<p class=""></p>
-<h3 class="">效果展示</h3>
-<p class="">相对于原来的显示内容变多了😈 </p>
-<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/c8298e52-a219-434c-91ae-1ddb61b9d0a9/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TN2AR56S%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152847Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDxxSJ2zmafhmIXntheEUJgSj2nEjXpZJarfK7K8PEMKgIgefc%2FprG4JaP0caF0hqovGgL2NAZpxAghvfksLEP0Rv8q%2FwMIWBAAGgw2Mzc0MjMxODM4MDUiDOJJ5pgfwchuwlPokSrcA%2BHrOHwqAHnVnYAa6Vq0qBEMb9J4runfXgd0QjV6vmIKFKbyE1l1FYpNP23Mrm5XX7V%2Fkq8IAM4MkbAI%2FN%2B6P1E9HzaNMb%2FshizUcmIRCwagpzrsYh%2B5Zogj1AG6skeRgYqg5LctNJh6xiGc54lqbmf%2BhpAEkyc7nNrxKmpmA0o7qxL0%2FiWpH4v3%2BqPZj%2FLiGu9cR7bzab25Vf2IDmq1Bia3tl5FSnlOwKnmN4Qv0evFRG%2B3FkN%2B1OoJ0cSap%2F2kjMoVaSZCl9tGRMXieiqQZSkHWicdudXTguwJPBKze3Hj8uBQnXkX5RpRmMVKOR%2F3UBf26cwGS5y%2BvL5mCQhu8raZtCWee16Xa0NcmtKaIbceMkrFcgSn4BQfFfnj2PIupheR8N8mRyPHj1fb%2Bbn4dJvcCu5oua5EtND62Fx9gWcwHyeX5CjKKowg6DMif%2B4r5BJYPu1gPDjrVeR%2BGFmtmwmwH0%2FgLY%2BHDMrnmNm03%2BIBJ5JxDKjw%2FubSDiYaxv6NWesR7VFQDstdpwJps0YFoPU7ipMja2eRkV%2FWzz%2FmZJpSP%2Ff9Va5MoiLJQnKp7c4fscKjPK%2BgryJFYqijrLNZkTHzfy6TxgsASv9mcZwtsk70gJzJ6i9kd%2Bs1cor2MK2Z48sGOqUBeVjweYDc7M0daIeWL6g%2FiQ%2BH1y5fDvx0L8lj9hLojZgQ9k3k1RZpQylyCphTwkiKi7nVDUJEVEIP3XEV2E9aS84WZW7MxVifJ8CGyP4Pb0JdIhPM8VvMJfcviPeJuP3Aw2O4X4s8V77rtE4v%2BBSbhGUWoc%2Blg6mi6p9zBh8B2WltteJh7%2Fb58mIp7wrtFqOaCBsOFoNHNVcThZ%2FaGnQMO%2BpUnz2%2B&X-Amz-Signature=b7017956dfed366ea748573ad0985cd50ba511670e50a6168672f2633c50b6c9&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/8191416a-4b00-4ac6-b657-1d91a3c3c244/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TN2AR56S%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152847Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDxxSJ2zmafhmIXntheEUJgSj2nEjXpZJarfK7K8PEMKgIgefc%2FprG4JaP0caF0hqovGgL2NAZpxAghvfksLEP0Rv8q%2FwMIWBAAGgw2Mzc0MjMxODM4MDUiDOJJ5pgfwchuwlPokSrcA%2BHrOHwqAHnVnYAa6Vq0qBEMb9J4runfXgd0QjV6vmIKFKbyE1l1FYpNP23Mrm5XX7V%2Fkq8IAM4MkbAI%2FN%2B6P1E9HzaNMb%2FshizUcmIRCwagpzrsYh%2B5Zogj1AG6skeRgYqg5LctNJh6xiGc54lqbmf%2BhpAEkyc7nNrxKmpmA0o7qxL0%2FiWpH4v3%2BqPZj%2FLiGu9cR7bzab25Vf2IDmq1Bia3tl5FSnlOwKnmN4Qv0evFRG%2B3FkN%2B1OoJ0cSap%2F2kjMoVaSZCl9tGRMXieiqQZSkHWicdudXTguwJPBKze3Hj8uBQnXkX5RpRmMVKOR%2F3UBf26cwGS5y%2BvL5mCQhu8raZtCWee16Xa0NcmtKaIbceMkrFcgSn4BQfFfnj2PIupheR8N8mRyPHj1fb%2Bbn4dJvcCu5oua5EtND62Fx9gWcwHyeX5CjKKowg6DMif%2B4r5BJYPu1gPDjrVeR%2BGFmtmwmwH0%2FgLY%2BHDMrnmNm03%2BIBJ5JxDKjw%2FubSDiYaxv6NWesR7VFQDstdpwJps0YFoPU7ipMja2eRkV%2FWzz%2FmZJpSP%2Ff9Va5MoiLJQnKp7c4fscKjPK%2BgryJFYqijrLNZkTHzfy6TxgsASv9mcZwtsk70gJzJ6i9kd%2Bs1cor2MK2Z48sGOqUBeVjweYDc7M0daIeWL6g%2FiQ%2BH1y5fDvx0L8lj9hLojZgQ9k3k1RZpQylyCphTwkiKi7nVDUJEVEIP3XEV2E9aS84WZW7MxVifJ8CGyP4Pb0JdIhPM8VvMJfcviPeJuP3Aw2O4X4s8V77rtE4v%2BBSbhGUWoc%2Blg6mi6p9zBh8B2WltteJh7%2Fb58mIp7wrtFqOaCBsOFoNHNVcThZ%2FaGnQMO%2BpUnz2%2B&X-Amz-Signature=d52face3450c88a1f296fbc122f7a51d91b530ecec22f60793292ceb5657da1c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class=""></p>
+<h3 class="Heading Heading--3 "><strong>查看 ESP32 MicroPython 调试信息</strong></h3>
+<p class="Paragraph ">启用 ESP32 MicroPython 调试信息后，您可以通过以下步骤查看这些信息：</p>
+<h3 class="Heading Heading--3 "><strong>1. 连接串口</strong>:</h3>
+<p class="Paragraph ">使用 USB 线将 ESP32 连接到您的电脑。 确保您已安装所需的 USB 驱动程序。</p>
+<h3 class="Heading Heading--3 "><strong>2. 确定串口</strong></h3>
+<p class="Paragraph ">:您需要确定 ESP32 连接到哪个串口。 在 Windows 上，您可以使用设备管理器查看可用串口。 在 macOS 或 Linux 上，您可以使用 <code>ls /dev/tty*</code> 命令列出可用串口。</p>
+<h3 class="Heading Heading--3 "><strong>3. 选择串口监视器</strong>:</h3>
+<p class="Paragraph ">选择并打开一个串口监视器应用程序，例如：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList "><strong>PuTTY (Windows):</strong> 免费且易于使用的串口监视器。</li>
+<li class="BulletedList "><strong>screen (macOS/Linux):</strong> 终端应用程序，提供串口监视功能。</li>
+<li class="BulletedList "><strong>Arduino IDE 串口监视器:</strong> 如果您使用 Arduino IDE 进行开发，可以直接使用内置的串口监视器。</li>
+</ul>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">关于监视器的选择</h3>
+<p class="Paragraph "><code><strong>pyserial</strong></code><code>-miniterm -f direct</code> 是一个Putty的替代方案</p>
+<p class="Paragraph "><code>pip install pyserial</code> 就可以安装，不过要设置一下相关的波特率，一般micropython也是115200</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">效果展示</h3>
+<p class="Paragraph ">相对于原来的显示内容变多了😈 </p>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/c8298e52-a219-434c-91ae-1ddb61b9d0a9/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YZNXMZ4G%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T153102Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDMpT9keiVG3g6JaSCCn2nmWrj4FDoI6QvtuPM5oJfKzAIhALLggwR1B0EE9xemtod3HN1sFyVcD7CqzOcP7u0f4iBOKv8DCG8QABoMNjM3NDIzMTgzODA1IgxTQNgJaUTkOTfCeWEq3AM8HumTiwhsjmpdXLoI5qVJXjpqNpVh2w8qSUEYzGgJAL5woHQkqFdqodQKmhZGW154Vqa2FLDR%2FgyaIYzY0LiQpMN9V21GCkd9Ly99uAUhc8t8l6qX%2FD4mkkefGIgRQxPK4d8rpxk9mQN9M2SD7B4L%2FKZBROVBdzCScTJMc6QCORyZm20L5EIf8EMGvih1sJvdeFPXafhNwUREutgBj7RqDgFJyY238R%2B8z9Khi3Pqt6uDnQqaa6X%2FYNP8keXkZMY7QzaC19TSLzNxTbxJdXvIQ85l%2F4ddFbz0cnRvihWreKqv9frEBNWJ9j5qgbgEq2w1M4nu5hMicFhkolck71uYwIAe%2BKI4nSilPxvGXLiQgX6gTZFJ8xf6Y28jw6KMLYMH376%2FhYxgJwh2xNEvYuurBQ%2BXH3VoL6Rf97j7OStWmsyR57reUWlGx9eNJjquVqhbngQIc3%2BkHXjTYihZ8Bgc1jkDMDd7GZIwKUvFcfeny4G5Fn%2BXT2Ux1jOxoW9jUZrBP%2BYIk6C5LmfgNHoAe9SIpttbZYVFXeSXkSZpVYfLXPlS8WwZLuCFT10tAMhBWNovWnXDr3vrSTGsz0S81Kih%2Fz7QP9UEbS3yijjQDe%2BiUyokPYFMneYr1pfpQTDtr%2BjLBjqkAXYS5FKzvqFKOPOw0SAqN%2B6F9LUHDUKSVJKjQQVbofdf8w%2BMJHOSTPGQT0Y%2FG3cDeMuC0mMQsINKYbCSu0Y50AvusCxRhDa2KL%2B9Og83OZv%2B3RowBKQaSuWfyXoP429Gc8oWI3ANh3BOT9%2FUxf53Sy2ADa1kaWvPp9PixGo1u8que%2Bb%2FdFw%2BvlkgXiT%2FP1T1pMWZaLy9vadQsVDgX%2FY41TrVT1Vc&X-Amz-Signature=26ca5dca62cf23597f27235b65c8b362367c5cb2a79bc3784444570d7a7ea592&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/8191416a-4b00-4ac6-b657-1d91a3c3c244/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YZNXMZ4G%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T153102Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDMpT9keiVG3g6JaSCCn2nmWrj4FDoI6QvtuPM5oJfKzAIhALLggwR1B0EE9xemtod3HN1sFyVcD7CqzOcP7u0f4iBOKv8DCG8QABoMNjM3NDIzMTgzODA1IgxTQNgJaUTkOTfCeWEq3AM8HumTiwhsjmpdXLoI5qVJXjpqNpVh2w8qSUEYzGgJAL5woHQkqFdqodQKmhZGW154Vqa2FLDR%2FgyaIYzY0LiQpMN9V21GCkd9Ly99uAUhc8t8l6qX%2FD4mkkefGIgRQxPK4d8rpxk9mQN9M2SD7B4L%2FKZBROVBdzCScTJMc6QCORyZm20L5EIf8EMGvih1sJvdeFPXafhNwUREutgBj7RqDgFJyY238R%2B8z9Khi3Pqt6uDnQqaa6X%2FYNP8keXkZMY7QzaC19TSLzNxTbxJdXvIQ85l%2F4ddFbz0cnRvihWreKqv9frEBNWJ9j5qgbgEq2w1M4nu5hMicFhkolck71uYwIAe%2BKI4nSilPxvGXLiQgX6gTZFJ8xf6Y28jw6KMLYMH376%2FhYxgJwh2xNEvYuurBQ%2BXH3VoL6Rf97j7OStWmsyR57reUWlGx9eNJjquVqhbngQIc3%2BkHXjTYihZ8Bgc1jkDMDd7GZIwKUvFcfeny4G5Fn%2BXT2Ux1jOxoW9jUZrBP%2BYIk6C5LmfgNHoAe9SIpttbZYVFXeSXkSZpVYfLXPlS8WwZLuCFT10tAMhBWNovWnXDr3vrSTGsz0S81Kih%2Fz7QP9UEbS3yijjQDe%2BiUyokPYFMneYr1pfpQTDtr%2BjLBjqkAXYS5FKzvqFKOPOw0SAqN%2B6F9LUHDUKSVJKjQQVbofdf8w%2BMJHOSTPGQT0Y%2FG3cDeMuC0mMQsINKYbCSu0Y50AvusCxRhDa2KL%2B9Og83OZv%2B3RowBKQaSuWfyXoP429Gc8oWI3ANh3BOT9%2FUxf53Sy2ADa1kaWvPp9PixGo1u8que%2Bb%2FdFw%2BvlkgXiT%2FP1T1pMWZaLy9vadQsVDgX%2FY41TrVT1Vc&X-Amz-Signature=7b0922962cba41fe22893b92eee722cceb9cada2d859cb63f6eb0b8f70728a30&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<p class="Paragraph "></p>
 
   </main>
     <aside class ="utterances">

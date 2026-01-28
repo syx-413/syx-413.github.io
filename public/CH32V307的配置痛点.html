@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -142,7 +142,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./Note.html">
+  <a href="./note.html">
     <div class="Navbar__Btn">
       
         
@@ -156,7 +156,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./OneDrive_Vercel__立即上手.html">
+  <a href="./onedrive-vercel--立即上手.html">
     <div class="Navbar__Btn">
       
         
@@ -180,7 +180,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./blog_mark.html">
+  <a href="./blog-mark.html">
     <div class="Navbar__Btn">
       
         
@@ -222,7 +222,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./About.html">
+  <a href="./about.html">
     <div class="Navbar__Btn">
       
         
@@ -297,79 +297,80 @@
         
         
           <span class="DateTagBar__Item DateTagBar__Tag">
-            <a href="./tag/单片机.html" class="tag tag-some(red)">单片机</a>
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
           </span>
         
       </div>
     
   </header>
   <main class="PageRoot">
-    <h2 class="">VScode 配置 CH32V307(使用MRS) + Cortex-Debug(1.4.4)</h2>
-<p class=""></p>
-<p class="">可以参考这两篇  &&  </p>
-<p class=""></p>
-<p class="">唯一注意到的一点是 如果需要 <code>Debug</code>  的话，需要注意<code>Debug</code>的时候 连接<code>ch32v307</code>和 <code>Cortex-Debug</code>(1.4.4)的版本</p>
-<h2 class="">Cortex Debug 降级到 1.4.4</h2>
-<p class="">首先是 Cortex Debug 的版本, 当前版本是 1.10.0, 这个版本运行沁恒的 gdb client 会提示如下错误</p>
-<pre><code class="language-c">ERROR: GDB major version should be >= 9, yours is 8; GDB could not start as expected. Bad installation or version mismatch. See if you can start gdb from a shell prompt and check its version (Must be >= 9)</code></pre>
-<p class="">沁恒定制的这个gcc已经8.3很久了, 等着沁恒升级不太现实, 只能将 <code>Cortex Debug</code> 降级到 1.4.4 使用, 这是支持gcc 8的最后一个版本. 在 <code>VSCode </code>的扩展中打开 Cortex Debug 的介绍页, 在 <code>Uninstall</code> <span class="color-red"><strong>右侧的小箭头点击展开</strong></span>, 能看到 Install Another Version 的菜单, 在里面选择 1.4.4 安装</p>
-<p class=""></p>
-<h2 class="">为什么(stem32)32bit 这么多结构体</h2>
-<p class=""></p>
-<p class=""></p>
-<p class=""><span class="bg-blue"> </span></p>
-<p class=""></p>
-<p class=""></p>
-<h2 class="">如何对于GPIO端口的复杂配置</h2>
-<p class="">芯片通用接口外接引脚的对应关系</p>
-<p class="">PC12—TAMPER-RTC</p>
-<p class="">PC14—-OSC32_IN</p>
-<p class="">PC15—-OSC32_OUT</p>
-<p class="">PC0~PC3—-ADC10~ADC13</p>
-<p class="">PA0~PA7—-ADC0~ADC7 </p>
-<p class="">PA4~PA5—-DAC0~DAC1</p>
-<p class=""></p>
-<p class=""></p>
-<h3 class="">外设</h3>
-<p class="">KEY 高电平3.3V</p>
-<p class="">NREST 高电平</p>
-<p class="">LED1~LED2 低电平0V</p>
-<p class=""></p>
-<p class=""></p>
-<p class=""><strong>GPIO的不同状态</strong></p>
-<p class="">软件配置成输出(推挽或开漏)</p>
-<p class="">推挽→ </p>
-<p class="">开漏→高阻 上拉5V</p>
-<p class="">特性	推挽输出 (Push-Pull)	                          开漏输出 (Open-Drain)
+    <h2 class="Heading Heading--2 ">VScode 配置 CH32V307(使用MRS) + Cortex-Debug(1.4.4)</h2>
+<p class="Paragraph "></p>
+<p class="Paragraph ">可以参考这两篇  &&  </p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">唯一注意到的一点是 如果需要 <code>Debug</code>  的话，需要注意<code>Debug</code>的时候 连接<code>ch32v307</code>和 <code>Cortex-Debug</code>(1.4.4)的版本</p>
+<h2 class="Heading Heading--2 ">Cortex Debug 降级到 1.4.4</h2>
+<p class="Paragraph ">首先是 Cortex Debug 的版本, 当前版本是 1.10.0, 这个版本运行沁恒的 gdb client 会提示如下错误</p>
+<pre class="Code"><code>ERROR: GDB major version should be >= 9, yours is 8; GDB could not start as expected. Bad installation or version mismatch. See if you can start gdb from a shell prompt and check its version (Must be >= 9)</code></pre>
+<p class="Paragraph ">沁恒定制的这个gcc已经8.3很久了, 等着沁恒升级不太现实, 只能将 <code>Cortex Debug</code> 降级到 1.4.4 使用, 这是支持gcc 8的最后一个版本. 在 <code>VSCode </code>的扩展中打开 Cortex Debug 的介绍页, 在 <code>Uninstall</code> <span class="SemanticString__Fragment--ColorRed"><strong>右侧的小箭头点击展开</strong></span>, 能看到 Install Another Version 的菜单, 在里面选择 1.4.4 安装</p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">为什么(stem32)32bit 这么多结构体</h2>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "><span class="SemanticString__Fragment--BgBlue"> </span></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">如何对于GPIO端口的复杂配置</h2>
+<p class="Paragraph ">芯片通用接口外接引脚的对应关系</p>
+<p class="Paragraph ">PC12—TAMPER-RTC</p>
+<p class="Paragraph ">PC14—-OSC32_IN</p>
+<p class="Paragraph ">PC15—-OSC32_OUT</p>
+<p class="Paragraph ">PC0~PC3—-ADC10~ADC13</p>
+<p class="Paragraph ">PA0~PA7—-ADC0~ADC7 </p>
+<p class="Paragraph ">PA4~PA5—-DAC0~DAC1</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">外设</h3>
+<p class="Paragraph ">KEY 高电平3.3V</p>
+<p class="Paragraph ">NREST 高电平</p>
+<p class="Paragraph ">LED1~LED2 低电平0V</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "><strong>GPIO的不同状态</strong></p>
+<p class="Paragraph ">软件配置成输出(推挽或开漏)</p>
+<p class="Paragraph ">推挽→ </p>
+<p class="Paragraph ">开漏→高阻 上拉5V</p>
+<p class="Paragraph ">特性	推挽输出 (Push-Pull)	                          开漏输出 (Open-Drain)
 驱动能力	强	                                                   弱 (需要上拉电阻)
 输出速度	快	                                                   慢
 电平转换	困难	                                           容易
 需要上拉电阻	否	                                           是
 应用场景	普通输出，驱动LED等	           I2C总线，电平转换，线与逻辑</p>
-<p class="">输入(带或不带上拉或下拉)</p>
-<p class=""></p>
-<p class="">或复用的外设功能端口</p>
-<p class="">GPIO_Init</p>
-<p class=""></p>
-<p class="">使用</p>
-<p class=""></p>
-<p class="">重映射(复用)</p>
-<p class=""></p>
-<p class=""></p>
-<p class=""></p>
-<p class=""></p>
-<p class=""></p>
-<h1 class="">IIC (硬件驱动)驱动 OLED (128x66)</h1>
-<p class="">CH32V307EVT-R1</p>
-<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/0aa8e6d6-6b95-4dd3-9907-4dce760790a3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Z4DLQB5A%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152824Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIEDii%2B7jwfJBqtD6o53D4SzcORaUmzblRY1GEAv3h%2BF6AiEAwfal8u1jzea8TtJ5FD5tcOzY6x8b%2BBX0gVEoCjKSK5kq%2FwMIWBAAGgw2Mzc0MjMxODM4MDUiDLYZnwLa3NDOiDnX2SrcA%2FFtJXAH5oqbqWKlMJovqGmvCk%2FfAu9zkkdhaHBBlua3HlEnsq%2BJ5ghIgoaWmL073r8BwKHN1WB%2FQmuBXfntOEAnBXIQ8nYRu%2BGYbWF1Q1TVF7gqZV4%2BXcgA3n35XKwZpiaIijN9hvd3H1GlS2YL%2Bq66BPYfUR7GgOYQ8rH6Uyg%2F%2BJ4ex0aAg4%2FVBLcnCJNhoBfpQyXpQgAcjKSJ5eyEExhJBuVOXyic2WjDdy36oqI8q%2F2VXXNpdWkwFay5Ywx%2BFBt%2FFvmjmJaT2IVsoXnYdV7acpU0%2BHD3cOTb9%2BzVceZriMr8iTXHj3DzuFJTy%2Fd07072bxSFtoAVBJ1wfdw35bD9qOiSMRE%2FyNOMMTyxHR5oj%2F48zVeqZnsG0qPj3ZoVyEiATQ5%2FTX7%2FIUqoCT51cydrc2FWvw4dpAIl8DfncEAGiSJf0l9VoiWWeu7IUM%2FsMR6mEW56BAb60uKOxWfr2vgMNzFdyYt5f%2FntiRnFoyUjEWxISY4mx6Bk0%2FAKvH9Xv54vok3NBnSI7eb5HpJEWGQNAU84wRdcGFVMgh%2B3uUAcQIdqOJFqJ9uFkVfAVpS7%2B%2FGpr9ds0sTT1UAr9h7lVGhtQhdEvvv1keCXbhmvyfTdQezJlW4ZJHX0p3hEMPCZ48sGOqUBNf1pic7OKwe6AKqem7fdZerhAjSu1TwWSx5wGj7IJkLy09D5TglHUX3ooXK9g%2B0l4HBMDewyRHka4sGnVqIrWBPGRDh0N5h9QV3i9skgQ8ejeN5LTxdb67Bx%2BsVdtOgNI7A5kY%2F7fwP9Ms9AWZxt%2FXQTwABqWFJOUGU0Ft%2Bkc8wazZXTChvxhV2WVLnBReN4tB2UmZZIbQ%2B02jrSrCoXuvGrKdVW&X-Amz-Signature=660ad163181a3c9a4814d5997000178f6b7021b0e00ac9978e46993c8899371f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/d4309cb8-4705-43ff-8b51-2ccd8cd0cd6f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Z4DLQB5A%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T152824Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIEDii%2B7jwfJBqtD6o53D4SzcORaUmzblRY1GEAv3h%2BF6AiEAwfal8u1jzea8TtJ5FD5tcOzY6x8b%2BBX0gVEoCjKSK5kq%2FwMIWBAAGgw2Mzc0MjMxODM4MDUiDLYZnwLa3NDOiDnX2SrcA%2FFtJXAH5oqbqWKlMJovqGmvCk%2FfAu9zkkdhaHBBlua3HlEnsq%2BJ5ghIgoaWmL073r8BwKHN1WB%2FQmuBXfntOEAnBXIQ8nYRu%2BGYbWF1Q1TVF7gqZV4%2BXcgA3n35XKwZpiaIijN9hvd3H1GlS2YL%2Bq66BPYfUR7GgOYQ8rH6Uyg%2F%2BJ4ex0aAg4%2FVBLcnCJNhoBfpQyXpQgAcjKSJ5eyEExhJBuVOXyic2WjDdy36oqI8q%2F2VXXNpdWkwFay5Ywx%2BFBt%2FFvmjmJaT2IVsoXnYdV7acpU0%2BHD3cOTb9%2BzVceZriMr8iTXHj3DzuFJTy%2Fd07072bxSFtoAVBJ1wfdw35bD9qOiSMRE%2FyNOMMTyxHR5oj%2F48zVeqZnsG0qPj3ZoVyEiATQ5%2FTX7%2FIUqoCT51cydrc2FWvw4dpAIl8DfncEAGiSJf0l9VoiWWeu7IUM%2FsMR6mEW56BAb60uKOxWfr2vgMNzFdyYt5f%2FntiRnFoyUjEWxISY4mx6Bk0%2FAKvH9Xv54vok3NBnSI7eb5HpJEWGQNAU84wRdcGFVMgh%2B3uUAcQIdqOJFqJ9uFkVfAVpS7%2B%2FGpr9ds0sTT1UAr9h7lVGhtQhdEvvv1keCXbhmvyfTdQezJlW4ZJHX0p3hEMPCZ48sGOqUBNf1pic7OKwe6AKqem7fdZerhAjSu1TwWSx5wGj7IJkLy09D5TglHUX3ooXK9g%2B0l4HBMDewyRHka4sGnVqIrWBPGRDh0N5h9QV3i9skgQ8ejeN5LTxdb67Bx%2BsVdtOgNI7A5kY%2F7fwP9Ms9AWZxt%2FXQTwABqWFJOUGU0Ft%2Bkc8wazZXTChvxhV2WVLnBReN4tB2UmZZIbQ%2B02jrSrCoXuvGrKdVW&X-Amz-Signature=d39a035bec49df67bf84000b21ecdea1eb94b753a1074d191fa5c9e90f18d060&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class=""></p>
-<p class="">对于默认的端口映射就是 <code>PB6</code> ——>SLC  </p>
-<div style="margin-left: 20px;"><p class="">                                   <code>PB7</code> ——>SDA  </p>
-</div><p class=""></p>
-<h3 class="">主机模式</h3>
-<!-- Unsupported block type -->
-<p class=""></p>
+<p class="Paragraph ">输入(带或不带上拉或下拉)</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">或复用的外设功能端口</p>
+<p class="Paragraph ">GPIO_Init</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">使用</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">重映射(复用)</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h1 class="Heading Heading--1 ">IIC (硬件驱动)驱动 OLED (128x66)</h1>
+<p class="Paragraph ">CH32V307EVT-R1</p>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/0aa8e6d6-6b95-4dd3-9907-4dce760790a3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466VHJHAM2K%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T153044Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQCqZkBwlY8%2FHeoUnD%2B2jem2LP8Ns77uHpJ64cg91ZqtpwIgJUvBPRdmMULCgYh6Wzz1Tj2BRq0G0C1P2BOKI2uRTl4q%2FwMIbxAAGgw2Mzc0MjMxODM4MDUiDIJwLO5E1MIPfV247yrcA4EpH8FGRDZckS1eT5nGxXGt%2FiV0ZdljHI6cvGYnnnl%2B7zoB3YeO2mcfDBw1mt0o3esHGFVTRxThRrwZoWD%2BYBKMk4Qd2D%2FpAyaW64XooiyzXJ%2FtBKCSHkIMzYQen15U%2F94uhnFFDJiqImgsIx3ONLiD4JLr0RYgMdYXZeHcfDJ5OeN6NR51yvVFOK5kv8LVxdCwXItqGROByNc5w1ps%2Bnl9NYYMecN7AS9JMGxYsK1DkZNNI0tsBxk28AjZctA3l1KgaWPIxUe7e6emOKpOa6gAZLlt7XZCgNAeVqxXXy5qDiNcIoM4zOAalYfO84%2BwVo3rqxdJYEoOoqErGOxKVzSUt9vNCul%2FgTAPRGwrDpuD41xqERuqxDKPSINFaAfXqHAL4jvL1zOZi1%2BK%2BurcPQJzDIuN5xKQPy5PFgdN8b3zc8IJpwldCWizUUobQQUDRUWnG4wCnNMgc0PvtXiO6c4UXGg05dXG1v0%2B%2B4nT0eiAH%2F4GxCoUaCTDdvLeB%2Fb62URswclAzwekXj3C4K0jfyTh6DQMY8SGR8r6qWVv%2F6FdWVUuZ3zHt%2B%2BHPPs3mLyBxyGCLF1ehspLa4a%2Fm7Mei3%2FpDu%2FtiwNwvBKHD%2F68Gk%2F4JpBFEMFMseGvrA9JMOWx6MsGOqUB7Vz0kM03dykar5xxedoBUKSVStXnDjC9fxIX8qGJR8qDUuxTnkAU50o3GqwN6MHznJTccL2TMqjU51WyGJ1X0sGLB0X1vOteVd4bUAMV6G7QLLuOW636bpuNrqmthcIC4j8%2FvvWUIJbZnXtrdYL80%2Fa0JzacfFJCcU1FbjoF1InxS4mw3A9uY94oVLOAPqSUHJmL6uyVv4DLyg%2BBXOoCEiTJr5Sj&X-Amz-Signature=bf211e42a3576546fbb8f74c6c1114a8c4ac0c9b8c4e57e94eb5fe7f6f0a3e48&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/d4309cb8-4705-43ff-8b51-2ccd8cd0cd6f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466VHJHAM2K%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T153044Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQCqZkBwlY8%2FHeoUnD%2B2jem2LP8Ns77uHpJ64cg91ZqtpwIgJUvBPRdmMULCgYh6Wzz1Tj2BRq0G0C1P2BOKI2uRTl4q%2FwMIbxAAGgw2Mzc0MjMxODM4MDUiDIJwLO5E1MIPfV247yrcA4EpH8FGRDZckS1eT5nGxXGt%2FiV0ZdljHI6cvGYnnnl%2B7zoB3YeO2mcfDBw1mt0o3esHGFVTRxThRrwZoWD%2BYBKMk4Qd2D%2FpAyaW64XooiyzXJ%2FtBKCSHkIMzYQen15U%2F94uhnFFDJiqImgsIx3ONLiD4JLr0RYgMdYXZeHcfDJ5OeN6NR51yvVFOK5kv8LVxdCwXItqGROByNc5w1ps%2Bnl9NYYMecN7AS9JMGxYsK1DkZNNI0tsBxk28AjZctA3l1KgaWPIxUe7e6emOKpOa6gAZLlt7XZCgNAeVqxXXy5qDiNcIoM4zOAalYfO84%2BwVo3rqxdJYEoOoqErGOxKVzSUt9vNCul%2FgTAPRGwrDpuD41xqERuqxDKPSINFaAfXqHAL4jvL1zOZi1%2BK%2BurcPQJzDIuN5xKQPy5PFgdN8b3zc8IJpwldCWizUUobQQUDRUWnG4wCnNMgc0PvtXiO6c4UXGg05dXG1v0%2B%2B4nT0eiAH%2F4GxCoUaCTDdvLeB%2Fb62URswclAzwekXj3C4K0jfyTh6DQMY8SGR8r6qWVv%2F6FdWVUuZ3zHt%2B%2BHPPs3mLyBxyGCLF1ehspLa4a%2Fm7Mei3%2FpDu%2FtiwNwvBKHD%2F68Gk%2F4JpBFEMFMseGvrA9JMOWx6MsGOqUB7Vz0kM03dykar5xxedoBUKSVStXnDjC9fxIX8qGJR8qDUuxTnkAU50o3GqwN6MHznJTccL2TMqjU51WyGJ1X0sGLB0X1vOteVd4bUAMV6G7QLLuOW636bpuNrqmthcIC4j8%2FvvWUIJbZnXtrdYL80%2Fa0JzacfFJCcU1FbjoF1InxS4mw3A9uY94oVLOAPqSUHJmL6uyVv4DLyg%2BBXOoCEiTJr5Sj&X-Amz-Signature=f136c03da7cd75b758bc3a2931c07ec9bb12ac6fc880b6257d647b6c554d133a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" /><figcaption></figcaption></figure></div>
+<p class="Paragraph "></p>
+<p class="Paragraph ">对于默认的端口映射就是 <code>PB6</code> ——>SLC  </p>
+<div style="margin-left: 20px;"><p class="Paragraph ">                                   <code>PB7</code> ——>SDA  </p>
+</div>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">主机模式</h3>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+<p class="Paragraph "></p>
 
   </main>
     <aside class ="utterances">

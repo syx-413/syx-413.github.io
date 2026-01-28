@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>开发 Rust&#x2F;C&#x2F;C++ cmake 混合应用&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="开发 Rust&#x2F;C&#x2F;C++ cmake 混合应用">
+  
+    <meta name="description" content="esp-idf 支持链接 C&#x2F;C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs&#x2F;esp-idf-template cmake来创建 Rust + C&#x2F;C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~&#x2F;esp&#x2F;esp-idf...">
+    <meta property="og:description" content="esp-idf 支持链接 C&#x2F;C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs&#x2F;esp-idf-template cmake来创建 Rust + C&#x2F;C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~&#x2F;esp&#x2F;esp-idf...">
+  
+  
+    <meta property="og:image" content="🦀">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🦀</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">开发 Rust&#x2F;C&#x2F;C++ cmake 混合应用</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-02T15:01:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">esp-idf 支持链接 C/C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs/esp-idf-template cmake来创建 Rust + C/C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~/esp/esp-idf/v5.2.1/ 中的idf.py 和 cmake 来构建。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust 代码作为一个 component 来集成：components/rust-xxx；</li>
+<li class="BulletedList ">Rust Component 目录的 CMakeLists.txt 文件会调用 cargo build 来将 Rust 代码编译为 esp-idf C 库可以调用的静态库。</li>
+<li class="BulletedList ">该 Rust Compoent 可以是 std 或 non_std 类型。由于 idf.py 已经提供了 esp-idf 库，所以 Rust 代码的 build.rs 不会向 std 应用那样 by 项目下载、编译和链接新的 esp-idf 库，而是直接链接 idf.py 所在的 esp-idf 库。</li>
+</ul>
+<p class="Paragraph ">默认创建启用 HAL（ esp-idf-svc）的 std 应用。</p>
+<p class="Paragraph ">Rust cmake 读取和使用的参数：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">RUST_DEPS</li>
+<li class="NumberedList ">CONFIG_IDF_TARGET_ARCH_RISCV</li>
+<li class="NumberedList ">SDKCONFIG</li>
+<li class="NumberedList ">IDF_PATH</li>
+</ol>
+<p class="Paragraph ">使用 cargo generate esp-rs/esp-idf-template cmake 创建应用：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">components/rust-mycmake/CMakeLists.txt 文件封装了构建该 Rust component 的 cargo 命令和参数（没有了.cargo/config.toml 配置，相当于替换了该文件的功能）：</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust target：xtensa-esp32s3-espidf</li>
+<li class="BulletedList ">Rust flags： –cfg espidf_time64</li>
+</ul>
+</div>
+<li class="BulletedList ">与 std 默认启用所有 esp-idf components 相比，cmake 项目默认只启用了很少的几个 components，需要在 components/rust-{{project-name}}/CMakeLists.txt 文件中设置 <code>RUST_DEPS</code> 来启用 Rust 依赖的 component；</li>
+</ul>
+<p class="Paragraph ">构建前需要 <code>同时 source</code> esp-idf 的 export.h 和 export-esp.sh。</p>
+<p class="Paragraph ">构建命令是 idf.py build 而非 cargo build。</p>
+<p class="Paragraph ">创建项目，默认是 std 应用</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>zj@a:~/code/esp32$ cargo generate esp-rs/esp-idf-template cmake
+⚠️   Favorite `esp-rs/esp-idf-template` not found in config, using it as a git repository: https://github.com/esp-rs/esp-idf-template.git
+🤷   Project Name: mycmake
+🔧   Destination: /Users/alizj/code/esp32/mycmake ...
+🔧   project-name: mycmake ... 
+🔧   Generating template ...
+✔ 🤷   Configure advanced template options? · true
+✔ 🤷   Rust toolchain (beware: nightly works only for riscv MCUs!) · esp
+✔ 🤷   Enable HAL support? · true
+✔ 🤷   Enable STD support? · true
+🔧   Moving generated files into: `/Users/alizj/code/esp32/mycmake`...
+🔧   Initializing a fresh Git repository
+✨   Done! New project created /Users/alizj/code/esp32/mycmake
+
+zj@a:~/code/esp32/mycmake$ ls
+CMakeLists.txt  components/  diagram.json  main/  sdkconfig.defaults  wokwi.toml
+
+zj@a:~/code/esp32/mycmake$ ls main/
+CMakeLists.txt  main.c</code></pre>
+<p class="Paragraph ">Rust 代码作为一个 component 被集成：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake$ ls components/rust-mycmake/
+CMakeLists.txt  Cargo.toml  build.rs  placeholder.c  rust-toolchain.toml  src/
+
+zj@a:~/code/esp32/mycmake$ ls components/rust-mycmake/src/
+lib.rs </code></pre>
+<p class="Paragraph ">Rust componet 的 CMakeLists.txt 文件封装了构建该 Rust 代码的 cargo 命令和配置参数。</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat CMakeLists.txt
+# If this component depends on other components - be it ESP-IDF or project-specific ones - enumerate those in the double-quotes below, separated by spaces
+# Note that pthread should always be there, or else STD will not work
+set(RUST_DEPS "pthread" "driver" "vfs")
+# Here's a non-minimal, reasonable set of ESP-IDF components that one might want enabled for Rust:
+#set(RUST_DEPS "pthread" "esp_http_client" "esp_http_server" "espcoredump" "app_update" "esp_serial_slave_link" "nvs_flash" "spi_flash" "esp_adc_cal" "mqtt")
+ 
+idf_component_register(
+    SRCS "placeholder.c"
+    INCLUDE_DIRS ""
+    PRIV_REQUIRES "${RUST_DEPS}"
+)
+
+if(CONFIG_IDF_TARGET_ARCH_RISCV)
+    if (CONFIG_IDF_TARGET_ESP32C6 OR CONFIG_IDF_TARGET_ESP32C5 OR CONFIG_IDF_TARGET_ESP32H2)
+        set(RUST_TARGET "riscv32imac-esp-espidf")
+    else ()
+        set(RUST_TARGET "riscv32imc-esp-espidf")
+    endif()
+elseif(CONFIG_IDF_TARGET_ESP32)
+    set(RUST_TARGET "xtensa-esp32-espidf")
+elseif(CONFIG_IDF_TARGET_ESP32S2)
+    set(RUST_TARGET "xtensa-esp32s2-espidf")
+elseif(CONFIG_IDF_TARGET_ESP32S3)
+    set(RUST_TARGET "xtensa-esp32s3-espidf")
+else()
+    message(FATAL_ERROR "Unsupported target ${CONFIG_IDF_TARGET}")
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CARGO_BUILD_TYPE "debug")
+    set(CARGO_BUILD_ARG "")
+else()
+    set(CARGO_BUILD_TYPE "release")
+    set(CARGO_BUILD_ARG "--release")
+endif()
+
+
+set(CARGO_BUILD_STD_ARG -Zbuild-std=std,panic_abort)
+
+
+if(IDF_VERSION_MAJOR GREATER "4")
+set(ESP_RUSTFLAGS "--cfg espidf_time64")
+endif()
+
+set(CARGO_PROJECT_DIR "${CMAKE_CURRENT_LIST_DIR}")
+set(CARGO_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+set(CARGO_TARGET_DIR "${CARGO_BUILD_DIR}/target")
+
+set(RUST_INCLUDE_DIR "${CARGO_TARGET_DIR}")
+set(RUST_STATIC_LIBRARY "${CARGO_TARGET_DIR}/${RUST_TARGET}/${CARGO_BUILD_TYPE}/librust_mycmake.a")
+
+# if this component uses CBindGen to generate a C header, uncomment the lines below and adjust the header name accordingly
+#set(RUST_INCLUDE_HEADER "${RUST_INCLUDE_DIR}/RustApi.h")
+#set_source_files_properties("${RUST_INCLUDE_HEADER}" PROPERTIES GENERATED true)
+
+idf_build_get_property(sdkconfig SDKCONFIG)
+idf_build_get_property(idf_path IDF_PATH)
+
+ExternalProject_Add(
+    project_rust_mycmake
+    PREFIX "${CARGO_PROJECT_DIR}"
+    DOWNLOAD_COMMAND ""
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
+        cargo clean --target ${RUST_TARGET} --target-dir ${CARGO_TARGET_DIR}
+    USES_TERMINAL_BUILD true
+    BUILD_COMMAND ${CMAKE_COMMAND} -E env
+        CARGO_CMAKE_BUILD_INCLUDES=$<TARGET_PROPERTY:${COMPONENT_LIB},INCLUDE_DIRECTORIES>
+        CARGO_CMAKE_BUILD_LINK_LIBRARIES=$<TARGET_PROPERTY:${COMPONENT_LIB},LINK_LIBRARIES>
+        CARGO_CMAKE_BUILD_SDKCONFIG=${sdkconfig}
+        CARGO_CMAKE_BUILD_ESP_IDF=${idf_path}
+        CARGO_CMAKE_BUILD_COMPILER=${CMAKE_C_COMPILER}
+        RUSTFLAGS=${ESP_RUSTFLAGS}
+        MCU=${CONFIG_IDF_TARGET}
+        cargo build --target ${RUST_TARGET} --target-dir ${CARGO_TARGET_DIR} ${CARGO_BUILD_ARG} ${CARGO_BUILD_STD_ARG}
+    INSTALL_COMMAND ""
+    BUILD_ALWAYS TRUE
+    TMP_DIR "${CARGO_BUILD_DIR}/tmp"
+    STAMP_DIR "${CARGO_BUILD_DIR}/stamp"
+    DOWNLOAD_DIR "${CARGO_BUILD_DIR}"
+    SOURCE_DIR "${CARGO_PROJECT_DIR}"
+    BINARY_DIR "${CARGO_PROJECT_DIR}"
+    INSTALL_DIR "${CARGO_BUILD_DIR}"
+    BUILD_BYPRODUCTS
+        "${RUST_INCLUDE_HEADER}"
+        "${RUST_STATIC_LIBRARY}"
+)
+
+add_prebuilt_library(library_rust_mycmake "${RUST_STATIC_LIBRARY}" PRIV_REQUIRES "${RUST_DEPS}")
+add_dependencies(library_rust_mycmake project_rust_mycmake)
+
+target_include_directories(${COMPONENT_LIB} PUBLIC "${RUST_INCLUDE_DIR}")
+target_link_libraries(${COMPONENT_LIB} PRIVATE library_rust_mycmake)</code></pre>
+<p class="Paragraph ">配置了 crate-type 为 staticlib，故会被编译为 esp-idf 可以链接的 C 库</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat Cargo.toml
+[package]
+name = "rust-mycmake"
+version = "0.1.0"
+authors = ["alizj"]
+edition = "2021" 
+resolver = "2"
+rust-version = "1.71"
+
+[lib]
+crate-type = ["staticlib"]
+
+[profile.release]
+opt-level = "s"
+
+[profile.dev]
+debug = true # Symbols are nice and they don't increase the size on Flash
+opt-level = "z"
+[features]
+default = ["std", "embassy", "esp-idf-svc/native"]
+
+pio = ["esp-idf-svc/pio"]
+std = ["alloc", "esp-idf-svc/std"]
+alloc = ["esp-idf-svc/alloc"]
+nightly = ["esp-idf-svc/nightly"]
+experimental = ["esp-idf-svc/experimental"]
+embassy = ["esp-idf-svc/embassy-sync", "esp-idf-svc/critical-section", "esp-idf-svc/embassy-time-driver"]
+
+[dependencies]
+log = { version = "0.4", default-features = false }
+esp-idf-svc = { version = "0.48", default-features = false }
+
+[build-dependencies]
+embuild = "0.31.3"
+
+# 编译为 staticlib，可以被 C 库调用的 Rust 代码
+zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat src/lib.rs
+#[no_mangle]
+extern "C" fn rust_main() -> i32 {
+    // It is necessary to call this function once. Otherwise some patches to the runtime
+    // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
+    esp_idf_svc::sys::link_patches();
+
+    // Bind the log crate to the ESP Logging facilities
+    esp_idf_svc::log::EspLogger::initialize_default();
+
+    log::info!("Hello, world!");
+    42
+}
+
+zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat placeholder.c
+/* Hello World Example
+
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/
+
+/* This is an empty source file to force the build of a CMake library that
+   can participate in the CMake dependency graph. This placeholder library
+   will depend on the actual library generated by external Rust build.
+*/
+
+# main.c 中调用 Rust 的 rust_main() 函数代码
+zj@a:~/code/esp32/mycmake$ cat main/main.c
+/* Hello World Example
+
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/
+#include <stdio.h>
+
+extern int rust_main(void);
+
+void app_main(void) {
+    printf("Hello world from C!\n");
+
+    int result = rust_main();
+
+    printf("Rust returned code: %d\n", result);
+}</code></pre>
+<p class="Paragraph ">构建前需要 source esp-idf 的 export.h 和 export-esp.sh：</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake$ source ~/esp/esp-idf/v5.2.1/export.sh   # esp idf
+zj@a:~/code/esp32/mycmake$ source ~/export-esp.sh   # esp rs，因为后续会 build Rust component </code></pre>
+<p class="Paragraph ">构建：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>#idf.py set-target [esp32|esp32s2|esp32s3|esp32c2|esp32c3|esp32c6|esp32h2]
+zj@a:~/code/esp32/mycmake$ idf.py build 
+Executing action: all (aliases: build)
+Running ninja in directory /Users/alizj/code/esp32/mycmake/build
+Executing "ninja all"...
+[0/9] Performing build step for 'project_rust_mycmake'    Finished release [optimized] target(s) in 0.25s
+[1/1] cd /Users/alizj/code/esp32/mycmake/build/bootloader/esp-idf/esptool_py && /Users/alizj/.espressif/p...izes.py --offset 0x8000 bootloader 0x1000 /Users/alizj/code/esp32/mycmake/build/bootloader/bootloader.bi
+Bootloader binary size 0x6860 bytes. 0x7a0 bytes (7%) free.
+[3/3] cd /Users/alizj/code/esp32/mycmake/build/esp-idf/esptool_py && /Users/alizj/.espressif/python_env/i...esp32/mycmake/build/partition_table/partition-table.bin /Users/alizj/code/esp32/mycmake/build/mycmake.bi
+mycmake.bin binary size 0x5b770 bytes. Smallest app partition is 0x100000 bytes. 0xa4890 bytes (64%) free.
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 2MB --flash_freq 40m 0x1000 build/bootloader/bootloader.bin 0x8000 build/partition_table/partition-table.bin 0x10000 build/mycmake.bin
+or from the "/Users/alizj/code/esp32/mycmake/build" directory
+ python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"
+
+# 构建的产物位于 build 目录下 。</code></pre>
+<p class="Paragraph ">烧录到设备 flash</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>idf.py -p /dev/cu.usbmodem2101 flash monitor</code></pre>
+<p class="Paragraph ">参考:</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">esp-idf-template 的 cmake 文档;</li>
+<li class="NumberedList ">Integrating a Rust Component into an ESP-IDF Project</li>
+</ol>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

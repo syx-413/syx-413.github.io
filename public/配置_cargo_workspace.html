@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -308,13 +308,17 @@
     
   </header>
   <main class="PageRoot">
-    <p class="">在 ~/code/esp32 下创建 std/non_std 两个目录，分别作为 std 和 non_std 应用的 workspace 目录， 之所以区分他们是因为 workspace 目录下的 .cargo/config.toml 文件配置不同：</p>
-<li class="">std workspace：创建 Cargo.toml，从一个 std 应用目录拷贝.cargo/config.toml/rust-toolchain.toml/sdkconfig.defaults 文件；</li>
-<li class="">non_std workspace: 创建 Cargo.toml，从一个 non_std 应用目录拷贝.cargo/config.toml/rust-toolchain.toml/sdkconfig.defaults 文件；</li>
-<p class="">std workspace：</p>
-<li class="">.cargo/config.toml 中设置最新的 ESP_IDF_VERSION = “v5.2.1”，没有指定 ESP_IDF_TOOLS_INSTALL_DIR = “global”，这样会在 workspace 目录下的 .embuild 中保存一份。</li>
-<p class="">Copy</p>
-<pre><code class="language-toml">zj@a:~/code/esp32/std$ cat Cargo.toml
+    <p class="Paragraph ">在 ~/code/esp32 下创建 std/non_std 两个目录，分别作为 std 和 non_std 应用的 workspace 目录， 之所以区分他们是因为 workspace 目录下的 .cargo/config.toml 文件配置不同：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">std workspace：创建 Cargo.toml，从一个 std 应用目录拷贝.cargo/config.toml/rust-toolchain.toml/sdkconfig.defaults 文件；</li>
+<li class="NumberedList ">non_std workspace: 创建 Cargo.toml，从一个 non_std 应用目录拷贝.cargo/config.toml/rust-toolchain.toml/sdkconfig.defaults 文件；</li>
+</ol>
+<p class="Paragraph ">std workspace：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">.cargo/config.toml 中设置最新的 ESP_IDF_VERSION = “v5.2.1”，没有指定 ESP_IDF_TOOLS_INSTALL_DIR = “global”，这样会在 workspace 目录下的 .embuild 中保存一份。</li>
+</ol>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>zj@a:~/code/esp32/std$ cat Cargo.toml
 [workspace]
 resolver = "2" # 没有指定 workspace 的 root package 时必须要指定该参数
 members = [  # std 应用目录列表
@@ -357,9 +361,9 @@ ESP_IDF_SDKCONFIG_DEFAULTS = { value = "sdkconfig.defaults", relative = true }
 zj@a:~/code/esp32/std$ cat rust-toolchain.toml
 [toolchain]
 channel = "esp"</code></pre>
-<p class="">non_std workspace:</p>
-<p class=""></p>
-<pre><code class="language-toml">zj@a:~/code/esp32/non_std$ cat Cargo.toml
+<p class="Paragraph ">non_std workspace:</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/code/esp32/non_std$ cat Cargo.toml
 [workspace]
 resolver = "2"
 members = [ 
@@ -402,17 +406,23 @@ zj@a:~/code/esp32/non_std$ cat rust-toolchain.toml
 [toolchain]
 channel = "esp"
 zj@a:~/code/esp32/non_std$</code></pre>
-<p class="">新增应用：</p>
-<li class="">在对应的 std/non_std 目录下使用 cargo generate 模板来创建应用。</li>
-<li class="">然后将应用名称添加到 members 列表中；</li>
-<p class="">构建应用：</p>
-<li class="">在 std/non_std workspace 根目录下： cargo build -p app1</li>
-<li class="">在特定应用目录，如 std/myespv2 目录下： cargo build # 只构建当前应用</li>
-<p class="">当应用位于 workspace 中（members 列表中） 时，cargo build <code>不再读取应用目录中的</code> 下列文件，而是都使用 workspaces 目录下的对应文件。</p>
-<li class="">rust-toolchain.toml</li>
-<li class="">.cargo/config.toml</li>
-<li class="">sdkconfig.defaults 和 sdkconfig.defaults.esp32s3 # 相对与 workspace 目录。</li>
-<p class="">但是应用目录下的 Cargo.toml 和 build.rs 还是必须的，分别指定各应用自身的依赖和构建脚本。</p>
+<p class="Paragraph ">新增应用：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">在对应的 std/non_std 目录下使用 cargo generate 模板来创建应用。</li>
+<li class="NumberedList ">然后将应用名称添加到 members 列表中；</li>
+</ol>
+<p class="Paragraph ">构建应用：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">在 std/non_std workspace 根目录下： cargo build -p app1</li>
+<li class="NumberedList ">在特定应用目录，如 std/myespv2 目录下： cargo build # 只构建当前应用</li>
+</ol>
+<p class="Paragraph ">当应用位于 workspace 中（members 列表中） 时，cargo build <code>不再读取应用目录中的</code> 下列文件，而是都使用 workspaces 目录下的对应文件。</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">rust-toolchain.toml</li>
+<li class="NumberedList ">.cargo/config.toml</li>
+<li class="NumberedList ">sdkconfig.defaults 和 sdkconfig.defaults.esp32s3 # 相对与 workspace 目录。</li>
+</ol>
+<p class="Paragraph ">但是应用目录下的 Cargo.toml 和 build.rs 还是必须的，分别指定各应用自身的依赖和构建脚本。</p>
 
   </main>
     <aside class ="utterances">

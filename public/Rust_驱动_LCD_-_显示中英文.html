@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -308,12 +308,14 @@
     
   </header>
   <main class="PageRoot">
-    <p class="">embedded-graphics 支持 BDF 和 MonoFont 字体:</p>
-<li class="">优先选择 BDF 字体, 特别是是中英文混合显示场景, MonoFont 由于中英文等宽, 会导致英文字体显示间距过大.</li>
-<li class="">优先选择 embedded-graphics/bdf 方案.</li>
-<p class="">The draw method for text drawables returns <code>the position of the next character</code>. This can be used to combine text with different character styles on a single line of text.</p>
-<p class=""></p>
-<pre><code class="language-rust">// https://docs.rs/embedded-graphics/latest/embedded_graphics/text/index.html#examples
+    <p class="Paragraph ">embedded-graphics 支持 BDF 和 MonoFont 字体:</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">优先选择 BDF 字体, 特别是是中英文混合显示场景, MonoFont 由于中英文等宽, 会导致英文字体显示间距过大.</li>
+<li class="BulletedList ">优先选择 embedded-graphics/bdf 方案.</li>
+</ul>
+<p class="Paragraph ">The draw method for text drawables returns <code>the position of the next character</code>. This can be used to combine text with different character styles on a single line of text.</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>// https://docs.rs/embedded-graphics/latest/embedded_graphics/text/index.html#examples
 // Create a small and a large character style.
 let small_style = MonoTextStyle::new(&FONT_6X10, Rgb565::WHITE);
 let large_style = MonoTextStyle::new(&FONT_10X20, Rgb565::WHITE);
@@ -323,24 +325,30 @@ let next = Text::new("small ", Point::new(20, 30), small_style).draw(&mut displa
 
 // Draw the second text after the first text using the large character style.
 let next = Text::new("large", next, large_style).draw(&mut display)?;</code></pre>
-<p class="">字体参考：https://github.com/olikraus/u8g2</p>
-<h2 class="">1 embedded-graphics/bdf #</h2>
-<p class="">https://github.com/embedded-graphics/bdf/tree/master</p>
-<p class="">该库可以从 bdf 字体文件中生成 embedded-graphics 能使用的：</p>
-<li class="">BDF Font：需要配合使用embedded-graphics/bdf/eg-bdf 库中提供的 BdfFont/BdfGlyph/BdfTextStyle 类型；</li>
-<li class="">MonoFont：embedded-graphics 可以直接导入使用；</li>
-<p class="">先使用 otf2bdf 工具将 TTF（truetype font） 字体转换为 BDF（Bitmap Distribution Format） 类型：</p>
-<li class="">对于 X11 使用的 pcf 字体格式，使用 pcf2bdf 工具将它转换为 bdf 格式；</li>
-<li class="">转换时 -p 参数指定生成的 BDF 字体大小;</li>
-<p class="">Copy</p>
-<pre><code class="language-bash">brew install otf2bdf 
+<p class="Paragraph ">字体参考：https://github.com/olikraus/u8g2</p>
+<h2 class="Heading Heading--2 ">1 embedded-graphics/bdf #</h2>
+<p class="Paragraph ">https://github.com/embedded-graphics/bdf/tree/master</p>
+<p class="Paragraph ">该库可以从 bdf 字体文件中生成 embedded-graphics 能使用的：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">BDF Font：需要配合使用embedded-graphics/bdf/eg-bdf 库中提供的 BdfFont/BdfGlyph/BdfTextStyle 类型；</li>
+<li class="NumberedList ">MonoFont：embedded-graphics 可以直接导入使用；</li>
+</ol>
+<p class="Paragraph ">先使用 otf2bdf 工具将 TTF（truetype font） 字体转换为 BDF（Bitmap Distribution Format） 类型：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">对于 X11 使用的 pcf 字体格式，使用 pcf2bdf 工具将它转换为 bdf 格式；</li>
+<li class="BulletedList ">转换时 -p 参数指定生成的 BDF 字体大小;</li>
+</ul>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>brew install otf2bdf 
 otf2bdf  -p 12 -r 75 -o LXGWWenKai_Regular.bdf  ~/Library/Fonts/LXGWWenKai-Regular.ttf</code></pre>
-<p class="">然后使用 eg-font-converter lib 来生成 BDF 或 MonoFont 字体:</p>
-<li class="">两者都至少包含 2 个文件: bitmap data 文件(.data) 和需要 include!() 到引用的 rs 文件;</li>
-<li class="">MonoFont 的 bitmap 文件是从 png 图片生成的, 故 MonoFont 还会生成 png 文件;</li>
-<p class="">生成 BDF 字体示例:</p>
-<p class=""></p>
-<pre><code class="language-rust">// /Users/zhangjun/codes/rust/bdf/eg-font-converter/src/bin/my-bdf-font.rs
+<p class="Paragraph ">然后使用 eg-font-converter lib 来生成 BDF 或 MonoFont 字体:</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">两者都至少包含 2 个文件: bitmap data 文件(.data) 和需要 include!() 到引用的 rs 文件;</li>
+<li class="BulletedList ">MonoFont 的 bitmap 文件是从 png 图片生成的, 故 MonoFont 还会生成 png 文件;</li>
+</ul>
+<p class="Paragraph ">生成 BDF 字体示例:</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>// /Users/zhangjun/codes/rust/bdf/eg-font-converter/src/bin/my-bdf-font.rs
 zj@a:~/codes/rust/bdf/eg-font-converter$ mkdir output
 zj@a:~/codes/rust/bdf/eg-font-converter$ ls
 Cargo.lock  Cargo.toml  output/  src/  tests/
@@ -394,16 +402,16 @@ const BDF_LXGWWenKai_Regular_FONT: ::eg_bdf::BdfFont = {
             BdfGlyph {
                 character: '\0',
 zj@a:~/codes/rust/bdf/eg-font-converter$</code></pre>
-<p class="">使用：</p>
-<p class=""></p>
-<pre><code class="language-bash">zj@a:~/codes/rust/bdf/eg-font-converter$ cp output/bdf_lxgwwenkai_regular_font.* ~/codes/esp32/st7735-lcd-examples/esp32c3-examples/src/
+<p class="Paragraph ">使用：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/codes/rust/bdf/eg-font-converter$ cp output/bdf_lxgwwenkai_regular_font.* ~/codes/esp32/st7735-lcd-examples/esp32c3-examples/src/
  
 # 添加本地依赖
 gzj@a:~/codes/esp32/st7735-lcd-examples/esp32c3-examples$ grep eg Cargo.toml
 eg-bdf = { path = "../../../rust/bdf/eg-bdf/" } // clone https://github.com/embedded-graphics/bdf 的本地目录</code></pre>
-<p class="">代码举例:</p>
-<p class=""></p>
-<pre><code class="language-rust">use eg_bdf::{BdfGlyph, BdfTextStyle};
+<p class="Paragraph ">代码举例:</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>use eg_bdf::{BdfGlyph, BdfTextStyle};
  
 include!("./bdf_lxgwwenkai_regular_font.rs");
 
@@ -421,8 +429,8 @@ fn main() {
     let mut text_box = TextBox::with_textbox_style(text, bounds, bdf_style, textbox_style);
     let next = text_box.draw(&mut display).unwrap();
 }</code></pre>
-<p class=""></p>
-<!-- Unsupported block type -->
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
 
   </main>
     <aside class ="utterances">

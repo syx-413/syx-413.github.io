@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -308,26 +308,35 @@
     
   </header>
   <main class="PageRoot">
-    <p class="">esp-idf 支持链接 C/C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs/esp-idf-template cmake来创建 Rust + C/C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~/esp/esp-idf/v5.2.1/ 中的idf.py 和 cmake 来构建。</p>
-<li class="">Rust 代码作为一个 component 来集成：components/rust-xxx；</li>
-<li class="">Rust Component 目录的 CMakeLists.txt 文件会调用 cargo build 来将 Rust 代码编译为 esp-idf C 库可以调用的静态库。</li>
-<li class="">该 Rust Compoent 可以是 std 或 non_std 类型。由于 idf.py 已经提供了 esp-idf 库，所以 Rust 代码的 build.rs 不会向 std 应用那样 by 项目下载、编译和链接新的 esp-idf 库，而是直接链接 idf.py 所在的 esp-idf 库。</li>
-<p class="">默认创建启用 HAL（ esp-idf-svc）的 std 应用。</p>
-<p class="">Rust cmake 读取和使用的参数：</p>
-<li class="">RUST_DEPS</li>
-<li class="">CONFIG_IDF_TARGET_ARCH_RISCV</li>
-<li class="">SDKCONFIG</li>
-<li class="">IDF_PATH</li>
-<p class="">使用 cargo generate esp-rs/esp-idf-template cmake 创建应用：</p>
-<li class="">components/rust-mycmake/CMakeLists.txt 文件封装了构建该 Rust component 的 cargo 命令和参数（没有了.cargo/config.toml 配置，相当于替换了该文件的功能）：</li>
-<div style="margin-left: 20px;"><li class="">Rust target：xtensa-esp32s3-espidf</li>
-<li class="">Rust flags： –cfg espidf_time64</li>
-</div><li class="">与 std 默认启用所有 esp-idf components 相比，cmake 项目默认只启用了很少的几个 components，需要在 components/rust-{{project-name}}/CMakeLists.txt 文件中设置 <code>RUST_DEPS</code> 来启用 Rust 依赖的 component；</li>
-<p class="">构建前需要 <code>同时 source</code> esp-idf 的 export.h 和 export-esp.sh。</p>
-<p class="">构建命令是 idf.py build 而非 cargo build。</p>
-<p class="">创建项目，默认是 std 应用</p>
-<p class="">Copy</p>
-<pre><code class="language-bash">zj@a:~/code/esp32$ cargo generate esp-rs/esp-idf-template cmake
+    <p class="Paragraph ">esp-idf 支持链接 C/C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs/esp-idf-template cmake来创建 Rust + C/C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~/esp/esp-idf/v5.2.1/ 中的idf.py 和 cmake 来构建。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust 代码作为一个 component 来集成：components/rust-xxx；</li>
+<li class="BulletedList ">Rust Component 目录的 CMakeLists.txt 文件会调用 cargo build 来将 Rust 代码编译为 esp-idf C 库可以调用的静态库。</li>
+<li class="BulletedList ">该 Rust Compoent 可以是 std 或 non_std 类型。由于 idf.py 已经提供了 esp-idf 库，所以 Rust 代码的 build.rs 不会向 std 应用那样 by 项目下载、编译和链接新的 esp-idf 库，而是直接链接 idf.py 所在的 esp-idf 库。</li>
+</ul>
+<p class="Paragraph ">默认创建启用 HAL（ esp-idf-svc）的 std 应用。</p>
+<p class="Paragraph ">Rust cmake 读取和使用的参数：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">RUST_DEPS</li>
+<li class="NumberedList ">CONFIG_IDF_TARGET_ARCH_RISCV</li>
+<li class="NumberedList ">SDKCONFIG</li>
+<li class="NumberedList ">IDF_PATH</li>
+</ol>
+<p class="Paragraph ">使用 cargo generate esp-rs/esp-idf-template cmake 创建应用：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">components/rust-mycmake/CMakeLists.txt 文件封装了构建该 Rust component 的 cargo 命令和参数（没有了.cargo/config.toml 配置，相当于替换了该文件的功能）：</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust target：xtensa-esp32s3-espidf</li>
+<li class="BulletedList ">Rust flags： –cfg espidf_time64</li>
+</ul>
+</div>
+<li class="BulletedList ">与 std 默认启用所有 esp-idf components 相比，cmake 项目默认只启用了很少的几个 components，需要在 components/rust-{{project-name}}/CMakeLists.txt 文件中设置 <code>RUST_DEPS</code> 来启用 Rust 依赖的 component；</li>
+</ul>
+<p class="Paragraph ">构建前需要 <code>同时 source</code> esp-idf 的 export.h 和 export-esp.sh。</p>
+<p class="Paragraph ">构建命令是 idf.py build 而非 cargo build。</p>
+<p class="Paragraph ">创建项目，默认是 std 应用</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>zj@a:~/code/esp32$ cargo generate esp-rs/esp-idf-template cmake
 ⚠️   Favorite `esp-rs/esp-idf-template` not found in config, using it as a git repository: https://github.com/esp-rs/esp-idf-template.git
 🤷   Project Name: mycmake
 🔧   Destination: /Users/alizj/code/esp32/mycmake ...
@@ -346,16 +355,16 @@ CMakeLists.txt  components/  diagram.json  main/  sdkconfig.defaults  wokwi.toml
 
 zj@a:~/code/esp32/mycmake$ ls main/
 CMakeLists.txt  main.c</code></pre>
-<p class="">Rust 代码作为一个 component 被集成：</p>
-<p class=""></p>
-<pre><code class="language-bash">zj@a:~/code/esp32/mycmake$ ls components/rust-mycmake/
+<p class="Paragraph ">Rust 代码作为一个 component 被集成：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake$ ls components/rust-mycmake/
 CMakeLists.txt  Cargo.toml  build.rs  placeholder.c  rust-toolchain.toml  src/
 
 zj@a:~/code/esp32/mycmake$ ls components/rust-mycmake/src/
 lib.rs </code></pre>
-<p class="">Rust componet 的 CMakeLists.txt 文件封装了构建该 Rust 代码的 cargo 命令和配置参数。</p>
-<p class="">Copy</p>
-<pre><code class="language-makefile">zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat CMakeLists.txt
+<p class="Paragraph ">Rust componet 的 CMakeLists.txt 文件封装了构建该 Rust 代码的 cargo 命令和配置参数。</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat CMakeLists.txt
 # If this component depends on other components - be it ESP-IDF or project-specific ones - enumerate those in the double-quotes below, separated by spaces
 # Note that pthread should always be there, or else STD will not work
 set(RUST_DEPS "pthread" "driver" "vfs")
@@ -448,9 +457,9 @@ add_dependencies(library_rust_mycmake project_rust_mycmake)
 
 target_include_directories(${COMPONENT_LIB} PUBLIC "${RUST_INCLUDE_DIR}")
 target_link_libraries(${COMPONENT_LIB} PRIVATE library_rust_mycmake)</code></pre>
-<p class="">配置了 crate-type 为 staticlib，故会被编译为 esp-idf 可以链接的 C 库</p>
-<p class=""></p>
-<pre><code class="language-toml">zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat Cargo.toml
+<p class="Paragraph ">配置了 crate-type 为 staticlib，故会被编译为 esp-idf 可以链接的 C 库</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat Cargo.toml
 [package]
 name = "rust-mycmake"
 version = "0.1.0"
@@ -536,13 +545,13 @@ void app_main(void) {
 
     printf("Rust returned code: %d\n", result);
 }</code></pre>
-<p class="">构建前需要 source esp-idf 的 export.h 和 export-esp.sh：</p>
-<p class="">Copy</p>
-<pre><code class="language-bash">zj@a:~/code/esp32/mycmake$ source ~/esp/esp-idf/v5.2.1/export.sh   # esp idf
+<p class="Paragraph ">构建前需要 source esp-idf 的 export.h 和 export-esp.sh：</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>zj@a:~/code/esp32/mycmake$ source ~/esp/esp-idf/v5.2.1/export.sh   # esp idf
 zj@a:~/code/esp32/mycmake$ source ~/export-esp.sh   # esp rs，因为后续会 build Rust component </code></pre>
-<p class="">构建：</p>
-<p class=""></p>
-<pre><code class="language-python">#idf.py set-target [esp32|esp32s2|esp32s3|esp32c2|esp32c3|esp32c6|esp32h2]
+<p class="Paragraph ">构建：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>#idf.py set-target [esp32|esp32s2|esp32s3|esp32c2|esp32c3|esp32c6|esp32h2]
 zj@a:~/code/esp32/mycmake$ idf.py build 
 Executing action: all (aliases: build)
 Running ninja in directory /Users/alizj/code/esp32/mycmake/build
@@ -563,12 +572,14 @@ or from the "/Users/alizj/code/esp32/mycmake/build" directory
  python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"
 
 # 构建的产物位于 build 目录下 。</code></pre>
-<p class="">烧录到设备 flash</p>
-<p class="">Copy</p>
-<pre><code class="language-bash">idf.py -p /dev/cu.usbmodem2101 flash monitor</code></pre>
-<p class="">参考:</p>
-<li class="">esp-idf-template 的 cmake 文档;</li>
-<li class="">Integrating a Rust Component into an ESP-IDF Project</li>
+<p class="Paragraph ">烧录到设备 flash</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>idf.py -p /dev/cu.usbmodem2101 flash monitor</code></pre>
+<p class="Paragraph ">参考:</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">esp-idf-template 的 cmake 文档;</li>
+<li class="NumberedList ">Integrating a Rust Component into an ESP-IDF Project</li>
+</ol>
 
   </main>
     <aside class ="utterances">

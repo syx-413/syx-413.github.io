@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -304,92 +304,105 @@
     
   </header>
   <main class="PageRoot">
-    <figure><img src="https://ovi.swo.moe/_next/image?url=%2Ficons%2F64.png&w=96&q=75" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">onedrive-vercel-indexindexing your onedrive since 2020</p>
-<p class="">文档博客赞助</p>
-<p class="">/</p>
-<p class="">GitHub</p>
-<p class="">/</p>
-<li class="">立即上手</li>
-<li class="">自定义配置</li>
-<li class="">缓存</li>
-<li class="">高级</li>
-<li class="">特性</li>
-<li class="">展示区</li>
-<li class="">迁移</li>
-<li class="">FAQs</li>
-<li class="">文档</li>
-<li class="">博客</li>
-<li class="">赞助</li>
-<p class="">中文</p>
-<h1 class="">高级</h1>
-<p class="">♻️</p>
-<p class="">此页持续更新中。</p>
-<p class="">这里有些高级设置，你可能需要了解一下。</p>
-<h2 class="">使用你自己的 client id 与 secret</h2>
-<p class="">如果你的账户没有管理权限，那么你就无法使用项目提供的 <code>clientId</code> 与 <code>clientSecret</code>。这个情况下，你就要生成你自己的 client id 与 secret 了。</p>
-<h3 class="">注册一个应用程序</h3>
-<p class="">打开以下链接：</p>
-<li class="">Microsoft Azure App registrations（ OneDrive 国际版、企业版与教育版，E5 订阅专用）</li>
-<li class="">Microsoft Azure.cn App registrations（OneDrive 世纪互联专用）</li>
-<p class="">创建一个应用程序：</p>
-<li class="">登入你的微软账户，点击 <em>New registration</em>。</li>
-<li class="">输入一个名字，例如 my-onedrive-vercel-index。</li>
-<li class="">将 <em>Supported account types</em> 设置为：</li>
-<div style="margin-left: 20px;"><pre><code class="language-plain text">Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)</code></pre>
-<p class="">OneDrive 世纪互联用户设置为 - 任何组织目录（任何 Azure AD 目录 - 多租户）中的帐户。</p>
-</div><li class="">将 <em>Redirect URI (optional)</em> 设置为 <code>Web</code>（在下拉菜单里）以及 <code>http://localhost</code>。</li>
-<li class="">点击注册。</li>
-<figure><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fregister-an-application.91b5cc67.png&w=3840&q=75" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<h3 class="">获取你的 client id 与 secret</h3>
-<p class="">你的应用 (client) ID 就是 <code>api.config.js</code> 里的 <code>clientId</code> ，它应该出现在 <em>Overview</em> > <em>Essentials</em>。</p>
-<figure><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fget-client-id.7f11595f.png&w=3840&q=75" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">你的 client secret 需要手动获取</p>
-<li class="">点击 <em>Certificates & secrets</em>。</li>
-<li class="">点击 <em>New client secret</em>。</li>
-<li class="">创建一个新 secret ，描述为 <code>client_secret</code>。</li>
-<li class="">将 <em>Expires</em> 设置为 <code>Custom</code>。</li>
-<li class="">将 <em>Start</em> 与 <em>End</em> 设置为能设置的最长时间。</li>
-<figure><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcreate-client-secret.3c3eb9c9.png&w=3840&q=75" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">最后，点击 <em>Add</em> ，然后复制 client_secret 的值并妥善保管。（只有一次复制机会）</p>
-<figure><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcopy-your-client-secret.8590835d.png&w=3840&q=75" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<h3 class="">修改 API 权限</h3>
-<p class="">Microsoft Graph API 可以设置 API 范围，我们只需要以下三个（ <code>api.config.js</code> 里要求的）：</p>
-<pre><code class="language-plain text">user.read files.read.all offline_access</code></pre>
-<p class="">点击 <em>API permissions</em>，再点击 <em>Microsoft Graph</em>，再点击 <em>Delegated permissions</em>，然后搜索：</p>
-<li class="">User.Read（这应该一开始就勾上了）</li>
-<li class="">Files.Read.All</li>
-<li class="">offline_access</li>
-<p class="">选择全部三个并点击 <em>Add permissions</em>。</p>
-<figure><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fadd-required-permissions.c28bba24.png&w=3840&q=75" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">💡</p>
-<p class="">现在，你就准备好你自己的 <code>clientId</code> 与 <code>clientSecret</code> 了。</p>
-<h3 class="">修改 <code>api.config.js</code></h3>
-<p class="">你可以直接将 <code>clientId</code> 修改为你自己的 <code>clientId</code>。</p>
-<p class="">但是，client secret 需要保密，你需要在下面进行 AES 加密：</p>
-<p class="">Obfuscate your client secret 👇</p>
-<p class="">Your client secret:</p>
-<p class="">Your obfuscated client secret:</p>
-<p class="">填写 client secret 后，你应该得到一个长得像这样的字符串：</p>
-<pre><code class="language-plain text">U2FsdGVkX1830zo3/pFDqaBCVBb37iLw3WnBDWGF9GIB2f4apzv0roemp8Y+iIxI3Ih5ecyukqELQEGzZlYiWg==</code></pre>
-<p class="">将它替换到 <code>obfuscatedClientSecret</code> 里。</p>
-<p class="">如果你修改了 <code>redirectUri</code> 为其他值，你也要在 <code>api.config.js</code> 里设置好。</p>
-<p class="">🗣</p>
-<p class="">详情请参考 关于使用自己的 secret 进行 AES 加密方式的小白解决办法。</p>
-<p class=""></p>
-<p class="">x7J8Q~oegfDRY7U4LQbM2YIv4G8mJx_fGxbg1cJQ</p>
-<h2 class="">自定义域名</h2>
-<p class="">详情请参考 Custom Domains - Vercel。</p>
-<p class="">缓存</p>
-<p class="">私密文件夹</p>
-<p class="">On This Page</p>
-<li class="">使用你自己的 client id 与 secret</li>
-<li class="">注册一个应用程序</li>
-<li class="">获取你的 client id 与 secret</li>
-<li class="">修改 API 权限</li>
-<li class="">修改 api.config.js</li>
-<li class="">自定义域名</li>
-<p class="">前往 GitHub 编辑此页</p>
+    <figure class="Image Image--Normal"><img src="https://ovi.swo.moe/_next/image?url=%2Ficons%2F64.png&w=96&q=75" /><figcaption></figcaption></figure>
+<p class="Paragraph ">onedrive-vercel-indexindexing your onedrive since 2020</p>
+<p class="Paragraph ">文档博客赞助</p>
+<p class="Paragraph ">/</p>
+<p class="Paragraph ">GitHub</p>
+<p class="Paragraph ">/</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">立即上手</li>
+<li class="BulletedList ">自定义配置</li>
+<li class="BulletedList ">缓存</li>
+<li class="BulletedList ">高级</li>
+<li class="BulletedList ">特性</li>
+<li class="BulletedList ">展示区</li>
+<li class="BulletedList ">迁移</li>
+<li class="BulletedList ">FAQs</li>
+<li class="BulletedList ">文档</li>
+<li class="BulletedList ">博客</li>
+<li class="BulletedList ">赞助</li>
+</ul>
+<p class="Paragraph ">中文</p>
+<h1 class="Heading Heading--1 ">高级</h1>
+<p class="Paragraph ">♻️</p>
+<p class="Paragraph ">此页持续更新中。</p>
+<p class="Paragraph ">这里有些高级设置，你可能需要了解一下。</p>
+<h2 class="Heading Heading--2 ">使用你自己的 client id 与 secret</h2>
+<p class="Paragraph ">如果你的账户没有管理权限，那么你就无法使用项目提供的 <code>clientId</code> 与 <code>clientSecret</code>。这个情况下，你就要生成你自己的 client id 与 secret 了。</p>
+<h3 class="Heading Heading--3 ">注册一个应用程序</h3>
+<p class="Paragraph ">打开以下链接：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">Microsoft Azure App registrations（ OneDrive 国际版、企业版与教育版，E5 订阅专用）</li>
+<li class="BulletedList ">Microsoft Azure.cn App registrations（OneDrive 世纪互联专用）</li>
+</ul>
+<p class="Paragraph ">创建一个应用程序：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">登入你的微软账户，点击 <em>New registration</em>。</li>
+<li class="NumberedList ">输入一个名字，例如 my-onedrive-vercel-index。</li>
+<li class="NumberedList ">将 <em>Supported account types</em> 设置为：</li>
+<div style="margin-left: 20px;"><pre class="Code"><code>Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)</code></pre>
+<p class="Paragraph ">OneDrive 世纪互联用户设置为 - 任何组织目录（任何 Azure AD 目录 - 多租户）中的帐户。</p>
+</div>
+<li class="NumberedList ">将 <em>Redirect URI (optional)</em> 设置为 <code>Web</code>（在下拉菜单里）以及 <code>http://localhost</code>。</li>
+<li class="NumberedList ">点击注册。</li>
+</ol>
+<figure class="Image Image--Normal"><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fregister-an-application.91b5cc67.png&w=3840&q=75" /><figcaption></figcaption></figure>
+<h3 class="Heading Heading--3 ">获取你的 client id 与 secret</h3>
+<p class="Paragraph ">你的应用 (client) ID 就是 <code>api.config.js</code> 里的 <code>clientId</code> ，它应该出现在 <em>Overview</em> > <em>Essentials</em>。</p>
+<figure class="Image Image--Normal"><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fget-client-id.7f11595f.png&w=3840&q=75" /><figcaption></figcaption></figure>
+<p class="Paragraph ">你的 client secret 需要手动获取</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">点击 <em>Certificates & secrets</em>。</li>
+<li class="NumberedList ">点击 <em>New client secret</em>。</li>
+<li class="NumberedList ">创建一个新 secret ，描述为 <code>client_secret</code>。</li>
+<li class="NumberedList ">将 <em>Expires</em> 设置为 <code>Custom</code>。</li>
+<li class="NumberedList ">将 <em>Start</em> 与 <em>End</em> 设置为能设置的最长时间。</li>
+</ol>
+<figure class="Image Image--Normal"><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcreate-client-secret.3c3eb9c9.png&w=3840&q=75" /><figcaption></figcaption></figure>
+<p class="Paragraph ">最后，点击 <em>Add</em> ，然后复制 client_secret 的值并妥善保管。（只有一次复制机会）</p>
+<figure class="Image Image--Normal"><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcopy-your-client-secret.8590835d.png&w=3840&q=75" /><figcaption></figcaption></figure>
+<h3 class="Heading Heading--3 ">修改 API 权限</h3>
+<p class="Paragraph ">Microsoft Graph API 可以设置 API 范围，我们只需要以下三个（ <code>api.config.js</code> 里要求的）：</p>
+<pre class="Code"><code>user.read files.read.all offline_access</code></pre>
+<p class="Paragraph ">点击 <em>API permissions</em>，再点击 <em>Microsoft Graph</em>，再点击 <em>Delegated permissions</em>，然后搜索：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">User.Read（这应该一开始就勾上了）</li>
+<li class="BulletedList ">Files.Read.All</li>
+<li class="BulletedList ">offline_access</li>
+</ul>
+<p class="Paragraph ">选择全部三个并点击 <em>Add permissions</em>。</p>
+<figure class="Image Image--Normal"><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fadd-required-permissions.c28bba24.png&w=3840&q=75" /><figcaption></figcaption></figure>
+<p class="Paragraph ">💡</p>
+<p class="Paragraph ">现在，你就准备好你自己的 <code>clientId</code> 与 <code>clientSecret</code> 了。</p>
+<h3 class="Heading Heading--3 ">修改 <code>api.config.js</code></h3>
+<p class="Paragraph ">你可以直接将 <code>clientId</code> 修改为你自己的 <code>clientId</code>。</p>
+<p class="Paragraph ">但是，client secret 需要保密，你需要在下面进行 AES 加密：</p>
+<p class="Paragraph ">Obfuscate your client secret 👇</p>
+<p class="Paragraph ">Your client secret:</p>
+<p class="Paragraph ">Your obfuscated client secret:</p>
+<p class="Paragraph ">填写 client secret 后，你应该得到一个长得像这样的字符串：</p>
+<pre class="Code"><code>U2FsdGVkX1830zo3/pFDqaBCVBb37iLw3WnBDWGF9GIB2f4apzv0roemp8Y+iIxI3Ih5ecyukqELQEGzZlYiWg==</code></pre>
+<p class="Paragraph ">将它替换到 <code>obfuscatedClientSecret</code> 里。</p>
+<p class="Paragraph ">如果你修改了 <code>redirectUri</code> 为其他值，你也要在 <code>api.config.js</code> 里设置好。</p>
+<p class="Paragraph ">🗣</p>
+<p class="Paragraph ">详情请参考 关于使用自己的 secret 进行 AES 加密方式的小白解决办法。</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">x7J8Q~oegfDRY7U4LQbM2YIv4G8mJx_fGxbg1cJQ</p>
+<h2 class="Heading Heading--2 ">自定义域名</h2>
+<p class="Paragraph ">详情请参考 Custom Domains - Vercel。</p>
+<p class="Paragraph ">缓存</p>
+<p class="Paragraph ">私密文件夹</p>
+<p class="Paragraph ">On This Page</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">使用你自己的 client id 与 secret</li>
+<li class="BulletedList ">注册一个应用程序</li>
+<li class="BulletedList ">获取你的 client id 与 secret</li>
+<li class="BulletedList ">修改 API 权限</li>
+<li class="BulletedList ">修改 api.config.js</li>
+<li class="BulletedList ">自定义域名</li>
+</ul>
+<p class="Paragraph ">前往 GitHub 编辑此页</p>
 
   </main>
     <aside class ="utterances">

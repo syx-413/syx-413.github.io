@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -308,10 +308,12 @@
     
   </header>
   <main class="PageRoot">
-    <h2 class="">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</h2>
-<li class="">https://github.com/esp-rs/esp-idf-template/issues/165</li>
-<p class="">Copy</p>
-<pre><code class="language-bash">  Using managed esp-idf repository: RemoteSdk { repo_url: None, git_ref: Tag("v5.1.2") }
+    <h2 class="Heading Heading--2 ">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</h2>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">https://github.com/esp-rs/esp-idf-template/issues/165</li>
+</ol>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>  Using managed esp-idf repository: RemoteSdk { repo_url: None, git_ref: Tag("v5.1.2") }
   Using esp-idf v5.1.2 at '/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2'
   ERROR: /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/espidf.constraints.v5.1.txt doesn't exist. Perhaps you've forgotten to run the install scripts. Please check the installation guide for more information.
   CMake Error at /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/cmake/build.cmake:363 (message):
@@ -329,12 +331,12 @@
 
   build script failed, must exit now
   note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</code></pre>
-<p class="">解决办法:</p>
-<p class=""></p>
-<pre><code class="language-bash">cargo clean && rm -rf .embuild && cargo build </code></pre>
-<h3 class="">报错: Missing dependencies for SOCKS support.</h3>
-<p class=""></p>
-<pre><code class="language-bash">  来自 https://github.com/ThrowTheSwitch/Unity 
+<p class="Paragraph ">解决办法:</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>cargo clean && rm -rf .embuild && cargo build </code></pre>
+<h3 class="Heading Heading--3 ">报错: Missing dependencies for SOCKS support.</h3>
+<p class="Paragraph "></p>
+<pre class="Code"><code>  来自 https://github.com/ThrowTheSwitch/Unity 
    * branch            7d2bf62b7e6afaf38153041a9d53c21aeeca9a25 -> FETCH_HEAD
   ERROR: Could not install packages due to an OSError: Missing dependencies for SOCKS support.
 
@@ -355,19 +357,19 @@
   Caused by:
       command 'env -u IDF_PYTHON_ENV_PATH -u MSYSTEM IDF_TOOLS_PATH="/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif" "python3" "/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py" "--idf-path" "/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2" "--non-interactive" "install-python-env"' exited with non-zero status code 1
 zj@a:~/codes/esp32/esp-demo$</code></pre>
-<p class="">解决办法: 不使用 socks5 代理, 而是使用 https/http 代理:</p>
-<p class=""></p>
-<pre><code class="language-bash"># 将下列内容添加到 ~/esp/export.sh 和 ~/esp/export-esp.sh 中
+<p class="Paragraph ">解决办法: 不使用 socks5 代理, 而是使用 https/http 代理:</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code># 将下列内容添加到 ~/esp/export.sh 和 ~/esp/export-esp.sh 中
 export all_proxy="http://192.168.3.2:1080" ALL_PROXY="http://192.168.3.2:1080"
 
 # 在 ~/.bashrc 中添加如下内容， 用于手动切换： 
 alias enable_http_proxy='export all_proxy="http://192.168.3.2:1080" ALL_PROXY="http://192.168.3.2:1080"'
 alias enable_socks_proxy='export all_proxy="socks5h://192.168.3.2:1080" ALL_PROXY="socks5h://192.168.3.2:1080"'
 alias disable_proxy='unset all_proxy ALL_PROXY'</code></pre>
-<h3 class="">rust-analyzer 报错，不能正常解析和补全。</h3>
-<p class="">解决办法：</p>
-<p class=""></p>
-<pre><code class="language-bash">zj@a:~/codes/esp32/esp-demo2/myesp$ cd 
+<h3 class="Heading Heading--3 ">rust-analyzer 报错，不能正常解析和补全。</h3>
+<p class="Paragraph ">解决办法：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/codes/esp32/esp-demo2/myesp$ cd 
 
 zj@a:~$ rustup component add rust-analyzer
 info: downloading component 'rust-analyzer'
@@ -392,10 +394,10 @@ total 95M
 
 zj@a:~$ ln -sf ~/.rustup/toolchains/nightly-x86_64-apple-darwin/bin/rust-analyzer ~/.rustup/toolchains/esp/bin/rust-analyzer
 z</code></pre>
-<h3 class="">报错：warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</h3>
-<p class="">这是因为同时 source 了 export.sh 和 export-esp.sh，当构建纯 Rust std/non_std 应用时，只需要 source export-esp.sh 即可。</p>
-<p class=""></p>
-<pre><code class="language-bash">   zj@a:~/code/esp32/std$ source ~/esp/esp-idf/v5.2.1/export.sh
+<h3 class="Heading Heading--3 ">报错：warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</h3>
+<p class="Paragraph ">这是因为同时 source 了 export.sh 和 export-esp.sh，当构建纯 Rust std/non_std 应用时，只需要 source export-esp.sh 即可。</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>   zj@a:~/code/esp32/std$ source ~/esp/esp-idf/v5.2.1/export.sh
    zj@a:~/code/esp32/std$ source ~/esp/export-esp.sh
  
    zj@a:~/code/esp32/std$ cargo build
@@ -425,8 +427,8 @@ z</code></pre>
      cargo:rerun-if-env-changed=ESP_IDF_SDKCONFIG
      cargo:rerun-if-env-changed=ESP_IDF_SDKCONFIG_DEFAULTS
      cargo:rerun-if-env-changed=MCU</code></pre>
-<p class=""></p>
-<!-- Unsupported block type -->
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
 
   </main>
     <aside class ="utterances">

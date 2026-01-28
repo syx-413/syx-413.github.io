@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -312,10 +312,10 @@ Image version:...">
     
   </header>
   <main class="PageRoot">
-    <h2 class="">1 使用 esptool.py image_info 查看 app 固件内容 #</h2>
-<p class="">参考 app_image_format.html</p>
-<p class=""></p>
-<pre><code class="language-bash">esptool.py --chip esp32s3 image_info build/app.bin
+    <h2 class="Heading Heading--2 ">1 使用 esptool.py image_info 查看 app 固件内容 #</h2>
+<p class="Paragraph ">参考 app_image_format.html</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>esptool.py --chip esp32s3 image_info build/app.bin
 esptool.py v2.3.1
 Image version: 1 
 Entry point: 40080ea4
@@ -336,9 +336,9 @@ Segment 12: len 0x00000 load 0x50000004 file_offs 0x00089b6c SOC_RTC_DATA
 Segment 13: len 0x00000 load 0x50000004 file_offs 0x00089b74 SOC_RTC_DATA
 Checksum: e8 (valid)
 Validation Hash: 407089ca0eae2bbf83b4120979d3354b1c938a49cb7a0c997f240474ef2ec76b (valid)</code></pre>
-<p class="">查看 Bootloader Image Format:</p>
-<p class=""></p>
-<pre><code class="language-bash">esptool.py --chip esp32s3 image_info build/bootloader/bootloader.bin --version 2
+<p class="Paragraph ">查看 Bootloader Image Format:</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>esptool.py --chip esp32s3 image_info build/bootloader/bootloader.bin --version 2
 
 File size: 26576 (bytes)
 
@@ -378,11 +378,11 @@ Bootloader information
 Bootloader version: 1
 ESP-IDF: v5.1-dev-4304-gcb51a3b-dirty
 Compile time: Mar 30 2023 19:14:17</code></pre>
-<h2 class="">2 分区表 #</h2>
-<p class="">使用 idf.py partition-table 来显示分区表内容。</p>
-<p class="">使用 gen_esp32part.py 工具来将 CSV 分区表转换为烧写到 FLASH 的 bin 格式。</p>
-<p class="">Copy</p>
-<pre><code class="language-bash"># Erase partition with name 'storage'
+<h2 class="Heading Heading--2 ">2 分区表 #</h2>
+<p class="Paragraph ">使用 idf.py partition-table 来显示分区表内容。</p>
+<p class="Paragraph ">使用 gen_esp32part.py 工具来将 CSV 分区表转换为烧写到 FLASH 的 bin 格式。</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code># Erase partition with name 'storage'
 parttool.py --port "/dev/ttyUSB1" erase_partition --partition-name=storage
  
 # Read partition with type 'data' and subtype 'spiffs' and save to file 'spiffs.bin'
@@ -393,8 +393,8 @@ parttool.py --port "/dev/ttyUSB1" write_partition --partition-name=factory --inp
 
 # Print the size of default boot partition
 parttool.py --port "/dev/ttyUSB1" get_partition_info --partition-boot-default --info size</code></pre>
-<p class=""></p>
-<!-- Unsupported block type -->
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
 
   </main>
     <aside class ="utterances">

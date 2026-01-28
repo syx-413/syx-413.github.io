@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>Slint with Rust &nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Slint with Rust ">
+  
+    <meta name="description" content="https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV14u411g7Xa  https:&#x2F;&#x2F;github.com&#x2F;syf20020816&#x2F;SurrealismUI  https:&#x2F;&#x2F;github.com&#x2F;syf20020816&#x2F;slint_learn  https:&#x2F;&#x2F;github.c...">
+    <meta property="og:description" content="https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV14u411g7Xa  https:&#x2F;&#x2F;github.com&#x2F;syf20020816&#x2F;SurrealismUI  https:&#x2F;&#x2F;github.com&#x2F;syf20020816&#x2F;slint_learn  https:&#x2F;&#x2F;github.c...">
+  
+  
+    <meta property="og:image" content="🦀">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🦀</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">Slint with Rust </h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-03T18:08:00+08:00</span>
+        
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <div class="Bookmark"><a href="https://www.bilibili.com/video/BV14u411g7Xa" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://www.bilibili.com/video/BV14u411g7Xa</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=www.bilibili.com&sz=64" />
+                                <span class="Bookmark__Link">www.bilibili.com/video/BV14u411g7Xa</span>
+                            </div>
+                        </div>
+                    </a></div>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: LinkPreview { link_preview: LinkPreviewBlock { url: "https://github.com/syf20020816/SurrealismUI" } } -->
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<div class="Bookmark"><a href="https://github.com/slint-ui" target="_blank">
+                        <div class="Bookmark__Content">
+                            <div class="Bookmark__Title">https://github.com/slint-ui</div>
+                            
+                            <div class="Bookmark__Meta">
+                                <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=github.com&sz=64" />
+                                <span class="Bookmark__Link">github.com/slint-ui</span>
+                            </div>
+                        </div>
+                    </a></div>
+<p class="Paragraph "></p>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

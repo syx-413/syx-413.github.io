@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -308,47 +308,47 @@
     
   </header>
   <main class="PageRoot">
-    <h2 class="">说明</h2>
-<p class="">这一部分是使用E5订阅中的exchange服务，搭建一个企业邮箱（域名邮箱）。</p>
-<p class="">简单来说，你需要首先准备一个域名，例如adc.com，遵循此文，你可以得到一个XXX@abc.com的邮箱用于收发邮件，并可以设置转发规则，即发到以@abc.com结尾的任何邮件都可以被转发到你的邮箱中。</p>
-<p class="">用途：比较有个性，用于注册验证等。</p>
-<h2 class="">设置自定义域</h2>
-<p class="">转到管理后台，登录E5管理员账号，如图，添加新域名</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-26-09.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">如果是使用cloudflare等DNS提供商，可以一键认证：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-27-33.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">按照指示继续添加TXT记录等。注意一个域名只能链接一个企业邮箱（当然你可以开二级域名）。</p>
-<p class="">这样我们就有两个域名了：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-30-07.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<h2 class="">添加自定义域用户</h2>
-<p class="">转到用户管理界面，选择添加用户即可：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-41-48.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">注意在 域 处，选择你刚才添加的域名：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-41-26.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">配置好后，在office.com可以直接登录。</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-11-18.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<h2 class="">设置Catch-all功能，实现无限别名收邮件</h2>
-<p class="">打开Exchange管理中心</p>
-<p class="">如图，对于你的域名，设置Internal relay，这样exchange就会将所有邮件都纳入收件中。</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-37-23.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">对于个人而言，我们只需要将所有发送到此企业邮箱的邮件都转到自己邮箱就行。但是对于团队，我们并不希望将发给团队中其他人的邮件也转发一次。这里我们建立一个用户组，便于管理。</p>
-<p class="">转到用户组管理。</p>
-<p class="">如图，添加动态用户组：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-55-07.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-58-08.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">转到规则进行配置</p>
-<p class="">如图，对所有外部发件人应用，转发到我们的常用账户。</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-01-13.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">开启高级选项，即可看到更多设置，在例外中，选择之前建立的小组：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-59-32.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">一个配置示例：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-00-15.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">这样我们就完成了配置：</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-06-49.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">测试一下，注意我使用的是kerm@kermsite.com，但这里的收件人是test@kermsite.com。说明转发成功了。</p>
-<figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-14-55.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class=""></p>
-<!-- Unsupported block type -->
+    <h2 class="Heading Heading--2 ">说明</h2>
+<p class="Paragraph ">这一部分是使用E5订阅中的exchange服务，搭建一个企业邮箱（域名邮箱）。</p>
+<p class="Paragraph ">简单来说，你需要首先准备一个域名，例如adc.com，遵循此文，你可以得到一个XXX@abc.com的邮箱用于收发邮件，并可以设置转发规则，即发到以@abc.com结尾的任何邮件都可以被转发到你的邮箱中。</p>
+<p class="Paragraph ">用途：比较有个性，用于注册验证等。</p>
+<h2 class="Heading Heading--2 ">设置自定义域</h2>
+<p class="Paragraph ">转到管理后台，登录E5管理员账号，如图，添加新域名</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-26-09.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">如果是使用cloudflare等DNS提供商，可以一键认证：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-27-33.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">按照指示继续添加TXT记录等。注意一个域名只能链接一个企业邮箱（当然你可以开二级域名）。</p>
+<p class="Paragraph ">这样我们就有两个域名了：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-30-07.png" /><figcaption></figcaption></figure>
+<h2 class="Heading Heading--2 ">添加自定义域用户</h2>
+<p class="Paragraph ">转到用户管理界面，选择添加用户即可：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-41-48.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">注意在 域 处，选择你刚才添加的域名：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-41-26.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">配置好后，在office.com可以直接登录。</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-11-18.png" /><figcaption></figcaption></figure>
+<h2 class="Heading Heading--2 ">设置Catch-all功能，实现无限别名收邮件</h2>
+<p class="Paragraph ">打开Exchange管理中心</p>
+<p class="Paragraph ">如图，对于你的域名，设置Internal relay，这样exchange就会将所有邮件都纳入收件中。</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-37-23.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">对于个人而言，我们只需要将所有发送到此企业邮箱的邮件都转到自己邮箱就行。但是对于团队，我们并不希望将发给团队中其他人的邮件也转发一次。这里我们建立一个用户组，便于管理。</p>
+<p class="Paragraph ">转到用户组管理。</p>
+<p class="Paragraph ">如图，添加动态用户组：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-55-07.png" /><figcaption></figcaption></figure>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-58-08.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">转到规则进行配置</p>
+<p class="Paragraph ">如图，对所有外部发件人应用，转发到我们的常用账户。</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-01-13.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">开启高级选项，即可看到更多设置，在例外中，选择之前建立的小组：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-59-32.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">一个配置示例：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-00-15.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">这样我们就完成了配置：</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-06-49.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">测试一下，注意我使用的是kerm@kermsite.com，但这里的收件人是test@kermsite.com。说明转发成功了。</p>
+<figure class="Image Image--Normal"><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-14-55.png" /><figcaption></figcaption></figure>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
 
   </main>
     <aside class ="utterances">

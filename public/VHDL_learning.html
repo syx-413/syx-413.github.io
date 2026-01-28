@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -300,78 +300,78 @@
     
   </header>
   <main class="PageRoot">
-    <p class="">https://miyo.github.io/learning_fpga/docs/book01/languages/</p>
-<h3 class=""><strong>两种基本处理方法——并发处理语句和顺序处理语句</strong></h3>
-<p class="">重复一下，在硬件编程中，需要处理独立运行的模块。也就是说，用于描述硬件的语言需要能够描述独立运行的同时并行处理。然而，根据想要实现的处理，有时需要描述条件分支等具有依赖关系的处理。为了满足这些要求，<code>VHDL </code>和 <code>Verilog HDL</code> 都支持两种称为同时处理语句和顺序处理语句的描述方式。具体的描述方法将在后面说明，但请先记住这两种方式的思路。</p>
-<h3 class=""><strong>并行语句</strong></h3>
-<p class="">同时处理语句是指不受周围处理影响而独立运行的处理。多个同时处理语句会在某个特定的时间点同时处理。因此，描述顺序或各处理语句之间不存在语法顺序，而是根据“某个时间点”输入的值生成输出。输出确定之前的时间取决于物理上在设备中电流流动的速度或信号延迟。</p>
-<h3 class=""><strong>顺序处理语句</strong></h3>
-<p class="">顺序处理语句是指根据语法等规定多个处理之间顺序的处理。例如，软件中必不可少的分支等控制语句的表达需要顺序</p>
-<p class="">在VHDL 和 Verilog HDL 中可以使用加减算、逻辑运算、比较等运算符。在软件编程中，使用运算符编写的处理会被转换为给处理器的指令，但在 HDL 中，这些运算会被合成成相应的硬件逻辑，如 LUT 或 FF 的组合。</p>
-<p class="">在 FPGA 中，有些包含小型数字信号处理器或乘法器，如果条件合适，可以使用它们与软件编程类似，HDL中也可以使用赋值运算将运算结果赋值给其他（或相同）变量。</p>
-<p class="">HDL 的赋值有阻塞赋值和非阻塞赋值两种类型。阻塞赋值是立即在该点赋值并继续的赋值。另一方面，非阻塞赋规定了多个赋值语句中的同时执行。C 语言等单线程软件编程中的赋值相当于 HDL 中的阻塞赋值。</p>
-<p class=""></p>
-<p class=""></p>
-<h2 class="">语法注意点</h2>
-<p class="">变量可以具有字母数字名称：它们必须以字母或 <code>“_”</code> 开头<em>，并且不能以 </em><code>“_” </code>结尾。 Verilog HDL 区分大小写。</p>
-<h3 class=""><strong>值的基本类型 — '0'，'1'，'Z'，'X'</strong></h3>
-<p class="">常常使用的数值 包括 <code>0</code> <code>1</code>  <code>z / Z</code>(高阻关断)  <code>x  X(0/1)</code></p>
-<p class="">硬件的值取 <code>'0'</code> 和 <code>'1'</code> 的值。此外，硬件还存在高阻态，表示<span class="color-pink">“电阻无限大”</span>的状态，在 VHDL 或 Verilog HDL 中用 <code>'Z' </code> 表示。值“电阻无限大”可能有些难以理解。物理上，可以想象开关断开状态。当多个信号合并到一个时，<code>'Z' </code>表示“不影响其他值”。</p>
-<blockquote class="">在 HDL 中可以使用高阻抗来表示开关关闭</blockquote>
-<p class=""></p>
-<p class="">另外，'0' 或 '1' 都可以作为不定值的概念存在，这用 'X' 表示。</p>
-<p class=""><code>;</code>  非常重要</p>
-<h2 class=""><strong>模块构成</strong></h2>
-<p class="">VHDL 编写的模块的概要。在 VHDL 中，将目标模块大致分为 <code>entity</code> 和 <code>architecture</code> 来编写。 <code>entity</code> 定义了连接到外部的输入输出端口等电路的外部框架， <code>architecture</code> 定义了使用的函数定义和处理内容等电路的内部</p>
-<h3 class="">library and package</h3>
-<pre><code class="language-vhdl">LIBRARY IEEE;
+    <p class="Paragraph ">https://miyo.github.io/learning_fpga/docs/book01/languages/</p>
+<h3 class="Heading Heading--3 "><strong>两种基本处理方法——并发处理语句和顺序处理语句</strong></h3>
+<p class="Paragraph ">重复一下，在硬件编程中，需要处理独立运行的模块。也就是说，用于描述硬件的语言需要能够描述独立运行的同时并行处理。然而，根据想要实现的处理，有时需要描述条件分支等具有依赖关系的处理。为了满足这些要求，<code>VHDL </code>和 <code>Verilog HDL</code> 都支持两种称为同时处理语句和顺序处理语句的描述方式。具体的描述方法将在后面说明，但请先记住这两种方式的思路。</p>
+<h3 class="Heading Heading--3 "><strong>并行语句</strong></h3>
+<p class="Paragraph ">同时处理语句是指不受周围处理影响而独立运行的处理。多个同时处理语句会在某个特定的时间点同时处理。因此，描述顺序或各处理语句之间不存在语法顺序，而是根据“某个时间点”输入的值生成输出。输出确定之前的时间取决于物理上在设备中电流流动的速度或信号延迟。</p>
+<h3 class="Heading Heading--3 "><strong>顺序处理语句</strong></h3>
+<p class="Paragraph ">顺序处理语句是指根据语法等规定多个处理之间顺序的处理。例如，软件中必不可少的分支等控制语句的表达需要顺序</p>
+<p class="Paragraph ">在VHDL 和 Verilog HDL 中可以使用加减算、逻辑运算、比较等运算符。在软件编程中，使用运算符编写的处理会被转换为给处理器的指令，但在 HDL 中，这些运算会被合成成相应的硬件逻辑，如 LUT 或 FF 的组合。</p>
+<p class="Paragraph ">在 FPGA 中，有些包含小型数字信号处理器或乘法器，如果条件合适，可以使用它们与软件编程类似，HDL中也可以使用赋值运算将运算结果赋值给其他（或相同）变量。</p>
+<p class="Paragraph ">HDL 的赋值有阻塞赋值和非阻塞赋值两种类型。阻塞赋值是立即在该点赋值并继续的赋值。另一方面，非阻塞赋规定了多个赋值语句中的同时执行。C 语言等单线程软件编程中的赋值相当于 HDL 中的阻塞赋值。</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">语法注意点</h2>
+<p class="Paragraph ">变量可以具有字母数字名称：它们必须以字母或 <code>“_”</code> 开头<em>，并且不能以 </em><code>“_” </code>结尾。 Verilog HDL 区分大小写。</p>
+<h3 class="Heading Heading--3 "><strong>值的基本类型 — '0'，'1'，'Z'，'X'</strong></h3>
+<p class="Paragraph ">常常使用的数值 包括 <code>0</code> <code>1</code>  <code>z / Z</code>(高阻关断)  <code>x  X(0/1)</code></p>
+<p class="Paragraph ">硬件的值取 <code>'0'</code> 和 <code>'1'</code> 的值。此外，硬件还存在高阻态，表示<span class="color-pink">“电阻无限大”</span>的状态，在 VHDL 或 Verilog HDL 中用 <code>'Z' </code> 表示。值“电阻无限大”可能有些难以理解。物理上，可以想象开关断开状态。当多个信号合并到一个时，<code>'Z' </code>表示“不影响其他值”。</p>
+<blockquote class="Quote ">在 HDL 中可以使用高阻抗来表示开关关闭</blockquote>
+<p class="Paragraph "></p>
+<p class="Paragraph ">另外，'0' 或 '1' 都可以作为不定值的概念存在，这用 'X' 表示。</p>
+<p class="Paragraph "><code>;</code>  非常重要</p>
+<h2 class="Heading Heading--2 "><strong>模块构成</strong></h2>
+<p class="Paragraph ">VHDL 编写的模块的概要。在 VHDL 中，将目标模块大致分为 <code>entity</code> 和 <code>architecture</code> 来编写。 <code>entity</code> 定义了连接到外部的输入输出端口等电路的外部框架， <code>architecture</code> 定义了使用的函数定义和处理内容等电路的内部</p>
+<h3 class="Heading Heading--3 ">library and package</h3>
+<pre class="Code"><code>LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;</code></pre>
-<h3 class="">entity</h3>
-<p class=""><code>entity</code> 定义电路的轮廓，例如连接到外部的 input/output 端口的声明</p>
-<h3 class="">architecture</h3>
-<p class=""><code>architecture</code> 定义电路的内部，例如要使用的函数的定义和处理内容</p>
-<p class=""></p>
-<p class=""> VHDL 中可以描述的常数的例子</p>
-<!-- Unsupported block type -->
-<h2 class="">VHDL 中的变量都有类型</h2>
-<p class="">定义了很多种类型，也可以定义自己的类型。常用的五种类型。</p>
-<p class=""> <code>std_logic</code> 、 <code>std_logic_vector</code> 对应硬件信号类型， </p>
-<p class=""><code>signed</code> 和 <code>unsigned</code> 用于表示可以进行加减运算的值， </p>
-<p class=""><code>integer</code> 可以表示一般数值</p>
-<p class=""></p>
-<!-- Unsupported block type -->
-<h3 class=""><strong>1-bitの信号</strong></h3>
-<p class=""><code>std_logic</code> 是 VHDL 的基本 1 Bit 信号类型。 <code>'0'</code> ， <code>'1'</code> ，以及高阻态的 <code>'Z'</code> ，不定值的 <code>'X'</code> 都可以作为其值。这些值直接对应硬件。</p>
-<h3 class=""><strong>n 位信号</strong></h3>
-<p class=""><code>std_logic_vector(n downto 0)</code> 是 <code>std_logic</code> 个 <code>std_logi_vector</code> 并排组成的 n 位信号线类型，称为 n 位 <code>std_logi_vector</code> 类型。 </p>
-<p class=""><code>std_logic_vector</code> 类型的变量 <code>a</code> 中的元素可以取出 <code>a(3)</code> ， <code>a(4 downto 2)</code> 等。前者是 <code>std_logic</code> 类型，后者是 3 位的 <code>std_logic_vector</code> 类型。</p>
-<p class=""> <code>downto</code> 表示 <code>std_logic</code> 的序列，从 MSB 降序编号。也就是说，对于 <code>std_logic_vector(n-1 downto 0)</code> 的位序列，MSB 是 <code>std_logic_vector(n-1)</code> ，LSB 是 <code>std_logic_vector(0)</code> 。</p>
-<p class="">也可以使用 <code>to</code> 逆序排列，这时可以像 <code>std_logic_vector(n to 0)</code> 这样表示。</p>
-<p class=""></p>
-<h2 class=""><strong>模块的外部描述 — entity</strong></h2>
-<p class=""><code>entity</code> 代表模块的外框，通过模块名称和输入输出信号来定义。例如，以下描述相当于定义了一个名为 <code>test</code> ，输入信号为 <code>pClk</code> 和 <code>pReset</code>，输出信号为 <code>Q</code> 的模块的外框。</p>
-<p class=""></p>
-<pre><code class="language-vhdl">entity test is
+<h3 class="Heading Heading--3 ">entity</h3>
+<p class="Paragraph "><code>entity</code> 定义电路的轮廓，例如连接到外部的 input/output 端口的声明</p>
+<h3 class="Heading Heading--3 ">architecture</h3>
+<p class="Paragraph "><code>architecture</code> 定义电路的内部，例如要使用的函数的定义和处理内容</p>
+<p class="Paragraph "></p>
+<p class="Paragraph "> VHDL 中可以描述的常数的例子</p>
+<!-- Unsupported block type: ChildDatabase { child_database: ChildDatabaseBlock { title: "New database" } } -->
+<h2 class="Heading Heading--2 ">VHDL 中的变量都有类型</h2>
+<p class="Paragraph ">定义了很多种类型，也可以定义自己的类型。常用的五种类型。</p>
+<p class="Paragraph "> <code>std_logic</code> 、 <code>std_logic_vector</code> 对应硬件信号类型， </p>
+<p class="Paragraph "><code>signed</code> 和 <code>unsigned</code> 用于表示可以进行加减运算的值， </p>
+<p class="Paragraph "><code>integer</code> 可以表示一般数值</p>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: ChildDatabase { child_database: ChildDatabaseBlock { title: "New database" } } -->
+<h3 class="Heading Heading--3 "><strong>1-bitの信号</strong></h3>
+<p class="Paragraph "><code>std_logic</code> 是 VHDL 的基本 1 Bit 信号类型。 <code>'0'</code> ， <code>'1'</code> ，以及高阻态的 <code>'Z'</code> ，不定值的 <code>'X'</code> 都可以作为其值。这些值直接对应硬件。</p>
+<h3 class="Heading Heading--3 "><strong>n 位信号</strong></h3>
+<p class="Paragraph "><code>std_logic_vector(n downto 0)</code> 是 <code>std_logic</code> 个 <code>std_logi_vector</code> 并排组成的 n 位信号线类型，称为 n 位 <code>std_logi_vector</code> 类型。 </p>
+<p class="Paragraph "><code>std_logic_vector</code> 类型的变量 <code>a</code> 中的元素可以取出 <code>a(3)</code> ， <code>a(4 downto 2)</code> 等。前者是 <code>std_logic</code> 类型，后者是 3 位的 <code>std_logic_vector</code> 类型。</p>
+<p class="Paragraph "> <code>downto</code> 表示 <code>std_logic</code> 的序列，从 MSB 降序编号。也就是说，对于 <code>std_logic_vector(n-1 downto 0)</code> 的位序列，MSB 是 <code>std_logic_vector(n-1)</code> ，LSB 是 <code>std_logic_vector(0)</code> 。</p>
+<p class="Paragraph ">也可以使用 <code>to</code> 逆序排列，这时可以像 <code>std_logic_vector(n to 0)</code> 这样表示。</p>
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 "><strong>模块的外部描述 — entity</strong></h2>
+<p class="Paragraph "><code>entity</code> 代表模块的外框，通过模块名称和输入输出信号来定义。例如，以下描述相当于定义了一个名为 <code>test</code> ，输入信号为 <code>pClk</code> 和 <code>pReset</code>，输出信号为 <code>Q</code> 的模块的外框。</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>entity test is
  port (
    pClk   : in std_logic;
    Q      : out std_logic;
    pReset : in std_logic -- 在最后一个之后不加
  );
 end entity;</code></pre>
-<h3 class=""><strong>定义端口</strong></h3>
-<p class="">端口是硬件模块的输入输出。在 <code>entity</code> 的 <code>port(~);</code> 中，通过指定信号的方向和类型来定义。</p>
-<p class="">信号方向有 <code>in</code> （输入）、 <code>out</code> （输出）和 <code>inout</code> （输入输出）三种。</p>
-<p class="">每个端口通过<span class="color-blue">“名称 : 方向 类型”</span>来定义。例如</p>
-<pre><code class="language-vhdl">pClk : in std_logic
+<h3 class="Heading Heading--3 "><strong>定义端口</strong></h3>
+<p class="Paragraph ">端口是硬件模块的输入输出。在 <code>entity</code> 的 <code>port(~);</code> 中，通过指定信号的方向和类型来定义。</p>
+<p class="Paragraph ">信号方向有 <code>in</code> （输入）、 <code>out</code> （输出）和 <code>inout</code> （输入输出）三种。</p>
+<p class="Paragraph ">每个端口通过<span class="color-blue">“名称 : 方向 类型”</span>来定义。例如</p>
+<pre class="Code"><code>pClk : in std_logic
 -- or together definate
 pR, pG, pB : in std_logic</code></pre>
-<p class="">这样的描述相当于定义了 <code>pClk</code> 的 <code>std_logic</code> 输入端口（ <code>in</code> ）。相同方向和类型的多个端口名也可以用“,”来并列定义。例如，</p>
-<p class="">可以将 3 个输入信号 <code>pR</code> ， <code>pG</code> ， <code>pB</code> 一起定义。</p>
-<h3 class=""><strong>定义常量</strong></h3>
-<p class="">可以在 <code>entity</code> 中定义模块内使用的常量</p>
-<pre><code class="language-vhdl">entity test is
+<p class="Paragraph ">这样的描述相当于定义了 <code>pClk</code> 的 <code>std_logic</code> 输入端口（ <code>in</code> ）。相同方向和类型的多个端口名也可以用“,”来并列定义。例如，</p>
+<p class="Paragraph ">可以将 3 个输入信号 <code>pR</code> ， <code>pG</code> ， <code>pB</code> 一起定义。</p>
+<h3 class="Heading Heading--3 "><strong>定义常量</strong></h3>
+<p class="Paragraph ">可以在 <code>entity</code> 中定义模块内使用的常量</p>
+<pre class="Code"><code>entity test is
   generic (
     width  : integer := 640;
     height : integer := 480
@@ -382,61 +382,61 @@ pR, pG, pB : in std_logic</code></pre>
     pReset : in std_logic
   );
 end test;</code></pre>
-<p class=""></p>
-<p class="">这个以 <code>width</code> 的名称定义了一个值为 640 的 <code>integer</code> 类型，即整数的常量。这个常量可以在 <code>entity</code> 内部，以及内部处理描述的 <code>architecture</code> 中使用</p>
-<h3 class=""><strong>内部处理描述 — architecture  </strong></h3>
-<p class="">在 VHDL 中， <code>architecture</code> 用于描述模块的处理内容。描述的基本流程如下：</p>
-<pre><code class="language-vhdl">architecture RTL of test is
+<p class="Paragraph "></p>
+<p class="Paragraph ">这个以 <code>width</code> 的名称定义了一个值为 640 的 <code>integer</code> 类型，即整数的常量。这个常量可以在 <code>entity</code> 内部，以及内部处理描述的 <code>architecture</code> 中使用</p>
+<h3 class="Heading Heading--3 "><strong>内部处理描述 — architecture  </strong></h3>
+<p class="Paragraph ">在 VHDL 中， <code>architecture</code> 用于描述模块的处理内容。描述的基本流程如下：</p>
+<pre class="Code"><code>architecture RTL of test is
   (在这里写变量的定义等。)
 begin
   (在这里描述处理内容。)
 end RTL;</code></pre>
-<p class="">上述是用于描述名为 <code>test</code> 的模块内容的块。</p>
-<h3 class=""><strong>变量的定义</strong></h3>
-<p class=""><strong>变量的定义</strong></p>
-<pre><code class="language-vhdl">signal 名前 : 型 := 初期値;
+<p class="Paragraph ">上述是用于描述名为 <code>test</code> 的模块内容的块。</p>
+<h3 class="Heading Heading--3 "><strong>变量的定义</strong></h3>
+<p class="Paragraph "><strong>变量的定义</strong></p>
+<pre class="Code"><code>signal 名前 : 型 := 初期値;
 -- second
 signal counter : std_logic_vector(9 downto 0); -- 10 bit
 --third
 signal counter : std_logic_vector(width-1 downto 0); --width</code></pre>
-<p class="">例如，10 位的数组可以这样定义。</p>
-<p class=""></p>
-<p class="">此外，可以使用 <code>generic</code> 定义的值 <code>width</code> 来定义宽度为 width 的 <code>std_logic_vector</code> 型的信号。这里 <code>width−1</code> 的值在综合时确定.</p>
-<h3 class=""><strong>运算符和运算</strong></h3>
-<p class="">将典型的运算符汇总在表 3 中。如果将逻辑运算符定义为 <code>std_logic_vector</code> 类型，则会对对应的每个比特的值之间应用逻辑运算并返回结果。例如，“ <code>"10" and "11"</code> ”会变成“ <code>"10"</code> ”，“ <code>"10" or "11"</code> ”会变成“ <code>"11"</code> ”。比较运算的结果是 <code>true</code> 或 <code>false</code> 的真值。可以看出它具备了许多常见的编程语言所拥有的运算功能。但是，表 3 的说明中标注了(*1)的算术运算或比较数值大小的运算，只能用于 <code>unsigned</code> 类型、 <code>signed</code> 类型或 <code>integer</code> 的变量或常量，或者相当于数值的立即数</p>
-<p class=""></p>
-<!-- Unsupported block type -->
-<pre><code class="language-vhdl">library ieee;
+<p class="Paragraph ">例如，10 位的数组可以这样定义。</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">此外，可以使用 <code>generic</code> 定义的值 <code>width</code> 来定义宽度为 width 的 <code>std_logic_vector</code> 型的信号。这里 <code>width−1</code> 的值在综合时确定.</p>
+<h3 class="Heading Heading--3 "><strong>运算符和运算</strong></h3>
+<p class="Paragraph ">将典型的运算符汇总在表 3 中。如果将逻辑运算符定义为 <code>std_logic_vector</code> 类型，则会对对应的每个比特的值之间应用逻辑运算并返回结果。例如，“ <code>"10" and "11"</code> ”会变成“ <code>"10"</code> ”，“ <code>"10" or "11"</code> ”会变成“ <code>"11"</code> ”。比较运算的结果是 <code>true</code> 或 <code>false</code> 的真值。可以看出它具备了许多常见的编程语言所拥有的运算功能。但是，表 3 的说明中标注了(*1)的算术运算或比较数值大小的运算，只能用于 <code>unsigned</code> 类型、 <code>signed</code> 类型或 <code>integer</code> 的变量或常量，或者相当于数值的立即数</p>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: ChildDatabase { child_database: ChildDatabaseBlock { title: "运算符汇总" } } -->
+<pre class="Code"><code>library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;</code></pre>
-<blockquote class="bg-green">• 对于 <code>std_logic_vector</code> 类型，如果要进行算术运算，通常需要先转换为 <code>signed</code> 或 <code>unsigned</code> 类型，再进行运算，运算完后再转换为 <code>std_logic_vector</code> 类型。</blockquote>
-<p class=""></p>
-<pre><code class="language-vhdl">signal B : std_logic_vector(15 downto 0);
+<blockquote class="Quote bg-green">• 对于 <code>std_logic_vector</code> 类型，如果要进行算术运算，通常需要先转换为 <code>signed</code> 或 <code>unsigned</code> 类型，再进行运算，运算完后再转换为 <code>std_logic_vector</code> 类型。</blockquote>
+<p class="Paragraph "></p>
+<pre class="Code"><code>signal B : std_logic_vector(15 downto 0);
 -- 取 B 的高 8 位
 signal high_byte : std_logic_vector(7 downto 0);
 high_byte <= B(15 downto 8);</code></pre>
-<p class=""></p>
-<blockquote class="bg-green">逻辑移位 :左移逻辑 (<code>sll</code>)：将位向量左移指定的位数，右侧补 0。右移逻辑 (<code>srl</code>)：将位向量右移指定的位数，左侧补 0。
+<p class="Paragraph "></p>
+<blockquote class="Quote bg-green">逻辑移位 :左移逻辑 (<code>sll</code>)：将位向量左移指定的位数，右侧补 0。右移逻辑 (<code>srl</code>)：将位向量右移指定的位数，左侧补 0。
 算术移位 :左移算术 (<code>sla</code>)：与 <code>sll </code>类似，但通常用于有符号数时。右移算术 (<code>sra</code>)：将位向量右移时保留符号位（最左边的比特）。
 旋转（循环移位）操作 :左旋 (<code>rol</code>)：将最高有效位送到最低有效位，实现循环左移。右旋 (<code>ror</code>)：实现循环右移。</blockquote>
-<p class=""></p>
-<p class=""></p>
-<h3 class="">计算结果的代入</h3>
-<p class="">计算结果可以通过赋值语句赋值给其他（或相同）变量。赋值有阻塞赋值和非阻塞赋值两种。</p>
-<p class="">:= 阻塞赋值</p>
-<p class=""><= 非阻塞赋值</p>
-<p class=""><code>Q <= counter(width-1);</code></p>
-<p class="">这种描述相当于取出 <code>std_logic_vector</code> 型变量 <code>counter</code> 的 <code>(width-1)</code> 个，并赋值给 <code>Q</code> 的硬件描述。在 VHDL 中， <code>signal</code> 变量在初始化之外不能使用阻塞赋值</p>
-<h3 class="">类型转换</h3>
-<pre><code class="language-vhdl">a <= "00000000" & b; -- 正在用8位的0（即=00000000）填充不足的8位
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 ">计算结果的代入</h3>
+<p class="Paragraph ">计算结果可以通过赋值语句赋值给其他（或相同）变量。赋值有阻塞赋值和非阻塞赋值两种。</p>
+<p class="Paragraph ">:= 阻塞赋值</p>
+<p class="Paragraph "><= 非阻塞赋值</p>
+<p class="Paragraph "><code>Q <= counter(width-1);</code></p>
+<p class="Paragraph ">这种描述相当于取出 <code>std_logic_vector</code> 型变量 <code>counter</code> 的 <code>(width-1)</code> 个，并赋值给 <code>Q</code> 的硬件描述。在 VHDL 中， <code>signal</code> 变量在初始化之外不能使用阻塞赋值</p>
+<h3 class="Heading Heading--3 ">类型转换</h3>
+<pre class="Code"><code>a <= "00000000" & b; -- 正在用8位的0（即=00000000）填充不足的8位
 b <= a(7 downto 0);  -- 只将a的下位8位赋值给b。</code></pre>
-<p class="">类型转换需要使用专用函数。例如，将 <code>std_logic_vector</code> 转换为 <code>unsigned</code> 类型或 <code>signed</code> 类型时，分别使用 <code>unsigned</code> 函数或 <code>signed</code> 函数。</p>
-<p class=""><code>unsigned(c);</code></p>
-<p class="">如果这样写， <code>std_logic_vector</code> 类型的变量 <code>c</code> 可以转换为 <code>unsigned</code> 类型。</p>
-<p class="">反之，将 <code>unsigned</code> 类型或 <code>singed</code> 类型的变量转换为 <code>std_logic_vector</code> 类型时，使用 <code>std_logic_vector</code> 函数</p>
-<pre><code class="language-vhdl">std_logic_vector(d);</code></pre>
-<p class=""></p>
-<p class="">如果这样写， <code>unsigned</code> 类型的变量 <code>d</code> 可以转换为 <code>std_logic_vector</code> 类型。</p>
+<p class="Paragraph ">类型转换需要使用专用函数。例如，将 <code>std_logic_vector</code> 转换为 <code>unsigned</code> 类型或 <code>signed</code> 类型时，分别使用 <code>unsigned</code> 函数或 <code>signed</code> 函数。</p>
+<p class="Paragraph "><code>unsigned(c);</code></p>
+<p class="Paragraph ">如果这样写， <code>std_logic_vector</code> 类型的变量 <code>c</code> 可以转换为 <code>unsigned</code> 类型。</p>
+<p class="Paragraph ">反之，将 <code>unsigned</code> 类型或 <code>singed</code> 类型的变量转换为 <code>std_logic_vector</code> 类型时，使用 <code>std_logic_vector</code> 函数</p>
+<pre class="Code"><code>std_logic_vector(d);</code></pre>
+<p class="Paragraph "></p>
+<p class="Paragraph ">如果这样写， <code>unsigned</code> 类型的变量 <code>d</code> 可以转换为 <code>std_logic_vector</code> 类型。</p>
 
   </main>
     <aside class ="utterances">

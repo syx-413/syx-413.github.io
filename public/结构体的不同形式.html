@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -154,7 +154,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./Note.html">
+  <a href="./note.html">
     <div class="Navbar__Btn">
       
         
@@ -168,7 +168,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./OneDrive_Vercel__立即上手.html">
+  <a href="./onedrive-vercel--立即上手.html">
     <div class="Navbar__Btn">
       
         
@@ -192,7 +192,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./blog_mark.html">
+  <a href="./blog-mark.html">
     <div class="Navbar__Btn">
       
         
@@ -234,7 +234,7 @@
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./About.html">
+  <a href="./about.html">
     <div class="Navbar__Btn">
       
         
@@ -303,24 +303,24 @@
         
         
           <span class="DateTagBar__Item DateTagBar__Tag">
-            <a href="./tag/单片机.html" class="tag tag-some(red)">单片机</a>
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
           </span>
         
       </div>
     
   </header>
   <main class="PageRoot">
-    <p class=""></p>
-<h3 class=""><strong>1. 包含指针成员的结构体</strong></h3>
-<pre><code class="language-c">typedef struct {
+    <p class="Paragraph "></p>
+<h3 class="Heading Heading--3 "><strong>1. 包含指针成员的结构体</strong></h3>
+<pre class="Code"><code>typedef struct {
     int id;
     char *name;
     float *scores;
 } Student;</code></pre>
-<p class=""></p>
-<p class=""></p>
-<h3 class=""><strong>2. 嵌套结构体</strong></h3>
-<pre><code class="language-c">typedef struct {
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 "><strong>2. 嵌套结构体</strong></h3>
+<pre class="Code"><code>typedef struct {
     float x;
     float y;
 } Point;
@@ -329,29 +329,29 @@ typedef struct {
     Point start;
     Point end;
 } Line;</code></pre>
-<p class=""></p>
-<h3 class=""><strong>3. 带有位字段的结构体</strong></h3>
-<pre><code class="language-c">typedef struct {
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 "><strong>3. 带有位字段的结构体</strong></h3>
+<pre class="Code"><code>typedef struct {
     unsigned int red : 3;
     unsigned int green : 3;
     unsigned int blue : 2;
 } Color;</code></pre>
-<p class=""></p>
-<h3 class=""><strong>4. 含有数组成员的结构体</strong></h3>
-<pre><code class="language-c">typedef struct {
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 "><strong>4. 含有数组成员的结构体</strong></h3>
+<pre class="Code"><code>typedef struct {
     int id;
     char name[50];
     float scores[5];
 } Student;</code></pre>
-<p class=""></p>
-<h3 class=""><strong>5. 包含函数指针成员的结构体</strong></h3>
-<pre><code class="language-c">typedef struct {
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 "><strong>5. 包含函数指针成员的结构体</strong></h3>
+<pre class="Code"><code>typedef struct {
     void (*draw)(void);
     void (*move)(int x, int y);
 } Shape;</code></pre>
-<p class=""></p>
-<h3 class=""><strong>6. 使用匿名结构体</strong></h3>
-<pre><code class="language-c">typedef struct {
+<p class="Paragraph "></p>
+<h3 class="Heading Heading--3 "><strong>6. 使用匿名结构体</strong></h3>
+<pre class="Code"><code>typedef struct {
     int x;
     int y;
 } Point;
@@ -360,9 +360,9 @@ typedef struct {
     Point start;
     Point end;
 } Line;</code></pre>
-<p class="">这些是结构体在C语言中的一些不同形式的例子，展示了结构体的灵活性和多样性。</p>
-<p class=""></p>
-<!-- Unsupported block type -->
+<p class="Paragraph ">这些是结构体在C语言中的一些不同形式的例子，展示了结构体的灵活性和多样性。</p>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
 
   </main>
     <aside class ="utterances">

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>使用E5订阅中的exchange邮局 - E5食用指南&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="使用E5订阅中的exchange邮局 - E5食用指南">
+  
+    <meta name="description" content="说明 这一部分是使用E5订阅中的exchange服务，搭建一个企业邮箱（域名邮箱）。 简单来说，你需要首先准备一个域名，例如adc.com，遵循此文，你可以得到一个XXX@abc.com的邮箱用于收发邮件，并可以设置转发规则，即发到以@abc.com结尾的任何邮件都可以被转发到你的邮箱中。 ">
+    <meta property="og:description" content="说明 这一部分是使用E5订阅中的exchange服务，搭建一个企业邮箱（域名邮箱）。 简单来说，你需要首先准备一个域名，例如adc.com，遵循此文，你可以得到一个XXX@abc.com的邮箱用于收发邮件，并可以设置转发规则，即发到以@abc.com结尾的任何邮件都可以被转发到你的邮箱中。 ">
+  
+  
+    <meta property="og:image" content="https:&#x2F;&#x2F;img.icons8.com&#x2F;color&#x2F;48&#x2F;outlook-calendar.png">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span><img class="inline-img-icon" src="https:&#x2F;&#x2F;img.icons8.com&#x2F;color&#x2F;48&#x2F;outlook-calendar.png"></span>
+        
+      </div>
+    
+    <h1 class="Header__Title">使用E5订阅中的exchange邮局 - E5食用指南</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-06-07</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/ondrive.html" class="tag tag-blue">Ondrive</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/refer.html" class="tag tag-red">Refer</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <h2 class="Heading Heading--2 ">说明</h2>
+<p class="Paragraph ">这一部分是使用E5订阅中的exchange服务，搭建一个企业邮箱（域名邮箱）。</p>
+<p class="Paragraph ">简单来说，你需要首先准备一个域名，例如adc.com，遵循此文，你可以得到一个XXX@abc.com的邮箱用于收发邮件，并可以设置转发规则，即发到以@abc.com结尾的任何邮件都可以被转发到你的邮箱中。</p>
+<p class="Paragraph ">用途：比较有个性，用于注册验证等。</p>
+<h2 class="Heading Heading--2 ">设置自定义域</h2>
+<p class="Paragraph ">转到管理后台，登录E5管理员账号，如图，添加新域名</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-26-09.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">如果是使用cloudflare等DNS提供商，可以一键认证：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-27-33.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">按照指示继续添加TXT记录等。注意一个域名只能链接一个企业邮箱（当然你可以开二级域名）。</p>
+<p class="Paragraph ">这样我们就有两个域名了：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-30-07.png" /><figcaption></figcaption></figure></div>
+<h2 class="Heading Heading--2 ">添加自定义域用户</h2>
+<p class="Paragraph ">转到用户管理界面，选择添加用户即可：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-41-48.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">注意在 域 处，选择你刚才添加的域名：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-41-26.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">配置好后，在office.com可以直接登录。</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-11-18.png" /><figcaption></figcaption></figure></div>
+<h2 class="Heading Heading--2 ">设置Catch-all功能，实现无限别名收邮件</h2>
+<p class="Paragraph ">打开Exchange管理中心</p>
+<p class="Paragraph ">如图，对于你的域名，设置Internal relay，这样exchange就会将所有邮件都纳入收件中。</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-37-23.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">对于个人而言，我们只需要将所有发送到此企业邮箱的邮件都转到自己邮箱就行。但是对于团队，我们并不希望将发给团队中其他人的邮件也转发一次。这里我们建立一个用户组，便于管理。</p>
+<p class="Paragraph ">转到用户组管理。</p>
+<p class="Paragraph ">如图，添加动态用户组：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-55-07.png" /><figcaption></figcaption></figure></div>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-58-08.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">转到规则进行配置</p>
+<p class="Paragraph ">如图，对所有外部发件人应用，转发到我们的常用账户。</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-01-13.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">开启高级选项，即可看到更多设置，在例外中，选择之前建立的小组：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-09-59-32.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">一个配置示例：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-00-15.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">这样我们就完成了配置：</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-06-49.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph ">测试一下，注意我使用的是kerm@kermsite.com，但这里的收件人是test@kermsite.com。说明转发成功了。</p>
+<div class="Image Image--Normal"><figure><img src="https://e5tutorial.vercel.app/exchange/2022-03-31-10-14-55.png" /><figcaption></figcaption></figure></div>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -310,11 +310,11 @@ cargo install cargo...">
     
   </header>
   <main class="PageRoot">
-    <p class="">参考：https://esp-rs.github.io/book/introduction.https</p>
-<p class=""></p>
-<p class="">安装前置依赖: 不需要先安装 <code>esp-idf</code>，后续构建 std 应用时会自动下载和安装 <code>esp-idf</code>。</p>
-<p class=""></p>
-<pre><code class="language-bash"># 提供 cargo generate 子命令
+    <p class="Paragraph ">参考：https://esp-rs.github.io/book/introduction.https</p>
+<p class="Paragraph "></p>
+<p class="Paragraph ">安装前置依赖: 不需要先安装 <code>esp-idf</code>，后续构建 std 应用时会自动下载和安装 <code>esp-idf</code>。</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code># 提供 cargo generate 子命令
 cargo install cargo-generate
 
 # A tool that forwards linker arguments to the actual linker that is also given as an argument to
@@ -329,19 +329,19 @@ brew install libuv  # espflash 依赖它
 
 cargo install espflash
 cargo install cargo-espflash # 可选，后续可以直接使用命令 cargo espflash</code></pre>
-<h2 class="">espup 安装和维护</h2>
-<p class="">espup 同时安装和维护 Xtensa and RISC-V architectures 两种 CPU 架构工具链</p>
-<p class="">包括 esp fork 的 rust， GCC 和 LLVM 等。</p>
-<p class="">Rust 官方编译器提供了对 RISC-V target 的 Tier2 支持，可以直接向官方 toolchain 添加对应 target：</p>
-<pre><code class="language-bash">rustup toolchain install nightly --component rust-src 
+<h2 class="Heading Heading--2 ">espup 安装和维护</h2>
+<p class="Paragraph ">espup 同时安装和维护 Xtensa and RISC-V architectures 两种 CPU 架构工具链</p>
+<p class="Paragraph ">包括 esp fork 的 rust， GCC 和 LLVM 等。</p>
+<p class="Paragraph ">Rust 官方编译器提供了对 RISC-V target 的 Tier2 支持，可以直接向官方 toolchain 添加对应 target：</p>
+<pre class="Code"><code>rustup toolchain install nightly --component rust-src 
 
 # For no_std (bare-metal) applications
 rustup target add riscv32imc-unknown-none-elf # For ESP32-C2 and ESP32-C3
 rustup target add riscv32imac-unknown-none-elf # For ESP32-C6 and ESP32-H2</code></pre>
-<p class=""><code>ESP32-S3 </code>使用 <code>xtensa</code> 处理器，不再 <code>Rust </code>官方<code> toolchain </code>支持范围内，<code>ESP fork </code>了 <code>Rust </code>编译器工具链来进行支持。</p>
-<p class="">使用 <code>espup </code>安装 <code>esp channel</code>：</p>
-<p class=""></p>
-<pre><code class="language-bash"># 清理旧版本
+<p class="Paragraph "><code>ESP32-S3 </code>使用 <code>xtensa</code> 处理器，不再 <code>Rust </code>官方<code> toolchain </code>支持范围内，<code>ESP fork </code>了 <code>Rust </code>编译器工具链来进行支持。</p>
+<p class="Paragraph ">使用 <code>espup </code>安装 <code>esp channel</code>：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code># 清理旧版本
 zj@a:~/esp$ espup uninstall
 [info]: Uninstalling the Espressif Rust ecosystem
 [info]: Uninstalling Xtensa LLVM 
@@ -374,18 +374,20 @@ enable_http_proxy
 
 export LIBCLANG_PATH="/Users/alizj/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-16.0.4-20231113/esp-clang/lib"
 export PATH="/Users/alizj/.rustup/toolchains/esp/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin:$PATH"</code></pre>
-<p class="">为了方便使用，将 ~/export-esp.sh 脚本 mv 到 ~/esp 目录，同时添加两个 alias：</p>
-<p class=""> </p>
-<pre><code class="language-bash">zj@a:~/esp$ mv ~/export-esp.sh ~/esp/
+<p class="Paragraph ">为了方便使用，将 ~/export-esp.sh 脚本 mv 到 ~/esp 目录，同时添加两个 alias：</p>
+<p class="Paragraph "> </p>
+<pre class="Code"><code>zj@a:~/esp$ mv ~/export-esp.sh ~/esp/
 zj@a:~/esp$ grep esp ~/.bashrc
 alias export_idf='. $HOME/esp/esp-idf/export.sh'
 alias export_esp='. $HOME/esp/export-esp.sh' </code></pre>
-<p class="">后续每次使用 esp-rs 前都需要 <code>source ~/esp/export-esp.sh</code> 脚本。</p>
-<h2 class="">修正 esp toolchain 缺失 rust-analyzer 的问题</h2>
-<p class="">esp 是 espup 安装的自定义 toolchain，不包含 rust-analyzer，需要建一个软链接：</p>
-<li class="">https://www.reddit.com/r/rust/comments/13d2tls/rustanalyzer_and_toolchain_for_esp/</li>
-<p class=""></p>
-<pre><code class="language-bash">zj@a:~$ rustup component add rust-analyzer
+<p class="Paragraph ">后续每次使用 esp-rs 前都需要 <code>source ~/esp/export-esp.sh</code> 脚本。</p>
+<h2 class="Heading Heading--2 ">修正 esp toolchain 缺失 rust-analyzer 的问题</h2>
+<p class="Paragraph ">esp 是 espup 安装的自定义 toolchain，不包含 rust-analyzer，需要建一个软链接：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">https://www.reddit.com/r/rust/comments/13d2tls/rustanalyzer_and_toolchain_for_esp/</li>
+</ul>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~$ rustup component add rust-analyzer
 info: downloading component 'rust-analyzer'
 info: installing component 'rust-analyzer'
 
@@ -404,18 +406,20 @@ total 96M
 -rwxr-xr-x 1 alizj 6.3M  5  5 12:11 rustfmt*
 
 zj@a:~/docs$ ln -sf ~/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rust-analyzer ~/.rustup/toolchains/esp/bin/rust-analyzer</code></pre>
-<p class="">也可以从 esp-rs/rust 源码编译安装 <code>rust-analyer</code>:</p>
-<pre><code class="language-bash"># 在 --tools 中指定 rust-analyzer 来编译安装 esp32 使用的 rust-analyzer
+<p class="Paragraph ">也可以从 esp-rs/rust 源码编译安装 <code>rust-analyer</code>:</p>
+<pre class="Code"><code># 在 --tools 中指定 rust-analyzer 来编译安装 esp32 使用的 rust-analyzer
 ./configure --experimental-targets=Xtensa --release-channel=nightly --enable-extended
   --tools=clippy,cargo,rustfmt,rust-analyzer --enable-lld </code></pre>
-<p class=""></p>
-<p class=""><code>espup </code>安装的内容位于 <code>~/.espup</code> 目录下，主要包含如下内容：</p>
-<li class=""><code>Espressif Rust fork</code> with support for Espressif targets</li>
-<li class=""><code>nightly toolchain</code> with support for RISC-V targets</li>
-<li class=""><code>LLVM fork</code> with support for Xtensa targets</li>
-<li class=""><code>GCC toolchain</code> that links the final binary</li>
-<p class=""></p>
-<pre><code class="language-bash"># 安装了两个 toolchain，分别是 nightly-x86_64-apple-darwin 和 esp
+<p class="Paragraph "></p>
+<p class="Paragraph "><code>espup </code>安装的内容位于 <code>~/.espup</code> 目录下，主要包含如下内容：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList "><code>Espressif Rust fork</code> with support for Espressif targets</li>
+<li class="BulletedList "><code>nightly toolchain</code> with support for RISC-V targets</li>
+<li class="BulletedList "><code>LLVM fork</code> with support for Xtensa targets</li>
+<li class="BulletedList "><code>GCC toolchain</code> that links the final binary</li>
+</ul>
+<p class="Paragraph "></p>
+<pre class="Code"><code># 安装了两个 toolchain，分别是 nightly-x86_64-apple-darwin 和 esp
 #
 # nightly-x86_64-apple-darwin 是 rust 官方工具链，支持 riscv32xx 和 x86_64-apple-darwin 等 4 个 targets
 # riscv32xx 是 esp32-c3 系列 RISC-V CPU 类型。
@@ -596,13 +600,13 @@ xtensa-esp32s2-none-elf
 xtensa-esp32s3-espidf  # espidf 后缀的 target 为使用 eps-idf 的 std 应用
 xtensa-esp32s3-none-elf # none-elf 后缀的 target 为不使用 esp-idf 的 non_std 应用
 xtensa-esp8266-none-elf</code></pre>
-<p class=""></p>
-<h2 class="">更新 esp-rs 工具链：</h2>
-<pre><code class="language-plain text">zj@a:~/esp$ enable_socks_proxy
+<p class="Paragraph "></p>
+<h2 class="Heading Heading--2 ">更新 esp-rs 工具链：</h2>
+<pre class="Code"><code>zj@a:~/esp$ enable_socks_proxy
 zj@a:~/esp$ espup update</code></pre>
-<p class=""></p>
-<!-- Unsupported block type -->
-<p class=""></p>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+<p class="Paragraph "></p>
 
   </main>
     <aside class ="utterances">

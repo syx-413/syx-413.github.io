@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>使用 cargo run 和 espflash 烧写固件&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="使用 cargo run 和 espflash 烧写固件">
+  
+    <meta name="description" content="espflash 是固件烧录和终端监视工具，基于 esptool.py. 参考：https:&#x2F;&#x2F;github.com&#x2F;esp-rs&#x2F;espflash&#x2F;tree&#x2F;main&#x2F;espflash#installation cargo-espflash vs espflash: cargo-espflash ...">
+    <meta property="og:description" content="espflash 是固件烧录和终端监视工具，基于 esptool.py. 参考：https:&#x2F;&#x2F;github.com&#x2F;esp-rs&#x2F;espflash&#x2F;tree&#x2F;main&#x2F;espflash#installation cargo-espflash vs espflash: cargo-espflash ...">
+  
+  
+    <meta property="og:image" content="🦀">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🦀</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">使用 cargo run 和 espflash 烧写固件</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-02T15:02:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <h2 class="Heading Heading--2 ">espflash 是固件烧录和终端监视工具，基于 esptool.py.</h2>
+<p class="Paragraph ">参考：https://github.com/esp-rs/espflash/tree/main/espflash#installation</p>
+<p class="Paragraph ">cargo-espflash vs espflash: cargo-espflash 是作为 cargo 的一个子命令来运行的，如 cargo espflash, 它支持 cargo 的 –bin/–expample 参数来快速指定 bin 和 example binary 名称。而 espflash 是一个单独工具，需要指定 bin 文件的具体路径：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code>MCU=esp32c3 cargo espflash flash --target riscv32imc-esp-espidf --example ledc_simple --monitor
+cargo espflash flash --example=blinky --monitor
+
+espflash flash target/debug/myapp --monitor </code></pre>
+<p class="Paragraph ">espflash 使用 USB 串口(linux: /dev/ttyUSB0, macOS: /dev/cu.*) 来烧录芯片的 Flash，它会检查项目的依赖是否包含 esp-idf-sys 来判断是那种类型的应用，然后 <code>自动烧写不同的文件</code> ：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">对于 std 应用，会烧写三个文件：应用 binary，bootloader.bin，partition-table.bin；</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">bootloader.bin，partition-table.bin 是 esp-idf-sys build script 生成的。</li>
+</ul>
+</div>
+<li class="BulletedList ">对于 no_std 应用，只烧写一个 elf 格式的应用 binary；</li>
+</ul>
+<p class="Paragraph "></p>
+<pre class="Code"><code>zj@a:~/codes/esp32$ espflash --help
+A command-line tool for flashing Espressif devices
+
+Usage: espflash <COMMAND> 
+
+Commands:
+  board-info       Print information about a connected target device
+  completions      Generate completions for the given shell
+  erase-flash      Erase Flash entirely
+  erase-parts      Erase specified partitions
+  erase-region     Erase specified region
+  flash            Flash an application in ELF format to a connected target device
+  monitor          Open the serial monitor without flashing the connected target device
+  partition-table  Convert partition tables between CSV and binary format
+  save-image       Generate a binary application image and save it to a local disk
+  write-bin        Write a binary file to a specific address in a target device's flash
+  help             Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+zj@a:~/codes/esp32$</code></pre>
+<h3 class="Heading Heading--3 ">cargo run: 在项目的 .cargo/config.toml 中添加如下内容, 然后就可以执行 cargo run 来 flash 和 monitor 应用:</h3>
+<p class="Paragraph "></p>
+<pre class="Code"><code>[target.'cfg(any(target_arch = "riscv32", target_arch = "xtensa"))']
+runner = "espflash flash --baud=921600 --monitor" </code></pre>
+<h3 class="Heading Heading--3 ">espflash 配置文件 espflash.toml:</h3>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">具体配置参数：https://github.com/esp-rs/espflash/blob/main/espflash/src/cli/config.rs#L77</li>
+</ul>
+<p class="Paragraph "></p>
+<pre class="Code"><code>[connection] 
+serial = "/dev/ttyUSB0"
+baudrate = 460800
+bootloader = "path/to/custom/bootloader.bin"
+partition_table = "path/to/custom/partition-table.bin"
+
+[flash]
+mode = "qio"
+size = "8MB"
+frequency = "80MHz"</code></pre>
+<p class="Paragraph ">espflash.toml 文件位置:</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">项目目录（Cargo.toml 所在目录）；</li>
+<li class="NumberedList ">workspace 根目录；</li>
+<li class="NumberedList ">$HOME/Library/Application Support/rs.esp.espflash/espflash.toml</li>
+</ol>
+<p class="Paragraph ">monitor 日志格式：espflash 的 flash 和 monitor 子命令支持 -L/–log-format 参数指定日志格式：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList "><code>serial</code>: Default logging format</li>
+<li class="NumberedList "><code>defmt</code> : Uses [defmt] logging framework. With logging format, logging strings have framing bytes to indicate that they are defmt messages.</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">一般是在 no_std 应用中使用，需要和 esp-println crate 联合使用。</li>
+</ul>
+</div>
+</ol>
+<p class="Paragraph ">Establishing a serial connection with the ESP32-S3 target device could be done using <code>USB-to-UART bridge</code> or <code>USB peripheral</code> supported in ESP32-S3. For the ESP32-S3, <code>the USB peripheral</code> is available, allowing you to flash the binaries <code>without the need for an external USB-to-UART bridge</code>.</p>
+<p class="Paragraph ">If you are flashing for the first time, you need to get the ESP32-S3 into <code>the download mode</code> manually. To do so, press and <code>hold the BOOT button and then press the RESET button once</code>. After that release the BOOT button.</p>
+<p class="Paragraph ">在线下载固件和烧写：esp-launchpad，它使用 USB-Serial-JTAG 接口， 例如在线下载和烧写 esp-box 固件</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">如果烧写了 USB-OTG 应用（如摄像头），则可能不能找到设备，这时可以按住 BOOT 按钮的同时按 RST 按钮将芯片至于 download 模式，这时芯片内 USB PHY 会连接 USB-Serial-JTAG Controller。</li>
+</ul>
+<p class="Paragraph ">probe-rs：embassy 使用 probe-rs 来烧写和调试：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">https://embassy.dev/book/dev/getting_started.html</li>
+<li class="NumberedList ">https://embassy.dev/book/dev/project_structure.html</li>
+</ol>
+<p class="Paragraph "></p>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

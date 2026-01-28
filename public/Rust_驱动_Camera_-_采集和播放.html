@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -308,63 +308,91 @@
     
   </header>
   <main class="PageRoot">
-    <p class="">esp32-camera 和 ov3660: https://shop.m5stack.com/products/esp32-psram-timer-camera-ov3660</p>
-<p class="">OV3660（pdf datasheet） 是 3MP 像素的 CMOS 图像传感器，最高 30FPS 720P（2048*1536）的照片（OV2660 可以提供 2MP 像素）。</p>
-<p class="">Camera 一般使用 RGB DVP 接口, 部分 LCD 也使用该 RGB 接口类型.</p>
-<p class="">OV3660 引脚说明：</p>
-<li class=""><strong>VDDA, VDDD, VDDIO</strong> - 电源引脚，分别为模拟电源、数字电源和I/O电源。</li>
-<li class=""><strong>GND</strong> - 地（Ground），电源的负极。</li>
-<li class=""><strong>SCL, SDA</strong> - 用于I2C通信的串行时钟线（SCL）和串行数据线（SDA），用于传感器配置。</li>
-<div style="margin-left: 20px;"><li class="">SIOC # SCCB input clock</li>
-<li class="">SIOD # SCCB data</li>
-</div><li class=""><strong>VS, HS, PCLK</strong> - 视频同步信号（VS，垂直同步），水平同步信号（HS），像素时钟（PCLK）。</li>
-<div style="margin-left: 20px;"><li class="">VS： video output vertical sync signal</li>
-<li class="">HS： video output horizontal sync signal</li>
-<li class="">PCLK： image output clock</li>
-</div><li class=""><strong>D0-D9</strong> - 数字图像数据输出引脚，用于传输图像数据，具体位数根据传感器配置和模式可能有所不同。</li>
-<li class=""><strong>RESET_BAR</strong> - 复位引脚，通常用于硬件复位传感器。</li>
-<li class=""><strong>PWDN</strong> - 电源关闭（Power Down）控制，用于控制传感器的电源模式。</li>
-<li class=""><strong>XCLK</strong> - 外部时钟输入，提供给传感器的工作时钟，system input clock/scan clock input。对于 ESP32 是 10 MHz。</li>
-<p class="">通过 I2C 等通信接口（也称为 SCCB，serial camera control bus），外部控制器可以读写 OV3660 的内部寄存器，以配置其工作模式、分辨率、曝光参数、增益等。</p>
-<li class="">automatic exposure control (AEC)</li>
-<li class="">automatic white balance (AWB)</li>
-<li class="">automatic flicker detection</li>
-<li class="">automatic black level calibration (ABLC)</li>
-<li class="">图像质量，如 JPEG 质量；</li>
-<li class="">可编程 frame rate；</li>
-<li class="">支持的输出格式： <code>raw RGB data, RGB565/555/444, CCIR656, YCbCr422,and JPEG compression</code></li>
-<p class="">ATTR_HTML: :width 400 :align center</p>
-<figure><img src="https://blog.opsnull.com/images/ov3660/2024-05-06_17-09-54_screenshot.png" style="max-width: 100%; border-radius: 5px;" /><figcaption></figcaption></figure>
-<p class="">驱动程序通过发送 VSYNC 信号来从 OV3660 获取恒定的 frame rate 输出。</p>
-<li class="">驱动发起 VSYNC 采集，OV3660 在 VSYNC 采集结束后，发送 VSYNC ISR 中断请求，驱动使用 DMA 来获取 OV3660 输出的一个 frame 数据；</li>
-<p class="">最大图片传输速率：maximum image transfer rate:</p>
-<li class="">2048x1536: 15 fps （3MP 像素）</li>
-<li class="">1080p: 20 fps</li>
-<li class="">720p: 45 fps</li>
-<li class="">XGA (1024x768): 45 fps</li>
-<li class="">VGA (640x480): 60 fps</li>
-<li class="">QVGA (320x240): 120 fps</li>
-<h2 class="">1 esp32-camera #</h2>
-<p class="">esp32-camera 项目是 ESP32 官方维护的摄像头驱动和 APIs 库：https://github.com/espressif/esp32-camera</p>
-<p class="">主要原理：将摄像头像素输出设置为 JEPG 格式，一个 frame 为一个 JPEG 格式数据的 frame buffer，然后通过读取 frame buffer 来获得单张照片。通过 loop 获取 frame buffer 的数据来形成 video stream。</p>
-<p class="">esp32-camera 摄像头驱动的配置参数：</p>
-<li class="">使用 LEDC timer 来产生 XCLK 所需的频率信号；</li>
-<li class="">像素格式，也即摄像头输出的像素数据格式： <code>PIXFORMAT_ + YUV422|GRAYSCALE|RGB565|JPEG</code></li>
-<div style="margin-left: 20px;"><li class="">YUV 也称为 YCbCr：Y 亮度，U/Cb：蓝色浓度，V/Cr：红色浓度，它也是一种压缩格式。</li>
-<div style="margin-left: 20px;"><li class="">为了节省带宽 YUV frame 一般使用采样，如 YUV422 表示 2:1的水平取样，垂直完全采样；</li>
-<li class="">每个像素只需要 2Bytes，这样 3MP 大概是 6MB 存储需求，8 PSRAM 还有 2MB 可用。</li>
-</div><li class="">RGB 输出格式：</li>
-<div style="margin-left: 20px;"><li class="">RGB888，也称 24-bit RGB，各使用 8bit 来表示 red/green/blue，在 3MP 2048x1536 分辨率的情况下，需要 9437184 bytes 存储空间来保存一个 frame，超过了 8 <code>PSRAM</code> 的容量。所以一般使用 RGB565/YUV/JPEG 等压缩格式</li>
-<li class="">RGB565，也称 16-bit RGB，5 bits for the red channel, 6 bits for the green channel, and 5 bits for the blue channel. 相比 RGB888，更节省资源；</li>
-<li class="">RGB 和 YUV 之间可以相互转换；</li>
-</div><li class="">JPEG 输出格式：为了节省空间， <code>建议使用</code> JPEG 压缩格式，一个 frame 照片的大小大概是原始 raw 的 1/5 空间需求；</li>
-</div><li class="">帧大小，也即一幅照片的分辨率：FRAMESIZE_ + QVGA|CIF|VGA|SVGA|XGA|SXGA|UXGA</li>
-<li class="">保存照片数据的 frame buffer 位置：PSRAM 或 DRAM；</li>
-<div style="margin-left: 20px;"><li class="">ESP32 需要有至少 8MB 的 PSRAM 来作为 framebuffer 保存照片，同时需要启用 JPEG 压缩格式，OV3660 支持 on-chip 的 JPEG video stream 输出。</li>
-<li class="">PSRAM 也称为 SPI RAM;</li>
-<li class="">启用 PSRAM: <code>echo 'CONFIG_ESP32_SPIRAM_SUPPORT=y' >> sdkconfig.defaults</code></li>
-</div><p class="">Copy</p>
-<pre><code class="language-c++">// https://github.com/espressif/esp32-camera/blob/master/driver/include/esp_camera.h#L115
+    <p class="Paragraph ">esp32-camera 和 ov3660: https://shop.m5stack.com/products/esp32-psram-timer-camera-ov3660</p>
+<p class="Paragraph ">OV3660（pdf datasheet） 是 3MP 像素的 CMOS 图像传感器，最高 30FPS 720P（2048*1536）的照片（OV2660 可以提供 2MP 像素）。</p>
+<p class="Paragraph ">Camera 一般使用 RGB DVP 接口, 部分 LCD 也使用该 RGB 接口类型.</p>
+<p class="Paragraph ">OV3660 引脚说明：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList "><strong>VDDA, VDDD, VDDIO</strong> - 电源引脚，分别为模拟电源、数字电源和I/O电源。</li>
+<li class="NumberedList "><strong>GND</strong> - 地（Ground），电源的负极。</li>
+<li class="NumberedList "><strong>SCL, SDA</strong> - 用于I2C通信的串行时钟线（SCL）和串行数据线（SDA），用于传感器配置。</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">SIOC # SCCB input clock</li>
+<li class="BulletedList ">SIOD # SCCB data</li>
+</ul>
+</div>
+<li class="NumberedList "><strong>VS, HS, PCLK</strong> - 视频同步信号（VS，垂直同步），水平同步信号（HS），像素时钟（PCLK）。</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">VS： video output vertical sync signal</li>
+<li class="BulletedList ">HS： video output horizontal sync signal</li>
+<li class="BulletedList ">PCLK： image output clock</li>
+</ul>
+</div>
+<li class="NumberedList "><strong>D0-D9</strong> - 数字图像数据输出引脚，用于传输图像数据，具体位数根据传感器配置和模式可能有所不同。</li>
+<li class="NumberedList "><strong>RESET_BAR</strong> - 复位引脚，通常用于硬件复位传感器。</li>
+<li class="NumberedList "><strong>PWDN</strong> - 电源关闭（Power Down）控制，用于控制传感器的电源模式。</li>
+<li class="NumberedList "><strong>XCLK</strong> - 外部时钟输入，提供给传感器的工作时钟，system input clock/scan clock input。对于 ESP32 是 10 MHz。</li>
+</ol>
+<p class="Paragraph ">通过 I2C 等通信接口（也称为 SCCB，serial camera control bus），外部控制器可以读写 OV3660 的内部寄存器，以配置其工作模式、分辨率、曝光参数、增益等。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">automatic exposure control (AEC)</li>
+<li class="BulletedList ">automatic white balance (AWB)</li>
+<li class="BulletedList ">automatic flicker detection</li>
+<li class="BulletedList ">automatic black level calibration (ABLC)</li>
+<li class="BulletedList ">图像质量，如 JPEG 质量；</li>
+<li class="BulletedList ">可编程 frame rate；</li>
+<li class="BulletedList ">支持的输出格式： <code>raw RGB data, RGB565/555/444, CCIR656, YCbCr422,and JPEG compression</code></li>
+</ul>
+<p class="Paragraph ">ATTR_HTML: :width 400 :align center</p>
+<figure class="Image Image--Normal"><img src="https://blog.opsnull.com/images/ov3660/2024-05-06_17-09-54_screenshot.png" /><figcaption></figcaption></figure>
+<p class="Paragraph ">驱动程序通过发送 VSYNC 信号来从 OV3660 获取恒定的 frame rate 输出。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">驱动发起 VSYNC 采集，OV3660 在 VSYNC 采集结束后，发送 VSYNC ISR 中断请求，驱动使用 DMA 来获取 OV3660 输出的一个 frame 数据；</li>
+</ul>
+<p class="Paragraph ">最大图片传输速率：maximum image transfer rate:</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">2048x1536: 15 fps （3MP 像素）</li>
+<li class="NumberedList ">1080p: 20 fps</li>
+<li class="NumberedList ">720p: 45 fps</li>
+<li class="NumberedList ">XGA (1024x768): 45 fps</li>
+<li class="NumberedList ">VGA (640x480): 60 fps</li>
+<li class="NumberedList ">QVGA (320x240): 120 fps</li>
+</ol>
+<h2 class="Heading Heading--2 ">1 esp32-camera #</h2>
+<p class="Paragraph ">esp32-camera 项目是 ESP32 官方维护的摄像头驱动和 APIs 库：https://github.com/espressif/esp32-camera</p>
+<p class="Paragraph ">主要原理：将摄像头像素输出设置为 JEPG 格式，一个 frame 为一个 JPEG 格式数据的 frame buffer，然后通过读取 frame buffer 来获得单张照片。通过 loop 获取 frame buffer 的数据来形成 video stream。</p>
+<p class="Paragraph ">esp32-camera 摄像头驱动的配置参数：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">使用 LEDC timer 来产生 XCLK 所需的频率信号；</li>
+<li class="BulletedList ">像素格式，也即摄像头输出的像素数据格式： <code>PIXFORMAT_ + YUV422|GRAYSCALE|RGB565|JPEG</code></li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">YUV 也称为 YCbCr：Y 亮度，U/Cb：蓝色浓度，V/Cr：红色浓度，它也是一种压缩格式。</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">为了节省带宽 YUV frame 一般使用采样，如 YUV422 表示 2:1的水平取样，垂直完全采样；</li>
+<li class="BulletedList ">每个像素只需要 2Bytes，这样 3MP 大概是 6MB 存储需求，8 PSRAM 还有 2MB 可用。</li>
+</ul>
+</div>
+<li class="BulletedList ">RGB 输出格式：</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">RGB888，也称 24-bit RGB，各使用 8bit 来表示 red/green/blue，在 3MP 2048x1536 分辨率的情况下，需要 9437184 bytes 存储空间来保存一个 frame，超过了 8 <code>PSRAM</code> 的容量。所以一般使用 RGB565/YUV/JPEG 等压缩格式</li>
+<li class="BulletedList ">RGB565，也称 16-bit RGB，5 bits for the red channel, 6 bits for the green channel, and 5 bits for the blue channel. 相比 RGB888，更节省资源；</li>
+<li class="BulletedList ">RGB 和 YUV 之间可以相互转换；</li>
+</ul>
+</div>
+<li class="BulletedList ">JPEG 输出格式：为了节省空间， <code>建议使用</code> JPEG 压缩格式，一个 frame 照片的大小大概是原始 raw 的 1/5 空间需求；</li>
+</ul>
+</div>
+<li class="BulletedList ">帧大小，也即一幅照片的分辨率：FRAMESIZE_ + QVGA|CIF|VGA|SVGA|XGA|SXGA|UXGA</li>
+<li class="BulletedList ">保存照片数据的 frame buffer 位置：PSRAM 或 DRAM；</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">ESP32 需要有至少 8MB 的 PSRAM 来作为 framebuffer 保存照片，同时需要启用 JPEG 压缩格式，OV3660 支持 on-chip 的 JPEG video stream 输出。</li>
+<li class="BulletedList ">PSRAM 也称为 SPI RAM;</li>
+<li class="BulletedList ">启用 PSRAM: <code>echo 'CONFIG_ESP32_SPIRAM_SUPPORT=y' >> sdkconfig.defaults</code></li>
+</ul>
+</div>
+</ul>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>// https://github.com/espressif/esp32-camera/blob/master/driver/include/esp_camera.h#L115
 /**
  * @brief Configuration structure for camera initialization
  */
@@ -433,15 +461,19 @@ typedef enum {
     YUV422_TO_YUV420
 } camera_conv_mode_t;
 #endif</code></pre>
-<p class="">对于 RAW RGB 和 YUV 像素，一般使用 8-10 位并行数字接口（DVP）输出， <code>该接口和 RGB LCD 接口类型一致</code> ，所以 LCD 和 Camera 在 esp-hal 仓库中属于同一个 module：lcd_camera;</p>
-<p class="">LCD 显示器一般使用 RGB 像素格式，而且是比较节省空间的 16-bit 的 RGB565 像素格式：</p>
-<li class="">camera 可以直接产生 RGB565 数据，故可以直接在 LCD 显示；</li>
-<li class="">bmp/png/jpeg 等图片格式，需要将像素转换为 RGB565 后才能供 LCD 显示；</li>
-<p class="">https://github.com/esp-rs/esp-hal/blob/main/esp-hal/src/lcd_cam/cam.rs LCD_CAM peripheral driver 支持 8/16 bit DVP 信号的 master 或 slave mode。在 master mode 时 LCD_CAM peripheral driver 为 camera 提供 master clock，反之在 slave mode 时，不提供。这可以通过 driver 的with_master_clock() 方法来设置。</p>
-<li class="">为了提高数据传输效率，这个 driver 使用了 DMA 机制。</li>
-<li class="">DMA 传输结束的通知方式：ByteLen 或 Signal。</li>
-<p class="">Copy</p>
-<pre><code class="language-rust">// https://github.com/esp-rs/esp-hal/blob/main/esp-hal/src/lcd_cam/cam.rs
+<p class="Paragraph ">对于 RAW RGB 和 YUV 像素，一般使用 8-10 位并行数字接口（DVP）输出， <code>该接口和 RGB LCD 接口类型一致</code> ，所以 LCD 和 Camera 在 esp-hal 仓库中属于同一个 module：lcd_camera;</p>
+<p class="Paragraph ">LCD 显示器一般使用 RGB 像素格式，而且是比较节省空间的 16-bit 的 RGB565 像素格式：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">camera 可以直接产生 RGB565 数据，故可以直接在 LCD 显示；</li>
+<li class="BulletedList ">bmp/png/jpeg 等图片格式，需要将像素转换为 RGB565 后才能供 LCD 显示；</li>
+</ul>
+<p class="Paragraph ">https://github.com/esp-rs/esp-hal/blob/main/esp-hal/src/lcd_cam/cam.rs LCD_CAM peripheral driver 支持 8/16 bit DVP 信号的 master 或 slave mode。在 master mode 时 LCD_CAM peripheral driver 为 camera 提供 master clock，反之在 slave mode 时，不提供。这可以通过 driver 的with_master_clock() 方法来设置。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">为了提高数据传输效率，这个 driver 使用了 DMA 机制。</li>
+<li class="BulletedList ">DMA 传输结束的通知方式：ByteLen 或 Signal。</li>
+</ul>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>// https://github.com/esp-rs/esp-hal/blob/main/esp-hal/src/lcd_cam/cam.rs
 
 //! ## Examples
 //!/Following code shows how to receive some bytes from an 8 bit DVP stream in
@@ -487,11 +519,13 @@ pub enum EofMode {
     ///
     /// It's only limited by the size of the DMA buffer when using
     /// [EofMode::EnableSignal].</code></pre>
-<p class="">通过将 ESP32 设置为 camera 的 master 模式，可以由 esp32 发送 VSYNC 信号给摄像头来作为采集 frame buffer 开始的控制信号，当 VSYNC 采集结束时，通过中断的方式得到通知；</p>
-<li class="">如果只有 1 个 frame buffer，则 drvier 需要等待当前 frame finish（VSYNC） 然后启动 I2S DMA，然后app 才能获得 frame buffer 数据。这种单 frame buffer 的方式，会给应用造成等待延迟。</li>
-<li class="">所以，建议使用 2 个或更多 fram buffer， 这时 I2S 工作在 continuous mode，自动将各 frame push 到 app 可以方位的 queue，这样会给 CPU/Memory 造成压力，但是可以 double frame rate，建议和 JPEG 一起使用。</li>
-<p class=""></p>
-<pre><code class="language-rust">esp_err_t camera_capture(){
+<p class="Paragraph ">通过将 ESP32 设置为 camera 的 master 模式，可以由 esp32 发送 VSYNC 信号给摄像头来作为采集 frame buffer 开始的控制信号，当 VSYNC 采集结束时，通过中断的方式得到通知；</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">如果只有 1 个 frame buffer，则 drvier 需要等待当前 frame finish（VSYNC） 然后启动 I2S DMA，然后app 才能获得 frame buffer 数据。这种单 frame buffer 的方式，会给应用造成等待延迟。</li>
+<li class="BulletedList ">所以，建议使用 2 个或更多 fram buffer， 这时 I2S 工作在 continuous mode，自动将各 frame push 到 app 可以方位的 queue，这样会给 CPU/Memory 造成压力，但是可以 double frame rate，建议和 JPEG 一起使用。</li>
+</ul>
+<p class="Paragraph "></p>
+<pre class="Code"><code>esp_err_t camera_capture(){
     //acquire a frame
     camera_fb_t * fb = esp_camera_fb_get();
     if (!fb) {
@@ -505,23 +539,30 @@ pub enum EofMode {
     esp_camera_fb_return(fb);
     return ESP_OK;
 }</code></pre>
-<p class="">提供的 API 支持：</p>
-<li class="">摄像头硬件设置（I2C 接口）；</li>
-<li class="">JPEG HTTP Capture：提供一个 http handler，请求时获从 fb 获取一张 JPEG 图片并返回；</li>
-<li class="">JPEG HTTP Stream：提供一个 http handler，在 while true 循环中不断获取 fb 中 JPEG 图片，通过 multipart/x-mixed-replace 编码的方式返回给客户端。</li>
-<div style="margin-left: 20px;"><li class="">也称为 <code>Motion JPEG</code> ， <code>主流浏览器，QuickTime，VLC 都支持 HTTP Stream</code> 播放。</li>
-</div><li class="">BMP HTTP Capture：将捕获的 JPEG 转码为 BMP，再返回；</li>
-<p class="">开发调试：My initial idea for this (which is the example I have in my project) was to <code>dump the JPEG from the camera as HEX onto the console</code> and use <code>xxd -r -p uart.txt image.jpg</code> to convert it to JPEG file. Somewhat tedious but it works haha.</p>
-<p class="">将 esp-camera 驱动的摄像头进行 RTSP+RTP（Over UDP） 进行流式输出的例子：camera-streamer：Example for ESP32 TimerCam rebuilt using ESPP to stream video over the network. It uses <code>RTSP + RTP (over UDP)</code> to perform real-time streaming of the camera data over the network to multiple clients.</p>
-<li class="">使用 RTSP+REP 将 OV2660 capture 的 JPEG 图片转换成流式输出；</li>
-<li class="">初始化摄像头配置：</li>
-<li class="">控制和 data 引脚；</li>
-<li class=""><code>像素输出格式</code> ：pixel_format = PIXFORMAT_JPEG, // YUV422,GRAYSCALE,RGB565,JPEG</li>
-<li class=""><code>分辨率（frame size）</code> ：frame_size = FRAMESIZE_QVGA</li>
-<li class="">JPEG 质量：越小质量越高；</li>
-<li class="">fb_count：frame buffer 数量；</li>
-<p class="">Copy</p>
-<pre><code class="language-c++">// https://github.com/esp-cpp/camera-streamer/blob/main/main/main.cpp
+<p class="Paragraph ">提供的 API 支持：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList ">摄像头硬件设置（I2C 接口）；</li>
+<li class="NumberedList ">JPEG HTTP Capture：提供一个 http handler，请求时获从 fb 获取一张 JPEG 图片并返回；</li>
+<li class="NumberedList ">JPEG HTTP Stream：提供一个 http handler，在 while true 循环中不断获取 fb 中 JPEG 图片，通过 multipart/x-mixed-replace 编码的方式返回给客户端。</li>
+<div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">也称为 <code>Motion JPEG</code> ， <code>主流浏览器，QuickTime，VLC 都支持 HTTP Stream</code> 播放。</li>
+</ul>
+</div>
+<li class="NumberedList ">BMP HTTP Capture：将捕获的 JPEG 转码为 BMP，再返回；</li>
+</ol>
+<p class="Paragraph ">开发调试：My initial idea for this (which is the example I have in my project) was to <code>dump the JPEG from the camera as HEX onto the console</code> and use <code>xxd -r -p uart.txt image.jpg</code> to convert it to JPEG file. Somewhat tedious but it works haha.</p>
+<p class="Paragraph ">将 esp-camera 驱动的摄像头进行 RTSP+RTP（Over UDP） 进行流式输出的例子：camera-streamer：Example for ESP32 TimerCam rebuilt using ESPP to stream video over the network. It uses <code>RTSP + RTP (over UDP)</code> to perform real-time streaming of the camera data over the network to multiple clients.</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">使用 RTSP+REP 将 OV2660 capture 的 JPEG 图片转换成流式输出；</li>
+<li class="BulletedList ">初始化摄像头配置：</li>
+<li class="BulletedList ">控制和 data 引脚；</li>
+<li class="BulletedList "><code>像素输出格式</code> ：pixel_format = PIXFORMAT_JPEG, // YUV422,GRAYSCALE,RGB565,JPEG</li>
+<li class="BulletedList "><code>分辨率（frame size）</code> ：frame_size = FRAMESIZE_QVGA</li>
+<li class="BulletedList ">JPEG 质量：越小质量越高；</li>
+<li class="BulletedList ">fb_count：frame buffer 数量；</li>
+</ul>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code>// https://github.com/esp-cpp/camera-streamer/blob/main/main/main.cpp
 
 // initialize camera
 /**
@@ -621,16 +662,18 @@ auto camera_task_fn = [&rtsp_server, &logger](auto &m, auto &cv) -> bool {
 
 auto camera_task = espp::Task::make_unique({.name = "Camera Task", .callback = camera_task_fn, .priority = 10});
 camera_task->start(); // 启动 camera task</code></pre>
-<p class="">另一个支持 RTSP + HTTP JPEG Streamer + image Capture 的 <code>强大的库</code> ： https://github.com/rzeldent/esp32cam-rtsp/tree/main</p>
-<li class="">相当于在官方 esp32-camera 的基础上，加了 RTSP 的功能</li>
-<li class="">Flashing this software on a ESP32CAM module will make it <code>a RTSP streaming camera server</code>, a HTTP Motion JPEG streamer and a HTTP image server.</li>
-<li class="">RTSP The RTSP protocol is an industry standard and allows many CCTV systems and applications (like for example VLC) to connect directly to the ESP32CAM camera stream. It is also possible to stream directly to a server using ffmpeg. This makes the module a camera server allowing recording and the stream can be stored on a disk and replayed later. The URL is <code>rtsp://<ip address>:554/mjpeg/1</code></li>
-<li class="">HTTP Motion JPEG The HTTP JPEG streamer makes it possible to watch the camera stream directly in your browser. The URL is <code>http://<ip address>/stream</code></li>
-<li class="">HTTP image The HTTP Image returns an HTTP JPEG image of the camera. The URL is <code>http://<ip address>/snapshot</code></li>
-<li class="">同时提供了 web 界面来设置 camera 参数，截图功能。</li>
-<p class="">可以使用 opencv 来显示 RTSP 内容：</p>
-<p class="">Copy</p>
-<pre><code class="language-python"># https://github.com/esp-cpp/camera-streamer/blob/main/opencv_rtsp_client.py
+<p class="Paragraph ">另一个支持 RTSP + HTTP JPEG Streamer + image Capture 的 <code>强大的库</code> ： https://github.com/rzeldent/esp32cam-rtsp/tree/main</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">相当于在官方 esp32-camera 的基础上，加了 RTSP 的功能</li>
+<li class="BulletedList ">Flashing this software on a ESP32CAM module will make it <code>a RTSP streaming camera server</code>, a HTTP Motion JPEG streamer and a HTTP image server.</li>
+<li class="BulletedList ">RTSP The RTSP protocol is an industry standard and allows many CCTV systems and applications (like for example VLC) to connect directly to the ESP32CAM camera stream. It is also possible to stream directly to a server using ffmpeg. This makes the module a camera server allowing recording and the stream can be stored on a disk and replayed later. The URL is <code>rtsp://<ip address>:554/mjpeg/1</code></li>
+<li class="BulletedList ">HTTP Motion JPEG The HTTP JPEG streamer makes it possible to watch the camera stream directly in your browser. The URL is <code>http://<ip address>/stream</code></li>
+<li class="BulletedList ">HTTP image The HTTP Image returns an HTTP JPEG image of the camera. The URL is <code>http://<ip address>/snapshot</code></li>
+<li class="BulletedList ">同时提供了 web 界面来设置 camera 参数，截图功能。</li>
+</ul>
+<p class="Paragraph ">可以使用 opencv 来显示 RTSP 内容：</p>
+<p class="Paragraph ">Copy</p>
+<pre class="Code"><code># https://github.com/esp-cpp/camera-streamer/blob/main/opencv_rtsp_client.py
 import sys
 import cv2
 
@@ -646,12 +689,14 @@ if __name__ == "__main__":
         print("Usage: python ./opencv_rtsp_client <address> <rtsp_port>")
         sys.exit(1)
     stream(sys.argv[1], sys.argv[2])</code></pre>
-<p class="">使用 camera-display 项目来从 RTSP+RTP 拉流显示 JPEG 图片：</p>
-<li class=""><code>RTSP client</code> that receives mjpeg frames split into <code>RTP packets</code>, turns them back into <code>JPEG images</code>, and pushes them into a queue.</li>
-<li class="">Display task, which pulls image data from the queue, <code>decodes the jpeg</code>, and displays it on the screen.</li>
-<p class="">其他 Streaming JPEG 或任何文件的方式：</p>
-<p class=""></p>
-<pre><code class="language-bash"># 使用 Gstreamer 将 webcam 发送的串行 JPEG image 捕获为 mp4 视频输出：
+<p class="Paragraph ">使用 camera-display 项目来从 RTSP+RTP 拉流显示 JPEG 图片：</p>
+<ol class="NumberedListWrapper">
+<li class="NumberedList "><code>RTSP client</code> that receives mjpeg frames split into <code>RTP packets</code>, turns them back into <code>JPEG images</code>, and pushes them into a queue.</li>
+<li class="NumberedList ">Display task, which pulls image data from the queue, <code>decodes the jpeg</code>, and displays it on the screen.</li>
+</ol>
+<p class="Paragraph ">其他 Streaming JPEG 或任何文件的方式：</p>
+<p class="Paragraph "></p>
+<pre class="Code"><code># 使用 Gstreamer 将 webcam 发送的串行 JPEG image 捕获为 mp4 视频输出：
 $ gst-launch-1.0 v4l2src ! jpegdec ! xvimagesink
 # Capture a single image and save it in JPEG format.
 $ gst-launch v4l2src num-buffers=1 ! jpegenc ! filesink location=/tmp/test.jpg
@@ -662,19 +707,23 @@ $ gst-launch-1.0 v4l2src num-buffers=1 ! image/jpeg,framerate=5/1,width=1280,hei
 ! filesink location=/tmp/test2.jpg
 # raw image
 $ gst-launch-1.0 v4l2src num-buffers=1 ! videoconvert ! 'video/x-raw,width=1280,height=960,format=RGBx' ! filesink location=image.raw</code></pre>
-<p class="">关于 Streaming 的解释： <code>Playing media straight from the Internet without storing it locally</code> is known as <code>Streaming</code>. We have been doing it throughout the tutorials whenever we used a URI starting with http://. This tutorial shows a couple of additional points to keep in mind when streaming. In particular:</p>
-<p class="">information Embedding multiple streams inside a single file is called “multiplexing” or “muxing”, and such file is then known as a <code>“container”</code>. Common container formats are Matroska (.mkv), Quicktime (.qt, .mov, .mp4), Ogg (.ogg) or Webm (.webm).</p>
-<p class="">Retrieving the individual streams from within the container is called “demultiplexing” or “demuxing”.</p>
-<h2 class="">2 像素格式：YUV 和 RGB #</h2>
-<p class=""><code>YUV 是一种颜色编码方法</code> 。常使用在各个影像处理组件中。 YUV 在对照片或影片编码时，考虑到人类的感知能力，允许降低色度的带宽。</p>
-<p class="">YUV是编译true-color颜色空间（color space）的种类， <code>Y'UV, YUV, YCbCr，YPbPr等专有名词都可以称为YUV</code> ，彼此有重叠。</p>
-<li class="">“Y”表示明亮度（Luminance、Luma）</li>
-<li class="">“U”和“V”则是色度、浓度（Chrominance、Chroma），</li>
-<p class="">Y′UV, YUV, YCbCr, YPbPr所指涉的范围，常有混淆或重叠的情况。从历史的演变来说，其中：</p>
-<li class=""><code>YUV和Y'UV通常用来编码电视的模拟信号</code></li>
-<li class=""><code>YCbCr 则是用来描述数字的影像信号</code> ，适合影片与图片压缩以及传输，例如 MPEG、JPEG。</li>
-<p class="">彩色图像记录的格式，常见的有 <code>RGB、YUV、CMYK</code> 等。彩色电视最早的构想是使用 RGB 三原色来同时传输。这种设计方式是原来黑白带宽的3倍，在当时并不是很好的设计。</p>
-<p class="">RGB诉求于人眼对色彩的感应，YUV则着重于视觉对于亮度的敏感程度，Y代表的是亮度，UV代表的是彩度（因此黑白电影可省略UV，相近于RGB），分别用Cr和Cb来表示，因此YUV的记录通常以Y:UV的格式呈现。</p>
+<p class="Paragraph ">关于 Streaming 的解释： <code>Playing media straight from the Internet without storing it locally</code> is known as <code>Streaming</code>. We have been doing it throughout the tutorials whenever we used a URI starting with http://. This tutorial shows a couple of additional points to keep in mind when streaming. In particular:</p>
+<p class="Paragraph ">information Embedding multiple streams inside a single file is called “multiplexing” or “muxing”, and such file is then known as a <code>“container”</code>. Common container formats are Matroska (.mkv), Quicktime (.qt, .mov, .mp4), Ogg (.ogg) or Webm (.webm).</p>
+<p class="Paragraph ">Retrieving the individual streams from within the container is called “demultiplexing” or “demuxing”.</p>
+<h2 class="Heading Heading--2 ">2 像素格式：YUV 和 RGB #</h2>
+<p class="Paragraph "><code>YUV 是一种颜色编码方法</code> 。常使用在各个影像处理组件中。 YUV 在对照片或影片编码时，考虑到人类的感知能力，允许降低色度的带宽。</p>
+<p class="Paragraph ">YUV是编译true-color颜色空间（color space）的种类， <code>Y'UV, YUV, YCbCr，YPbPr等专有名词都可以称为YUV</code> ，彼此有重叠。</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList ">“Y”表示明亮度（Luminance、Luma）</li>
+<li class="BulletedList ">“U”和“V”则是色度、浓度（Chrominance、Chroma），</li>
+</ul>
+<p class="Paragraph ">Y′UV, YUV, YCbCr, YPbPr所指涉的范围，常有混淆或重叠的情况。从历史的演变来说，其中：</p>
+<ul class="BulletedListWrapper">
+<li class="BulletedList "><code>YUV和Y'UV通常用来编码电视的模拟信号</code></li>
+<li class="BulletedList "><code>YCbCr 则是用来描述数字的影像信号</code> ，适合影片与图片压缩以及传输，例如 MPEG、JPEG。</li>
+</ul>
+<p class="Paragraph ">彩色图像记录的格式，常见的有 <code>RGB、YUV、CMYK</code> 等。彩色电视最早的构想是使用 RGB 三原色来同时传输。这种设计方式是原来黑白带宽的3倍，在当时并不是很好的设计。</p>
+<p class="Paragraph ">RGB诉求于人眼对色彩的感应，YUV则着重于视觉对于亮度的敏感程度，Y代表的是亮度，UV代表的是彩度（因此黑白电影可省略UV，相近于RGB），分别用Cr和Cb来表示，因此YUV的记录通常以Y:UV的格式呈现。</p>
 
   </main>
     <aside class ="utterances">

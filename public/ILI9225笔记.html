@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/theme.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/notablog.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -156,7 +156,7 @@ v...">
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./Note.html">
+  <a href="./note.html">
     <div class="Navbar__Btn">
       
         
@@ -170,7 +170,7 @@ v...">
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./OneDrive_Vercel__立即上手.html">
+  <a href="./onedrive-vercel--立即上手.html">
     <div class="Navbar__Btn">
       
         
@@ -194,7 +194,7 @@ v...">
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./blog_mark.html">
+  <a href="./blog-mark.html">
     <div class="Navbar__Btn">
       
         
@@ -236,7 +236,7 @@ v...">
   
   
   <span class="Navbar__Delim">&centerdot;</span>
-  <a href="./About.html">
+  <a href="./about.html">
     <div class="Navbar__Btn">
       
         
@@ -311,18 +311,18 @@ v...">
         
         
           <span class="DateTagBar__Item DateTagBar__Tag">
-            <a href="./tag/单片机.html" class="tag tag-some(red)">单片机</a>
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
           </span>
         
       </div>
     
   </header>
   <main class="PageRoot">
-    <h3 class="">ILI9225笔记</h3>
-<!-- Unsupported block type -->
-<h2 class="">LCD_ 函数</h2>
-<h3 class="">LCD_setAddrWindow</h3>
-<pre><code class="language-c">/*
+    <h3 class="Heading Heading--3 ">ILI9225笔记</h3>
+<!-- Unsupported block type: TableOfContents { table_of_contents: TableOfContentsBlock { color: Gray } } -->
+<h2 class="Heading Heading--2 ">LCD_ 函数</h2>
+<h3 class="Heading Heading--3 ">LCD_setAddrWindow</h3>
+<pre class="Code"><code>/*
       函数说明：设置读写起始和结束地址
       入口数据：x1,x1 设置列的起始和结束地址
                 y0,y1 设置行的起始和结束地址
@@ -339,9 +339,9 @@ void LCD_setAddrWindow(UINT16 x0,UINT16 y0,UINT16 x1,UINT16 y1)
 		LCD_writeHalfword(y1);
 		LCD_writeCmd(0x2c);//储存器写
 }</code></pre>
-<h3 class="">LCD_init [初始化]</h3>
-<h3 class="">LCD_setDir</h3>
-<pre><code class="language-c">void LCD_setDir(UINT8 dir)
+<h3 class="Heading Heading--3 ">LCD_init [初始化]</h3>
+<h3 class="Heading Heading--3 ">LCD_setDir</h3>
+<pre class="Code"><code>void LCD_setDir(UINT8 dir)
 {
     LCD_parameter.dir = dir & 3;  
 // just perform the operation ourselves on the protected variables
@@ -368,8 +368,8 @@ void LCD_setAddrWindow(UINT16 x0,UINT16 y0,UINT16 x1,UINT16 y1)
 	LCD_writeHalfword(val);
 	//Vert_Scroll(0, HEIGHT, 0);
 }</code></pre>
-<h3 class="">LCD_setColor —LCD_setFont</h3>
-<pre><code class="language-c">void LCD_setColor(UINT16 color){
+<h3 class="Heading Heading--3 ">LCD_setColor —LCD_setFont</h3>
+<pre class="Code"><code>void LCD_setColor(UINT16 color){
 	LCD_parameter.color = color;
 }
 void LCD_setBackground(UINT16 color){
@@ -385,8 +385,8 @@ void LCD_setBackgroundRGB(UINT8 r,UINT8 g,UINT8 b){
 void LCD_setFont(UINT8 font){
 	LCD_parameter.font = font;
 }</code></pre>
-<h3 class="">LCD_showChar</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_showChar</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：显示单个字符
       入口数据：x,y显示坐标
                 num 要显示的字符
@@ -441,8 +441,8 @@ void LCD_showChar(UINT16 x,UINT16 y,UINT8 num,UINT8 overlay)
 		}
 	}   	 	  
 }</code></pre>
-<h3 class="">LCD_showString</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_showString</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：显示字符串
       入口数据：x,y显示坐标
                 *p 要显示的字符串
@@ -458,8 +458,8 @@ void LCD_showString(UINT16 x,UINT16 y,char *p,UINT8 overlay)
 		p++;
 	}  
 }</code></pre>
-<h3 class="">LCD_showPicture</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_showPicture</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：显示图片
       入口数据：x,y起点坐标
                 length 图片长度
@@ -482,8 +482,8 @@ void LCD_showPicture(UINT16 x,UINT16 y,UINT16 length,UINT16 width,UINT8 pic[])
 		}
 	}
 }</code></pre>
-<h3 class="">LCD_clear</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_clear</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：在指定区域填充背景颜色
       入口数据：x0,y0   起始坐标
                 x1,y1   终止坐标
@@ -502,8 +502,8 @@ void LCD_clear(UINT16 x0,UINT16 y0,UINT16 x1,UINT16 y1)
 		LCD_writeHalfword(LCD_parameter.Background);
 	} 					  	    
 }</code></pre>
-<h3 class="">LCD_fillCircle—LCD_fillSemiCircle</h3>
-<pre><code class="language-c">//fill a circle,thx for LCDWIKI
+<h3 class="Heading Heading--3 ">LCD_fillCircle—LCD_fillSemiCircle</h3>
+<pre class="Code"><code>//fill a circle,thx for LCDWIKI
 void LCD_fillCircle(int x, int y, int radius)
 {
 	LCD_fill(x, y-radius,x, y+radius+1);
@@ -543,8 +543,8 @@ void LCD_fillSemiCircle(int x0, int y0, int r, UINT8 cornername,int delta)
     	}
   	}
 }</code></pre>
-<h3 class="">LCD_writeByte—LCD_writeHalfword</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_writeByte—LCD_writeHalfword</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：LCD 写入1字节
       入口数据：data 写入的数据
       返回值：  无
@@ -566,8 +566,8 @@ void LCD_writeHalfword(UINT16 data)
 	LCD_writeByte(data>>8);
 	LCD_writeByte(data);
 }</code></pre>
-<h3 class="">LCD_writeCmd</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_writeCmd</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：LCD写入命令
       入口数据：cmd 写入的命令
       返回值：  无
@@ -578,8 +578,8 @@ void LCD_writeCmd(UINT8 cmd)
 	LCD_writeByte(cmd);
 	LCD_DC_DATA();//写数据
 }</code></pre>
-<h3 class="">LCD_fill</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_fill</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：在指定区域填充前景颜色
       入口数据：x0,y0   起始坐标
                 x1,y1   终止坐标
@@ -598,8 +598,8 @@ void LCD_fill(UINT16 x0,UINT16 y0,UINT16 x1,UINT16 y1)
 			LCD_writeHalfword(LCD_parameter.color);
 		} 
 }</code></pre>
-<h3 class="">LCD_drawPixel</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_drawPixel</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：在指定位置画点
       入口数据：x,y 画点坐标
       返回值：  无
@@ -609,8 +609,8 @@ void LCD_drawPixel(UINT16 x,UINT16 y)
 	LCD_setAddrWindow(x,y,x,y);//设置光标位置 
 	LCD_writeHalfword(LCD_parameter.color);
 }</code></pre>
-<h3 class="">LCD_drawLine</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_drawLine</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：画线
       入口数据：x0,y0   起始坐标
                 x1,y1   终止坐标
@@ -650,8 +650,8 @@ void LCD_drawLine(UINT16 x0,UINT16 y0,UINT16 x1,UINT16 y1)
 		}
 	}
 }</code></pre>
-<h3 class="">LCD_drawRectangle</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_drawRectangle</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：画矩形
       入口数据：x1,y0   起始坐标
                 x1,y1   终止坐标
@@ -664,8 +664,8 @@ void LCD_drawRectangle(UINT16 x0, UINT16 y0, UINT16 x1, UINT16 y1)
 	LCD_drawLine(x0,y1,x1,y1);
 	LCD_drawLine(x1,y0,x1,y1);
 }</code></pre>
-<h3 class="">LCD_drawCircle</h3>
-<pre><code class="language-c">/******************************************************************************
+<h3 class="Heading Heading--3 ">LCD_drawCircle</h3>
+<pre class="Code"><code>/******************************************************************************
       函数说明：画圆
       入口数据：x0,y0   圆心坐标
                 r       半径
@@ -692,8 +692,8 @@ void LCD_drawCircle(UINT16 x0,UINT16 y0,UINT8 r)
 		}
 	}
 }</code></pre>
-<p class=""></p>
-<p class=""></p>
+<p class="Paragraph "></p>
+<p class="Paragraph "></p>
 
   </main>
     <aside class ="utterances">
