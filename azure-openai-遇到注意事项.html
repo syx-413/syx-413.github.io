@@ -22,15 +22,15 @@
   }
 </style>
 
-  <title>Note&nbsp;|&nbsp;My Blog</title>
+  <title>Azure openai 遇到注意事项&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
-  <meta property="og:title" content="Note">
+  <meta property="og:title" content="Azure openai 遇到注意事项">
   
-    <meta name="description" content=" https:&#x2F;&#x2F;open.spotify.com&#x2F;track&#x2F;3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae  https:&#x2F;&#x2F;open.spotify.com&#x2F;embed&#x2F;track&#x2F;4bIi9DwDxvJCmemLykVlJ7?utm_source=gen...">
-    <meta property="og:description" content=" https:&#x2F;&#x2F;open.spotify.com&#x2F;track&#x2F;3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae  https:&#x2F;&#x2F;open.spotify.com&#x2F;embed&#x2F;track&#x2F;4bIi9DwDxvJCmemLykVlJ7?utm_source=gen...">
+    <meta name="description" content="使用Azure 的Openai 调用的时候需要注意的的一些地方 比如 model=&quot;gpt-4o&quot; api_version=&quot;2024-02-15-preview&quot;  model 一般为你部署的名字通常是azure_endpoint  https:&#x2F;&#x2F;xxxx.openai.azure.com&#x2F; 的...">
+    <meta property="og:description" content="使用Azure 的Openai 调用的时候需要注意的的一些地方 比如 model=&quot;gpt-4o&quot; api_version=&quot;2024-02-15-preview&quot;  model 一般为你部署的名字通常是azure_endpoint  https:&#x2F;&#x2F;xxxx.openai.azure.com&#x2F; 的...">
   
   
-    <meta property="og:image" content="🎶">
+    <meta property="og:image" content="https:&#x2F;&#x2F;arunpotti.com&#x2F;wp-content&#x2F;uploads&#x2F;2021&#x2F;12&#x2F;microsoft_azure.svg_.png">
   
   <style>
     .DateTagBar {
@@ -208,32 +208,76 @@
 
   <header class="Header">
     
-      <div class="Header__Cover">
-        <img src="https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1585108592681-d0db82bab204?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb">
-      </div>
-    
-    <div class="Header__Spacer ">
+    <div class="Header__Spacer Header__Spacer--NoCover">
     </div>
     
       <div class="Header__Icon">
         
-          <span class="inline-img-icon">🎶</span>
+          <span><img class="inline-img-icon" src="https:&#x2F;&#x2F;arunpotti.com&#x2F;wp-content&#x2F;uploads&#x2F;2021&#x2F;12&#x2F;microsoft_azure.svg_.png"></span>
         
       </div>
     
-    <h1 class="Header__Title">Note</h1>
+    <h1 class="Header__Title">Azure openai 遇到注意事项</h1>
     
       <div class="DateTagBar">
         
-          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2025-05-13</span>
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-07-03</span>
         
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/openai.html" class="tag tag-default">openai</a>
+          </span>
         
       </div>
     
   </header>
   <main class="PageRoot">
-    <p class="Paragraph "></p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/track/3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae" style="border: none;"></iframe></div></div><p class="Paragraph "></p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/embed/track/4bIi9DwDxvJCmemLykVlJ7?utm_source=generator" style="border: none;"></iframe></div></div><!-- Unsupported block type: Unsupported --><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/track/0kCkx3AREMYFBRSOE9UWDi?si=4e181da1c6734aa9" style="border: none;"></iframe></div></div><div class="Divider"></div><p class="Paragraph ">
-</p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://monster-siren.hypergryph.com/music/232285" style="border: none;"></iframe></div></div><p class="Paragraph "></p>
+    <h3 class="Heading Heading--3 ">使用Azure 的Openai 调用的时候需要注意的的一些地方</h3><p class="Paragraph ">比如</p><p class="Paragraph "><code>model=&quot;gpt-4o&quot;</code></p><p class="Paragraph "><code>api_version=&quot;2024-02-15-preview&quot;</code></p><p class="Paragraph "></p><p class="Paragraph "><code>model</code> 一般为你部署的名字通常是<code>azure_endpoint</code>  <code>https://xxxx.openai.azure.com/</code> 的<code>xxx</code> 的名字</p><p class="Paragraph "><code>api_version</code> 并不是 <code>gpt</code>的版本 </p><p class="Paragraph "></p><p class="Paragraph ">改动后前</p><pre class="Code"><code class="language-python">from openai import AzureOpenAI
+
+
+client = AzureOpenAI(
+  azure_endpoint = &quot;https://XXXX.openai.azure.com/&quot;, 
+  api_key=&quot;XXXXX&quot;,  
+  api_version=&quot;2024-05-13&quot;
+)
+
+
+message_text = [{&quot;role&quot;:&quot;system&quot;,&quot;content&quot;:&quot;You are an AI assistant that helps people find information.&quot;},{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Was ist 4x6?&quot;}]
+
+completion = client.chat.completions.create(
+  model=&quot;GPT-4o&quot;, # model = &quot;deployment_name&quot;
+  messages = message_text,
+  temperature=0.7,
+  max_tokens=800,
+  top_p=0.95,
+  frequency_penalty=0,
+  presence_penalty=0,
+  stop=None
+)
+
+print(completion.choices[0].message.content)</code></pre><p class="Paragraph "></p><div class="Divider"></div><p class="Paragraph ">改动后</p><pre class="Code"><code class="language-python">from openai import AzureOpenAI
+
+client = AzureOpenAI(
+  azure_endpoint = &quot;https://swcgpt4.openai.azure.com/&quot;,
+  api_key=&quot;XXXX&quot;,
+  api_version=&quot;2024-02-15-preview&quot;
+)
+
+
+message_text = [{&quot;role&quot;:&quot;system&quot;,&quot;content&quot;:&quot;You are an AI assistant that helps people find information.&quot;},{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Was ist 4x6?&quot;}]
+
+completion = client.chat.completions.create(
+  model=&quot;SWgpt40&quot;, # model = &quot;deployment_name&quot;
+  messages = message_text,
+  temperature=0.7,
+  max_tokens=800,
+  top_p=0.95,
+  frequency_penalty=0,
+  presence_penalty=0,
+  stop=None
+)
+
+print(completion.choices[0].message.content)</code></pre><p class="Paragraph "></p><div class="Divider"></div><p class="Paragraph ">参考</p><p class="Paragraph ">stackoverflow同样的问题</p><p class="Paragraph ">微软文档说明</p><p class="Paragraph "></p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

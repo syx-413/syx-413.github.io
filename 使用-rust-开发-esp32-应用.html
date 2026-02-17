@@ -22,15 +22,15 @@
   }
 </style>
 
-  <title>Note&nbsp;|&nbsp;My Blog</title>
+  <title>使用 Rust 开发 ESP32 应用&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
-  <meta property="og:title" content="Note">
+  <meta property="og:title" content="使用 Rust 开发 ESP32 应用">
   
-    <meta name="description" content=" https:&#x2F;&#x2F;open.spotify.com&#x2F;track&#x2F;3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae  https:&#x2F;&#x2F;open.spotify.com&#x2F;embed&#x2F;track&#x2F;4bIi9DwDxvJCmemLykVlJ7?utm_source=gen...">
-    <meta property="og:description" content=" https:&#x2F;&#x2F;open.spotify.com&#x2F;track&#x2F;3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae  https:&#x2F;&#x2F;open.spotify.com&#x2F;embed&#x2F;track&#x2F;4bIi9DwDxvJCmemLykVlJ7?utm_source=gen...">
+    <meta name="description" content="ESP32 的 Rust 应用分为两种类型： 使用 std 库：可以使用 Rust 标准库的各种类型和特性，如 Vec&#x2F;HashMap&#x2F;Box，heap、thread&#x2F;Mutex 等； 使用 core 库（non_std ）: bare metal 开发； esp- 开头：是 non_std 类型，...">
+    <meta property="og:description" content="ESP32 的 Rust 应用分为两种类型： 使用 std 库：可以使用 Rust 标准库的各种类型和特性，如 Vec&#x2F;HashMap&#x2F;Box，heap、thread&#x2F;Mutex 等； 使用 core 库（non_std ）: bare metal 开发； esp- 开头：是 non_std 类型，...">
   
   
-    <meta property="og:image" content="🎶">
+    <meta property="og:image" content="🦀">
   
   <style>
     .DateTagBar {
@@ -208,32 +208,48 @@
 
   <header class="Header">
     
-      <div class="Header__Cover">
-        <img src="https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1585108592681-d0db82bab204?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb">
-      </div>
-    
-    <div class="Header__Spacer ">
+    <div class="Header__Spacer Header__Spacer--NoCover">
     </div>
     
       <div class="Header__Icon">
         
-          <span class="inline-img-icon">🎶</span>
+          <span class="inline-img-icon">🦀</span>
         
       </div>
     
-    <h1 class="Header__Title">Note</h1>
+    <h1 class="Header__Title">使用 Rust 开发 ESP32 应用</h1>
     
       <div class="DateTagBar">
         
-          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2025-05-13</span>
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-02T14:59:00+08:00</span>
         
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
         
       </div>
     
   </header>
   <main class="PageRoot">
-    <p class="Paragraph "></p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/track/3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae" style="border: none;"></iframe></div></div><p class="Paragraph "></p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/embed/track/4bIi9DwDxvJCmemLykVlJ7?utm_source=generator" style="border: none;"></iframe></div></div><!-- Unsupported block type: Unsupported --><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/track/0kCkx3AREMYFBRSOE9UWDi?si=4e181da1c6734aa9" style="border: none;"></iframe></div></div><div class="Divider"></div><p class="Paragraph ">
-</p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://monster-siren.hypergryph.com/music/232285" style="border: none;"></iframe></div></div><p class="Paragraph "></p>
+    <h2 class="Heading Heading--2 ">ESP32 的 Rust 应用分为两种类型：</h2><ol class="NumberedListWrapper">
+<li class="NumberedList ">使用 std 库：可以使用 Rust 标准库的各种类型和特性，如 Vec/HashMap/Box，heap、thread/Mutex 等；</li><li class="NumberedList ">使用 core 库（non_std ）: bare metal 开发；</li><div style="margin-left: 20px;"><p class="Paragraph ">Github 的 esp-rs 组织中的各库命名管理：</p></div>
+<li class="NumberedList ">esp- 开头：是 non_std 类型，如 esp-hal;</li><li class="NumberedList ">esp-idf- 开头：是 std 类型，如 esp-idf-hal;</li></ol>
+<p class="Paragraph "></p><p class="Paragraph ">对于 std 类型应用，<code>cargo build </code>时会下载和编译依赖的 esp-idf 库。</p><p class="Paragraph ">推荐使用 cargo generate template 来创建 std/non_std 应用:</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">std 应用:</li><div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList "><strong>cargo generate esp-rs/esp-idf-template cargo:</strong> 纯 Rust 应用（cargo-frst）；</li><li class="BulletedList "><strong>cargo generate esp-rs/esp-idf-template cmake:</strong> 混合 Rust and C/C++ in a traditional ESP-IDF idf.py；</li></ul>
+<p class="Paragraph "></p></div>
+<li class="NumberedList ">non_std 应用:</li><div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">cargo generate esp-rs/esp-template</li></ul>
+</div>
+</ol>
+<p class="Paragraph ">注意：</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">除了构建 cmake 应用外，构建纯 Rust 的 std 或 non_std 应用都只需 source ~/esp/export-esp.sh 脚本即可， <code>不能同时</code> source ~/esp/esp-idf/v5.2.1/export.sh, 否则会构建失败。</li><li class="NumberedList ">开发 Rust ESP32 应用时，需要先确定是使用 std 还是 non_std 类型，然后选择对应的 crate 库，而不是混合使用两种类型的库。</li><li class="NumberedList ">std 应用可以使用 non_std 的库，但是反过来 <code>non_std 应用只应该使用 non_std 的库</code> 。</li></ol>
+<p class="Paragraph ">参考：The Embedded Rust ESP Development Ecosystem</p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

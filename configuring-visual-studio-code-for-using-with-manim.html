@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>Configuring Visual Studio Code for using with Manim&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Configuring Visual Studio Code for using with Manim">
+  
+    <meta name="description" content="Follow the instruction in the Installation Page on the official documentation. After installing Manim get back here for configuring the virtual enviro...">
+    <meta property="og:description" content="Follow the instruction in the Installation Page on the official documentation. After installing Manim get back here for configuring the virtual enviro...">
+  
+  
+    <meta property="og:image" content="🎟️">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🎟️</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">Configuring Visual Studio Code for using with Manim</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2023-12-23</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/manim.html" class="tag tag-yellow">Manim</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">Follow the instruction in the Installation Page on the official documentation. After installing Manim get back here for configuring the virtual environment. In my case, I use Windows; I used chocolatey to install Manim (<code>choco install manimce</code>).</p><h3 class="Heading Heading--3 ">Configuring the Virtual Environment</h3><ol class="NumberedListWrapper">
+<li class="NumberedList "> </li><div style="margin-left: 20px;"><p class="Paragraph ">Open a Terminal (say <code>cmd</code> on Windows) on the project directory. The project directory can be anywhere including a folder on your desktop. For me it’s <code>C:\dev\manim-project</code>. I opened a PowerShell window by doing Shift+Right Click and then clicked on <code>Open PowerShell window here</code>. (On windows 11 you would need to click <code>Show more options</code>)</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/83b7880f-194f-4560-ace2-2f992c91f4ec/powershell_start_screen.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XBFSOVEM%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161509Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQC9XAmw0Oba%2BcC0K8iwfOjAtUmJ5PhorGJtFYT2JrIKKQIgKpPC3A0%2FgCOIwNZSu2R%2BW1QHg9qrJUv0S7QKutEcI1Yq%2FwMIURAAGgw2Mzc0MjMxODM4MDUiDNy6EeC2YbhxPPI77CrcAznKbFKleQBoa2%2BJCj2BAis7LH912caC75KajxlH65bd8N%2FVm9ua6A9Za4qGTjpBUCXtznroTlQlJRp4b4m4dbiY6mvfPIyQKRNYWNMj%2FeuZJf83lPvGXLfluFHFJmb5JVdpLvIpGFLJ3u1GPr2B%2FCftzY9EndVtPGg%2FH4FHXpIPRLo1nPuBy4gglqyYTMSxwQ8DgcXhVhGhFi1mvy4qsEbEg%2F%2FRXt3TsddWMn6jU6JqjVcOtbbPUW7a21G4hMbddmic2qoRAPykuhnr%2BDB3du50W%2BHiBFF61TPxrTq7OosrXy%2FKM2iz9snHgkhrao8oLRio6bRbXrR1IL9o2Q6DDhjG2XCio0C5t%2BNQjGLEd3xP3AtfEf8neXSBpcYStW36g1ScsQRqxVhCDVXVZGJVDXFs8Ngb52Cfp69eDJTVjMRYYxEGwtZEIEiBh7U798Iq0KQdzCA2r9zpLQczObCsWk%2BIBQ7mss5w3s9C1dn0SBJdhEYuac5V756REZm5vhNQn32GWdWAIUuxvZJWI9RDkQlDB6P%2FcyNPuhoTBAFG2anXP9FC%2F4S1BmD5upSY5KuSLoToI0YjIx5z%2FkaNk5T4IKs8DNh7Q3cWTlu1naP%2BxPMOEo%2Ba68hod6iHIjAFMKCZ0swGOqUBLZQj%2F7Xmzx6%2FNndua7a996cgrLtlDd%2BUR77JSGFefRAsHVwGHva5imYkTRpVKlwr4IEFwbnrmFDtqrK4wiQIimD24prW8md5PMZWQTnjZF7x1fFJBRwM9W6QiOdwZMINBy1IlzNzbURoaipspJfouPQ%2FebggN7sUczP9HTFUeTS%2FzwIG80SwpzVetSbM7RUpXZzKIUhXoh3TdrmxABgFUX3jVJgO&X-Amz-Signature=d2808d39cb456bf427d05ff11fd8bc6db0188ecc542059faed2c0c5068c0f2ee&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div></div>
+<li class="NumberedList "> </li><div style="margin-left: 20px;"><p class="Paragraph ">Create a new virtual environment</p><pre class="Code"><code class="language-python">python -m venv .venv</code></pre></div>
+<li class="NumberedList "> </li><div style="margin-left: 20px;"><p class="Paragraph ">Activate the Virtual Environment.</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">On Windows: <code>.venv\Scripts\activate</code> (should work on cmd, also)</li><li class="NumberedList ">On macOS/Linux/WSL: <code>source .venv/bin/activate</code> (this will include Git Bash users on Windows also).</li><div style="margin-left: 20px;"><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/d088a650-1df1-4dfd-979c-f96f18955ae6/powershell_install_and_activate_venv.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XM3R6AFV%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161511Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDP3icm4WsuFlluvhPYWDy8venpD4NLb3PPf9LtGAoCjQIhAKX%2BWJSIK9werpT9bnbSsuV82vq1OiucR8W%2FBWX4zUmbKv8DCFEQABoMNjM3NDIzMTgzODA1IgylkK2QA1uRoKbT%2BwAq3AMbyC9P5R0mDgX1g%2BfF0aeBFJGlqIOPH1PrBSTPpL5wzRj5plGVcMhQZFtosQYtp3HDC23XHOb9HUcXcM1uekmBtmehjkvfZ8IoHFo6foNL8VVqkRLaHnkmbEPR9ZnPH%2F11I%2FT%2F1wK28snZ9dMSUQkpvQ8e5eT7b65d0wZjQ4aiCeUJdBrMad9WhvQrOvsXQhIX%2B6Hd6NSTA4STJS5CsKttHCkCRB5JQPF9MZ%2BUXNKp97uQNE%2FjFKhzRppBLZ5xVVWiQggy28r3CFcQ8tmna4i98iJk3mhgMOiGmHmK2U54u%2FatP6yFlh1ZkP5AocO8gppm3sWBev5Zd6D2jgrT%2FgJ7osIu5GiK4Ng6bopVUGHsXSCw5XDa2M5NszXy7FQ%2FjT4FE25nv3Pr2ODfkNGQB4E1cAOI%2BPJ1UvXhWMHdBfBIculdJlF9jrU2iW3mdDAkYKwN5kAA5OsyiWyhrkAtpWhnu8W42bd%2FbgGB3vpvz50KX%2FaKHEt2ZVdmLfyhQ3wpBZGKJMMTTHpz1y3uCtncOV4hKELwCE6a5bxrqqSrPxuWX1caMppYeeZyuP7doaaCXyEIZ5wwvJ2gTGT76ekg6ePyrS5e7GkzGJ5ndUH%2B51p0fRc2mxR%2BGuQKR%2B659TCPmtLMBjqkATM2LpWeAg2s5u490luVat9X89lJDpoxr5NG60h23ajUk2UOF3LiLkJMYj1eS4xtojVJrnyHy3gUfg8IkNLYeMJ1aqSElyaCmzbJAlLyUqgV%2Bw6tGcEZa7M8bgw20Xj2ztHby0dJFJKv9RTP4yGL330i5AOWEjPRLSenMWzYg4uu59ziHJpCFK5Hy08c9c8ODommasDFslozYxBw%2FWsst3opbflN&X-Amz-Signature=46ad3d6c2cfe82e0c869f467e04224a1906af8a5ec049ad6557262ffd0155fd5&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div></div>
+</ol>
+</div>
+</ol>
+<div class="Callout ColorfulBlock--BgGray"><div class="Callout__Icon">🥸</div><div class="Callout__Content">Note</div></div><p class="Paragraph ">On powershell, you may see an error like below when activating the virtual environment.</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/867916c0-cd46-4add-9336-c4f020153dcb/powershell_set_execution_error.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665Q4AV3FG%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161509Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIEL1yWOOj%2BSCt7LIKrvbDxBOCYu4YRqnKjdLTkjjNpOKAiA6AqvJdqH6N6yhxPJREqxjWLbLlb99AEHyBT%2BvgK2%2FdSr%2FAwhREAAaDDYzNzQyMzE4MzgwNSIMQTkyjecVDRvWghOjKtwDFHknNlWTGtOP%2BM0ShbFi1Gf8inryhSf8gJfnpqntK3hF%2FIydRDDJojL3TsbZJf1sC%2BQmXFyT03Kzj0lTzXLTT50LHBcvGWCPnSLTvPSETgbCG4uFkKG%2FRkahdnPp8ihWonsC%2F1LYOVqksQU%2BXaYR9Lb0DPTgQJpApzW1JGpEuujWWOrX2NtHvTQujH71NcGA1dWlGIo0POg%2FfkkeyHkFItpTrI0Nf9V1YrkLEYm3B76LRA9Wyhh2zTU1IvvqrYX3lWm1ysiz6tm1E9w0dFBkdmCD01d%2BsYPp6Si8%2B5%2Bf4c3xzC%2FABl7H16LMwJenHjgK9hzoxwAFb0iJ6fnRkyZngZbgzXjt1Dys0SBKo8hiTjeG%2BKXaNcyfCLiolcuH0SPU%2FNOeZcSKXApVNH6rcrSym1Pex3W4vDR7HQQgi5yVlqbtOHx76mSjCF4EBMBgC2YoNU9aWCQra%2BdvJABydSpfELDx2ZEgjzpw2%2Fy6c%2Bovaq3wD9NUCkXM7ZTqUq259t3dxWQ01bsNPXqcl2T6Co2vzsxW1bPc5mZtLxWDuYtt0vQW2%2ByRaeW3tTE9rnzZDn5BILQ3Hsfv0mI1IgPMFq%2BFOudbkzohzjVDVnhkuJ8mfAd%2BIYNk0aOBuCXMCugwyZnSzAY6pgH4GG%2FgR7aOwC8TK6n6iVFqPOn5Vn8BvO8X4I0g572pcMiR8p4eZRv9PxXPKuwHE2ROWLk4PxNRZyAf3qjzijs7Tf%2Fo3xuwKNVkTKMCMVzOsuxkqSHRlZaJtfOJvr0jxUxbCd%2Bw56xtc44106%2BGPIJ6JNWDFvwQJuTOx%2B47wh16P0poECnvLILFm%2FgU2NMIHDi01Opr3C2%2FfRVc9luqBQvWT25dHMwS&X-Amz-Signature=6f9055a1befab7e85268fd27d432868f3e6ce10bfcd38054cfb5c370721990e9&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">In which case, you can run the command</p><pre class="Code"><code class="language-python">Set-ExecutionPolicy Bypass -Scope CurrentUser</code></pre><p class="Paragraph ">Also doing so could introduce security issues, have a look at the docs before running this command.</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">  </li><div style="margin-left: 20px;"><p class="Paragraph ">Install Manim using <strong>pip</strong>:</p><pre class="Code"><code class="language-plaintext">python -m pip install manim</code></pre><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/2dca44be-32b1-4fd6-857f-a3bfad3ebe84/powershell_pip_install_manim_op.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466SKCGLJOE%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161511Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIFMOiAmRl7TGRJRfRFOWv9bJ%2F4AFBiiG4WGRYRi98JeJAiB%2Fx7hxCf%2FLLQz08jxKnY0pgNhPTvyou9LQx7oaKeNMlSr%2FAwhREAAaDDYzNzQyMzE4MzgwNSIM8%2B7J2prpYHk5CAADKtwD61IJsL9q86rgmJdUkMMJBBdZwkRzrKqOWpwHpSTUoqyZr956DWQwWGCUOzy7vC3XSqAW%2B8TUwsW9FMatfAFfejSxKVHg0HHkFQXhCf3dQHVXhlS1cjapsuZaNxfwBlF6zuG8Q%2FTAHizKScbVatyyfmQjE1mELH1A8yZ%2B%2FHyGh5Z4NlZT0K5vEbuQhEJBLcPA5VhP2tcRmF7nS9HnA8K1%2FtWs3HdVDhGFOWEgIQX7GA7wi83kedMw1ZxqGtJm1tbpoDfiyCsTUtg4GtG1uSGcWJ4ttczy7psOB9IqWPDnyOUxjcn8050X6H63B9joA9QE%2B2fpXXs497SclKNg9QJf4DYm%2BxQ8gTeB%2B066VRwXN5ydpkmzwbMMT2lcOBVvPE7Z2B6EX9FvU4Ln%2BFrZ2M2EZVVrs96eYuFXHCFstgu5XlYjRcm3ZRNBmPFCBwi7hDO7v36PU%2BmSLtGWpJ5eSmLtr7V5SmtnycqQukXiorH3xoLQBOA%2B9CzvOf5cpZAXG44MUd%2FGQVm04rxjXqhLUKaVZ6e7ddBHI%2BET9bFGrlsy7YyqcPlYG8Jso6GOT8qA6aGyhT%2F4jlHtcvYHzEDpbsaTlF%2Fecx7Wvvqpnqf%2FPfVbjYVN%2B1d5Yq5XOn7jwGgwy5jSzAY6pgHGUEa5WOOq3NGY4vL8cnoMz4J003rb5gy8DS2Pq3C8MtV%2FPsSYXY4i35Qb7r8ClM1z1ZUY5RuuD1Z7jWGaDpN%2BT%2F5DTbew%2BCCQMj9JLh7byarFIQlyhQft2yh663cyPlEfQXN4i4zl9zj6xNnHkRDRSJvA97BtvGfpHrUiSjA6JW5dE8U9DZfcvKqsFq6%2BRgcPyjblPpN7iGqXT3ZvMEuHtO4NA5Z0&X-Amz-Signature=d1f837abb854d15b9c8ece32925411399710bf2060cdbfd9c4e59b2e88735830&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div></div>
+</ol>
+<p class="Paragraph ">If you followed the steps correctly you should see the version of manim when running <code>manim --version</code> in that terminal. Just don’t close the terminal yet, that will be used in the next steps.</p><h3 class="Heading Heading--3 ">Initializing a Manim project</h3><p class="Paragraph ">To initialize a manim project run:</p><pre class="Code"><code class="language-python">manim init project &lt;project-name&gt;</code></pre><p class="Paragraph ">where <code>&lt;project-name&gt;</code> should be replaced by the directory where you need to create a project (introduced in manim <code>v0.16.0</code>). Manim asks for some questions and creates the project accordingly with configuration files.</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/9a25a4a3-a3b1-4f83-b78c-2ad4c7ecf7b3/powershell_manim_init.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665Q4AV3FG%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161509Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIEL1yWOOj%2BSCt7LIKrvbDxBOCYu4YRqnKjdLTkjjNpOKAiA6AqvJdqH6N6yhxPJREqxjWLbLlb99AEHyBT%2BvgK2%2FdSr%2FAwhREAAaDDYzNzQyMzE4MzgwNSIMQTkyjecVDRvWghOjKtwDFHknNlWTGtOP%2BM0ShbFi1Gf8inryhSf8gJfnpqntK3hF%2FIydRDDJojL3TsbZJf1sC%2BQmXFyT03Kzj0lTzXLTT50LHBcvGWCPnSLTvPSETgbCG4uFkKG%2FRkahdnPp8ihWonsC%2F1LYOVqksQU%2BXaYR9Lb0DPTgQJpApzW1JGpEuujWWOrX2NtHvTQujH71NcGA1dWlGIo0POg%2FfkkeyHkFItpTrI0Nf9V1YrkLEYm3B76LRA9Wyhh2zTU1IvvqrYX3lWm1ysiz6tm1E9w0dFBkdmCD01d%2BsYPp6Si8%2B5%2Bf4c3xzC%2FABl7H16LMwJenHjgK9hzoxwAFb0iJ6fnRkyZngZbgzXjt1Dys0SBKo8hiTjeG%2BKXaNcyfCLiolcuH0SPU%2FNOeZcSKXApVNH6rcrSym1Pex3W4vDR7HQQgi5yVlqbtOHx76mSjCF4EBMBgC2YoNU9aWCQra%2BdvJABydSpfELDx2ZEgjzpw2%2Fy6c%2Bovaq3wD9NUCkXM7ZTqUq259t3dxWQ01bsNPXqcl2T6Co2vzsxW1bPc5mZtLxWDuYtt0vQW2%2ByRaeW3tTE9rnzZDn5BILQ3Hsfv0mI1IgPMFq%2BFOudbkzohzjVDVnhkuJ8mfAd%2BIYNk0aOBuCXMCugwyZnSzAY6pgH4GG%2FgR7aOwC8TK6n6iVFqPOn5Vn8BvO8X4I0g572pcMiR8p4eZRv9PxXPKuwHE2ROWLk4PxNRZyAf3qjzijs7Tf%2Fo3xuwKNVkTKMCMVzOsuxkqSHRlZaJtfOJvr0jxUxbCd%2Bw56xtc44106%2BGPIJ6JNWDFvwQJuTOx%2B47wh16P0poECnvLILFm%2FgU2NMIHDi01Opr3C2%2FfRVc9luqBQvWT25dHMwS&X-Amz-Signature=711302e77d913bcd4f31bf956333a9f84eadba36d9343894a89bdb3b25cc25f6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">This should create 2 files main.py and manim.cfg inside the &lt;project-name&gt; folder.</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/55c49908-c7fa-4171-8825-e5c1e01434dc/file_explorer_manim_init_op.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665Q4AV3FG%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161509Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIEL1yWOOj%2BSCt7LIKrvbDxBOCYu4YRqnKjdLTkjjNpOKAiA6AqvJdqH6N6yhxPJREqxjWLbLlb99AEHyBT%2BvgK2%2FdSr%2FAwhREAAaDDYzNzQyMzE4MzgwNSIMQTkyjecVDRvWghOjKtwDFHknNlWTGtOP%2BM0ShbFi1Gf8inryhSf8gJfnpqntK3hF%2FIydRDDJojL3TsbZJf1sC%2BQmXFyT03Kzj0lTzXLTT50LHBcvGWCPnSLTvPSETgbCG4uFkKG%2FRkahdnPp8ihWonsC%2F1LYOVqksQU%2BXaYR9Lb0DPTgQJpApzW1JGpEuujWWOrX2NtHvTQujH71NcGA1dWlGIo0POg%2FfkkeyHkFItpTrI0Nf9V1YrkLEYm3B76LRA9Wyhh2zTU1IvvqrYX3lWm1ysiz6tm1E9w0dFBkdmCD01d%2BsYPp6Si8%2B5%2Bf4c3xzC%2FABl7H16LMwJenHjgK9hzoxwAFb0iJ6fnRkyZngZbgzXjt1Dys0SBKo8hiTjeG%2BKXaNcyfCLiolcuH0SPU%2FNOeZcSKXApVNH6rcrSym1Pex3W4vDR7HQQgi5yVlqbtOHx76mSjCF4EBMBgC2YoNU9aWCQra%2BdvJABydSpfELDx2ZEgjzpw2%2Fy6c%2Bovaq3wD9NUCkXM7ZTqUq259t3dxWQ01bsNPXqcl2T6Co2vzsxW1bPc5mZtLxWDuYtt0vQW2%2ByRaeW3tTE9rnzZDn5BILQ3Hsfv0mI1IgPMFq%2BFOudbkzohzjVDVnhkuJ8mfAd%2BIYNk0aOBuCXMCugwyZnSzAY6pgH4GG%2FgR7aOwC8TK6n6iVFqPOn5Vn8BvO8X4I0g572pcMiR8p4eZRv9PxXPKuwHE2ROWLk4PxNRZyAf3qjzijs7Tf%2Fo3xuwKNVkTKMCMVzOsuxkqSHRlZaJtfOJvr0jxUxbCd%2Bw56xtc44106%2BGPIJ6JNWDFvwQJuTOx%2B47wh16P0poECnvLILFm%2FgU2NMIHDi01Opr3C2%2FfRVc9luqBQvWT25dHMwS&X-Amz-Signature=784547485a565a5dade4b00e11a6dbf3c298c6a63d31d5f44953327471542d5e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">contains the configuration files necessary for Manim. They can be overridden by command line flags.</p><p class="Paragraph "><code>manim.cfg</code>See the documentation for a tutorial on using them.</p><p class="Paragraph ">You would need to <code>cd</code> into <code>&lt;project-name&gt;</code> directory before continuing next steps.</p><pre class="Code"><code class="language-plaintext">cd &lt;project-name&gt;</code></pre><h2 class="Heading Heading--2 ">Configuring Visual Studio Code</h2><ol class="NumberedListWrapper">
+<li class="NumberedList "></li><div style="margin-left: 20px;"><p class="Paragraph ">Open VSCode. Typing <code>code .</code> in the same terminal should do the trick.</p></div>
+<li class="NumberedList "></li><div style="margin-left: 20px;"><p class="Paragraph ">Click “Yes” in the dialog box. (This is needed so that other extensions work correctly)</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6c5c8b2e-defa-4799-84c5-fab6ab9cd339/code_confirmation.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4662W6SBNJB%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161513Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIBe5lEbSDLnlW3CBanq%2B8RvarPyluUvNdKcFpmBA69ZKAiEAswuwIl6DKoxdB7AUW6c4EVP18%2BBhWIGMMlbKx%2FJTC84q%2FwMIURAAGgw2Mzc0MjMxODM4MDUiDIRslkV5dacMdlbz%2FircA2sB6WFletACZZ1tKXYW7hivb%2FsDmBSonTkne8JhhsB%2BfKOIJ9bGnlMlrZe0K0FTRl%2BMQoccrbHcK9ppdZlF0dB0rz86J3W6qV7KOk5%2Fud4XWW13bu%2BJWs0VG7h8zeVyfIeZmKFywaoPsTPbvlRC9rD%2Fhx3S12D0gYVnUdDaLfa4jAdI41gWCP06QEACJheGUbDCrRCmEIXQFaVD2jfkwjZbOERIDZMKFxeiVfa6MaSN5NXOBD2eMptcpZkB9j7zStcX6EglObTa3g8cWYLPZ%2BUFnG92udQ8nP33dbSoF8Bih44i1LVJoA4XBUfxPkMnYk3u1TSaTgdK0rm74wGYGD9lPxse0KOgOjVajG0gEv%2FBP0tAJ6KLYaKF%2FJycrfuZdqatGq0UuaNeNjRJef%2BAB2ltKpd9V%2B8t0IpYsbCsSOPPaxSG13JCUIgF8m2uAmy9CnTUKPhKieVADits0n%2F4DOZEGbp6B6jnjMFD%2FVHkJpVNcrG87%2B%2Fg5MBhcSgqueDBuO09KaMnVZO10%2ByflsoYV414AjzdO6JpJzN6LkV%2FABPj0kUJ5BVea4MpJZ9dMNM1F3iGGim2v1VIoP9g7EarEy%2FMVXBAZOup3Dn2fZXXqWhwhpWBHasYZ3Ys2NwWMO%2BY0swGOqUBNevhMOiIdLGdrNRUUHNDJY3BHCGsnJR%2B81Z3y2U%2FcYPAQ6d2E2jetds2Ei9GZEXUqjkWg6w25vMT1PKJtjxjQllhaap%2FEbYyPFgIlGEOlHmv5l7xpwu0KG5oQ%2FyXgdF%2B7oFCFJpdCcupp7X1jnAF0TbT%2B9Vcg9vusGTR0qIfMy3U9Amsca5RysrHNnMuTTCO9tu4Z1erZ7MMEGMM4DofdduXcVBJ&X-Amz-Signature=872f7b5883ac861addb28e66e05287cd4c7472b2f6eba6b72f99014f2b4cdfaa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div></div>
+<li class="NumberedList "> </li><div style="margin-left: 20px;"><p class="Paragraph ">Install the following extensions.</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">Python</li><li class="BulletedList ">Pylance</li><li class="BulletedList ">Jupyter (optional, for using manim on Jupyter)</li><li class="BulletedList ">Jupyter Keymap (optional, ignore if you like visual studio’s keymaps)</li><li class="BulletedList ">Color Highlight (optional, if you don’t want a color picker for colors)</li><li class="BulletedList ">Rainbow Brackets (optional, if you don’t want all brackets to be of same color)</li><li class="BulletedList ">Manim Sideview (optional, if you don’t want live preview of code video you generate)</li></ul>
+</div>
+<li class="NumberedList "></li><div style="margin-left: 20px;"><p class="Paragraph ">Select the Python interpreter by clicking F1 and searching for <code>Python: Select Interpreter</code>. Select the virtual environment previously created.</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/7d30e836-dc81-4c87-926d-cfdaf3fafb00/code_choose_python.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466WYL64LRF%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161514Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDJSTgYub2WKsggXrEcIt11Jn6%2BJe2LpDEZVxRLISt2%2FwIhAL%2FbLNHAtivmJqmj5RSss7GC%2FzM2xILgJVWK0BQuLy%2F0Kv8DCFEQABoMNjM3NDIzMTgzODA1IgwgWQKwn5IJRGci5b4q3AOqWe4PB0HG8VyRZpcn2j920AR11FS9%2FsGDni71GLqE5f%2BhyUpuCnzIJTcBcMY0x4uojR7%2F%2BZp2bX%2BK5oTqpiMGpPMiqOTBRQz2PGrLynJi2RMa2VXk8z6F14j8EvuplO%2FBdJ2yU0xj2KVH4BcFBRyRJf6K1Yygiz3QUIprerywgZMvAz88OATjd2NzuckevDzdAk3z32NRHjWd7wbvi1iU5WX4ApwM2ghmO9uIE5nMQLMkddU593T9RbRQTUxgq323lYI2irE6wFove8DJenR9%2Bi%2B3CkwJv%2FaVaLGV9EUK8bIEn0dLAPaO1I4B%2Bqe2vf%2BwABker5hCpQB%2BrCAxNg44JifYXtJWTn53Y1HzDQd9K3zthyMxPXU7%2BHELP1CShP3jisHAJlrjvWakMy8dWbxnVAdGbAE%2Fja1hxc%2BB0QZ7kBTdaG0bHGliaelG4kH1EvN2%2B2CEVNYyF6iD%2FLzDJ4ApLhrqVZr85dXJlBdfwFqiKdWW3QTaAkL9Z0GGsXCuz51MUh5WPfJVAiadpwWwP6%2FRu%2BMgkwEnWpuO4CpOI7ebAc4W8SgJckkVR0Uzq9IyhzG25XuaVpmhwEAyLGdkFz1KWa8XLaqYJV3XDc1eucMoBHhadKy3ySjj70DQKzCzmdLMBjqkAeio9tk1DwQGMk%2FexQbUMCDkRUd9V5SV%2FkzAprRURokugkGgVMzwz7fXvUBo4%2B003%2FFFESF0YBmVG34pYYOnJdNBCM0ddp7Axw2wOzNTOmyUdYLX73VRmQASujRJlPD85vZ8eanDgffV%2FUCC2c0dcq9FBRv%2BolL2jwW5AiXD9ylBPlcBhh8SywN0ZwBeesCfKJMjl4wMLa6CqXY1dg%2FzkJ0zsCWw&X-Amz-Signature=e6af1931a848da8fa2257cd2c7e409206674aaa0cb5bae2a4c3724a3ff08d13d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div></div>
+<li class="NumberedList "></li><div style="margin-left: 20px;"><p class="Paragraph ">If everything is configured correctly pressing Ctrl + Click should get to the corresponding definition of that class. Also, there would be no yellow swiggly lines.</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/c4f0557d-c09b-45bb-9573-cb457a81895e/vscode_manim_defn.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XE3VEAWE%2F20260217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260217T161515Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQCW4yFLlHlc9BM9BZp%2Fkk0ccvpmJPSK1pmdnRnALH6BRQIgcEKayq%2FR0p%2FTpYLLUv%2BjIHf0PvOAixrR7st1qsaN2O8q%2FwMIURAAGgw2Mzc0MjMxODM4MDUiDERED7AMSGcRCufs1CrcA5qAGXNyHpLyXIIiSdiADECMjHi59JHGfuRKPq3PNJoo45hWrpCEzYa7UPRavXF1I5Ur%2FdHT1qjcVzS81CCkCvX%2BC7VLYy9IM8JzxGlwJGAGLwOlGd20q0gIlrEhR6Qg74pl4Sgh9SHWDAyW2XRdK9dzpaOh08Dj6CdnmDtSiXiAXDrEBGJKTo64Ug6gApF0tjhDtEDRM27U6frrQpnEu1YPYrWedPPBTLZLXNRWDhGrPMk1RRSABoS1FRi27lur7yylPlEDJS%2Fei0OpWT%2F78gggLB4OeH9O5knqcPlQzBeqkHA93woHsKylA7fKxHBo8Zr04PHjXerxV1bqSm1empZxBcHym7%2FDKfgFym6wlwZMBH80jl%2B1kgrcmc%2FvQPuuPdLAj9BVCxfHLxJrKc8MLeQRrrXLIgUISS7ZvEyT6OUVG8IoKhMU7MDnYYNOE4Wm9TYcRE1WU5DVfOW%2B%2Bmgz%2Bvcg9DbyEII8UWrmzedOoyNFhezp3%2FmuocPg6PCpdAvuLqYnJqOT4jbZ%2FHCbDvQIXUrkPDPzBCaStsuF%2BEW3fkPAvzsYnlV%2BCIlMfwRI47HWTuguDnTjyQ3bRxdbBBG0526jtJKaktaN2LD%2FeuTcaY5vQeAFi9aSRSNNDw35MJua0swGOqUBeruYkwyilLOji3Rm1AsycPTN6yNhZ2Vn%2Fjoug9mh%2FuitmRuY344Wrz3tIoyuOW0tQhzXHuatERivrwT7Ni2ts%2BoeFQqWHTUS7Pg%2BJf%2BoLzTa6JlTpvzKFk3j01hwIkGvTot5Kce8bxBhvUI1Jb0W49ASZxp3KvtqYn33F5aA%2BxgRzljCqk7IVXSqGq6yUQC5htie1AQwY1i%2BNlgt8uKd4K87yVEy&X-Amz-Signature=6e361a5d927ff8bef460c740ec620f9171fe4939b8f8859202fbebf4bdcad3cc&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">If you want to use Jupyter for working with Manim, then open the same terminal and run</p></div>
+<li class="NumberedList "></li><div style="margin-left: 20px;"><pre class="Code"><code class="language-python">python -m pip install manim[jupyterlab]</code></pre></div>
+<li class="NumberedList "></li><div style="margin-left: 20px;"><p class="Paragraph ">You can open a terminal in VSCode Ctrl + ` and run manim commands there.</p></div>
+</ol>
+<p class="Paragraph ">Hope this helps you in configuring Visual Studio Code to work with Manim. If you have an error, or found something to difficult to understand, jump over to <code>#help-form</code> on Manim’s Discord server.</p><p class="Paragraph "></p><p class="Paragraph "></p><p class="Paragraph "></p><h2 class="Heading Heading--2 ">This is my code</h2><p class="Paragraph "></p><pre class="Code"><code class="language-python">tlmgr update --all
+
+fc-list -f &quot;%{family}\n&quot; :lang=zh &gt;E:\Desktop\Manim_Pro:zhfont.txt
+
+.venv/Scripts/Activate.ps1
+
+# init:
+
+manim init project &lt;Project-Name&gt;</code></pre>
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

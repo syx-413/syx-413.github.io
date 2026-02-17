@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="./css/theme.css">
+<link rel="stylesheet" type="text/css" href="./css/notablog.css">
+<link rel="stylesheet" type="text/css" href="./css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+
+  <title>VSCode+EIDE开发CH32V系列RISC-V MCU - Wahahahehehe - 博客园&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="VSCode+EIDE开发CH32V系列RISC-V MCU - Wahahahehehe - 博客园">
+  
+    <meta name="description" content="https:&#x2F;&#x2F;img2022.cnblogs.com&#x2F;blog&#x2F;1684271&#x2F;202211&#x2F;1684271-20221116155026047-160653294.gif VSCode+EIDE开发CH32V系列RISC-V MCU 1. VS Code Visual Studion Code ...">
+    <meta property="og:description" content="https:&#x2F;&#x2F;img2022.cnblogs.com&#x2F;blog&#x2F;1684271&#x2F;202211&#x2F;1684271-20221116155026047-160653294.gif VSCode+EIDE开发CH32V系列RISC-V MCU 1. VS Code Visual Studion Code ...">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="./index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="./blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">VSCode+EIDE开发CH32V系列RISC-V MCU - Wahahahehehe - 博客园</h1>
+    
+      <div class="DateTagBar">
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="./tag/环境.html" class="tag tag-purple">环境</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155026047-160653294.gif" alt="" loading="lazy" /></figure></div><h2 class="Heading Heading--2 ">VSCode+EIDE开发CH32V系列RISC-V MCU</h2><h2 class="Heading Heading--2 ">1. VS Code</h2><p class="Paragraph "><strong>Visual Studion Code</strong> (<strong>VS Code</strong>)，是一款由微软开发且跨平台的免费源代码编辑器。该软件支持语法高亮、代码自动补全（又称 IntelliSense）、代码重构、查看定义功能，并且内置了命令行工具和 Git 版本控制系统。</p><ul class="BulletedListWrapper">
+<li class="BulletedList "><strong>VS Code 官网</strong></li><li class="BulletedList "><strong>VS Code 官方文档</strong></li></ul>
+<h2 class="Heading Heading--2 ">2. Embedded IDE 简介</h2><p class="Paragraph "><strong>Embedded IDE</strong> (<strong>EIDE</strong>)是一款适用于 8051/STM8/Cortex-M/RISC-V 的单片机开发环境。</p><p class="Paragraph ">能够在 vscode 上提供 <strong>8051</strong>, <strong>STM8</strong>, <strong>Cortex-M</strong>, <strong>RISC-V</strong> 项目的 开发, 编译, 烧录 功能。</p><ul class="BulletedListWrapper">
+<li class="BulletedList "><strong>eide 官网</strong></li><li class="BulletedList "><strong>eide 使用教程</strong></li></ul>
+<h2 class="Heading Heading--2 ">3. 在VS Code中安装EIDE插件</h2><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155026047-160653294.gif" alt="" loading="lazy" /></figure></div><h2 class="Heading Heading--2 ">4. 工具链配置</h2><p class="Paragraph ">eide还需要调用相应的工具链才可完成MCU的工程编译，</p><p class="Paragraph ">如<strong>8051 MCU</strong> 的工具链<code>SDCC</code>或者<code>Keil C51</code>, <strong>RISC-V MCU</strong>的工具链<code>RISC-V GCC</code>。</p><p class="Paragraph "><strong>&quot;设置工具链路径&quot;</strong> 中选项的图标表明了工具链路径设置的总体状态</p><ul class="BulletedListWrapper">
+<li class="BulletedList "><strong>√</strong> ：某一个工具链已设置完毕</li><li class="BulletedList "><strong>x</strong> ：还没有为任何工具链设置安装路径</li></ul>
+<div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155034441-1692697531.png" alt="" loading="lazy" /></figure></div><p class="Paragraph ">工具链可以通过在线的方式安装，有的工具链上github中下载，需要考虑网络情况，如RISC-V官方工具链下载网址。</p><p class="Paragraph ">沁恒RISC-V系列MCU支持官方RISC-V GCC工具链，不过其自研的RISC-V架构青稞系列处理器增加了自定义压缩指令、硬件压栈、免表中断等功能，需要使用其自家的工具链。工具链在MounRiver Studio（MRS） 安装目录下：<code>D:\MounRiver\MounRiver_Studio\toolchain\RISC-V Embedded GCC\bin</code>。</p><p class="Paragraph ">为EIDE配置本地 RISC-V 编译工具链（由MRS提供）：</p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155043680-1059233150.gif" alt="" loading="lazy" /></figure></div><p class="Paragraph "><code>工具链安装目录</code> 是指你的编译器的<strong>根目录</strong>
+示例：</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">如果你的 GCC 编译器位置是：<code>D:/MounRiver/MounRiver_Studio/toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gcc.exe</code></li><li class="BulletedList ">那么，你需要将 <code>工具链安装目录</code> 设置为 <code>D:/MounRiver/MounRiver_Studio/toolchain/RISC-V Embedded GCC</code>，因此对于 GCC 来说，这个目录就是 <code>bin</code> 文件夹所在的目录</li></ul>
+<p class="Paragraph ">详细过程参考<strong>eide 使用教程</strong></p><h2 class="Heading Heading--2 ">5. openocd下载配置</h2><p class="Paragraph ">通过openocd和wchlink可以对沁恒RISC-V MCU进行程序下载。</p><p class="Paragraph ">在EIDE中需要配置openocd的路径，该工具同样也在MRS的安装目录下：<code>D:\MounRiver\MounRiver_Studio\toolchain\OpenOCD\bin\openocd.exe</code></p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155055251-321173168.gif" alt="" loading="lazy" /></figure></div><h2 class="Heading Heading--2 ">6. 新建工程</h2><p class="Paragraph ">通过github远程仓库模板新建工程，<strong>需要保证能正常访问github</strong></p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155102345-1182256207.gif" alt="" loading="lazy" /></figure></div><p class="Paragraph ">github中的模板更新并不及时。</p><p class="Paragraph ">模板中的sdk文件夹中的 Core、Debug、Ld、Peripheral、Startup文件夹可能并不是最新的,</p><p class="Paragraph ">建议在<strong>官网下载</strong>最新的evt，替换对应的文件即可。</p><h2 class="Heading Heading--2 ">7.Debug 配置</h2><p class="Paragraph ">通过OpenOCD进行DEBUG调试，可以借用 Cortex-Debug插件，
+launch.json 配置如下：</p><pre class="Code"><code class="language-json">{    
+&quot;version&quot;: &quot;0.2.0&quot;,    
+&quot;configurations&quot;: [{            
+														&quot;cwd&quot;: &quot;${workspaceRoot}&quot;,            
+														&quot;executable&quot;: &quot;./build/Debug/CH32V307_hello_world.elf&quot;, //替换对应的elf文件路径            
+														&quot;name&quot;: &quot;Debug with OpenOCD&quot;,            
+														&quot;request&quot;: &quot;launch&quot;,            
+														&quot;type&quot;: &quot;cortex-debug&quot;,            
+														&quot;servertype&quot;: &quot;openocd&quot;,            
+														&quot;searchDir&quot;: [],            
+														&quot;runToEntryPoint&quot;: &quot;main&quot;,            
+														&quot;showDevDebugOutput&quot;: &quot;none&quot;,            
+														&quot;device&quot;: &quot;CH32V307&quot;,            
+														&quot;svdFile&quot;: &quot;D:/MounRiver/MounRiver_Studio/template/wizard/WCH/RISC-V/CH32V307/NoneOS/CH32V307xx.svd&quot;, //MRS安装目录            
+														&quot;toolchainPrefix&quot;: &quot;D:/MounRiver/MounRiver_Studio/toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gdb.exe&quot;, //MRS安装目录            
+														&quot;configFiles&quot;: [&quot;D:/MounRiver/MounRiver_Studio/toolchain/OpenOCD/bin/wch-riscv.cfg&quot; //MRS安装目录            
+														]}]
+	}</code></pre>
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

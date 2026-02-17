@@ -22,15 +22,19 @@
   }
 </style>
 
-  <title>Note&nbsp;|&nbsp;My Blog</title>
+  <title>使用wsl 编译&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
-  <meta property="og:title" content="Note">
+  <meta property="og:title" content="使用wsl 编译">
   
-    <meta name="description" content=" https:&#x2F;&#x2F;open.spotify.com&#x2F;track&#x2F;3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae  https:&#x2F;&#x2F;open.spotify.com&#x2F;embed&#x2F;track&#x2F;4bIi9DwDxvJCmemLykVlJ7?utm_source=gen...">
-    <meta property="og:description" content=" https:&#x2F;&#x2F;open.spotify.com&#x2F;track&#x2F;3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae  https:&#x2F;&#x2F;open.spotify.com&#x2F;embed&#x2F;track&#x2F;4bIi9DwDxvJCmemLykVlJ7?utm_source=gen...">
+    <meta name="description" content="wsl --install -d Ubuntu-18.04
+wsl --export Ubuntu UNbuntu.tar
+wsl --import UbuntuN E:&#x2F;wslu22&#x2F; E:\wslu22\UNbuntu.tar
+mkdir rocklinux 将所需文件放到 rocklinux ...">
+    <meta property="og:description" content="wsl --install -d Ubuntu-18.04
+wsl --export Ubuntu UNbuntu.tar
+wsl --import UbuntuN E:&#x2F;wslu22&#x2F; E:\wslu22\UNbuntu.tar
+mkdir rocklinux 将所需文件放到 rocklinux ...">
   
-  
-    <meta property="og:image" content="🎶">
   
   <style>
     .DateTagBar {
@@ -208,32 +212,39 @@
 
   <header class="Header">
     
-      <div class="Header__Cover">
-        <img src="https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1585108592681-d0db82bab204?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb">
-      </div>
-    
-    <div class="Header__Spacer ">
+    <div class="Header__Spacer Header__Spacer--NoCover">
     </div>
     
-      <div class="Header__Icon">
-        
-          <span class="inline-img-icon">🎶</span>
-        
-      </div>
-    
-    <h1 class="Header__Title">Note</h1>
+    <h1 class="Header__Title">使用wsl 编译</h1>
     
       <div class="DateTagBar">
         
-          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2025-05-13</span>
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2025-03-24T15:57:00+08:00</span>
         
         
       </div>
     
   </header>
   <main class="PageRoot">
-    <p class="Paragraph "></p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/track/3vSoVqNk3vvMNaki3YeuFa?si=b6edba9ccf0b49ae" style="border: none;"></iframe></div></div><p class="Paragraph "></p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/embed/track/4bIi9DwDxvJCmemLykVlJ7?utm_source=generator" style="border: none;"></iframe></div></div><!-- Unsupported block type: Unsupported --><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://open.spotify.com/track/0kCkx3AREMYFBRSOE9UWDi?si=4e181da1c6734aa9" style="border: none;"></iframe></div></div><div class="Divider"></div><p class="Paragraph ">
-</p><div class="Embed"><div class="Embed__ResponsiveContainer"><iframe src="https://monster-siren.hypergryph.com/music/232285" style="border: none;"></iframe></div></div><p class="Paragraph "></p>
+    <pre class="Code"><code class="language-bash">wsl --install -d Ubuntu-18.04
+wsl --export Ubuntu UNbuntu.tar
+wsl --import UbuntuN E:/wslu22/ E:\wslu22\UNbuntu.tar
+mkdir rocklinux</code></pre><p class="Paragraph ">将所需文件放到 rocklinux 下</p><pre class="Code"><code class="language-bash">root@Shaox ~/rocklinux# ls
+buildroot_dl_4c7c9df616fb.tar.gz  tspi_linux_sdk_repo_20240131.tar.gz</code></pre><pre class="Code"><code class="language-bash">sudo apt-get install git repo python2.7 python3
+sudo apt-get install git ssh make gcc libssl-dev liblz4-tool expect g++ patchelf chrpath gawk texinfo chrpath diffstat binfmt-support qemu-user-static live-build bison flex fakeroot cmake gcc-multilib g++-multilib unzip device-tree-compiler ncurses-dev</code></pre><p class="Paragraph "></p><pre class="Code"><code class="language-bash">tar -xvzf tspi_linux_sdk_repo_20240131.tar.gz
+root@Shaox ~/rocklinux# sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+update-alternatives: using /usr/bin/python2.7 to provide /usr/bin/python (python) in auto mode
+
+root@Shaox ~/rocklinux# sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
+update-alternatives: using /usr/bin/python3.6 to provide /usr/bin/python (python) in auto mode
+root@Shaox ~/rocklinux# sudo update-alternatives --config python
+There are 2 choices for the alternative python (providing /usr/bin/python).</code></pre><pre class="Code"><code class="language-bash">Selection Path Priority Status
+&gt; 0 /usr/bin/python3.6 2 auto mode
+  1 /usr/bin/python2.7 1 manual mode
+  2 /usr/bin/python3.6 2 manual mode
+Press &lt;enter&gt; to keep the current choice[*], or type selection number: 1
+update-alternatives: using /usr/bin/python2.7 to provide /usr/bin/python (python) in manual mode</code></pre><pre class="Code"><code class="language-bash">.repo/repo/repo sync -l -j88
+tar -xzf buildroot_dl_4c7c9df616fb.tar.gz</code></pre><p class="Paragraph "></p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"
