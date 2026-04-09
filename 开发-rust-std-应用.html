@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <!-- Chrome, Firefox OS and Opera Status Bar Color -->
 <meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
 <link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
@@ -21,6 +22,181 @@
     font-size: 20px;
   }
 </style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
 
   <title>开发 Rust std 应用&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -204,6 +380,11 @@
   
   
   
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
 </nav>
 
   <header class="Header">
@@ -240,7 +421,7 @@
 <li class="BulletedList ">构建的 target 是 <code>xtensa-esp32s3-espidf</code>, 而 non_std 应用的 target 是 <code>xtensa-esp32s3-none-elf</code></li></ul>
 <p class="Paragraph ">esp-idf 是 C/C++ 开发的，运行 FreeRTOS 操作系统，为 Rust std 提供了 newlib enviroment 实现（~/.rustup/toolchains/esp 目录），</p><p class="Paragraph ">这样 std 应用可以使用 Rust 标准库的各种类型和特性，如 Vec/HashMap/Box，net，heap 内存分配、thread/Mutex 等；</p><p class="Paragraph "></p><p class="Paragraph ">Rust std 应用与 esp-idf 之间的 3 种互操作方式（这些 std 库惯例是 esp-idf- 开头）：</p><ol class="NumberedListWrapper">
 <li class="NumberedList "><code>esp-idf-sys</code> crate：esp-idf 的 unsafe binding，Gives <code>raw (unsafe) access</code> to drivers, Wi-Fi and more.</li><li class="NumberedList "><code>esp-idf-svc</code> crate：esp-idf 的 safe binding，抽象层次更高，实现了 embedded-svc trait。</li><li class="NumberedList "><code>esp-idf-hal</code> crate：实现了 <code>embedded-hal</code> trait，支持 async，底层也是基于 esp-idf；</li></ol>
-<p class="Paragraph ">它们之间的层次关系: <code>esp-idf-svc -&gt; esp-idf-hal -&gt; esp-idf-sys(esp-idf 的 Rust binding).</code></p><p class="Paragraph "></p><p class="Paragraph ">embedded-hal 和 embedded-svc 是 Rust embedded workgroup 定义的厂商中立的嵌入式规范.</p><p class="Paragraph "></p><p class="Paragraph ">编译 esp-idf-sys 时, build.rs 会会自动下载/安装/配置/编译和链接 esp-idf 库，</p><p class="Paragraph ">安装到 $ESP_IDF_TOOLS_INSTALL_DIR 位置，默认为 by 项目的 .embuild/espressif 目录。</p><p class="Paragraph "></p><p class="Paragraph ">esp-idf-sys 默认启用 <code>esp-idf</code> 所有的 <code>Component</code>（静态库的形式） ，这样可以后续直接链接他们(后续也可以通过 <code>esp_idf_components</code>, $ESP_IDF_COMPONENTS 来配置）。</p><p class="Paragraph "></p><p class="Paragraph ">esp-idf-sys 也支持添加本地和远程的 C/C++ Component，在构建 esp-idf-sys 时自动使用 bindgen 将它封装为Rust 接口，后续自动链接到可执行程序中。（参考后文）。</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/fdc7d164-d9c5-45ee-a354-d0b025c45732/image%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Q52JKDMQ%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071850Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQCrqSVvcrZ0CzEgwTQsZryu5dceolIw2cs4AuVd0w4rfQIhALst78XHQ7ac39WM1WRwIAbALsd%2BdeZ0IYF2PL8sbLclKogECMf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgzFEq35ciuDuaY8jjEq3APeK%2F0sbqhjYfqI9fTXHVv5lIzaMtccwKaeqFxABR2f37dyJsBa0hnvEMPPsaWsrr1QzIJA%2FXLHWVjVd6297di5RKYkCDfsEHPDmM8Vi%2BMZBtgy5FUMUQV06Z4wj6TI%2F3DCujxXSYfwmgVFXDIAS7hy8mfrZhELGMlQLO5%2BpGFE98AYHc958P7wls6gF98R%2FfoG2mp02I4aSQxJLNIxwTg9MK4Khb1D7iJ164oPWSeRcRuBaiNrmD1NVhJsmyO9VnNb5tqPPgcXD3n1nXW8T9ucEBx9l6rRRraDLVYdl%2FHHiHl53eAk%2BUPPR074tjD9e9D%2B26hlhL%2BotXeu65wtOoG7br%2FcQTo1hjfmXVdVBxGCGnpW15v8XdkZl5ND8%2FILf9R7K9PgjT40d9lDzVny5%2FIOg1T%2FoaBow85YBtuGyAStX6IL1HRcD%2F0WFnuZOvSueghVhoHcXtkafNRKibgw2rh%2Bw1dWqiKzFImRMzGTSiPVMxid9ND9yZVF2qjuAUk66GYpvyBdkY8o30x99U%2FGrlPgTST5rss4YOUQifp7qy1JQ54%2B6d5cuVFPuaPTVHiGw4DC%2BCQgLMYXbk1f9vhaHreX%2B1KYItdweeqlUh4k7KSbYKZsc5f10PZvGU70EzDTnM3OBjqkASujVjK4Oei7sjJI0KEtIFzZjRSTJ703ll8F0oxxUFh5bTfZTXqX%2BMYLtAlW10DZe9QBLAJXrzvTe84nE%2FWPlGUCJlNamHQIrH9tNq2AGNq4%2Bf9AM9rNni7d334ZSuWox33LR6Ai438z6GCQW3Qf0QIvHWkwyp4QP4wKaKSdOU1FkgnEhNhgRBZ1jwqVR%2F6tOJ3fUh38xjMJ%2Fk7P6In6qe9XY3iF&X-Amz-Signature=5031e7d56a926d4b0d03ab8fd655166a3bbb1d7a7ae41e0bffc2fd413f93c9b9&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><p class="Paragraph ">如果 esp-idf-hal 不满足需求（如缺少一些 esp32 的寄存器的操作），可以使用 <code>esp-rs/esp-pacs</code> 下的esp32s3 create, 它是使用 svd2rust 工具来基于芯片的 svd 自动生成的库。</p><p class="Paragraph "></p><p class="Paragraph ">https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/cae98e63-d9a9-4fff-86dd-709ef6f5834a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Q52JKDMQ%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071850Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQCrqSVvcrZ0CzEgwTQsZryu5dceolIw2cs4AuVd0w4rfQIhALst78XHQ7ac39WM1WRwIAbALsd%2BdeZ0IYF2PL8sbLclKogECMf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgzFEq35ciuDuaY8jjEq3APeK%2F0sbqhjYfqI9fTXHVv5lIzaMtccwKaeqFxABR2f37dyJsBa0hnvEMPPsaWsrr1QzIJA%2FXLHWVjVd6297di5RKYkCDfsEHPDmM8Vi%2BMZBtgy5FUMUQV06Z4wj6TI%2F3DCujxXSYfwmgVFXDIAS7hy8mfrZhELGMlQLO5%2BpGFE98AYHc958P7wls6gF98R%2FfoG2mp02I4aSQxJLNIxwTg9MK4Khb1D7iJ164oPWSeRcRuBaiNrmD1NVhJsmyO9VnNb5tqPPgcXD3n1nXW8T9ucEBx9l6rRRraDLVYdl%2FHHiHl53eAk%2BUPPR074tjD9e9D%2B26hlhL%2BotXeu65wtOoG7br%2FcQTo1hjfmXVdVBxGCGnpW15v8XdkZl5ND8%2FILf9R7K9PgjT40d9lDzVny5%2FIOg1T%2FoaBow85YBtuGyAStX6IL1HRcD%2F0WFnuZOvSueghVhoHcXtkafNRKibgw2rh%2Bw1dWqiKzFImRMzGTSiPVMxid9ND9yZVF2qjuAUk66GYpvyBdkY8o30x99U%2FGrlPgTST5rss4YOUQifp7qy1JQ54%2B6d5cuVFPuaPTVHiGw4DC%2BCQgLMYXbk1f9vhaHreX%2B1KYItdweeqlUh4k7KSbYKZsc5f10PZvGU70EzDTnM3OBjqkASujVjK4Oei7sjJI0KEtIFzZjRSTJ703ll8F0oxxUFh5bTfZTXqX%2BMYLtAlW10DZe9QBLAJXrzvTe84nE%2FWPlGUCJlNamHQIrH9tNq2AGNq4%2Bf9AM9rNni7d334ZSuWox33LR6Ai438z6GCQW3Qf0QIvHWkwyp4QP4wKaKSdOU1FkgnEhNhgRBZ1jwqVR%2F6tOJ3fUh38xjMJ%2Fk7P6In6qe9XY3iF&X-Amz-Signature=c6786fb8708ed63a035a45ab9b433031c8cf8d400b8c17d5b709760c52560e36&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h2 class="Heading Heading--2 ">使用 esp-rs/esp-idf-template 模板</h2><p class="Paragraph "></p><p class="Paragraph ">使用 esp-rs/esp-idf-template 模板来创建 std 应用:</p><ul class="BulletedListWrapper">
+<p class="Paragraph ">它们之间的层次关系: <code>esp-idf-svc -&gt; esp-idf-hal -&gt; esp-idf-sys(esp-idf 的 Rust binding).</code></p><p class="Paragraph "></p><p class="Paragraph ">embedded-hal 和 embedded-svc 是 Rust embedded workgroup 定义的厂商中立的嵌入式规范.</p><p class="Paragraph "></p><p class="Paragraph ">编译 esp-idf-sys 时, build.rs 会会自动下载/安装/配置/编译和链接 esp-idf 库，</p><p class="Paragraph ">安装到 $ESP_IDF_TOOLS_INSTALL_DIR 位置，默认为 by 项目的 .embuild/espressif 目录。</p><p class="Paragraph "></p><p class="Paragraph ">esp-idf-sys 默认启用 <code>esp-idf</code> 所有的 <code>Component</code>（静态库的形式） ，这样可以后续直接链接他们(后续也可以通过 <code>esp_idf_components</code>, $ESP_IDF_COMPONENTS 来配置）。</p><p class="Paragraph "></p><p class="Paragraph ">esp-idf-sys 也支持添加本地和远程的 C/C++ Component，在构建 esp-idf-sys 时自动使用 bindgen 将它封装为Rust 接口，后续自动链接到可执行程序中。（参考后文）。</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/fdc7d164-d9c5-45ee-a354-d0b025c45732/image%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665C6GXSFQ%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141008Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEE0aCXVzLXdlc3QtMiJHMEUCIFOKfZUgVEwZm2HDS%2Bw%2F9cP3L%2F%2Fy6tbFVNgQoxvH2YtSAiEAvYLVjR7Pot9RdvXKQnNy8fsW2gekspvHwhlwZZotEg4q%2FwMIFRAAGgw2Mzc0MjMxODM4MDUiDL41ZF%2FnrRQ%2FCL0TsSrcA1jGGgfTlMa7LccguUffFzLwEZ7KyRGJwJbggVEjP7saIxa7qH%2BHDNLvduf3Uan4DGiSQAYW0kRNk6VaK%2BY6%2FZDKU6EqYhaXK8T%2BDXY3ItRTj40aRkHve8Yo%2BrlgieRPRXaPnGLjt%2FuZ4PQOnBi%2F6H6OEi7Wkbflr5br%2BJ6Ga4D3X4SRCMBQFCdXDkh2SyDuRpsxqP%2B2LhMI2z4WewVdh4RJnazuuNSL2BEt2YBkc3CJtbmtLtuzh9O7Ban0dQAq8R9yk5BXBrKKPIZ0fLr8kbV99HczUnwiLXA8J%2BZcMT4xhL1XOqHUd90ki2Shu9msI5lDgFebcvN8vK6HTGIEDJPPu2JDI972Cv54oD2pmxNC3KwJs8fxRTeG8bvHPolDje2H8w1oCQS4yAMcua2yl76Ga67Ggtr3FHzFXRhURhBw%2BioND9hByZOv5W%2FWWNgZajFfFxTmCHjEF8P2fJtbM5FJrC6ul7I0OH2Ve%2FgpEGbx6w4AyL1mOOCaGrD0OZwqTHOjr7gLqYwFGh1Tfq8z%2F14Pe2JQ0UZiBMMBniMu2OeCyyIOROr%2BwxDLiHPAoH0hGY53%2F97M4eAxfUYOCZecwxtbcrwU4eIqH3ozoVp%2BGxSw9UxDALKRoqMldzclMKez3s4GOqUBxd34%2Bfn97tcGArfzCejv%2Blb6UnM6cWclLueZm%2BalO3WXSTZwzxL9GbVumT6eKs%2B040y8m00ogWJ62%2F5tndUPbJ3A1lAhIeaoJBsfuJx8wvGy%2By5JuwcR9eIVCFZ4mXFjR%2FV0nFBmqaUqmgp0nGsPhw4NfR35vtI5VxjV9VT5rIx1TUVdnHsMnVHAiqCRmHlKg7Tqmj86yMYrIOp9M7ScqNrKPtE6&X-Amz-Signature=e43fd29ed5d729786598d552b7cb7c4c17e13a2a98d79ad439ae9ff20fdb39d0&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><p class="Paragraph ">如果 esp-idf-hal 不满足需求（如缺少一些 esp32 的寄存器的操作），可以使用 <code>esp-rs/esp-pacs</code> 下的esp32s3 create, 它是使用 svd2rust 工具来基于芯片的 svd 自动生成的库。</p><p class="Paragraph "></p><p class="Paragraph ">https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/cae98e63-d9a9-4fff-86dd-709ef6f5834a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665C6GXSFQ%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141008Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEE0aCXVzLXdlc3QtMiJHMEUCIFOKfZUgVEwZm2HDS%2Bw%2F9cP3L%2F%2Fy6tbFVNgQoxvH2YtSAiEAvYLVjR7Pot9RdvXKQnNy8fsW2gekspvHwhlwZZotEg4q%2FwMIFRAAGgw2Mzc0MjMxODM4MDUiDL41ZF%2FnrRQ%2FCL0TsSrcA1jGGgfTlMa7LccguUffFzLwEZ7KyRGJwJbggVEjP7saIxa7qH%2BHDNLvduf3Uan4DGiSQAYW0kRNk6VaK%2BY6%2FZDKU6EqYhaXK8T%2BDXY3ItRTj40aRkHve8Yo%2BrlgieRPRXaPnGLjt%2FuZ4PQOnBi%2F6H6OEi7Wkbflr5br%2BJ6Ga4D3X4SRCMBQFCdXDkh2SyDuRpsxqP%2B2LhMI2z4WewVdh4RJnazuuNSL2BEt2YBkc3CJtbmtLtuzh9O7Ban0dQAq8R9yk5BXBrKKPIZ0fLr8kbV99HczUnwiLXA8J%2BZcMT4xhL1XOqHUd90ki2Shu9msI5lDgFebcvN8vK6HTGIEDJPPu2JDI972Cv54oD2pmxNC3KwJs8fxRTeG8bvHPolDje2H8w1oCQS4yAMcua2yl76Ga67Ggtr3FHzFXRhURhBw%2BioND9hByZOv5W%2FWWNgZajFfFxTmCHjEF8P2fJtbM5FJrC6ul7I0OH2Ve%2FgpEGbx6w4AyL1mOOCaGrD0OZwqTHOjr7gLqYwFGh1Tfq8z%2F14Pe2JQ0UZiBMMBniMu2OeCyyIOROr%2BwxDLiHPAoH0hGY53%2F97M4eAxfUYOCZecwxtbcrwU4eIqH3ozoVp%2BGxSw9UxDALKRoqMldzclMKez3s4GOqUBxd34%2Bfn97tcGArfzCejv%2Blb6UnM6cWclLueZm%2BalO3WXSTZwzxL9GbVumT6eKs%2B040y8m00ogWJ62%2F5tndUPbJ3A1lAhIeaoJBsfuJx8wvGy%2By5JuwcR9eIVCFZ4mXFjR%2FV0nFBmqaUqmgp0nGsPhw4NfR35vtI5VxjV9VT5rIx1TUVdnHsMnVHAiqCRmHlKg7Tqmj86yMYrIOp9M7ScqNrKPtE6&X-Amz-Signature=62e2435b2255df8cad5daedf40510335f7bcdaddd14ea0e4acbac1560cdbbd0d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h2 class="Heading Heading--2 ">使用 esp-rs/esp-idf-template 模板</h2><p class="Paragraph "></p><p class="Paragraph ">使用 esp-rs/esp-idf-template 模板来创建 std 应用:</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">在编译 esp-idf-sys 时自动下载和安装 esp-idf 框架到项目的 .embuild/espressif/esp-idf 目录下;</li><li class="BulletedList ">可以配置项目的 .cargo/config.toml 文件, 添加 env ESP_IDF_TOOLS_INSTALL_DIR = “global” 来使用全局 <code>~/.espressif/</code> 下的 esp-idf 工具链(建议).</li><li class="BulletedList ">sdkconfig.defaults 文件为 esp-idf 的缺省参数提供 override 参数如 stack size, log level；</li></ul>
 <p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/codes/esp32/$ cargo generate esp-rs/esp-idf-template cargo
 ⚠️   Favorite `esp-rs/esp-idf-template` not found in config, using it as a git repository: https://github.com/esp-rs/esp-idf-template.git

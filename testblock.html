@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <!-- Chrome, Firefox OS and Opera Status Bar Color -->
 <meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
 <link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
@@ -21,6 +22,181 @@
     font-size: 20px;
   }
 </style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
 
   <title>Testblock &nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -204,6 +380,11 @@
   
   
   
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
 </nav>
 
   <header class="Header">
@@ -248,13 +429,13 @@ Source Sans Pro 字体，优雅登场，
 谱写文字之美，韵律悠扬。</p><p class="Paragraph ">页脚<span class="SemanticString__Fragment--BgGray">静候</span>，守望每个<span class="SemanticString__Fragment--ColorRed">篇章</span>，
 导航指引方向，不再彷徨。
 纵有万千变化，皆在毫厘间，
-代码之诗，永世传唱。</p><p class="Paragraph "></p><p class="Paragraph ">Link</p><div class="Bookmark"><a href="https://avatars.githubusercontent.com/u/53369562?v=4" target="_blank">
+代码之诗，永世传唱。</p><p class="Paragraph "></p><p class="Paragraph ">Link</p><div class="Bookmark"><a href="https://avatars.githubusercontent.com/u/53369562?v=4" target="_blank" rel="noopener noreferrer">
                         <div class="Bookmark__Content">
                             <div class="Bookmark__Info">
                                 <div class="Bookmark__Title">https://avatars.githubusercontent.com/u/53369562?v=4</div>
                                 
                                 <div class="Bookmark__Meta">
-                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=avatars.githubusercontent.com&sz=64" />
+                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=avatars.githubusercontent.com&sz=64" alt="avatars.githubusercontent.com favicon" />
                                     <span class="Bookmark__Link">avatars.githubusercontent.com/u/53369562?v=4</span>
                                 </div>
                             </div>
@@ -263,13 +444,13 @@ Source Sans Pro 字体，优雅登场，
                     </a></div><p class="Paragraph ">
 
 
- Test  the link website</p><p class="Paragraph "></p><div class="Bookmark"><a href="https://dragonman225.js.org/notablog.html" target="_blank">
+ Test  the link website</p><p class="Paragraph "></p><div class="Bookmark"><a href="https://dragonman225.js.org/notablog.html" target="_blank" rel="noopener noreferrer">
                         <div class="Bookmark__Content">
                             <div class="Bookmark__Info">
                                 <div class="Bookmark__Title">https://dragonman225.js.org/notablog.html</div>
                                 
                                 <div class="Bookmark__Meta">
-                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=dragonman225.js.org&sz=64" />
+                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=dragonman225.js.org&sz=64" alt="dragonman225.js.org favicon" />
                                     <span class="Bookmark__Link">dragonman225.js.org/notablog.html</span>
                                 </div>
                             </div>
@@ -305,25 +486,25 @@ https://github.com/syx-413/syx-413.github.io
         theme=&quot;boxy-light&quot;
         crossorigin=&quot;anonymous&quot;
         async&gt;
-&lt;/script&gt;</code></pre><p class="Paragraph ">color block</p><p class="Paragraph ">What&#39;s this?</p><p class="Paragraph ">I do<span class="SemanticString__Fragment--BgRed">n&#39;t care.</span></p><p class="Paragraph "><span class="SemanticString__Fragment--BgRed">You don&#39;t gotta say more</span>.</p><p class="Paragraph "></p><p class="Paragraph ">Test  the icon</p><p class="Paragraph ">🌼</p><p class="Paragraph "> </p><p class="Paragraph ">The table</p><p class="Paragraph "></p><p class="Paragraph "></p><p class="Paragraph ">Test at</p><p class="Paragraph ">  </p><p class="Paragraph "></p><div class="Bookmark"><a href="https://every.to/napkin-math/what-are-ai-agents-and-who-profits-from-them" target="_blank">
+&lt;/script&gt;</code></pre><p class="Paragraph ">color block</p><p class="Paragraph ">What&#39;s this?</p><p class="Paragraph ">I do<span class="SemanticString__Fragment--BgRed">n&#39;t care.</span></p><p class="Paragraph "><span class="SemanticString__Fragment--BgRed">You don&#39;t gotta say more</span>.</p><p class="Paragraph "></p><p class="Paragraph ">Test  the icon</p><p class="Paragraph ">🌼</p><p class="Paragraph "> </p><p class="Paragraph ">The table</p><p class="Paragraph "></p><p class="Paragraph "></p><p class="Paragraph ">Test at</p><p class="Paragraph ">  </p><p class="Paragraph "></p><div class="Bookmark"><a href="https://every.to/napkin-math/what-are-ai-agents-and-who-profits-from-them" target="_blank" rel="noopener noreferrer">
                         <div class="Bookmark__Content">
                             <div class="Bookmark__Info">
                                 <div class="Bookmark__Title">https://every.to/napkin-math/what-are-ai-agents-and-who-profits-from-them</div>
                                 
                                 <div class="Bookmark__Meta">
-                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=every.to&sz=64" />
+                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=every.to&sz=64" alt="every.to favicon" />
                                     <span class="Bookmark__Link">every.to/napkin-math/what-are-ai-agents-and-who-profits-from-them</span>
                                 </div>
                             </div>
                             
                         </div>
-                    </a></div><p class="Paragraph ">test  Then oral table </p><blockquote class="Quote "></blockquote><div class="Callout ColorfulBlock--BgGray"><div class="Callout__Icon">💡</div><div class="Callout__Content">Notde </div></div><p class="Paragraph "></p><p class="Paragraph "></p><div class="Breadcrumb"></div><div class="Bookmark"><a href="https://dragonman225.js.org/notablog.html" target="_blank">
+                    </a></div><p class="Paragraph ">test  Then oral table </p><blockquote class="Quote "></blockquote><div class="Callout ColorfulBlock--BgGray"><div class="Callout__Icon">💡</div><div class="Callout__Content">Notde </div></div><p class="Paragraph "></p><p class="Paragraph "></p><div class="Breadcrumb"></div><div class="Bookmark"><a href="https://dragonman225.js.org/notablog.html" target="_blank" rel="noopener noreferrer">
                         <div class="Bookmark__Content">
                             <div class="Bookmark__Info">
                                 <div class="Bookmark__Title">https://dragonman225.js.org/notablog.html</div>
                                 
                                 <div class="Bookmark__Meta">
-                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=dragonman225.js.org&sz=64" />
+                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=dragonman225.js.org&sz=64" alt="dragonman225.js.org favicon" />
                                     <span class="Bookmark__Link">dragonman225.js.org/notablog.html</span>
                                 </div>
                             </div>
@@ -333,25 +514,25 @@ https://github.com/syx-413/syx-413.github.io
 <div class="Column" style="flex: 1; width: 100%; min-width: 0;"><p class="Paragraph ">C2</p></div>
 </div>
 <h3 class="Heading Heading--3 ">Simple table </h3><div class="Table"><table class="Table__Simple" style="width: 100%"><tr><td class="Table__Cell">table 1</td><td class="Table__Cell">table 1</td><td class="Table__Cell">table 1</td></tr><tr><td class="Table__Cell">something1</td><td class="Table__Cell">something1</td><td class="Table__Cell">something1</td></tr><tr><td class="Table__Cell"></td><td class="Table__Cell">something1something1</td><td class="Table__Cell">something1</td></tr></table></div>
-<p class="Paragraph ">D</p><p class="Paragraph ">sound </p><div class="Audio"><audio controls src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/4e786ea3-1167-40b0-b92d-b6e14a613233/Kizuna_AI_-_Touch_Me.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466VZWQ3P6Q%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071845Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQC8WZWvGH63AqSXtnQZDuyaRvOn9akQbIl9aLxcdQWXTAIhAIr%2FoQQHRS3VuofjAMIIAhkMnkXCwljImXlXkh4vd2bPKogECMf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igw%2FxbKSe86a4oL%2BMccq3AMI4lktP572b%2FkolkPvprvcX6jjxXGd76ReB8VH%2FjsnfVQmRwhd%2FO4Tk5TOnpJ5if9spexQ6ww5dh0kS9f22tkzCLH4QRuzNfkY46mE46h58UEFXgNdGxHsnUb3%2F6LlG6FaRR%2BHb6JGutg4FzXel4OwhMFFk94%2Fx8kNLOODegtytQRyLakrBj5aKjsI0PpytDcQqNU9d2HA4JicgH5SKNwknfaoAcnvr2Qed6AnYUALXaJVBE86dI7Nx3H%2BMNootWd693tGrR8t8wz5Vr9VKb2pQPWyYXvRuaDy%2FlI5dkmYuRbjJoUtRjvrMafh3YNJwec0NZTi3dECYJafEI5ZNdDgTpARbySNvfjn0ZbQTa2KpJ4dM8GozSvv72MXzSSclY%2F3NXEb45lUMlM9PG5v7lFzdUi3UbfKJsQ6HdoCiz4M%2BTcpUNWJpIa8S8a7Bc1HEulZNHZEhAGgiC6fNucDvsUgM8prOGBiWBbUw539GlI%2FnnMovDSumIrBbGeiaX97y3ShgcLI9XdlcRPV6qRSk6t6dRSl3stWb7v7t7Q8MiHmncM%2FgUN9N6wKzoqbT7Lpo9u64xkYmJlVKhD2pjeISCzBaX3ssBjeGyHxXDNt%2FW%2B7vUHDuT9Yjbr842QyHTDXm83OBjqkAaLFYj8gfVWTw6UjvXc7FJUWd4JgHv7UnsNXLkDQlJ1yo4ADWiofQYdr0ib4bDjCXA9iLAAlTgQrf%2BvyqvlS5DfqkDppUvH9snvC%2B50DkiOQlIYROL6g2bEtEGBXWevxqkG6UFV%2F8iZtLxlxl1bBBJdPK6IZjZAooZQ6KQYMt6kVsE45VCvyZoWyQB%2B8bodPIoGTwQFSfeDpELM5ImUR9OQ%2B%2FAim&X-Amz-Signature=59e3212afeeb87fdc9648228d58a743ff7b2516b35e4ff5965516e04ee993b9f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"></audio></div><div class="Bookmark"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/transition#%E8%AF%AD%E6%B3%95" target="_blank">
+<p class="Paragraph ">D</p><p class="Paragraph ">sound </p><div class="Audio"><audio controls src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/4e786ea3-1167-40b0-b92d-b6e14a613233/Kizuna_AI_-_Touch_Me.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4663F3QQO5Y%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141001Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIHo4RX1rkSd3YrQ81VRCbDS%2BIKdVDlinDHxrR7XCC62aAiAFYDB2upMy3rg8Quw5njNuhQhPL7%2B1%2FgWPoKwABZukfSr%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMe9JqY8sfHl72M7ZwKtwDuxG7Vmss5ReDRHz38%2BsKckd%2BQgqFqY%2FrlLJo51T2oiJGgsF7DYd4vho6Lk6dfnMQevDoXeca2V1LteMhy%2FxPl%2BKrcqvaZmZ9SofVpQmxYp5Klo%2BYccUcF7lAwpwm8p9m0VzcMLy43pPT9wPs9ZwYlPE45Pnve6AgxTTbyg2Q6Vza0SGUCIdsoEjuVsjyPgwt65UFHJ%2Fs0Jty45fU9UcfgtMO07H2bgw5J28o7GmiFhoUcdgttcktkz%2FYoN5h6F25z%2F2LQk3aeXykQGOQncKAgnl7LqAKXMZ%2B0fqQw2WfS4x%2BBJ%2Bd5FVKQ37izSGXnMDMAdjbGWOpygVCv61dxGw4cP%2B3CzKne0ghJGZ%2FmVuMkuw6ffMc%2FDglNuds5o2rg%2FB5KoQxRAyD9h%2FRrvat2bt9ZeAWcJ%2BYGlgKZeeKluDPJw2My41d9Kvt%2Fepy6z9VwCF5dcj5fSl9XmlF9hh1uP8OOsijyXX%2BCmKtnzws%2BajO16PLUZyWx3o2Eiv%2BAtpZrWA%2Bbxkijz5%2FnHEV1X%2B65Z2q3kwvWQ8%2FFzwWXQ%2FV42cLLmUPD%2FmGtqSJOYRfQt8CKU5Ktv0X0jiIHfGtGlu9MXsafoljwx3pmOPju%2FGOgqEzHGSYnhxC6xdbSt%2F34Vsw9LDezgY6pgFKtzhhZEZh4XSbRD0l0JcAtYi8ozTG2z8%2BSqLS7RQAsaIVWlzQQdrZNQhE2SuMjTPXPYAkrRHJt6Aiq%2FbVbI7cEgiPIk6gKv4XrXe0WNp8V1m%2B7xPvjcucQVvsgFyvlPpLX31n1NPXJyqtjKl1hMTsDctQ0GwAMCYl1tpkPeixS37xDHoQ%2BPLKSOEmulHefpPMfwdvraUKk2Ni3leOd8MyFdDESG2%2F&X-Amz-Signature=d98ecb7ec58650f589aad1fe71b94f0acd39914792150c84bb44e8f1d324daa2&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"></audio></div><div class="Bookmark"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/transition#%E8%AF%AD%E6%B3%95" target="_blank" rel="noopener noreferrer">
                         <div class="Bookmark__Content">
                             <div class="Bookmark__Info">
                                 <div class="Bookmark__Title">https://developer.mozilla.org/zh-CN/docs/Web/CSS/transition#%E8%AF%AD%E6%B3%95</div>
                                 
                                 <div class="Bookmark__Meta">
-                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=developer.mozilla.org&sz=64" />
+                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=developer.mozilla.org&sz=64" alt="developer.mozilla.org favicon" />
                                     <span class="Bookmark__Link">developer.mozilla.org/zh-CN/docs/Web/CSS/transition#%E8%AF%AD%E6%B3%95</span>
                                 </div>
                             </div>
                             
                         </div>
-                    </a></div><div class="Bookmark"><a href="https://drive.s413.blog/api/raw/?path=/%F0%9F%93%83PDF/Analog-Circuit-compilation-yang.pdf" target="_blank">
+                    </a></div><div class="Bookmark"><a href="https://drive.s413.blog/api/raw/?path=/%F0%9F%93%83PDF/Analog-Circuit-compilation-yang.pdf" target="_blank" rel="noopener noreferrer">
                         <div class="Bookmark__Content">
                             <div class="Bookmark__Info">
                                 <div class="Bookmark__Title">https://drive.s413.blog/api/raw/?path=/%F0%9F%93%83PDF/Analog-Circuit-compilation-yang.pdf</div>
                                 
                                 <div class="Bookmark__Meta">
-                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=drive.s413.blog&sz=64" />
+                                    <img class="Bookmark__Icon" src="https://www.google.com/s2/favicons?domain=drive.s413.blog&sz=64" alt="drive.s413.blog favicon" />
                                     <span class="Bookmark__Link">drive.s413.blog/api/raw/?path=/%F0%9F%93%83PDF/Analog-Circuit-compilation-yang.pdf</span>
                                 </div>
                             </div>

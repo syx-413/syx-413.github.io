@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <!-- Chrome, Firefox OS and Opera Status Bar Color -->
 <meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
 <link rel="stylesheet" type="text/css" href="./css/SourceSansPro.css">
@@ -21,6 +22,181 @@
     font-size: 20px;
   }
 </style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
 
   <title>Clash Tun 共享网络&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -204,6 +380,11 @@
   
   
   
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
 </nav>
 
   <header class="Header">
@@ -236,7 +417,7 @@
     
   </header>
   <main class="PageRoot">
-    <p class="Paragraph ">本篇记录关于配置Clash-Tun的不太容易理解的点</p><div class="TableOfContents"></div><h3 class="Heading Heading--3 ">配置防火墙</h3><h3 class="Heading Heading--3 ">配置防火墙</h3><p class="Paragraph ">配置相关的代理软件</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/d7a233c5-004b-4efd-8b92-f21f8e4c82c3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=e02b76740697676ef3c6efea9e37d8bbdb4769b953772929907cd33543a2d910&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">这一步是配置防火墙</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6c9ec68e-ac6a-472f-84a7-f9d2da12c286/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=04bb59332dad119cc1bf9e6df974e7ee655b1123c1ff1d284f7932c4a9df2276&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">勾选网络用到的种类</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/71e61063-a9e8-4b7a-adb2-03353856980d/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=231fc3aff8a835827820f0299d8a8d13e19bb4484fc125e6106148d103a17b9b&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h3 class="Heading Heading--3 ">Clash 配置</h3><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/b2c2f5f7-db95-45c0-829d-d48e89a963bf/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=99fdcc7964ad4c475c85648a0149edd823f97fb34cd6f361b68db30ae1c12386&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h3 class="Heading Heading--3 ">网卡配置</h3><p class="Paragraph ">控制面板-网络共享-更改网卡配置</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6cc29020-68cf-491d-9009-722a2da5eb5b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=3a769e8b3f88a27aaf2a78536b1a32c091b0b1eb3170539459c91e262c91baf4&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><p class="Paragraph ">接下来的是关于你想共享的网卡，一般为热点，如果找不到，可以开关一下你的热点，然后可以确定你要用的那个热点网络</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/7d0d7f05-e58e-4462-8697-b4c718048340/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=68e8c9e60f1ff84555f8c16a40526c78a5d2518b101050b609302f61471cc0bc&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/9288d8e1-aa37-4fb0-8406-0a45c368e151/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=dc85ff078e0be461d649b6dadc1d899975e11aaa6a557dbd403cf5ab735cfef7&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/28d9f8e3-02cd-453c-9eb8-0598f370411f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=b0593f6c36646ea3bbcdf173a76f09c5abc592c4f2947a3a9daf0e411b1b5088&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/96a38dbf-459b-472b-8803-8bf88aafee13/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U6XVSPQX%2F20260406%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260406T071852Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIGL4U4aSh%2FQA7XuPOUXcWUKWAQWjfzV0uq5qTL1FjcXRAiBLY7ghPub04SzatyCLEKo3pIlS1n2Ab58R8akvoKWpWCqIBAjH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMvX0Ndaj3Nxj3byhsKtwD4xSTdzRoDwADoCfXBwEqWKunryrUAnHtE6vWe5qj1D708q4xYtmVnCf%2BDjXUxqBRHZ2uQLnbukJVG2JGeHWJvaVVlhwn0aVrwdsrK1WRziFKPTROJST0L1zwYURbg9oxKSDf3XAVWqNuaGELGoC6HCJV0JMbt9UKOMvHazQQfCeZ1x081x%2BgyANqXhqcDDKos9GKtIEvp3fwL9fBpHUIjjd6ZttBFcODq1MFa3g%2BmlLr%2BgYAqGeNtRxA27a%2B1LfTzaG6119LQH9Z87X%2FUgc5OmyL2EtOBUsD2EoqCTbh7BA6VJfB4h0PAwszmTSCwcB4Q9zk5cVLkhP1MLXxyUwl3nOA41axeJTYTgyQ9H9d6%2BkEWg2auWjQ97mR6Gcl8iKtc2nz%2Fjai0jLX%2Fh0S%2B3AaG3D9SXaeMLlxk69l6g%2BRKkBGDJuWgHA1z%2FLJjr0IqaxmnUemUVtKyR6H%2BmSkYatOyh2lXCKdaDO4o1BWcKcPmzEU9Me%2FNE8uuOrEiNiduinrhM71fTua31SGxw672LsVSG7dgK8CNjt4hU%2B9wvnhzJhSQQLeM%2Blnp7JinCINHH1JZC7xtsCZNGemp%2FVyafEH4dQj1nu16WsiS5O1%2FPgj0Qe7vJDLNR%2FReAPXMvEwq5rNzgY6pgE%2B5YqCIZv44QoAkGxnczyMbhk%2FA%2FI8bSklkKUOK0aws9jmCsPzH%2BH4Ek6qelj%2BRCRwbvR9Xn6BkunHRZCPEQRMIi3rD4mcq5LWJzhoc2J%2BG4jyG7Ivcg9NHxSnxFANMRXlQTHV12Pazjm6cO98phIYMQ6%2BQgRxv8Exm7fNkKoNK1VfD1lpgQ%2BgspWykIwlReWnexq0oaNRw5A306sW81gOT3VRw9Zk&X-Amz-Signature=175b8e841fe74887f95f1a337d79125cc1867e1d18b768ae2d6f0fa294b894d5&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><h3 class="Heading Heading--3 ">小结</h3><p class="Paragraph ">目前这种方式还存在bug比如共享Wi-Fi 可能连接不上，需要很麻烦的配置。不过我用这个Tun 模式仅仅是为了Arc 浏览器。</p>
+    <p class="Paragraph ">本篇记录关于配置Clash-Tun的不太容易理解的点</p><div class="TableOfContents"></div><h3 class="Heading Heading--3 ">配置防火墙</h3><h3 class="Heading Heading--3 ">配置防火墙</h3><p class="Paragraph ">配置相关的代理软件</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/d7a233c5-004b-4efd-8b92-f21f8e4c82c3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=3bc7c4f55aed42b1c032f935ee5d2e69b035230e782236a777bc6aa8125ea38a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">这一步是配置防火墙</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6c9ec68e-ac6a-472f-84a7-f9d2da12c286/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=ec8f455bc3d4fcf4258eb1628dcb6573fe9d26e21cb26207d8819e60907ba31d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">勾选网络用到的种类</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/71e61063-a9e8-4b7a-adb2-03353856980d/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=14b67e7ffb96dc50996f52416e2ca59c95b81f63710813e5ea58fa5dc7700dac&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h3 class="Heading Heading--3 ">Clash 配置</h3><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/b2c2f5f7-db95-45c0-829d-d48e89a963bf/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=00b478c8291621ad13b623ac70cf4a9ddfcb546fe8cb8d0cab1efc4d5f0208e8&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h3 class="Heading Heading--3 ">网卡配置</h3><p class="Paragraph ">控制面板-网络共享-更改网卡配置</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6cc29020-68cf-491d-9009-722a2da5eb5b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=3bbbea4a079ab57d7ce9d1969c87eaa566eed8324e18aad9bfce4296fc8ba705&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><p class="Paragraph ">接下来的是关于你想共享的网卡，一般为热点，如果找不到，可以开关一下你的热点，然后可以确定你要用的那个热点网络</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/7d0d7f05-e58e-4462-8697-b4c718048340/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=1cd7a6644094a11ee24278160683f7dd4474571ea6cc05ceccfe9abcf7d39096&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/9288d8e1-aa37-4fb0-8406-0a45c368e151/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=8dd1042367d30adeaca9b87b7c1036b32ed5192bf119294cfad0de6486a43301&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/28d9f8e3-02cd-453c-9eb8-0598f370411f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=c790c0e6b6bae85277e7eb038edd39b0a5bcbdde785747ddf0d81ac0d64ab77f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/96a38dbf-459b-472b-8803-8bf88aafee13/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665HH5KTQL%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T141013Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLXdlc3QtMiJGMEQCIF5oY2zk8OOZt7%2BGOtN7VOqlxzaC0uLUd%2B%2FfxP23oh5hAiBX5ZtW8cqronVlm9i6q4iHRiqPfF0uE9x%2FWJtHCX%2FV3ir%2FAwgVEAAaDDYzNzQyMzE4MzgwNSIMOJsGgFvKnkT8vONqKtwDjUNDD4qvTGI12wWpNO%2FNx79XRIyOSxUq1tEMEH7m%2Bc4vdPSalar79LCKMc%2FM%2FhiSLnvIbGLvzt4hGYrmgjOL236VIcmGPhjDNdSPhr7VhXvluTUmO1cBrIzE1OX5K0OxzpX6NYEHFDrHJ0KQ0u5mvK90KEsEyCdS7esWg9WgIyfLotJ8%2FXmMmYciwG0wa5csk2hKVLZ5ExXYd8zpnyRuODrxRcPgwXQ0zHIAr6%2F7HiwMijyk5NDk2HlG3Awexfo28C6NwIkKS7vfRtZMQ4GBlAReFi%2FQc2hDoE6G0i24J3R6XEQUmW5%2BZhXFcy3vkjjXBRLkrJku5aedqf7abPoi0anNzZk%2FJNqSrsL7kRiaXgj%2BdOtOM9uJpfvWTyf%2BXsjJP70gjuDgXYBy%2F%2B7YhgsMJRqBs27e0GUFjum43EtUNPMtoCVxUd0cuZTCuYIKn32PZlCqjqJxIzAv8JGfKeOx7SCNLtSRJNz6q%2Bj4ed3thFpxT8WzBJHoZvf6KAGgAl5SFRw6d6ZpyDi60xdeYOHWDMTDQJlB5SYfHK9uYVCFilV18q0LOamF5pkPX34tMZAe8UoSCetC1nDjge4GY5DI%2FK0t1zJ6j5J2CexfdaE4oi1dmFW%2FLB%2FjmEm9vt0wjrHezgY6pgEnDlsscOdKTWOelUOYAudYSAP%2F83MhiKbKTbitXhO451j4S0eVFZWu0X9bIh8ltV%2Bn4NKPsp6IfiEbN782e8QY7lwAIvHMhALvTFmlBxkHsszeppQLxZQ4xQrY%2FissASMtsHJ5C3Xjb9SjXszpm%2BkU7F0M%2BIB1Q25MKahczABlyX2UlcCdXOdIQsWcoKYtCCsY7kV4zofJdK2VdjMy6%2BGhNCRDgIHY&X-Amz-Signature=083f9f8a45cf983a156e535349ae2fe595225ddc0d0aa345b7fd1d62a935c3ef&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><h3 class="Heading Heading--3 ">小结</h3><p class="Paragraph ">目前这种方式还存在bug比如共享Wi-Fi 可能连接不上，需要很麻烦的配置。不过我用这个Tun 模式仅仅是为了Arc 浏览器。</p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"
