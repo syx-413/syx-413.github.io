@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>杂项&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -414,7 +469,7 @@
   </header>
   <main class="PageRoot">
     <div class="Callout ColorfulBlock--BgGray"><div class="Callout__Icon">💡</div><div class="Callout__Content"><strong>Ch549参考资料</strong>密码是vm51</div></div><p class="Paragraph "></p><p class="Paragraph ">答辩</p><div class="Divider"></div><div class="ColumnList"><div class="Column" style="flex: 0.5; width: 50%; min-width: 0;"><p class="Paragraph ">  学习经历</p><p class="Paragraph "></p></div>
-<div class="Column" style="flex: 0.5; width: 50%; min-width: 0;"><div class="File"><a href="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/5d8874c0-4d1b-4e23-ac8b-5ee340fbb2b2/material.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YXTDOWRS%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260409T140957Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEE4aCXVzLXdlc3QtMiJIMEYCIQD8vLuu9aVwScZspGYbSbDjNp0%2F3Ufjqu5HfaCQrJ%2BtlwIhAJkBa%2BEbknhOnfXZq4eff5JcXazJPQJRnOUCupcdp4HJKv8DCBcQABoMNjM3NDIzMTgzODA1IgyB8u7a8MBo7kDS74gq3APaaLYQsQ6hS9c50o2FVkjCNQNW2mMvzzv1Cisq8oiiUUYk%2F03toF1AogFvmYhRBV8H4U%2BdP7mM6bc0bNZ5GTVhY2SAJAuc6m2Uvu4exKYZX9FOww%2BKSpBTWAITNnveqAKPK21pFz1VE9bkF%2BZhjv%2BGgzXouKlWGUMp7lDURraRPIbcNHXG4SECqHhyZpB1wroLQhn21EfC%2BmxTE8Q5lkaYu56dQEopdbUecL1ENo6adQr51SFuMuamMNGuQYgk154mJHEV%2BplEXHvPQrb0SgorDs9IVk9pY9L2KxU1IBJpQq2WXLqp%2Fupo7X1UjeDPFlyc8q8hWvTQJx%2FyAnpZG5K7KPBw4qJmQakOgOWUvkkMo3Cbx%2FycB%2FG6YsglGCcOXZJAvVB5k7E93C288mi2iLWc%2FSqc4Zp5vyVwyWVn0OO9yEAJFHt3Wbb8uzWiHHnLq36p1MMrIuisRyCdh6P1FjxxGPDmIT1tAj0yzhdmeSB3M3pggHSyd%2BQjwnBnNr4WIE25Jeb%2FnVXfZ1o0hp3SDN2T0l2vVp2wJAekdNlU3C6fk6qfvY7Iizme3k6%2FjyK68wik4zHL6ztKPYE3GOdNjNGy7QHCwCr%2FYt%2BqatsMMBIXFC%2FNqayyhAGZ%2FxMmZzDi5N7OBjqkAfrpZSUC%2BrNJRCq%2BU18t0qoYX1q%2BfKn5GFJeScmrR4rlTflF5ql2D2wZWQmQw5ygjmaFGK6oO%2B9wscimeVzeb2uzjYhoYnfv9kn3ggiIckLO4MniakSktmHYVA9aKYAw7gH59kJ8zjdMiYLcJj%2FSazwllpy%2FgMfeNmu1L%2BBwsQO8%2Bbx%2BcDoFDy%2B%2Bujcr6CNlDSyfYYGChuWmwCX98ldaTTWUgP70&X-Amz-Signature=70c8712c921b7b6e1a9b2a4f796c8883ff5b715dd3d5c5f6272e2e741703cb9b&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" target="_blank"><div class="File__Icon">📎</div><div class="File__Title">material.zip</div></a></div><p class="Paragraph "></p></div>
+<div class="Column" style="flex: 0.5; width: 50%; min-width: 0;"><div class="File"><a href="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/5d8874c0-4d1b-4e23-ac8b-5ee340fbb2b2/material.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YQ45BEC5%2F20260411%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260411T105322Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHoaCXVzLXdlc3QtMiJIMEYCIQC9H2XKMraFzKM9gLXd1b%2FjvdO0IfyXqzxPSqg6idsHrwIhAIgmBWCBOLkR3uK0nmV2HAEwqks26H3H4%2FaoLiENIP2WKv8DCEMQABoMNjM3NDIzMTgzODA1IgwrGiYdUh5CMJdqde8q3ANUzChn3L0oGEIXIZqE2MX3PDPFNmJ6BuaV%2BvroV%2FbWE4DllHcVi0XKevfgAeeJiEsbd0eVce8viMrSRIOheocP4g8cVxbKYT0hzi5WKylaCzHxvjW04N39LrJOLZ%2FyAEzkOvsMth7%2FM15ZOGco%2FO97y8N3c%2BRLi7UI06Fw4LRu%2Ff8t1aF7HMBpCCs%2FRbCYthknhfhWz92OUZrF8JlWjblzWvNkli%2FMthcU58xoYRifeep8CNUle7Kjib79f%2BCYOeKRmkB6zkVqHLOyi788u%2FWlhNSVOnJodcLTkcrggBqaIJtR9EWsypw84iS%2FT0bq6vpWKeQsU99ycUpCmBgwFWO0Yohct5%2BO7RNP1juHzdPZ3T%2FgmPbF4V3WXlh41tD93b4QBKLE3uJk%2FKgPCB8I2lLCaRDK6CGHsUWt2i63djGRxedVKc69fWiblK2FniMyZbfrSm35GFcksOUhf2Pg4yRmlov3ZCrrtvwBhtQmFmrI1DR6DR1GeGXWZOIBao%2BHIDf87ZCCeEiqeICLJtj80LYNzrqmKVnIzebTovs%2Fz2rTE3COvL8fE5dvu2rarecgHzCpyyYr9s3WOk4obgc9ZsgB4bOQCYD3XaXCc%2FUUEjXxeaUB00rJmb6lRstiojC6rejOBjqkASsdYAjn1ZS9tWqiU16vGZszR1tP%2F1bQvFDHXjx4THMBmXfSMtxI5984vdnMeLHSr%2B%2FrlGK4UiwPQEBzHgG%2FwgWi1M70Wy8KBiwYyHwCn%2BaHr3qra%2F4sBEQaciTWjlGfYodcaYzdUTLnMbUOX8XhugKyetGgOH%2FM9ucjyDrgWNGLO3%2Bjs%2BXSzMfTKP1KB7gKNGdruX5VY%2FQY%2BvCybAmzw8teXZhk&X-Amz-Signature=ba5035f0c52d102d9fac20bcc175805d853a667a22f0100ef83480b892dd6de0&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" target="_blank"><div class="File__Icon">📎</div><div class="File__Title">material.zip</div></a></div><p class="Paragraph "></p></div>
 </div>
 <p class="Paragraph "></p>
   </main>

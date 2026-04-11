@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>开源工具链学习 &nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -409,23 +464,23 @@
     
   </header>
   <main class="PageRoot">
-    <p class="Paragraph "></p><p class="Paragraph ">https://github.com/YosysHQ/oss-cad-suite-build?tab=readme-ov-file#installation</p><h1 class="Heading Heading--1 ">OSS CAD Suite</h1><h2 class="Heading Heading--2 ">Introduction</h2><p class="Paragraph ">OSS CAD Suite is a binary software distribution for a number of open source software used in digital logic design.
-You will find tools for RTL synthesis, formal hardware verification, place &amp; route, FPGA programming, and testing with support for HDLs like Verilog, Migen, and Amaranth.</p><p class="Paragraph ">OSS CAD Suite is a component of YosysHQ&#39;s Tabby CAD Suite:</p><div class="Image Image--Normal"><figure><img src="https://user-images.githubusercontent.com/59544343/119006798-f8786100-b990-11eb-9535-cef67420ccfb.png" alt="" loading="lazy" /></figure></div><p class="Paragraph ">See Tabby CAD Datasheet for details on Tabby CAD Suite; see OSS CAD Suite GitHub (this page) for details on OSS CAD Suite.</p><h3 class="Heading Heading--3 ">RTL Synthesis</h3><ul class="BulletedListWrapper">
+    <p class="Paragraph "></p><p class="Paragraph ">https://github.com/YosysHQ/oss-cad-suite-build?tab=readme-ov-file#installation</p><h1 id="heading-27afc3f52a888088bad2e50c241349f9" class="Heading Heading--1 "><a class="Anchor" href="#heading-27afc3f52a888088bad2e50c241349f9" aria-label="Anchor">#</a><span class="SemanticString">OSS CAD Suite</span></h1><h2 id="heading-27afc3f52a8880058cd9f423dcdd00d3" class="Heading Heading--2 "><a class="Anchor" href="#heading-27afc3f52a8880058cd9f423dcdd00d3" aria-label="Anchor">#</a><span class="SemanticString">Introduction</span></h2><p class="Paragraph ">OSS CAD Suite is a binary software distribution for a number of open source software used in digital logic design.
+You will find tools for RTL synthesis, formal hardware verification, place &amp; route, FPGA programming, and testing with support for HDLs like Verilog, Migen, and Amaranth.</p><p class="Paragraph ">OSS CAD Suite is a component of YosysHQ&#39;s Tabby CAD Suite:</p><div class="Image Image--Normal"><figure><img src="https://user-images.githubusercontent.com/59544343/119006798-f8786100-b990-11eb-9535-cef67420ccfb.png" alt="" loading="lazy" /></figure></div><p class="Paragraph ">See Tabby CAD Datasheet for details on Tabby CAD Suite; see OSS CAD Suite GitHub (this page) for details on OSS CAD Suite.</p><h3 id="heading-27afc3f52a8880cba436c7021c864ac0" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a8880cba436c7021c864ac0" aria-label="Anchor">#</a><span class="SemanticString">RTL Synthesis</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">Yosys RTL synthesis with extensive Verilog 2005 support</li><li class="BulletedList ">Amaranth refreshed Python toolbox for building complex digital hardware</li><li class="BulletedList ">Migen Python toolbox for building complex digital hardware</li><li class="BulletedList ">ABC A System for Sequential Synthesis and Verification</li><li class="BulletedList ">GHDL VHDL 2008/93/87 simulator (linux-x64, darwin-x64 and darwin-arm64 platforms only)</li></ul>
 <p class="Paragraph ">Did you know that the Tabby CAD version of yosys supports industry standard SystemVerilog, VHDL and SVA?
-Contact us at contact@yosyshq.com to arrange a free evaluation license.</p><h3 class="Heading Heading--3 ">Plugins</h3><ul class="BulletedListWrapper">
+Contact us at contact@yosyshq.com to arrange a free evaluation license.</p><h3 id="heading-27afc3f52a8880e2b947ee949f56feed" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a8880e2b947ee949f56feed" aria-label="Anchor">#</a><span class="SemanticString">Plugins</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">GHDL plugin VHDL synthesis based on GHDL (linux-x64, darwin-x64 and darwin-arm64 platforms only)</li><li class="BulletedList ">Slang plugin SystemVerilog synthesis based on Slang</li></ul>
-<h3 class="Heading Heading--3 ">Formal Tools</h3><ul class="BulletedListWrapper">
+<h3 id="heading-27afc3f52a888044a96ddf02c1cfbe6b" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a888044a96ddf02c1cfbe6b" aria-label="Anchor">#</a><span class="SemanticString">Formal Tools</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">sby (formerly SymbiYosys) a front-end driver program for Yosys-based formal hardware verification flows.</li><li class="BulletedList ">mcy Mutation Cover with Yosys</li><li class="BulletedList ">eqy Equivalence Checking with Yosys</li><li class="BulletedList ">sby-gui GUI for sby (formerly SymbiYosys)</li><li class="BulletedList ">aiger AIGER tools including bounded model checker</li><li class="BulletedList ">avy Interpolating Property Directed Reachability tool</li><li class="BulletedList ">Boolector SMT solver and BTOR model checker</li><li class="BulletedList ">Yices 2 SMT solver</li><li class="BulletedList ">Super prove ABC-based AIGER hardware model checker (linux-x64 platform only)</li><li class="BulletedList ">Pono an SMT-based model checker built on smt-switch</li><li class="BulletedList ">Z3 SMT solver</li><li class="BulletedList ">Bitwuzla SMT solver</li></ul>
-<h3 class="Heading Heading--3 ">PnR (Place and Route)</h3><ul class="BulletedListWrapper">
+<h3 id="heading-27afc3f52a8880549960dcc64eecf681" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a8880549960dcc64eecf681" aria-label="Anchor">#</a><span class="SemanticString">PnR (Place and Route)</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">nextpnr a portable FPGA place and route tool (generic, ice40, ecp5, machxo2, nexus, gowin)</li><li class="BulletedList ">Project IceStorm tools for working with Lattice ICE40 bitstreams</li><li class="BulletedList ">Project Trellis tools for working with Lattice ECP5 bitstreams</li><li class="BulletedList ">Project Oxide tools for working with Lattice Nexus bitstreams</li><li class="BulletedList ">Project Apicula tools for working with Gowin bitstreams</li><li class="BulletedList ">Project Peppercorn tools for working with Cologne Chip GateMate bitstreams</li></ul>
-<h3 class="Heading Heading--3 ">FPGA board programming tools</h3><ul class="BulletedListWrapper">
+<h3 id="heading-27afc3f52a88805bbf40ed92a25e1e98" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a88805bbf40ed92a25e1e98" aria-label="Anchor">#</a><span class="SemanticString">FPGA board programming tools</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">openFPGALoader universal utility for programming FPGA</li><li class="BulletedList ">dfu-util Device Firmware Upgrade Utilities</li><li class="BulletedList ">ecpprog basic driver for FTDI based JTAG probes, to program ECP5 FPGAs</li><li class="BulletedList ">ecpdap program ECP5 FPGAs and attached SPI flash using CMSIS-DAP probes in JTAG mode</li><li class="BulletedList ">fujprog ULX2S / ULX3S JTAG programmer</li><li class="BulletedList ">openocd Open On-Chip Debugger</li><li class="BulletedList ">icesprog iCESugar FPGA board programmer</li><li class="BulletedList ">iceprogduino Olinuxino based programmer for iCE40HX1K-EVB</li><li class="BulletedList ">TinyFPGA USB Bootloader</li><li class="BulletedList ">TinyFPGA-B TinyFPGA B2 Board programmer</li><li class="BulletedList ">iceFUN iceFUN Programmer</li></ul>
-<h3 class="Heading Heading--3 ">Simulation/Testing</h3><ul class="BulletedListWrapper">
+<h3 id="heading-27afc3f52a88805eb20bfb47931fd459" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a88805eb20bfb47931fd459" aria-label="Anchor">#</a><span class="SemanticString">Simulation/Testing</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">GTK Wave fully featured GTK+ based wave viewer</li><li class="BulletedList ">Surfer A waveform viewer with a focus on a snappy usable interface, and extensibility.</li><li class="BulletedList ">verilator Verilog/SystemVerilog simulator</li><li class="BulletedList ">iverilog Verilog compilation system</li><li class="BulletedList ">cocotb coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python</li></ul>
-<h3 class="Heading Heading--3 ">Support libraries</h3><ul class="BulletedListWrapper">
+<h3 id="heading-27afc3f52a888078aa4dead02632aa56" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a888078aa4dead02632aa56" aria-label="Anchor">#</a><span class="SemanticString">Support libraries</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">Python 3 language interpreter is provided in all supported platforms.</li><li class="BulletedList ">Python 2 language interpreter is provided in Linux platforms in form of library only.</li><li class="BulletedList ">Ubuntu 22.04 distribution development packages are used and shared libraries used are provided in package.</li><li class="BulletedList ">macports distribution system for macOS is used to obtain all libraries used, and they are provided in package.</li><li class="BulletedList ">MinGW Minimalist GNU for Windows library packages from Fedora 39 are used in compilation and provided in package.</li></ul>
-<h2 class="Heading Heading--2 ">Installation</h2><ol class="NumberedListWrapper">
+<h2 id="heading-27afc3f52a8880478046fd68f23be5b3" class="Heading Heading--2 "><a class="Anchor" href="#heading-27afc3f52a8880478046fd68f23be5b3" aria-label="Anchor">#</a><span class="SemanticString">Installation</span></h2><ol class="NumberedListWrapper">
 <li class="NumberedList ">Download an archive matching your OS from the releases page.</li><li class="NumberedList ">Extract the archive to a location of your choice (for Windows it is recommended that path does not contain spaces)</li><li class="NumberedList ">On macOS to allow execution of quarantined files <code>xattr -d com.apple.quarantine oss-cad-suite-darwin-x64-yyymmdd.tgz</code> on downloaded file, or run: <code>./activate</code> in extracted location once.</li><li class="NumberedList ">Set the environment as described below.</li></ol>
 <p class="Paragraph ">Linux and macOS</p><pre class="Code"><code class="language-bash">export PATH=&quot;&lt;extracted_location&gt;/oss-cad-suite/bin:$PATH&quot;
 
@@ -445,12 +500,12 @@ from existing PowerShell prompt:
 
 to create new CMD prompt:
 &lt;extracted_location&gt;\\oss-cad-suite\\start.bat
-</code></pre><p class="Paragraph "><strong>NOTE:</strong> when environment is set, <code>python3</code> from package becomes available as well, this enables usage of <em>Migen</em> and <em>Amaranth</em> HDL and <em>LiteX</em> libraries scripts as usual. When OSS CAD Suite is just added in PATH to use packaged python3 use <code>tabbypy3</code> to start python environment. For Windows, there are no wrappers and using environment.bat is only choice.</p><h2 class="Heading Heading--2 ">Using LiteX</h2><p class="Paragraph ">We provide you with Python 3.11 and all required software to be able to use LiteX. After activating <code>environment</code> it is possible to perform installation same as usual:</p><pre class="Code"><code class="language-bash">mkdir -p litex
+</code></pre><p class="Paragraph "><strong>NOTE:</strong> when environment is set, <code>python3</code> from package becomes available as well, this enables usage of <em>Migen</em> and <em>Amaranth</em> HDL and <em>LiteX</em> libraries scripts as usual. When OSS CAD Suite is just added in PATH to use packaged python3 use <code>tabbypy3</code> to start python environment. For Windows, there are no wrappers and using environment.bat is only choice.</p><h2 id="heading-27afc3f52a8880a98f46d7b9b7850356" class="Heading Heading--2 "><a class="Anchor" href="#heading-27afc3f52a8880a98f46d7b9b7850356" aria-label="Anchor">#</a><span class="SemanticString">Using LiteX</span></h2><p class="Paragraph ">We provide you with Python 3.11 and all required software to be able to use LiteX. After activating <code>environment</code> it is possible to perform installation same as usual:</p><pre class="Code"><code class="language-bash">mkdir -p litex
 cd litex
 wget &lt;https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py&gt;
 python3 litex_setup.py init
 python3 litex_setup.py install
-</code></pre><p class="Paragraph "></p><h3 class="Heading Heading--3 ">嵌入式ARM RISV </h3><p class="Paragraph "></p><h3 class="Heading Heading--3 ">Openocd</h3><p class="Paragraph "></p><p class="Paragraph ">wezterm 配置文件</p><pre class="Code"><code class="language-lua">-- 引入 wezterm API
+</code></pre><p class="Paragraph "></p><h3 id="heading-27afc3f52a8880c4a3d3fe71d381e5c6" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a8880c4a3d3fe71d381e5c6" aria-label="Anchor">#</a><span class="SemanticString">嵌入式ARM RISV </span></h3><p class="Paragraph "></p><h3 id="heading-27afc3f52a8880a59814f52f692b728a" class="Heading Heading--3 "><a class="Anchor" href="#heading-27afc3f52a8880a59814f52f692b728a" aria-label="Anchor">#</a><span class="SemanticString">Openocd</span></h3><p class="Paragraph "></p><p class="Paragraph ">wezterm 配置文件</p><pre class="Code"><code class="language-lua">-- 引入 wezterm API
 local wezterm = require(&quot;wezterm&quot;)
 local act = wezterm.action
 -- 初始化 config

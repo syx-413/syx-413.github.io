@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>安装 ESP32 Rust 开发工具链 esp-rs&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -433,7 +488,7 @@ cargo install espup
 brew install libuv  # espflash 依赖它
 
 cargo install espflash
-cargo install cargo-espflash # 可选，后续可以直接使用命令 cargo espflash</code></pre><h2 class="Heading Heading--2 ">espup 安装和维护</h2><p class="Paragraph ">espup 同时安装和维护 Xtensa and RISC-V architectures 两种 CPU 架构工具链</p><p class="Paragraph ">包括 esp fork 的 rust， GCC 和 LLVM 等。</p><p class="Paragraph ">Rust 官方编译器提供了对 RISC-V target 的 Tier2 支持，可以直接向官方 toolchain 添加对应 target：</p><pre class="Code"><code class="language-bash">rustup toolchain install nightly --component rust-src 
+cargo install cargo-espflash # 可选，后续可以直接使用命令 cargo espflash</code></pre><h2 id="heading-cad0b67c259b48ca90490972ea10841c" class="Heading Heading--2 "><a class="Anchor" href="#heading-cad0b67c259b48ca90490972ea10841c" aria-label="Anchor">#</a><span class="SemanticString">espup 安装和维护</span></h2><p class="Paragraph ">espup 同时安装和维护 Xtensa and RISC-V architectures 两种 CPU 架构工具链</p><p class="Paragraph ">包括 esp fork 的 rust， GCC 和 LLVM 等。</p><p class="Paragraph ">Rust 官方编译器提供了对 RISC-V target 的 Tier2 支持，可以直接向官方 toolchain 添加对应 target：</p><pre class="Code"><code class="language-bash">rustup toolchain install nightly --component rust-src 
 
 # For no_std (bare-metal) applications
 rustup target add riscv32imc-unknown-none-elf # For ESP32-C2 and ESP32-C3
@@ -472,7 +527,7 @@ export LIBCLANG_PATH=&quot;/Users/alizj/.rustup/toolchains/esp/xtensa-esp32-elf-
 export PATH=&quot;/Users/alizj/.rustup/toolchains/esp/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin:$PATH&quot;</code></pre><p class="Paragraph ">为了方便使用，将 ~/export-esp.sh 脚本 mv 到 ~/esp 目录，同时添加两个 alias：</p><p class="Paragraph "> </p><pre class="Code"><code class="language-bash">zj@a:~/esp$ mv ~/export-esp.sh ~/esp/
 zj@a:~/esp$ grep esp ~/.bashrc
 alias export_idf=&#39;. $HOME/esp/esp-idf/export.sh&#39;
-alias export_esp=&#39;. $HOME/esp/export-esp.sh&#39; </code></pre><p class="Paragraph ">后续每次使用 esp-rs 前都需要 <code>source ~/esp/export-esp.sh</code> 脚本。</p><h2 class="Heading Heading--2 ">修正 esp toolchain 缺失 rust-analyzer 的问题</h2><p class="Paragraph ">esp 是 espup 安装的自定义 toolchain，不包含 rust-analyzer，需要建一个软链接：</p><ul class="BulletedListWrapper">
+alias export_esp=&#39;. $HOME/esp/export-esp.sh&#39; </code></pre><p class="Paragraph ">后续每次使用 esp-rs 前都需要 <code>source ~/esp/export-esp.sh</code> 脚本。</p><h2 id="heading-d67e0177bb1549f28575259e43a141ea" class="Heading Heading--2 "><a class="Anchor" href="#heading-d67e0177bb1549f28575259e43a141ea" aria-label="Anchor">#</a><span class="SemanticString">修正 esp toolchain 缺失 rust-analyzer 的问题</span></h2><p class="Paragraph ">esp 是 espup 安装的自定义 toolchain，不包含 rust-analyzer，需要建一个软链接：</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">https://www.reddit.com/r/rust/comments/13d2tls/rustanalyzer_and_toolchain_for_esp/</li></ul>
 <p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~$ rustup component add rust-analyzer
 info: downloading component &#39;rust-analyzer&#39;
@@ -676,8 +731,8 @@ xtensa-esp32s2-espidf
 xtensa-esp32s2-none-elf
 xtensa-esp32s3-espidf  # espidf 后缀的 target 为使用 eps-idf 的 std 应用
 xtensa-esp32s3-none-elf # none-elf 后缀的 target 为不使用 esp-idf 的 non_std 应用
-xtensa-esp8266-none-elf</code></pre><p class="Paragraph "></p><h2 class="Heading Heading--2 ">更新 esp-rs 工具链：</h2><pre class="Code"><code class="language-plaintext">zj@a:~/esp$ enable_socks_proxy
-zj@a:~/esp$ espup update</code></pre><p class="Paragraph "></p><div class="TableOfContents"></div><p class="Paragraph "></p>
+xtensa-esp8266-none-elf</code></pre><p class="Paragraph "></p><h2 id="heading-fe5728c91a6d406aa939bfdf978d3d6b" class="Heading Heading--2 "><a class="Anchor" href="#heading-fe5728c91a6d406aa939bfdf978d3d6b" aria-label="Anchor">#</a><span class="SemanticString">更新 esp-rs 工具链：</span></h2><pre class="Code"><code class="language-plaintext">zj@a:~/esp$ enable_socks_proxy
+zj@a:~/esp$ espup update</code></pre><p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="2"><a href="#heading-cad0b67c259b48ca90490972ea10841c">espup 安装和维护</a></div><div class="TableOfContents__Item" data-level="2"><a href="#heading-d67e0177bb1549f28575259e43a141ea">修正 esp toolchain 缺失 rust-analyzer 的问题</a></div><div class="TableOfContents__Item" data-level="2"><a href="#heading-fe5728c91a6d406aa939bfdf978d3d6b">更新 esp-rs 工具链：</a></div></aside><p class="Paragraph "></p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>缓存 - OneDrive Vercel Index&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -413,10 +468,10 @@
     
   </header>
   <main class="PageRoot">
-    <h1 class="Heading Heading--1 ">缓存</h1><h2 class="Heading Heading--2 ">Super fast?</h2><p class="Paragraph ">Yes! Folder listing, thumbnail, search, etc., are now cached with Vercel&#39;s edge function caching. You should experience extremely faster load speed for these routes, especially folder listings. <em>(Note: the thumbnails themselves are not cached to follow Vercel&#39;s fair use policy, only the URL pointing to the thumbnails are cached.)</em></p><p class="Paragraph "><strong>The cache is valid for 60 seconds on the edge</strong> - This means you won&#39;t see your newly added files for at least 60 seconds after your files are done uploading.</p><p class="Paragraph ">If you want to manually purge the cache of your site, you can do so by triggering a redeployment manually.</p><p class="Paragraph "></p><div style="margin-left: 20px;"><p class="Paragraph ">The cache is automatically purged upon a new deployment being created. If you ever need to invalidate the CDN cache, you can always re-deploy. Further reading: Caching - Vercel Docs.</p></div>
-<h2 class="Heading Heading--2 ">Technical details</h2><p class="Paragraph ">Relevant headers:</p><pre class="Code"><code class="language-plaintext">Cache-Control: max-age=0, s-maxage=60, stale-while-revalidate</code></pre><ul class="BulletedListWrapper">
+    <h1 id="heading-cda35e93b61e4336ba6693b1aab1b3cb" class="Heading Heading--1 "><a class="Anchor" href="#heading-cda35e93b61e4336ba6693b1aab1b3cb" aria-label="Anchor">#</a><span class="SemanticString">缓存</span></h1><h2 id="heading-a10ca063ac794b238036fecec74a4959" class="Heading Heading--2 "><a class="Anchor" href="#heading-a10ca063ac794b238036fecec74a4959" aria-label="Anchor">#</a><span class="SemanticString">Super fast?</span></h2><p class="Paragraph ">Yes! Folder listing, thumbnail, search, etc., are now cached with Vercel&#39;s edge function caching. You should experience extremely faster load speed for these routes, especially folder listings. <em>(Note: the thumbnails themselves are not cached to follow Vercel&#39;s fair use policy, only the URL pointing to the thumbnails are cached.)</em></p><p class="Paragraph "><strong>The cache is valid for 60 seconds on the edge</strong> - This means you won&#39;t see your newly added files for at least 60 seconds after your files are done uploading.</p><p class="Paragraph ">If you want to manually purge the cache of your site, you can do so by triggering a redeployment manually.</p><p class="Paragraph "></p><div style="margin-left: 20px;"><p class="Paragraph ">The cache is automatically purged upon a new deployment being created. If you ever need to invalidate the CDN cache, you can always re-deploy. Further reading: Caching - Vercel Docs.</p></div>
+<h2 id="heading-b2b5f179117e43678ab8ed35d2137291" class="Heading Heading--2 "><a class="Anchor" href="#heading-b2b5f179117e43678ab8ed35d2137291" aria-label="Anchor">#</a><span class="SemanticString">Technical details</span></h2><p class="Paragraph ">Relevant headers:</p><pre class="Code"><code class="language-plaintext">Cache-Control: max-age=0, s-maxage=60, stale-while-revalidate</code></pre><ul class="BulletedListWrapper">
 <li class="BulletedList "><code>max-age=0</code> - no cache for your browser</li><li class="BulletedList "><code>s-maxage=60</code> - cache remains fresh for 60 seconds on the edge</li><li class="BulletedList "><code>stale-while-revalidate</code> - allow serving stale cache after 60 seconds while the edge revalidates the cache</li></ul>
-<p class="Paragraph ">You can check for response headers <code>x-vercel-cache</code> to see whether your request is responsed by a cache hit (fast 🐰), or fresh revalidated data (slow 🐢).</p><h3 class="Heading Heading--3 ">Cache miss</h3><p class="Paragraph ">Most often, no cache is present at the edge when someone first visits a route. This is presented as <em>cache miss</em>, where the response header <code>x-vercel-cache</code> is set to <code>MISS</code>. In this scenario, fresh data is requested from the upstream API, and you will experience a slow load speed (compared to other scenarios).</p><div class="Image Image--Normal"><figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" /></figure></div><h3 class="Heading Heading--3 ">Cache hit</h3><p class="Paragraph ">After the route is requested, Vercel will cache the function response at the edge. When a second request on the same route is triggered, Vercel will respond with the cache instead of requesting data from the upstream for a second time. This is presented as <em>cache hit</em>, where the response header <code>x-vercel-cache</code> is set to <code>HIT</code>. You will experience an instant response.</p><div class="Image Image--Normal"><figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" /></figure></div><h3 class="Heading Heading--3 ">Cache stale</h3><p class="Paragraph ">If the cache is present for longer than 60 seconds, on the request triggered, Vercel will respond with the stale cache, setting <code>x-vercel-cache</code> to <code>STALE</code>, and perform a new request to the upstream API. In this case, the following response is most likely guaranteed to be fresh, and Vercel will update the cache on the edge accordingly. You will experience an instant response for both requests.</p><div class="Image Image--Normal"><figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" /></figure></div><p class="Paragraph ">自定义配置</p><p class="Paragraph ">高级</p>
+<p class="Paragraph ">You can check for response headers <code>x-vercel-cache</code> to see whether your request is responsed by a cache hit (fast 🐰), or fresh revalidated data (slow 🐢).</p><h3 id="heading-c9ff6d22c02149a786b701cd11e9e469" class="Heading Heading--3 "><a class="Anchor" href="#heading-c9ff6d22c02149a786b701cd11e9e469" aria-label="Anchor">#</a><span class="SemanticString">Cache miss</span></h3><p class="Paragraph ">Most often, no cache is present at the edge when someone first visits a route. This is presented as <em>cache miss</em>, where the response header <code>x-vercel-cache</code> is set to <code>MISS</code>. In this scenario, fresh data is requested from the upstream API, and you will experience a slow load speed (compared to other scenarios).</p><div class="Image Image--Normal"><figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" /></figure></div><h3 id="heading-efc3a1d4d59f46baaf3e23b8fe149930" class="Heading Heading--3 "><a class="Anchor" href="#heading-efc3a1d4d59f46baaf3e23b8fe149930" aria-label="Anchor">#</a><span class="SemanticString">Cache hit</span></h3><p class="Paragraph ">After the route is requested, Vercel will cache the function response at the edge. When a second request on the same route is triggered, Vercel will respond with the cache instead of requesting data from the upstream for a second time. This is presented as <em>cache hit</em>, where the response header <code>x-vercel-cache</code> is set to <code>HIT</code>. You will experience an instant response.</p><div class="Image Image--Normal"><figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" /></figure></div><h3 id="heading-80d9c21f7c2b4dd38bd759e30635ea29" class="Heading Heading--3 "><a class="Anchor" href="#heading-80d9c21f7c2b4dd38bd759e30635ea29" aria-label="Anchor">#</a><span class="SemanticString">Cache stale</span></h3><p class="Paragraph ">If the cache is present for longer than 60 seconds, on the request triggered, Vercel will respond with the stale cache, setting <code>x-vercel-cache</code> to <code>STALE</code>, and perform a new request to the upstream API. In this case, the following response is most likely guaranteed to be fresh, and Vercel will update the cache on the edge accordingly. You will experience an instant response for both requests.</p><div class="Image Image--Normal"><figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" /></figure></div><p class="Paragraph ">自定义配置</p><p class="Paragraph ">高级</p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>Azure openai 遇到注意事项&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -413,7 +468,7 @@
     
   </header>
   <main class="PageRoot">
-    <h3 class="Heading Heading--3 ">使用Azure 的Openai 调用的时候需要注意的的一些地方</h3><p class="Paragraph ">比如</p><p class="Paragraph "><code>model=&quot;gpt-4o&quot;</code></p><p class="Paragraph "><code>api_version=&quot;2024-02-15-preview&quot;</code></p><p class="Paragraph "></p><p class="Paragraph "><code>model</code> 一般为你部署的名字通常是<code>azure_endpoint</code>  <code>https://xxxx.openai.azure.com/</code> 的<code>xxx</code> 的名字</p><p class="Paragraph "><code>api_version</code> 并不是 <code>gpt</code>的版本 </p><p class="Paragraph "></p><p class="Paragraph ">改动后前</p><pre class="Code"><code class="language-python">from openai import AzureOpenAI
+    <h3 id="heading-b059b2ab1dd544c18589e4d709cf1f17" class="Heading Heading--3 "><a class="Anchor" href="#heading-b059b2ab1dd544c18589e4d709cf1f17" aria-label="Anchor">#</a><span class="SemanticString">使用Azure 的Openai 调用的时候需要注意的的一些地方</span></h3><p class="Paragraph ">比如</p><p class="Paragraph "><code>model=&quot;gpt-4o&quot;</code></p><p class="Paragraph "><code>api_version=&quot;2024-02-15-preview&quot;</code></p><p class="Paragraph "></p><p class="Paragraph "><code>model</code> 一般为你部署的名字通常是<code>azure_endpoint</code>  <code>https://xxxx.openai.azure.com/</code> 的<code>xxx</code> 的名字</p><p class="Paragraph "><code>api_version</code> 并不是 <code>gpt</code>的版本 </p><p class="Paragraph "></p><p class="Paragraph ">改动后前</p><pre class="Code"><code class="language-python">from openai import AzureOpenAI
 
 
 client = AzureOpenAI(

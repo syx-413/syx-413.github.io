@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>使用 USB-JTAG&#x2F;probe-rs 调试应用&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -419,7 +474,7 @@
   <main class="PageRoot">
     <p class="Paragraph ">ESP32-S3 开发版一般有两个 USB 接口，一般标记为 UART 和 USB，后者是支持 USB-Serial-JTAG 调试的接口，该接口包含两个 USB 设备：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">USB-CDC-ACM：PC 识别为 USB 串口设备，可以用于下载固件和打印芯片输出的日志；</li><li class="NumberedList ">JTAG 设备：可以被用来进行 JTAG 调试；</li></ol>
-<h3 class="Heading Heading--3 ">查看 MaxcOS USE-Serial-JTAG 设备信息：</h3><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/docs$ system_profiler SPUSBDataType | grep -A 11 &quot;USB JTAG&quot; 
+<h3 id="heading-7c9fed20f014411ea3b3bd2080f8064d" class="Heading Heading--3 "><a class="Anchor" href="#heading-7c9fed20f014411ea3b3bd2080f8064d" aria-label="Anchor">#</a><span class="SemanticString">查看 MaxcOS USE-Serial-JTAG 设备信息：</span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/docs$ system_profiler SPUSBDataType | grep -A 11 &quot;USB JTAG&quot; 
         USB JTAG/serial debug unit:
 
           Product ID: 0x1001
@@ -524,7 +579,7 @@ RAM: 0x3fcf0000..0x3fd00000 (64.00 KiB)
 RAM: 0x40370000..0x40378000 (32.00 KiB)
 RAM: 0x40378000..0x403e0000 (416.00 KiB)
 NVM: 0x42000000..0x44000000 (32.00 MiB)
-NVM: 0x3c000000..0x3e000000 (32.00 MiB)</code></pre><div class="TableOfContents"></div>
+NVM: 0x3c000000..0x3e000000 (32.00 MiB)</code></pre><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="3"><a href="#heading-7c9fed20f014411ea3b3bd2080f8064d">查看 MaxcOS USE-Serial-JTAG 设备信息：</a></div></aside>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

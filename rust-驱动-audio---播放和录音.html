@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>Rust 驱动 Audio - 播放和录音&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -417,7 +472,7 @@
     
   </header>
   <main class="PageRoot">
-    <h2 class="Heading Heading--2 ">1 音频格式 #</h2><p class="Paragraph ">PCM：脉冲编码调制（英语：Pulse-code modulation，缩写：PCM）是一种模拟信号的数字化方法。 A PCM stream has two basic properties that determine the stream’s fidelity to the original analog signal:</p><ol class="NumberedListWrapper">
+    <h2 id="heading-609d73b80c684fbeb23fd76032cfb034" class="Heading Heading--2 "><a class="Anchor" href="#heading-609d73b80c684fbeb23fd76032cfb034" aria-label="Anchor">#</a><span class="SemanticString">1 音频格式 #</span></h2><p class="Paragraph ">PCM：脉冲编码调制（英语：Pulse-code modulation，缩写：PCM）是一种模拟信号的数字化方法。 A PCM stream has two basic properties that determine the stream’s fidelity to the original analog signal:</p><ol class="NumberedListWrapper">
 <li class="NumberedList "><code>the sampling rate</code>, which is the number of times per second that samples are taken;</li><li class="NumberedList ">and <code>the bit depth</code>, which determines the number of possible digital values that can be used to represent each sample.</li></ol>
 <p class="Paragraph ">The compact disc (CD) brought PCM to consumer audio applications with its introduction in 1982. The CD uses <code>a 44,100 Hz sampling frequency and 16-bit resolution</code> and stores up to 80 minutes of stereo audio per disc. stereo audio 是通过 two-channel 提供的。</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">The audio contained in a CD-DA consists of <code>two-channel signed 16-bit LPCM sampled at 44,100 Hz</code> and written as a little-endian interleaved stream with left channel coming first</li></ul>
@@ -427,7 +482,7 @@
 <li class="NumberedList ">在立体声 LPCM 流中，左声道和右声道的采样值通常是 <code>交错存储的</code> 。例如，一个典型的存储序列可能是L1、 R1、L2、R2、…、Ln、Rn，其中L和R分别代表左声道和右声道的采样值，n是采样点的索引。</li><li class="NumberedList ">在多声道LPCM流中，各声道的采样值可以按不同方式组织。最常见的是交错方式，即按照采样时刻顺序依次存储各声道的采样值，比如L1、C1、R1、LS1、RS1、L2、C2、R2、LS2、RS2、…，其中L、C、R、LS、RS分别代表左前、中央、右前、左后和右后声道的采样值。</li></ol>
 <p class="Paragraph ">参考：https://planethifi.com/pcm-audio/</p><p class="Paragraph "><span class="SemanticString__Fragment--ColorPink"><code>WAV（Waveform Audio File Format）</code></span> 是一种音频文件格式，它通常用来 存储未压缩的音频数据 ，这些数据大多数情况下 使用<span class="SemanticString__Fragment--ColorPink"><code>Linear Pulse-Code Modulation (LPCM) </code></span>编码 。WAV格式由微软和IBM开发，最初是为Windows 3.1 操作系统设计的。由于其无损特性和广泛的兼容性，WAV格式成为了保存高质量音频的一种流行选择。</p><p class="Paragraph ">总结：WAV 文件和 LPCM 的关系：</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">**存储LPCM数据**：WAV文件格式经常用来存储LPCM编码的音频数据。这意味着WAV文件可以 <code>保存按照LPCM方法采样、量化和编码的音频信号，保留原始音频的所有细节而不会丢失任何信息</code> 。</li><li class="BulletedList ">**无损音频格式**：由于LPCM是一种无损编码方式， <code>因此使用LPCM编码的WAV文件也是无损的</code> 。这使得WAV文件特别适合需要高质量音频，如专业音乐制作、音频编辑和音频分析的场合。</li><li class="BulletedList ">**高数据率**：LPCM编码的音频数据未经过压缩，所以WAV文件通常具有较高的数据率。例如，一段标准的CD质量音频（44.1kHz采样率、16位深度、立体声）的数据率大约为1.4Mbps。 <code>这意味着WAV文件可以变得相当大</code> ，尤其是对于较长的录音。</li><li class="BulletedList ">**广泛的应用**：WAV格式由于其简单、无损和高质量的特性，在很多应用中被广泛使用，尤其是在需要原始音质的场合，如音乐制作、电影后期制作、广播和科学研究等。</li></ul>
-<h3 class="Heading Heading--3 ">总结</h3><p class="Paragraph "> <code>wav</code>文件不需要解码，可以直接读取 <code>LPCM 编码数据</code> ，然后通过 I2S 接口发送给功放芯片播放。</p><p class="Paragraph "></p><pre class="Code"><code class="language-plaintext">// https://github.com/espressif/esp-box/blob/master/examples/watering_demo/main/app/app_audio.c
+<h3 id="heading-9f6d1f9c15374a6d80615e2983f80670" class="Heading Heading--3 "><a class="Anchor" href="#heading-9f6d1f9c15374a6d80615e2983f80670" aria-label="Anchor">#</a><span class="SemanticString">总结</span></h3><p class="Paragraph "> <code>wav</code>文件不需要解码，可以直接读取 <code>LPCM 编码数据</code> ，然后通过 I2S 接口发送给功放芯片播放。</p><p class="Paragraph "></p><pre class="Code"><code class="language-plaintext">// https://github.com/espressif/esp-box/blob/master/examples/watering_demo/main/app/app_audio.c
 
 static void audio_beep_task(void *pvParam)
 {
@@ -507,7 +562,7 @@ EXIT:
 <li class="NumberedList ">WAV（Waveform Audio File Format）：</li><li class="NumberedList ">**普遍支持**：WAV是最广泛支持的音频文件格式之一，由微软开发，原生支持LPCM音频流。</li><li class="NumberedList ">**无损质量**：WAV文件可以无损存储LPCM音频数据，保持原始音频质量。</li><li class="NumberedList ">**元数据支持**：WAV格式支持存储关于音频流的详细信息，如采样率、位深度、声道数等。</li><li class="NumberedList ">**文件大小**：由于WAV文件通常不使用压缩，文件大小可能会非常大，尤其是对于高采样率、高位深度、多声道音频。</li><li class="NumberedList ">AIFF（Audio Interchange File Format）</li><li class="NumberedList ">**类似WAV**：AIFF是苹果公司开发的一种音频文件格式，与WAV非常相似，提供无损音频质量和广泛的元数据支持。</li><li class="NumberedList ">**跨平台**：虽然AIFF最初是为Macintosh系统设计的，但现在它在多个平台上都得到支持。</li><li class="NumberedList ">**文件大小**：和WAV一样，AIFF文件也可能相当大，特别是当存储高质量的多声道LPCM音频时。</li><li class="NumberedList ">FLAC（Free Lossless Audio Codec）</li><li class="NumberedList ">**无损压缩**：FLAC提供无损压缩，能够在不损失音质的情况下减小文件大小，适用于LPCM音频数据。</li><li class="NumberedList ">**标签和元数据**：FLAC支持丰富的标签和元数据，方便音乐管理和播放器识别。</li><li class="NumberedList ">**广泛支持**：尽管主要用于立体声音频，FLAC格式也支持多达8个声道的音频，适用于多声道LPCM音频流的存储。</li><li class="NumberedList ">Multichannel WAV/RF64</li><li class="NumberedList ">**大型文件**：为了克服WAV文件对文件大小的限制（4GB），扩展格式如RF64被设计用来支持更大的文件，适合长时间的高质量多声道录音。</li><li class="NumberedList ">**广泛兼容性**：这些格式保持了与标准WAV格式的向后兼容性，同时扩展了其能力，以支持更大的数据量。</li></ol>
 <p class="Paragraph ">存储过程：存储多声道LPCM音频流通常涉及以下步骤：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">**选择格式**：根据需要支持的声道数、对音质的要求以及对文件大小的考虑，选择合适的音频文件格式。</li><li class="NumberedList ">**准备音频数据**：将LPCM编码的音频数据按照选择的格式要求（如声道排列、采样率、位深度等）进行组织。</li><li class="NumberedList ">**写入文件**：将音频数据连同必要的元数据（如格式头信息）一起写入到文件中。</li><li class="NumberedList ">**验证**：确保写入的音频文件符合所选格式的规范，并且可以被目标播放器或编辑软件正确读取。</li></ol>
-<p class="Paragraph ">使用适当的音频编辑或编码软件，你可以轻松地将多声道LPCM音频流保存到这些格式的文件中，无论是通过图形用户界面操作还是通过编程方式。</p><h2 class="Heading Heading--2 ">2 I2S 接口和播放声音 #</h2><p class="Paragraph ">一般来说，一个语音提示文件的 <code>MP3 </code>格式的大小约 <code>5KB</code>，而未压缩的 <code>wav </code>格式的大小则为 <code>60KB </code>左右。如果拿 <code>2MB </code>的 <code>FLASH </code>空间来存储 <code>MP3 </code>格式的语音提示文件，则其数量要远大于 <code>WAV </code>格式。</p><ul class="BulletedListWrapper">
+<p class="Paragraph ">使用适当的音频编辑或编码软件，你可以轻松地将多声道LPCM音频流保存到这些格式的文件中，无论是通过图形用户界面操作还是通过编程方式。</p><h2 id="heading-c1db010d2f604a02aec50cbf85f7ddfd" class="Heading Heading--2 "><a class="Anchor" href="#heading-c1db010d2f604a02aec50cbf85f7ddfd" aria-label="Anchor">#</a><span class="SemanticString">2 I2S 接口和播放声音 #</span></h2><p class="Paragraph ">一般来说，一个语音提示文件的 <code>MP3 </code>格式的大小约 <code>5KB</code>，而未压缩的 <code>wav </code>格式的大小则为 <code>60KB </code>左右。如果拿 <code>2MB </code>的 <code>FLASH </code>空间来存储 <code>MP3 </code>格式的语音提示文件，则其数量要远大于 <code>WAV </code>格式。</p><ul class="BulletedListWrapper">
 <li class="BulletedList "><code>wav </code>保存的是未压缩的 PCM 数据，可以直接通过 <code>I2S </code>接口发送给数字音频芯片来播放。</li></ul>
 <p class="Paragraph ">而其他格式如 <code>MP3</code>， 需要通过软件或硬件解码为 <code>PCM</code> 格式 ，然后才能通过 I2S 数字音频接口发送给功放芯片。</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">使用<code>I2C</code>协议来配置WM8978模块</li><li class="NumberedList ">初始化<code>ESP32</code>的<code>I2S</code>通信接口</li><li class="NumberedList ">建立数据缓冲，大于<code>4096</code>字节</li><li class="NumberedList ">从<code>FLASH</code>读取一个扇区（<code>4096</code>字节）</li><li class="NumberedList ">转为解码所需的<code>stream</code>比特流形式（如开源的 <code>mad MP3</code> 解码库 ）</li><li class="NumberedList ">开始<code>MP3</code>解码</li><li class="NumberedList ">解码<code>4096</code>字节完成后，把 <code>PCM </code>数据 通过<code>I2S</code>送入<code>WM8978</code>模块</li></ol>
@@ -633,7 +688,7 @@ I (477) PLAY_FLASH_MP3_CONTROL: [ 3 ] Set up  event listener
 I (477) PLAY_FLASH_MP3_CONTROL: [3.1] Listening event from all elements of pipeline
 I (487) PLAY_FLASH_MP3_CONTROL: [ 4 ] Start audio_pipeline
 I (507) PLAY_FLASH_MP3_CONTROL: [ * ] Receive music info from mp3 decoder, sample_rates=44100, bits=16, ch=2
-I (7277) PLAY_FLASH_MP3_CONTROL: [ 5 ] Stop audio_pipeline</code></pre><p class="Paragraph ">示例：https://github.com/espressif/esp-adf/tree/master/examples</p><h2 class="Heading Heading--2 ">3 记录声音 #</h2><p class="Paragraph ">使用麦克风 <code>Module </code>如 <code>INMP441 module</code> 来将声音转换为数字信号（<code>PCM </code>编码后的数字流），然后 <code>ESP32 driver</code> 通过 <code>I2S </code>接口来获取数字音频。</p><ul class="BulletedListWrapper">
+I (7277) PLAY_FLASH_MP3_CONTROL: [ 5 ] Stop audio_pipeline</code></pre><p class="Paragraph ">示例：https://github.com/espressif/esp-adf/tree/master/examples</p><h2 id="heading-7fa6c972d3e84186a4d9b5e2d3af47a3" class="Heading Heading--2 "><a class="Anchor" href="#heading-7fa6c972d3e84186a4d9b5e2d3af47a3" aria-label="Anchor">#</a><span class="SemanticString">3 记录声音 #</span></h2><p class="Paragraph ">使用麦克风 <code>Module </code>如 <code>INMP441 module</code> 来将声音转换为数字信号（<code>PCM </code>编码后的数字流），然后 <code>ESP32 driver</code> 通过 <code>I2S </code>接口来获取数字音频。</p><ul class="BulletedListWrapper">
 <li class="BulletedList "><code>INMP441 module will be acting as a mic input for capturing mono 16-bit audio signals at rate 8000 samples per second.</code></li><li class="BulletedList ">一般数字音频功放芯片集成有 <code>MIC</code>，也是通过 <code>I2S </code>接口来获取 <code>PCM</code> 数据，所以也称为 <code>codec chip</code>。</li></ul>
 <p class="Paragraph ">如果是模拟 <code>MIC </code>则可以使用 <code>ESP32 </code>的 ADC 引脚转换为 <code>LPCM</code>，然后再保存到 wav 文件中。</p><p class="Paragraph ">通过 <code>I2S </code>从 <code>MIC </code>读取 <code>PCM </code>数字音频后，以 <code>wav </code>文件格式存入 <code>SD </code>卡：</p><ul class="BulletedListWrapper">
 <li class="BulletedList "><code>wav </code>文件：<code>medatadata header + LPCM raw data</code>；</li></ul>

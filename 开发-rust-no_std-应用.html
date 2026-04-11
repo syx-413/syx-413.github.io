@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>开发 Rust no_std 应用&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -419,8 +474,8 @@ no_std 应用是 bare-metal 实现，不依赖 esp-idf 及其提供的 FreeRTOS 
     
   </header>
   <main class="PageRoot">
-    <h2 class="Heading Heading--2 ">no_std 应用</h2><p class="Paragraph ">
-no_std 应用是 bare-metal 实现，不依赖 esp-idf 及其提供的 FreeRTOS 操作系统和 Rust std 标注库，而是使用 std 的一个子集 core 库，core 库不支持 heap 内存分配和线程。当前支持 HAL/WIFI/BLE/ESP-NOW/Backtrace/Storage 等。</p><p class="Paragraph ">no_std <code>不依赖于</code> C/C++ 开发的 esp-idf 及其提供的 FreeRTOS 操作系统环境，而是基于 esp-pacs/esp-hal 开发的 xtensa-esp32s3-none-elf 应用。</p><p class="Paragraph ">esp-alloc crate 为 no_std 提供了 heap 内存分配的支持；例子：esp-examples/alloc</p><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://blog.opsnull.com/images/no_std_%E5%BA%94%E7%94%A8/2024-02-11_15-27-15_screenshot.png" alt="" loading="lazy" /></figure></div><h3 class="Heading Heading--3 ">no_std 相关的库：</h3><ul class="BulletedListWrapper">
+    <h2 id="heading-2a46249282e54c85a2beeddab08dc9e6" class="Heading Heading--2 "><a class="Anchor" href="#heading-2a46249282e54c85a2beeddab08dc9e6" aria-label="Anchor">#</a><span class="SemanticString">no_std 应用</span></h2><p class="Paragraph ">
+no_std 应用是 bare-metal 实现，不依赖 esp-idf 及其提供的 FreeRTOS 操作系统和 Rust std 标注库，而是使用 std 的一个子集 core 库，core 库不支持 heap 内存分配和线程。当前支持 HAL/WIFI/BLE/ESP-NOW/Backtrace/Storage 等。</p><p class="Paragraph ">no_std <code>不依赖于</code> C/C++ 开发的 esp-idf 及其提供的 FreeRTOS 操作系统环境，而是基于 esp-pacs/esp-hal 开发的 xtensa-esp32s3-none-elf 应用。</p><p class="Paragraph ">esp-alloc crate 为 no_std 提供了 heap 内存分配的支持；例子：esp-examples/alloc</p><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://blog.opsnull.com/images/no_std_%E5%BA%94%E7%94%A8/2024-02-11_15-27-15_screenshot.png" alt="" loading="lazy" /></figure></div><h3 id="heading-fc7edc5c335047c6b2fe092a6c34c017" class="Heading Heading--3 "><a class="Anchor" href="#heading-fc7edc5c335047c6b2fe092a6c34c017" aria-label="Anchor">#</a><span class="SemanticString">no_std 相关的库：</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList "><code>esp-pacs</code> : Peripheral access crates，是根据处理的 SVD 描述文件生成的 Peripheral Access Crates (PACs) ，它是低级的处理器寄存器定义 unsafe 封装。理论上可以直接基于 esp-pacs 开发 no_std 应用，但是因为层次太低级，开发效率不高，所以一般使用 esp-hal 等高层封装来开发。</li><li class="BulletedList "><code>esp-hal</code> : Hardware abstraction layer. async traits from the various packages in the <code>embedded-hal</code> repository.</li><div style="margin-left: 20px;"><ul class="BulletedListWrapper">
 <li class="BulletedList ">相比 esp-pacs crate，esp-hal 是高层次的封装，一般实现了 embedded-hal 和 async trait，底层基于 esp-pacs；</li><li class="BulletedList ">esp-hal 为 embassy 提供了实现，可以通过 embassy async task 来实现 <code>并发任务</code> 。</li><li class="BulletedList ">2024.03.08 发布的 0.16.0 版本开始，将以前芯片相关的 esp32-hal, esp32c3-hal 等 crate 合并为一个单独的 esp-hal crate。使用时在 features 中指定 CPU 类型，如: <code>esp-hal = { version = &quot;0.17.0&quot;, features = [ &quot;esp32s3&quot; ] }</code></li></ul>
 </div>
@@ -475,7 +530,7 @@ fn main() -&gt; ! {
         log::info!(&quot;Hello world!&quot;);
         delay.delay(500.millis());
     }
-}</code></pre><h3 class="Heading Heading--3 ">按需配置 Cargo.toml：</h3><p class="Paragraph "> </p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/non_std$ cat myesp-nonstd/Cargo.toml
+}</code></pre><h3 id="heading-2158faf7e1b54e6e9e5dff94441bc939" class="Heading Heading--3 "><a class="Anchor" href="#heading-2158faf7e1b54e6e9e5dff94441bc939" aria-label="Anchor">#</a><span class="SemanticString">按需配置 Cargo.toml：</span></h3><p class="Paragraph "> </p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/non_std$ cat myesp-nonstd/Cargo.toml
 [package] 
 name = &quot;myesp-nonstd&quot;
 version = &quot;0.1.0&quot;
@@ -515,9 +570,9 @@ debug-assertions = false
 incremental = false
 lto = &#39;fat&#39;
 opt-level = &#39;s&#39;
-overflow-checks = false</code></pre><h3 class="Heading Heading--3 ">按需配置 rust-toolchain.toml </h3><p class="Paragraph "> </p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/myesp-nonstd$ cat rust-toolchain.toml
+overflow-checks = false</code></pre><h3 id="heading-3e4d25f709674723ae85c9ebb7e8240d" class="Heading Heading--3 "><a class="Anchor" href="#heading-3e4d25f709674723ae85c9ebb7e8240d" aria-label="Anchor">#</a><span class="SemanticString">按需配置 rust-toolchain.toml </span></h3><p class="Paragraph "> </p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/myesp-nonstd$ cat rust-toolchain.toml
 [toolchain]
-channel = &quot;esp&quot; # 使用 esp channel 工具链 </code></pre><h3 class="Heading Heading--3 ">按需配置 .cargo/config.toml </h3><p class="Paragraph "></p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/myesp-nonstd$ cat .cargo/config.toml
+channel = &quot;esp&quot; # 使用 esp channel 工具链 </code></pre><h3 id="heading-99b4e557dca946f7b961efd9f7e2cdd8" class="Heading Heading--3 "><a class="Anchor" href="#heading-99b4e557dca946f7b961efd9f7e2cdd8" aria-label="Anchor">#</a><span class="SemanticString">按需配置 .cargo/config.toml </span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/myesp-nonstd$ cat .cargo/config.toml
 [target.xtensa-esp32s3-none-elf]
 runner = &quot;espflash flash --monitor&quot;  # cargo run 会烧录 flash 和读终端日志
 
@@ -532,7 +587,7 @@ rustflags = [
 target = &quot;xtensa-esp32s3-none-elf&quot; # 使用不链接 esp-idf 的 none-elf 工具链
 
 [unstable]
-build-std = [&quot;core&quot;]  # 使用 core 库而非 std 库！</code></pre><h3 class="Heading Heading--3 ">构建和烧录：</h3><p class="Paragraph "> </p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32$ cd myesp-nonstd/
+build-std = [&quot;core&quot;]  # 使用 core 库而非 std 库！</code></pre><h3 id="heading-05c76299ac9344f8a8a9f3cc710089a8" class="Heading Heading--3 "><a class="Anchor" href="#heading-05c76299ac9344f8a8a9f3cc710089a8" aria-label="Anchor">#</a><span class="SemanticString">构建和烧录：</span></h3><p class="Paragraph "> </p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32$ cd myesp-nonstd/
 
 zj@a:~/code/esp32/myesp-nonstd$ source ~/esp/export-esp.sh
 
@@ -549,7 +604,7 @@ drwxr-xr-x   5 alizj  160  5  9 12:21 incremental/
 -rwxr-xr-x   1 alizj 2.0M  5 10 15:27 myesp-nonstd*
 -rw-r--r--   1 alizj  194  5  8 15:06 myesp-nonstd.d</code></pre><p class="Paragraph ">参考：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">官方文档：Embedded Rust (no_std) on Espressif</li><li class="NumberedList ">官方 non_std 示例：https://github.com/esp-rs/no_std-training</li><li class="NumberedList ">https://apollolabsblog.hashnode.dev/series/esp32c3-embedded-rust-hal 强烈推荐。</li><li class="NumberedList ">https://github.com/apollolabsdev/ESP32C3</li><li class="NumberedList ">Bare-Metal Rust on ESP32: A Brief Overview</li><li class="NumberedList ">https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem</li></ol>
-<h2 class="Heading Heading--2 ">1 在 Rust no_std 应用中使用 defmt 日志框架 </h2><p class="Paragraph ">defmt 是一种 no_std 应用的 logging framework，它将 ESP32 芯片中应用打印的日志延迟到 host server 上格式化，从而降低 ESP32 芯片应用的内存开销。</p><p class="Paragraph ">ESP32 no_std book 的 defmt 例子：https://docs.esp-rs.org/no_std-training/03_7_defmt.html</p><p class="Paragraph ">对于 ESP32 no_std 应用来说， <code>esp-println, esp-backtrace and espflash/cargo-espflash provide mechanisms to use defmt</code> :</p><ol class="NumberedListWrapper">
+<h2 id="heading-280c4094232945a3ae698f3c0fae8776" class="Heading Heading--2 "><a class="Anchor" href="#heading-280c4094232945a3ae698f3c0fae8776" aria-label="Anchor">#</a><span class="SemanticString">1 在 Rust no_std 应用中使用 defmt 日志框架 </span></h2><p class="Paragraph ">defmt 是一种 no_std 应用的 logging framework，它将 ESP32 芯片中应用打印的日志延迟到 host server 上格式化，从而降低 ESP32 芯片应用的内存开销。</p><p class="Paragraph ">ESP32 no_std book 的 defmt 例子：https://docs.esp-rs.org/no_std-training/03_7_defmt.html</p><p class="Paragraph ">对于 ESP32 no_std 应用来说， <code>esp-println, esp-backtrace and espflash/cargo-espflash provide mechanisms to use defmt</code> :</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">espflash has support for different logging formats, one of them being defmt.</li><div style="margin-left: 20px;"><ul class="BulletedListWrapper">
 <li class="BulletedList ">espflash requires framming bytes as when using defmt it also needs to print non-defmt messages, like the bootloader prints. It’s important to note that other defmt-enabled tools like probe-rs won’t be able to parse these messages due to the extra framing bytes. Uses <code>rzcobs encoding</code></li></ul>
 </div>
@@ -558,7 +613,7 @@ drwxr-xr-x   5 alizj  160  5  9 12:21 incremental/
 <li class="BulletedList ">Enable the log feature of esp-println</li><li class="BulletedList ">When building the app, set DEFMT_LOG level.</li></ul>
 <p class="Paragraph ">defmt-rtt：Transmit defmt log messages over the RTT (Real-Time Transfer) protocol https://github.com/knurling-rs/defmt/tree/main/firmware/defmt-rtt</p><p class="Paragraph ">embassy 依赖于 defmt 和 defmt-rtt：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">https://embassy.dev/book/dev/project_structure.html</li><li class="NumberedList ">https://embassy.dev/book/dev/basic_application.html</li></ol>
-<p class="Paragraph "></p><div class="TableOfContents"></div><p class="Paragraph "></p>
+<p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="2"><a href="#heading-2a46249282e54c85a2beeddab08dc9e6">no_std 应用</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-fc7edc5c335047c6b2fe092a6c34c017">no_std 相关的库：</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-2158faf7e1b54e6e9e5dff94441bc939">按需配置 Cargo.toml：</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-3e4d25f709674723ae85c9ebb7e8240d">按需配置 rust-toolchain.toml </a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-99b4e557dca946f7b961efd9f7e2cdd8">按需配置 .cargo/config.toml </a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-05c76299ac9344f8a8a9f3cc710089a8">构建和烧录：</a></div><div class="TableOfContents__Item" data-level="2"><a href="#heading-280c4094232945a3ae698f3c0fae8776">1 在 Rust no_std 应用中使用 defmt 日志框架 </a></div></aside><p class="Paragraph "></p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

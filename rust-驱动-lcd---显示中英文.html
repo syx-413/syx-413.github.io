@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>Rust 驱动 LCD - 显示中英文&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -428,7 +483,7 @@ let large_style = MonoTextStyle::new(&amp;FONT_10X20, Rgb565::WHITE);
 let next = Text::new(&quot;small &quot;, Point::new(20, 30), small_style).draw(&amp;mut display)?;
 
 // Draw the second text after the first text using the large character style.
-let next = Text::new(&quot;large&quot;, next, large_style).draw(&amp;mut display)?;</code></pre><p class="Paragraph ">字体参考：https://github.com/olikraus/u8g2</p><h2 class="Heading Heading--2 ">1 embedded-graphics/bdf #</h2><p class="Paragraph ">https://github.com/embedded-graphics/bdf/tree/master</p><p class="Paragraph ">该库可以从 bdf 字体文件中生成 embedded-graphics 能使用的：</p><ol class="NumberedListWrapper">
+let next = Text::new(&quot;large&quot;, next, large_style).draw(&amp;mut display)?;</code></pre><p class="Paragraph ">字体参考：https://github.com/olikraus/u8g2</p><h2 id="heading-d3b4f566a7b344eeb45fd7875ab6cc34" class="Heading Heading--2 "><a class="Anchor" href="#heading-d3b4f566a7b344eeb45fd7875ab6cc34" aria-label="Anchor">#</a><span class="SemanticString">1 embedded-graphics/bdf #</span></h2><p class="Paragraph ">https://github.com/embedded-graphics/bdf/tree/master</p><p class="Paragraph ">该库可以从 bdf 字体文件中生成 embedded-graphics 能使用的：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">BDF Font：需要配合使用embedded-graphics/bdf/eg-bdf 库中提供的 BdfFont/BdfGlyph/BdfTextStyle 类型；</li><li class="NumberedList ">MonoFont：embedded-graphics 可以直接导入使用；</li></ol>
 <p class="Paragraph ">先使用 otf2bdf 工具将 TTF（truetype font） 字体转换为 BDF（Bitmap Distribution Format） 类型：</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">对于 X11 使用的 pcf 字体格式，使用 pcf2bdf 工具将它转换为 bdf 格式；</li><li class="BulletedList ">转换时 -p 参数指定生成的 BDF 字体大小;</li></ul>
@@ -509,7 +564,7 @@ fn main() {
     let mut bounds = Rectangle::new(Point::new(0, 0), Size::new(128, 160));
     let mut text_box = TextBox::with_textbox_style(text, bounds, bdf_style, textbox_style);
     let next = text_box.draw(&amp;mut display).unwrap();
-}</code></pre><p class="Paragraph "></p><div class="TableOfContents"></div>
+}</code></pre><p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="2"><a href="#heading-d3b4f566a7b344eeb45fd7875ab6cc34">1 embedded-graphics/bdf #</a></div></aside>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

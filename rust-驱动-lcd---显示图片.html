@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>Rust 驱动 LCD - 显示图片&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -417,7 +472,7 @@
     
   </header>
   <main class="PageRoot">
-    <h1 class="Heading Heading--1 ">Rust 驱动 LCD - 显示图片</h1><p class="Paragraph "></p><p class="Paragraph ">一个 LCD 小游戏：esp32-spooky-maze-game</p><ul class="BulletedListWrapper">
+    <h1 id="heading-100fc3f52a8880b5a5b5ddf8ee249d7f" class="Heading Heading--1 "><a class="Anchor" href="#heading-100fc3f52a8880b5a5b5ddf8ee249d7f" aria-label="Anchor">#</a><span class="SemanticString">Rust 驱动 LCD - 显示图片</span></h1><p class="Paragraph "></p><p class="Paragraph ">一个 LCD 小游戏：esp32-spooky-maze-game</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">使用的是 <code>mipidsi::Builder::st7789</code>，需要修改为 <code>st7735s</code>，支持按键。</li><li class="BulletedList "><code>xtensa-esp32s3-none-elf non_std</code> 应用。</li></ul>
 <p class="Paragraph ">另外一个 LCD 项目样例： https://github.com/georgik/esp32-rust-multi-target-template/blob/main/esp32-s3-usb-otg/src/main.rs</p><p class="Paragraph ">ESP Display Interface with SPI and DMA： https://github.com/georgik/esp-display-interface-spi-dma/blob/main/README.md</p><p class="Paragraph ">参考文档：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">https://docs.espressif.com/projects/esp-iot-solution/en/latest/display/lcd/index.html</li><li class="NumberedList ">https://www.makerfabs.com/esp32-3-5-inch-tft-touch-capacitive-with-camera.html</li></ol>
@@ -430,7 +485,7 @@
 <li class="BulletedList ">i2c_oled：一般是小型的 OLED LCD 屏幕使用 I2C；</li><li class="BulletedList ">i80_controller：Intel 8080 interfaced</li><li class="BulletedList ">mipi_dsi：最高效的串行接口；</li><li class="BulletedList ">rgb_panel</li><li class="BulletedList ">spi_lcd_touch</li><li class="BulletedList ">tjpgd ：JPEG 软解压库；</li></ul>
 <p class="Paragraph ">esp-iot-solution/examples/display/lcd/ 目录也包含一些 LCD 例子：</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">lcd_with_te</li><li class="BulletedList ">qspi_with_ram</li><li class="BulletedList ">qspi_without_ram</li><li class="BulletedList ">rgb_avoid_tearing</li><li class="BulletedList ">rgb_lcd_8bit</li></ul>
-<h2 class="Heading Heading--2 ">1 显示 raw 图片 #</h2><p class="Paragraph ">raw 图片是指 RGB888/RGB565 等格式的图片。</p><p class="Paragraph ">像素格式主要分为 YUV 和 RGB 两种大类：</p><ol class="NumberedListWrapper">
+<h2 id="heading-d9cac5a6d0e241149f1e33770327fd8e" class="Heading Heading--2 "><a class="Anchor" href="#heading-d9cac5a6d0e241149f1e33770327fd8e" aria-label="Anchor">#</a><span class="SemanticString">1 显示 raw 图片 #</span></h2><p class="Paragraph ">raw 图片是指 RGB888/RGB565 等格式的图片。</p><p class="Paragraph ">像素格式主要分为 YUV 和 RGB 两种大类：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">YUV422: 也称为 YCbCr：Y 亮度，U/Cb：蓝色浓度，V/Cr：红色浓度；</li><div style="margin-left: 20px;"><ul class="BulletedListWrapper">
 <li class="BulletedList ">为了节省带宽 YUV frame 一般使用采样，如 YUV422 表示 2:1的水平取样，垂直完全采样；</li></ul>
 </div>
@@ -627,7 +682,7 @@ def main():  # type: () -&gt; None
 
 
 if __name__ == &#39;__main__&#39;:
-    main()</code></pre><h2 class="Heading Heading--2 ">2 显示 png 图片 #</h2><p class="Paragraph ">使用如下 python 代码将 png 图片转换为 raw RGB 565 format：</p><p class="Paragraph "></p><pre class="Code"><code class="language-python">#!/usr/bin/python
+    main()</code></pre><h2 id="heading-ece6f8c0a4d94e05841d327cbf2efb2f" class="Heading Heading--2 "><a class="Anchor" href="#heading-ece6f8c0a4d94e05841d327cbf2efb2f" aria-label="Anchor">#</a><span class="SemanticString">2 显示 png 图片 #</span></h2><p class="Paragraph ">使用如下 python 代码将 png 图片转换为 raw RGB 565 format：</p><p class="Paragraph "></p><pre class="Code"><code class="language-python">#!/usr/bin/python
 
 import sys
 from PIL import Image
@@ -656,7 +711,7 @@ for i in range(0, len(pixels) - 1, pixelSize):
     pixels2 += chr(ord(pixels[i + 2]) &gt;&gt; 3 | (ord(pixels[i + 1]) &lt;&lt; 3 &amp; 0xe0))
     pixels2 += chr(ord(pixels[i]) &amp; 0xf8 | (ord(pixels[i + 1]) &gt;&gt; 5 &amp; 0x07))
 out.write(pixels2)
-out.close()</code></pre><h2 class="Heading Heading--2 ">3 显示 bmp 图片 #</h2><p class="Paragraph ">bmp 图片是未经压缩的像素 bit 文件，包含 header + 像素数据，不需要解压缩和转码，可以直接读取，转换为 RGB 565 格式：</p><p class="Paragraph "></p><pre class="Code"><code class="language-cplusplus">// https://github.com/Makerfabs/Project_Touch-Screen-Camera/blob/master/example/SD2TFT/SD2TFT.ino#L205
+out.close()</code></pre><h2 id="heading-0fa7bfd08b3a41abad808109e5bb9a77" class="Heading Heading--2 "><a class="Anchor" href="#heading-0fa7bfd08b3a41abad808109e5bb9a77" aria-label="Anchor">#</a><span class="SemanticString">3 显示 bmp 图片 #</span></h2><p class="Paragraph ">bmp 图片是未经压缩的像素 bit 文件，包含 header + 像素数据，不需要解压缩和转码，可以直接读取，转换为 RGB 565 格式：</p><p class="Paragraph "></p><pre class="Code"><code class="language-cplusplus">// https://github.com/Makerfabs/Project_Touch-Screen-Camera/blob/master/example/SD2TFT/SD2TFT.ino#L205
 
 int print_img(fs::FS &amp;fs, String filename)
 {
@@ -689,7 +744,7 @@ int print_img(fs::FS &amp;fs, String filename)
     f.close();
     SPI_OFF_SD;
     return 0;
-}</code></pre><h2 class="Heading Heading--2 ">4 显示 jpeg 图片 #</h2><p class="Paragraph ">JPEG 是压缩图片格式，在 LCD 显示前需要先对其进行解压缩和解码，转换为 LCD 上显示的 RGB 像素数据（raw picture），如 JPEG_RAW_TYPE_RGB565_BE：</p><p class="Paragraph "></p><pre class="Code"><code class="language-c">// https://github.com/espressif/esp-box/blob/master/examples/usb_camera_lcd_display/main/main.c#L56
+}</code></pre><h2 id="heading-0e91b468062f48f5ae7f36271c7332a3" class="Heading Heading--2 "><a class="Anchor" href="#heading-0e91b468062f48f5ae7f36271c7332a3" aria-label="Anchor">#</a><span class="SemanticString">4 显示 jpeg 图片 #</span></h2><p class="Paragraph ">JPEG 是压缩图片格式，在 LCD 显示前需要先对其进行解压缩和解码，转换为 LCD 上显示的 RGB 像素数据（raw picture），如 JPEG_RAW_TYPE_RGB565_BE：</p><p class="Paragraph "></p><pre class="Code"><code class="language-c">// https://github.com/espressif/esp-box/blob/master/examples/usb_camera_lcd_display/main/main.c#L56
 
 // 将 JPEG 解码为 JPEG_RAW_TYPE_RGB565_BE 输出格式
 static jpeg_error_t esp_jpeg_decoder_one_picture(uint8_t *input_buf, int len, uint8_t *output_buf)
@@ -1010,7 +1065,7 @@ if __name__ == &#39;__main__&#39;:
 <li class="BulletedList ">没有提供 C 源代码，只提供了头文件和 lib 库；</li></ul>
 </div>
 </ol>
-<h2 class="Heading Heading--2 ">5 显示 gif 图片 #</h2><p class="Paragraph ">使用 Rust tinygif 库和系统定时器来显示 GIF 图片：</p><p class="Paragraph "></p><pre class="Code"><code class="language-rust">// https://github.com/MabezDev/mkey/blob/main/firmware/src/main.rs
+<h2 id="heading-4d1a7049c45d4886bacc0e0d7d6564fb" class="Heading Heading--2 "><a class="Anchor" href="#heading-4d1a7049c45d4886bacc0e0d7d6564fb" aria-label="Anchor">#</a><span class="SemanticString">5 显示 gif 图片 #</span></h2><p class="Paragraph ">使用 Rust tinygif 库和系统定时器来显示 GIF 图片：</p><p class="Paragraph "></p><pre class="Code"><code class="language-rust">// https://github.com/MabezDev/mkey/blob/main/firmware/src/main.rs
 let image =
         tinygif::Gif::&lt;Rgb565&gt;::from_slice(include_bytes!(&quot;../Ferris-240x240.gif&quot;)).unwrap();
     let mut start = SystemTimer::now();
@@ -1051,9 +1106,9 @@ let image =
                 frames = 0;
             }
         }
-    }</code></pre><h2 class="Heading Heading--2 ">6 使用 LVGL 显示图片 #</h2><p class="Paragraph ">https://docs.lvgl.io/8.2/widgets/core/img.html</p><p class="Paragraph ">Images are the basic object to display images from flash (as arrays) or from files. Images can display symbols (LV_SYMBOL_…) too.</p><p class="Paragraph ">Using the Image decoder interface custom image formats can be supported as well.</p><p class="Paragraph ">Image source：To provide maximum flexibility, the source of the image can be:</p><ol class="NumberedListWrapper">
+    }</code></pre><h2 id="heading-308700da230e4d8b8bb72c7bce029e16" class="Heading Heading--2 "><a class="Anchor" href="#heading-308700da230e4d8b8bb72c7bce029e16" aria-label="Anchor">#</a><span class="SemanticString">6 使用 LVGL 显示图片 #</span></h2><p class="Paragraph ">https://docs.lvgl.io/8.2/widgets/core/img.html</p><p class="Paragraph ">Images are the basic object to display images from flash (as arrays) or from files. Images can display symbols (LV_SYMBOL_…) too.</p><p class="Paragraph ">Using the Image decoder interface custom image formats can be supported as well.</p><p class="Paragraph ">Image source：To provide maximum flexibility, the source of the image can be:</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">a variable in code (a C array with the pixels).</li><li class="NumberedList ">a file stored externally (e.g. on an SD card).</li><li class="NumberedList ">a text with Symbols.</li></ol>
-<p class="Paragraph ">To set the source of an image, use <code>lv_img_set_src(img, src).</code></p><p class="Paragraph ">To generate a pixel array from a PNG, JPG or BMP image, use the Online image converter tool and set the converted image with its pointer: <code>lv_img_set_src(img1, &amp;converted_img_var)</code>; To make the variable visible in the C file, you need to declare it with LV_IMG_DECLARE(converted_img_var).</p><p class="Paragraph ">To use external files, you also need to convert the image files using the online converter tool but now you should select the binary output format. You also need to use LVGL’s file system module and register a driver with some functions for the basic file operation. Go to the File system to learn more. To set an image sourced from a file, use lv_img_set_src(img, “S:folder1/my_img.bin”).</p><p class="Paragraph ">You can also set a symbol similarly to Labels. In this case, the image will be rendered as text according to the font specified in the style. It enables to use of light-weight monochrome “letters” instead of real images. You can set symbol like lv_img_set_src(img1, LV_SYMBOL_OK).</p><h2 class="Heading Heading--2 ">7 使用 embeded-graphics 显示图片 #</h2><h2 class="Heading Heading--2 ">8 使用 slint 显示图片 #</h2><p class="Paragraph ">使用 image crate 可以将各种照片转换称 RGBA8 格式:</p><p class="Paragraph "></p>
+<p class="Paragraph ">To set the source of an image, use <code>lv_img_set_src(img, src).</code></p><p class="Paragraph ">To generate a pixel array from a PNG, JPG or BMP image, use the Online image converter tool and set the converted image with its pointer: <code>lv_img_set_src(img1, &amp;converted_img_var)</code>; To make the variable visible in the C file, you need to declare it with LV_IMG_DECLARE(converted_img_var).</p><p class="Paragraph ">To use external files, you also need to convert the image files using the online converter tool but now you should select the binary output format. You also need to use LVGL’s file system module and register a driver with some functions for the basic file operation. Go to the File system to learn more. To set an image sourced from a file, use lv_img_set_src(img, “S:folder1/my_img.bin”).</p><p class="Paragraph ">You can also set a symbol similarly to Labels. In this case, the image will be rendered as text according to the font specified in the style. It enables to use of light-weight monochrome “letters” instead of real images. You can set symbol like lv_img_set_src(img1, LV_SYMBOL_OK).</p><h2 id="heading-51c0ccbe1f184734b2e3cbe3d9995465" class="Heading Heading--2 "><a class="Anchor" href="#heading-51c0ccbe1f184734b2e3cbe3d9995465" aria-label="Anchor">#</a><span class="SemanticString">7 使用 embeded-graphics 显示图片 #</span></h2><h2 id="heading-d8feca751ba040b6874eb94f6a98b0ba" class="Heading Heading--2 "><a class="Anchor" href="#heading-d8feca751ba040b6874eb94f6a98b0ba" aria-label="Anchor">#</a><span class="SemanticString">8 使用 slint 显示图片 #</span></h2><p class="Paragraph ">使用 image crate 可以将各种照片转换称 RGBA8 格式:</p><p class="Paragraph "></p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

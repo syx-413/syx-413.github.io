@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>esp-rs 常见问题&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -417,7 +472,7 @@
     
   </header>
   <main class="PageRoot">
-    <h2 class="Heading Heading--2 ">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</h2><ol class="NumberedListWrapper">
+    <h2 id="heading-dbd81b21b668417fb1bddd0aba4d27b7" class="Heading Heading--2 "><a class="Anchor" href="#heading-dbd81b21b668417fb1bddd0aba4d27b7" aria-label="Anchor">#</a><span class="SemanticString">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</span></h2><ol class="NumberedListWrapper">
 <li class="NumberedList ">https://github.com/esp-rs/esp-idf-template/issues/165</li></ol>
 <p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash">  Using managed esp-idf repository: RemoteSdk { repo_url: None, git_ref: Tag(&quot;v5.1.2&quot;) }
   Using esp-idf v5.1.2 at &#39;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2&#39;
@@ -436,7 +491,7 @@
   command did not execute successfully, got: exit status: 1
 
   build script failed, must exit now
-  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</code></pre><p class="Paragraph ">解决办法:</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">cargo clean &amp;&amp; rm -rf .embuild &amp;&amp; cargo build </code></pre><h3 class="Heading Heading--3 ">报错: Missing dependencies for SOCKS support.</h3><p class="Paragraph "></p><pre class="Code"><code class="language-bash">  来自 https://github.com/ThrowTheSwitch/Unity 
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</code></pre><p class="Paragraph ">解决办法:</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">cargo clean &amp;&amp; rm -rf .embuild &amp;&amp; cargo build </code></pre><h3 id="heading-5ebd3cd374d74a118c0626e28aba40aa" class="Heading Heading--3 "><a class="Anchor" href="#heading-5ebd3cd374d74a118c0626e28aba40aa" aria-label="Anchor">#</a><span class="SemanticString">报错: Missing dependencies for SOCKS support.</span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-bash">  来自 https://github.com/ThrowTheSwitch/Unity 
    * branch            7d2bf62b7e6afaf38153041a9d53c21aeeca9a25 -&gt; FETCH_HEAD
   ERROR: Could not install packages due to an OSError: Missing dependencies for SOCKS support.
 
@@ -462,7 +517,7 @@ export all_proxy=&quot;http://192.168.3.2:1080&quot; ALL_PROXY=&quot;http://192.
 # 在 ~/.bashrc 中添加如下内容， 用于手动切换： 
 alias enable_http_proxy=&#39;export all_proxy=&quot;http://192.168.3.2:1080&quot; ALL_PROXY=&quot;http://192.168.3.2:1080&quot;&#39;
 alias enable_socks_proxy=&#39;export all_proxy=&quot;socks5h://192.168.3.2:1080&quot; ALL_PROXY=&quot;socks5h://192.168.3.2:1080&quot;&#39;
-alias disable_proxy=&#39;unset all_proxy ALL_PROXY&#39;</code></pre><h3 class="Heading Heading--3 ">rust-analyzer 报错，不能正常解析和补全。</h3><p class="Paragraph ">解决办法：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/codes/esp32/esp-demo2/myesp$ cd 
+alias disable_proxy=&#39;unset all_proxy ALL_PROXY&#39;</code></pre><h3 id="heading-1951903e30c24167976dff02972b65ac" class="Heading Heading--3 "><a class="Anchor" href="#heading-1951903e30c24167976dff02972b65ac" aria-label="Anchor">#</a><span class="SemanticString">rust-analyzer 报错，不能正常解析和补全。</span></h3><p class="Paragraph ">解决办法：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/codes/esp32/esp-demo2/myesp$ cd 
 
 zj@a:~$ rustup component add rust-analyzer
 info: downloading component &#39;rust-analyzer&#39;
@@ -486,7 +541,7 @@ total 95M
 -rwxr-xr-x 1 zhangjun 6.6M  2  8 14:49 rustfmt*
 
 zj@a:~$ ln -sf ~/.rustup/toolchains/nightly-x86_64-apple-darwin/bin/rust-analyzer ~/.rustup/toolchains/esp/bin/rust-analyzer
-z</code></pre><h3 class="Heading Heading--3 ">报错：warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</h3><p class="Paragraph ">这是因为同时 source 了 export.sh 和 export-esp.sh，当构建纯 Rust std/non_std 应用时，只需要 source export-esp.sh 即可。</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">   zj@a:~/code/esp32/std$ source ~/esp/esp-idf/v5.2.1/export.sh
+z</code></pre><h3 id="heading-c95692e81495463eb0c6d808b4ec4120" class="Heading Heading--3 "><a class="Anchor" href="#heading-c95692e81495463eb0c6d808b4ec4120" aria-label="Anchor">#</a><span class="SemanticString">报错：warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</span></h3><p class="Paragraph ">这是因为同时 source 了 export.sh 和 export-esp.sh，当构建纯 Rust std/non_std 应用时，只需要 source export-esp.sh 即可。</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">   zj@a:~/code/esp32/std$ source ~/esp/esp-idf/v5.2.1/export.sh
    zj@a:~/code/esp32/std$ source ~/esp/export-esp.sh
  
    zj@a:~/code/esp32/std$ cargo build
@@ -515,7 +570,7 @@ z</code></pre><h3 class="Heading Heading--3 ">报错：warning: esp-idf-sys@0.34
      cargo:rerun-if-env-changed=ESP_IDF_TOOLS_INSTALL_DIR
      cargo:rerun-if-env-changed=ESP_IDF_SDKCONFIG
      cargo:rerun-if-env-changed=ESP_IDF_SDKCONFIG_DEFAULTS
-     cargo:rerun-if-env-changed=MCU</code></pre><p class="Paragraph "></p><div class="TableOfContents"></div>
+     cargo:rerun-if-env-changed=MCU</code></pre><p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="2"><a href="#heading-dbd81b21b668417fb1bddd0aba4d27b7">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-5ebd3cd374d74a118c0626e28aba40aa">报错: Missing dependencies for SOCKS support.</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-1951903e30c24167976dff02972b65ac">rust-analyzer 报错，不能正常解析和补全。</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-c95692e81495463eb0c6d808b4ec4120">报错：warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</a></div></aside>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

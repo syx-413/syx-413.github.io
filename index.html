@@ -198,6 +198,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>
     My Blog
@@ -421,7 +476,7 @@
     
     <div class="ArticleItem__Cover">
       <a href="./回顾2024年.html">
-        <img src="https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;8fe94484-0302-4982-8305-0ab12e47b0b3&#x2F;1000000274.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Credential=ASIAZI2LB466VDEXX7LH%2F20260409%2Fus-west-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260409T140953Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEE0aCXVzLXdlc3QtMiJHMEUCIAYJ5JE3gvpsy2sc%2FueLtmmvLbuPGzcU%2B0j%2Fq5AZ%2B9ohAiEA9pHsWfFmEm%2FTl73O30J2X4G7GFEAUk6lPgS0bzAbVeEq%2FwMIFRAAGgw2Mzc0MjMxODM4MDUiDEpTE%2FspRoM%2BoFawGSrcA4nOPj0ywu4Gwu%2FcB%2FUuRj0oOOIuYFeDA8uhEz4qBW3cem0gSlEhI98KNQxTparye33fXrziK8drmX48nYlQ4TnPokOQOywlpULNWjKE8AiBUmQIEL%2FP7Ez8dbzYvwDg17F%2F7apGbfkjBqWW4gR8Wc0TDl%2BTfXOxbVuPwXdZgbWqp6JDtnd7Cj0iOUdBBAWz%2Fk%2F5Hj1UsXOwbaz7DkjouBXAOWqiBsPPs0BnbmdYa%2FIWVKEAKo%2Fs0N87BvS9UpL4nCpcL7BKEswGqubgQpvstUlfZTWJ3mf9LRaVwSTBTAI3diilIiCaW7jXGHycmnLtV1A%2BGKOYt2jxiiwNE3SVWj5usZZTyRZI8kcZYSUjnsPkapQtKCgOqSGuWIiYxOlaZyCOAA7kh08jsrMxekF%2Fd22aAfCDbFlYFHaR836T2noYJ8Fa7Kh1z0eQU2DNGNUXLxV0wXxIOvtApu90c7j4tBTptxqiAbdMg1tUvPs5DCW793wB7pVgK0IeR0GkOlpjRGlW2UrAlifQQLScCSOqHBuwDHftSjDEzc4c1D9tKpguriy8QDi9zD4Uww2FNEItb81mXIeCuUf2fxCvSJwM41osJEw4Ua8%2FTl5OfCgiov6qptYQ2qpHef8wY4KMMN2z3s4GOqUBmeiIZfc5xbfTdf8tuV%2Bf4mUbVvyZc9vb8byRqarLfsqK9wlUNRtH0vNbPeS22j9vHGMI0rl57oxdeTQ7MtxICRme%2F1jHCWBwmEhEKw5SWEw3tfDOoLINs4yhdGiUVOaRzdy4oAFD1IEQg7NsRZ2nq4lXYeCi5kCPnTk1%2Bf54KPDLRE5xK%2BuG3e6t7wot40McwW%2BfbAZKLne2DvCKY6wFi7L1Vjef&amp;X-Amz-Signature=8232fc79647ea57ca3a9138d6e7af4e9976ea02245d4851991fe292b67e9416e&amp;X-Amz-SignedHeaders=host&amp;x-amz-checksum-mode=ENABLED&amp;x-id=GetObject" loading="lazy">
+        <img src="https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;8fe94484-0302-4982-8305-0ab12e47b0b3&#x2F;1000000274.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Credential=ASIAZI2LB4662LAXMDRZ%2F20260411%2Fus-west-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260411T105319Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHoaCXVzLXdlc3QtMiJHMEUCIDGh8JEkS29FmfdbXKbYGkD1U92FjxRSvunWabfDOI6oAiEAp%2BcZ2lHgbIpY%2FQCHV%2B1bBQNGMDSiCkVuzyvZof1eHEgq%2FwMIQxAAGgw2Mzc0MjMxODM4MDUiDJRkitf50krR%2B4shYyrcA5MyloiNYFvdLXZ2aU%2FmmS740ictHzyxU6lduiI6HuwReDJYOzSRCPTxHJHyaIRDZU2NP6Zjq4cTtINmWeXT0CW6ULAimA2sUdS9BsOBMJi6XS7zDxZSWC%2F8TUDpeoFuSxvkfbEjAGzd%2BDmgLaEW5RiZXcfMrqQAilUlLXHeyE%2FvCBVppmELbMeD6bwLwx1NJJgL2U3DMbK3YIyeg%2Flxx8msLtF4gQ%2BQQoirGiFUT9a8aMEG%2BYdrGJNX7%2BG1K5OAfSM9a5HRJtCAizlYAyvwPITnGRiFAmT6k8QAob9kY6AXNkOfbN%2BHWAoD9en1Oh9xtngoNVmXz8DxxHhb66s4YteK4troPQAa05MyjDiQYs3jFl7Lx30aT1eaTlWNHMg5u3YfCg4Ctfd94g5UL7mqbQU54aw5pi%2BY46o7urPLueSvTAdUzA%2BsG7u7wA16d2hqK%2FUdhV9gc4xCMkYA8PlvhOWUHvM%2Bjyi2dkBjvR0riQuYdmQ3pUMl5xlSuy%2BWGkbbgrJWSjDMaVomXXptO8RJPLP3cgQcDpo%2FLrorVffRP8HSj3meqKCUrUYYmdZhXGUom7p8ufMo2Lpio2DtMKU9S%2FzmFKpZ01jatSnMjILySQAu6y2FTHDz1UNdCwudMLqv6M4GOqUBYyZARnyLvv4ZqONdi8BFmLBK3fKvDJwuSyzPJiQoYuroTLp%2B0B58exhPUDAJVIVzYSuYierS%2FsHXlJ0kfL9HC5f4rTJrjiRRkHK2%2BMPQpYl%2BiFCj9Q9kJUE%2FjM4aMmxeJdlkoao1Z1S74eqyTIVblX8Jrv%2BQeeP1y%2BGfRG4kZsh4dgJVzJOi6BZjNyZbCONR%2FU5THMRzNR%2BomjmCWLDX4USY4FTN&amp;X-Amz-Signature=fe699b9c98a32716bbc8632d1d3a2c447d81297debd97450ee94f26b64f26da4&amp;X-Amz-SignedHeaders=host&amp;x-amz-checksum-mode=ENABLED&amp;x-id=GetObject" loading="lazy">
       </a>
     </div>
     

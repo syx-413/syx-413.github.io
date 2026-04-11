@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>托管文件与图片 - OneDrive Vercel Index&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -413,7 +468,7 @@
     
   </header>
   <main class="PageRoot">
-    <h1 class="Heading Heading--1 ">托管文件与图片</h1><p class="Paragraph ">是，它可以做图床（或者文件网盘），你可以将它生成的文件直链嵌入到任何其他网站上。</p><p class="Paragraph ">下面的 GIF 就是个例子：</p><div class="Image Image--Normal"><figure><img src="https://drive.swo.moe/api?path=/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif&raw=true" alt="" loading="lazy" /></figure></div><p class="Paragraph ">你可以在文件列表或预览页面复制直链，或者按照下面的格式生成：</p><pre class="Code"><code class="language-plaintext">![nyan cat](https://drive.swo.moe/api?path=/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif&amp;raw=true)</code></pre><p class="Paragraph ">多文件与文件夹下载</p><p class="Paragraph ">搜索文件与文件夹</p><p class="Paragraph ">On This Page</p><p class="Paragraph ">前往 GitHub 编辑此页</p>
+    <h1 id="heading-5f791b9782424b4a9afa15f8151596d5" class="Heading Heading--1 "><a class="Anchor" href="#heading-5f791b9782424b4a9afa15f8151596d5" aria-label="Anchor">#</a><span class="SemanticString">托管文件与图片</span></h1><p class="Paragraph ">是，它可以做图床（或者文件网盘），你可以将它生成的文件直链嵌入到任何其他网站上。</p><p class="Paragraph ">下面的 GIF 就是个例子：</p><div class="Image Image--Normal"><figure><img src="https://drive.swo.moe/api?path=/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif&raw=true" alt="" loading="lazy" /></figure></div><p class="Paragraph ">你可以在文件列表或预览页面复制直链，或者按照下面的格式生成：</p><pre class="Code"><code class="language-plaintext">![nyan cat](https://drive.swo.moe/api?path=/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif&amp;raw=true)</code></pre><p class="Paragraph ">多文件与文件夹下载</p><p class="Paragraph ">搜索文件与文件夹</p><p class="Paragraph ">On This Page</p><p class="Paragraph ">前往 GitHub 编辑此页</p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>blog mark&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -413,7 +468,7 @@
     
   </header>
   <main class="PageRoot">
-    <h3 class="Heading Heading--3 ">以下为遇见的优秀博客 </h3><div class="Divider"></div><div class="ColumnList"><div class="Column" style="flex: 0.29166666666666663; width: 29.166666666666664%; min-width: 0;"><div class="Bookmark"><a href="https://csdiy.wiki/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/CS50P/" target="_blank" rel="noopener noreferrer">
+    <h3 id="heading-560c44fcb034407dbbf306960b7356f3" class="Heading Heading--3 "><a class="Anchor" href="#heading-560c44fcb034407dbbf306960b7356f3" aria-label="Anchor">#</a><span class="SemanticString">以下为遇见的优秀博客 </span></h3><div class="Divider"></div><div class="ColumnList"><div class="Column" style="flex: 0.29166666666666663; width: 29.166666666666664%; min-width: 0;"><div class="Bookmark"><a href="https://csdiy.wiki/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/CS50P/" target="_blank" rel="noopener noreferrer">
                         <div class="Bookmark__Content">
                             <div class="Bookmark__Info">
                                 <div class="Bookmark__Title">https://csdiy.wiki/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/CS50P/</div>

@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>添加视频字幕 - OneDrive Vercel Index&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -418,7 +473,7 @@
 <li class="BulletedList ">私密文件夹</li><li class="BulletedList ">多文件与文件夹下载</li><li class="BulletedList ">托管文件与图片</li><li class="BulletedList ">搜索文件与文件夹</li><li class="BulletedList ">添加视频字幕</li><li class="BulletedList ">自定义文件直链链接</li></ul>
 </div>
 <li class="BulletedList ">展示区</li><li class="BulletedList ">迁移</li><li class="BulletedList ">FAQs</li><li class="BulletedList ">文档</li><li class="BulletedList ">博客</li><li class="BulletedList ">赞助</li></ul>
-<p class="Paragraph ">中文</p><h1 class="Heading Heading--1 ">添加视频字幕</h1><p class="Paragraph ">‼️</p><p class="Paragraph ">仅支持 WebVTT 字幕文件（即 <code>.vtt</code> 后缀）</p><p class="Paragraph ">如果你有某个视频的 WebVTT 字幕文件（即 <code>.vtt</code> 后缀），你可以将它放在与视频文件的同一个目录下。</p><div class="Image Image--Normal"><figure><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvideo-subtitles.74eb54b2.png&w=3840&q=75" alt="" loading="lazy" /></figure></div><p class="Paragraph ">例如：</p><ul class="BulletedListWrapper">
+<p class="Paragraph ">中文</p><h1 id="heading-601e92ace50d4d6383566d18aaa68164" class="Heading Heading--1 "><a class="Anchor" href="#heading-601e92ace50d4d6383566d18aaa68164" aria-label="Anchor">#</a><span class="SemanticString">添加视频字幕</span></h1><p class="Paragraph ">‼️</p><p class="Paragraph ">仅支持 WebVTT 字幕文件（即 <code>.vtt</code> 后缀）</p><p class="Paragraph ">如果你有某个视频的 WebVTT 字幕文件（即 <code>.vtt</code> 后缀），你可以将它放在与视频文件的同一个目录下。</p><div class="Image Image--Normal"><figure><img src="https://ovi.swo.moe/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvideo-subtitles.74eb54b2.png&w=3840&q=75" alt="" loading="lazy" /></figure></div><p class="Paragraph ">例如：</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">拥有视频和字幕的文件夹： 🍡 Genshin PV / PV - Shenhe - 申鹤</li><li class="BulletedList ">拥有字幕的视频： Collected Miscellany - Shenhe - Fluttering of Frosty Feathers - Genshin Impact.mp4</li></ul>
 <p class="Paragraph ">简单来说，你的视频和字幕要放在同一个文件夹下，文件名也要一样：</p><pre class="Code"><code class="language-plaintext">.
 ├── &lt;视频文件名&gt;.mp4

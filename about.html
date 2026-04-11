@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>About&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -417,9 +472,9 @@
     
   </header>
   <main class="PageRoot">
-    <div class="Breadcrumb"></div><div class="Divider"></div><h3 class="Heading Heading--3 "><span class="SemanticString__Fragment--ColorGreen">male</span></h3><p class="Paragraph "></p><h3 class="Heading Heading--3 ">Welcome send me email 
-</h3><p class="Paragraph "><span class="SemanticString__Fragment--ColorPurple">the413reply dot gmail.com</span>
-</p><h2 class="Heading Heading--2 ">Q&amp;A</h2><p class="Paragraph "></p><p class="Paragraph "></p><p class="Paragraph "></p>
+    <div class="Breadcrumb"></div><div class="Divider"></div><h3 id="heading-ed31ab05a1574e12a8411e818e648027" class="Heading Heading--3 "><a class="Anchor" href="#heading-ed31ab05a1574e12a8411e818e648027" aria-label="Anchor">#</a><span class="SemanticString"><span class="SemanticString__Fragment--ColorGreen">male</span></span></h3><p class="Paragraph "></p><h3 id="heading-95cee0ef925240ee86306072b771132b" class="Heading Heading--3 "><a class="Anchor" href="#heading-95cee0ef925240ee86306072b771132b" aria-label="Anchor">#</a><span class="SemanticString">Welcome send me email 
+</span></h3><p class="Paragraph "><span class="SemanticString__Fragment--ColorPurple">the413reply dot gmail.com</span>
+</p><h2 id="heading-4e0744f03b5d486cb1c3a8083b06eb43" class="Heading Heading--2 "><a class="Anchor" href="#heading-4e0744f03b5d486cb1c3a8083b06eb43" aria-label="Anchor">#</a><span class="SemanticString">Q&amp;A</span></h2><p class="Paragraph "></p><p class="Paragraph "></p><p class="Paragraph "></p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

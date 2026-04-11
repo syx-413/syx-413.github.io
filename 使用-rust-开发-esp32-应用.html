@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>使用 Rust 开发 ESP32 应用&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -417,7 +472,7 @@
     
   </header>
   <main class="PageRoot">
-    <h2 class="Heading Heading--2 ">ESP32 的 Rust 应用分为两种类型：</h2><ol class="NumberedListWrapper">
+    <h2 id="heading-1ff2fdf2c1c34cbeab1fbb29cf40eb43" class="Heading Heading--2 "><a class="Anchor" href="#heading-1ff2fdf2c1c34cbeab1fbb29cf40eb43" aria-label="Anchor">#</a><span class="SemanticString">ESP32 的 Rust 应用分为两种类型：</span></h2><ol class="NumberedListWrapper">
 <li class="NumberedList ">使用 std 库：可以使用 Rust 标准库的各种类型和特性，如 Vec/HashMap/Box，heap、thread/Mutex 等；</li><li class="NumberedList ">使用 core 库（non_std ）: bare metal 开发；</li><div style="margin-left: 20px;"><p class="Paragraph ">Github 的 esp-rs 组织中的各库命名管理：</p></div>
 <li class="NumberedList ">esp- 开头：是 non_std 类型，如 esp-hal;</li><li class="NumberedList ">esp-idf- 开头：是 std 类型，如 esp-idf-hal;</li></ol>
 <p class="Paragraph "></p><p class="Paragraph ">对于 std 类型应用，<code>cargo build </code>时会下载和编译依赖的 esp-idf 库。</p><p class="Paragraph ">推荐使用 cargo generate template 来创建 std/non_std 应用:</p><ol class="NumberedListWrapper">

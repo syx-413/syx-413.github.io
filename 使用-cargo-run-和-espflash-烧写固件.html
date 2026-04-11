@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>使用 cargo run 和 espflash 烧写固件&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -417,7 +472,7 @@
     
   </header>
   <main class="PageRoot">
-    <h2 class="Heading Heading--2 ">espflash 是固件烧录和终端监视工具，基于 esptool.py.</h2><p class="Paragraph ">参考：https://github.com/esp-rs/espflash/tree/main/espflash#installation</p><p class="Paragraph ">cargo-espflash vs espflash: cargo-espflash 是作为 cargo 的一个子命令来运行的，如 cargo espflash, 它支持 cargo 的 –bin/–expample 参数来快速指定 bin 和 example binary 名称。而 espflash 是一个单独工具，需要指定 bin 文件的具体路径：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">MCU=esp32c3 cargo espflash flash --target riscv32imc-esp-espidf --example ledc_simple --monitor
+    <h2 id="heading-d231649270c047c9aa0b9f013f36269d" class="Heading Heading--2 "><a class="Anchor" href="#heading-d231649270c047c9aa0b9f013f36269d" aria-label="Anchor">#</a><span class="SemanticString">espflash 是固件烧录和终端监视工具，基于 esptool.py.</span></h2><p class="Paragraph ">参考：https://github.com/esp-rs/espflash/tree/main/espflash#installation</p><p class="Paragraph ">cargo-espflash vs espflash: cargo-espflash 是作为 cargo 的一个子命令来运行的，如 cargo espflash, 它支持 cargo 的 –bin/–expample 参数来快速指定 bin 和 example binary 名称。而 espflash 是一个单独工具，需要指定 bin 文件的具体路径：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">MCU=esp32c3 cargo espflash flash --target riscv32imc-esp-espidf --example ledc_simple --monitor
 cargo espflash flash --example=blinky --monitor
 
 espflash flash target/debug/myapp --monitor </code></pre><p class="Paragraph ">espflash 使用 USB 串口(linux: /dev/ttyUSB0, macOS: /dev/cu.*) 来烧录芯片的 Flash，它会检查项目的依赖是否包含 esp-idf-sys 来判断是那种类型的应用，然后 <code>自动烧写不同的文件</code> ：</p><ul class="BulletedListWrapper">
@@ -446,8 +501,8 @@ Commands:
 Options:
   -h, --help     Print help
   -V, --version  Print version
-zj@a:~/codes/esp32$</code></pre><h3 class="Heading Heading--3 ">cargo run: 在项目的 .cargo/config.toml 中添加如下内容, 然后就可以执行 cargo run 来 flash 和 monitor 应用:</h3><p class="Paragraph "></p><pre class="Code"><code class="language-toml">[target.&#39;cfg(any(target_arch = &quot;riscv32&quot;, target_arch = &quot;xtensa&quot;))&#39;]
-runner = &quot;espflash flash --baud=921600 --monitor&quot; </code></pre><h3 class="Heading Heading--3 ">espflash 配置文件 espflash.toml:</h3><ul class="BulletedListWrapper">
+zj@a:~/codes/esp32$</code></pre><h3 id="heading-f65b88f6ea0d4b52a42eee9d826324e0" class="Heading Heading--3 "><a class="Anchor" href="#heading-f65b88f6ea0d4b52a42eee9d826324e0" aria-label="Anchor">#</a><span class="SemanticString">cargo run: 在项目的 .cargo/config.toml 中添加如下内容, 然后就可以执行 cargo run 来 flash 和 monitor 应用:</span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-toml">[target.&#39;cfg(any(target_arch = &quot;riscv32&quot;, target_arch = &quot;xtensa&quot;))&#39;]
+runner = &quot;espflash flash --baud=921600 --monitor&quot; </code></pre><h3 id="heading-d01b9f3f60f74bf99661d762815d4643" class="Heading Heading--3 "><a class="Anchor" href="#heading-d01b9f3f60f74bf99661d762815d4643" aria-label="Anchor">#</a><span class="SemanticString">espflash 配置文件 espflash.toml:</span></h3><ul class="BulletedListWrapper">
 <li class="BulletedList ">具体配置参数：https://github.com/esp-rs/espflash/blob/main/espflash/src/cli/config.rs#L77</li></ul>
 <p class="Paragraph "></p><pre class="Code"><code class="language-toml">[connection] 
 serial = &quot;/dev/ttyUSB0&quot;
@@ -469,7 +524,7 @@ frequency = &quot;80MHz&quot;</code></pre><p class="Paragraph ">espflash.toml �
 <li class="BulletedList ">如果烧写了 USB-OTG 应用（如摄像头），则可能不能找到设备，这时可以按住 BOOT 按钮的同时按 RST 按钮将芯片至于 download 模式，这时芯片内 USB PHY 会连接 USB-Serial-JTAG Controller。</li></ul>
 <p class="Paragraph ">probe-rs：embassy 使用 probe-rs 来烧写和调试：</p><ol class="NumberedListWrapper">
 <li class="NumberedList ">https://embassy.dev/book/dev/getting_started.html</li><li class="NumberedList ">https://embassy.dev/book/dev/project_structure.html</li></ol>
-<p class="Paragraph "></p><div class="TableOfContents"></div>
+<p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="2"><a href="#heading-d231649270c047c9aa0b9f013f36269d">espflash 是固件烧录和终端监视工具，基于 esptool.py.</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-f65b88f6ea0d4b52a42eee9d826324e0">cargo run: 在项目的 .cargo/config.toml 中添加如下内容, 然后就可以执行 cargo run 来 flash 和 monitor 应用:</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-d01b9f3f60f74bf99661d762815d4643">espflash 配置文件 espflash.toml:</a></div></aside>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

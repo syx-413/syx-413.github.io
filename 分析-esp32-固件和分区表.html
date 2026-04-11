@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>分析 ESP32 固件和分区表&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -421,7 +476,7 @@ Image version:...">
     
   </header>
   <main class="PageRoot">
-    <h2 class="Heading Heading--2 ">1 使用 esptool.py image_info 查看 app 固件内容 #</h2><p class="Paragraph ">参考 app_image_format.html</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">esptool.py --chip esp32s3 image_info build/app.bin
+    <h2 id="heading-8ffb6de674b145058eee70ea0686027e" class="Heading Heading--2 "><a class="Anchor" href="#heading-8ffb6de674b145058eee70ea0686027e" aria-label="Anchor">#</a><span class="SemanticString">1 使用 esptool.py image_info 查看 app 固件内容 #</span></h2><p class="Paragraph ">参考 app_image_format.html</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">esptool.py --chip esp32s3 image_info build/app.bin
 esptool.py v2.3.1
 Image version: 1 
 Entry point: 40080ea4
@@ -480,7 +535,7 @@ Bootloader information
 ======================
 Bootloader version: 1
 ESP-IDF: v5.1-dev-4304-gcb51a3b-dirty
-Compile time: Mar 30 2023 19:14:17</code></pre><h2 class="Heading Heading--2 ">2 分区表 #</h2><p class="Paragraph ">使用 idf.py partition-table 来显示分区表内容。</p><p class="Paragraph ">使用 gen_esp32part.py 工具来将 CSV 分区表转换为烧写到 FLASH 的 bin 格式。</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash"># Erase partition with name &#39;storage&#39;
+Compile time: Mar 30 2023 19:14:17</code></pre><h2 id="heading-fd98cfb5f76f428586a1d0bce54bb3c1" class="Heading Heading--2 "><a class="Anchor" href="#heading-fd98cfb5f76f428586a1d0bce54bb3c1" aria-label="Anchor">#</a><span class="SemanticString">2 分区表 #</span></h2><p class="Paragraph ">使用 idf.py partition-table 来显示分区表内容。</p><p class="Paragraph ">使用 gen_esp32part.py 工具来将 CSV 分区表转换为烧写到 FLASH 的 bin 格式。</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash"># Erase partition with name &#39;storage&#39;
 parttool.py --port &quot;/dev/ttyUSB1&quot; erase_partition --partition-name=storage
  
 # Read partition with type &#39;data&#39; and subtype &#39;spiffs&#39; and save to file &#39;spiffs.bin&#39;
@@ -490,7 +545,7 @@ parttool.py --port &quot;/dev/ttyUSB1&quot; read_partition --partition-type=data
 parttool.py --port &quot;/dev/ttyUSB1&quot; write_partition --partition-name=factory --input &quot;factory.bin&quot;
 
 # Print the size of default boot partition
-parttool.py --port &quot;/dev/ttyUSB1&quot; get_partition_info --partition-boot-default --info size</code></pre><p class="Paragraph "></p><div class="TableOfContents"></div>
+parttool.py --port &quot;/dev/ttyUSB1&quot; get_partition_info --partition-boot-default --info size</code></pre><p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="2"><a href="#heading-8ffb6de674b145058eee70ea0686027e">1 使用 esptool.py image_info 查看 app 固件内容 #</a></div><div class="TableOfContents__Item" data-level="2"><a href="#heading-fd98cfb5f76f428586a1d0bce54bb3c1">2 分区表 #</a></div></aside>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"

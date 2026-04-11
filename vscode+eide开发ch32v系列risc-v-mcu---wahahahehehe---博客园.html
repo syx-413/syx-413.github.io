@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>VSCode+EIDE开发CH32V系列RISC-V MCU - Wahahahehehe - 博客园&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -407,16 +462,16 @@
     
   </header>
   <main class="PageRoot">
-    <div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155026047-160653294.gif" alt="" loading="lazy" /></figure></div><h2 class="Heading Heading--2 ">VSCode+EIDE开发CH32V系列RISC-V MCU</h2><h2 class="Heading Heading--2 ">1. VS Code</h2><p class="Paragraph "><strong>Visual Studion Code</strong> (<strong>VS Code</strong>)，是一款由微软开发且跨平台的免费源代码编辑器。该软件支持语法高亮、代码自动补全（又称 IntelliSense）、代码重构、查看定义功能，并且内置了命令行工具和 Git 版本控制系统。</p><ul class="BulletedListWrapper">
+    <div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155026047-160653294.gif" alt="" loading="lazy" /></figure></div><h2 id="heading-15bdd4c449ba40a3bc022e8a47f275ed" class="Heading Heading--2 "><a class="Anchor" href="#heading-15bdd4c449ba40a3bc022e8a47f275ed" aria-label="Anchor">#</a><span class="SemanticString">VSCode+EIDE开发CH32V系列RISC-V MCU</span></h2><h2 id="heading-7e9e271dcea44619848dadf7848c7f24" class="Heading Heading--2 "><a class="Anchor" href="#heading-7e9e271dcea44619848dadf7848c7f24" aria-label="Anchor">#</a><span class="SemanticString">1. VS Code</span></h2><p class="Paragraph "><strong>Visual Studion Code</strong> (<strong>VS Code</strong>)，是一款由微软开发且跨平台的免费源代码编辑器。该软件支持语法高亮、代码自动补全（又称 IntelliSense）、代码重构、查看定义功能，并且内置了命令行工具和 Git 版本控制系统。</p><ul class="BulletedListWrapper">
 <li class="BulletedList "><strong>VS Code 官网</strong></li><li class="BulletedList "><strong>VS Code 官方文档</strong></li></ul>
-<h2 class="Heading Heading--2 ">2. Embedded IDE 简介</h2><p class="Paragraph "><strong>Embedded IDE</strong> (<strong>EIDE</strong>)是一款适用于 8051/STM8/Cortex-M/RISC-V 的单片机开发环境。</p><p class="Paragraph ">能够在 vscode 上提供 <strong>8051</strong>, <strong>STM8</strong>, <strong>Cortex-M</strong>, <strong>RISC-V</strong> 项目的 开发, 编译, 烧录 功能。</p><ul class="BulletedListWrapper">
+<h2 id="heading-3c91259228b843dba8b22cf52996b7fa" class="Heading Heading--2 "><a class="Anchor" href="#heading-3c91259228b843dba8b22cf52996b7fa" aria-label="Anchor">#</a><span class="SemanticString">2. Embedded IDE 简介</span></h2><p class="Paragraph "><strong>Embedded IDE</strong> (<strong>EIDE</strong>)是一款适用于 8051/STM8/Cortex-M/RISC-V 的单片机开发环境。</p><p class="Paragraph ">能够在 vscode 上提供 <strong>8051</strong>, <strong>STM8</strong>, <strong>Cortex-M</strong>, <strong>RISC-V</strong> 项目的 开发, 编译, 烧录 功能。</p><ul class="BulletedListWrapper">
 <li class="BulletedList "><strong>eide 官网</strong></li><li class="BulletedList "><strong>eide 使用教程</strong></li></ul>
-<h2 class="Heading Heading--2 ">3. 在VS Code中安装EIDE插件</h2><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155026047-160653294.gif" alt="" loading="lazy" /></figure></div><h2 class="Heading Heading--2 ">4. 工具链配置</h2><p class="Paragraph ">eide还需要调用相应的工具链才可完成MCU的工程编译，</p><p class="Paragraph ">如<strong>8051 MCU</strong> 的工具链<code>SDCC</code>或者<code>Keil C51</code>, <strong>RISC-V MCU</strong>的工具链<code>RISC-V GCC</code>。</p><p class="Paragraph "><strong>&quot;设置工具链路径&quot;</strong> 中选项的图标表明了工具链路径设置的总体状态</p><ul class="BulletedListWrapper">
+<h2 id="heading-8b29c554f9d74e4281cfb31434f7475e" class="Heading Heading--2 "><a class="Anchor" href="#heading-8b29c554f9d74e4281cfb31434f7475e" aria-label="Anchor">#</a><span class="SemanticString">3. 在VS Code中安装EIDE插件</span></h2><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155026047-160653294.gif" alt="" loading="lazy" /></figure></div><h2 id="heading-a4a0faf1d4d34aa3acc628522d705922" class="Heading Heading--2 "><a class="Anchor" href="#heading-a4a0faf1d4d34aa3acc628522d705922" aria-label="Anchor">#</a><span class="SemanticString">4. 工具链配置</span></h2><p class="Paragraph ">eide还需要调用相应的工具链才可完成MCU的工程编译，</p><p class="Paragraph ">如<strong>8051 MCU</strong> 的工具链<code>SDCC</code>或者<code>Keil C51</code>, <strong>RISC-V MCU</strong>的工具链<code>RISC-V GCC</code>。</p><p class="Paragraph "><strong>&quot;设置工具链路径&quot;</strong> 中选项的图标表明了工具链路径设置的总体状态</p><ul class="BulletedListWrapper">
 <li class="BulletedList "><strong>√</strong> ：某一个工具链已设置完毕</li><li class="BulletedList "><strong>x</strong> ：还没有为任何工具链设置安装路径</li></ul>
 <div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155034441-1692697531.png" alt="" loading="lazy" /></figure></div><p class="Paragraph ">工具链可以通过在线的方式安装，有的工具链上github中下载，需要考虑网络情况，如RISC-V官方工具链下载网址。</p><p class="Paragraph ">沁恒RISC-V系列MCU支持官方RISC-V GCC工具链，不过其自研的RISC-V架构青稞系列处理器增加了自定义压缩指令、硬件压栈、免表中断等功能，需要使用其自家的工具链。工具链在MounRiver Studio（MRS） 安装目录下：<code>D:\MounRiver\MounRiver_Studio\toolchain\RISC-V Embedded GCC\bin</code>。</p><p class="Paragraph ">为EIDE配置本地 RISC-V 编译工具链（由MRS提供）：</p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155043680-1059233150.gif" alt="" loading="lazy" /></figure></div><p class="Paragraph "><code>工具链安装目录</code> 是指你的编译器的<strong>根目录</strong>
 示例：</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">如果你的 GCC 编译器位置是：<code>D:/MounRiver/MounRiver_Studio/toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gcc.exe</code></li><li class="BulletedList ">那么，你需要将 <code>工具链安装目录</code> 设置为 <code>D:/MounRiver/MounRiver_Studio/toolchain/RISC-V Embedded GCC</code>，因此对于 GCC 来说，这个目录就是 <code>bin</code> 文件夹所在的目录</li></ul>
-<p class="Paragraph ">详细过程参考<strong>eide 使用教程</strong></p><h2 class="Heading Heading--2 ">5. openocd下载配置</h2><p class="Paragraph ">通过openocd和wchlink可以对沁恒RISC-V MCU进行程序下载。</p><p class="Paragraph ">在EIDE中需要配置openocd的路径，该工具同样也在MRS的安装目录下：<code>D:\MounRiver\MounRiver_Studio\toolchain\OpenOCD\bin\openocd.exe</code></p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155055251-321173168.gif" alt="" loading="lazy" /></figure></div><h2 class="Heading Heading--2 ">6. 新建工程</h2><p class="Paragraph ">通过github远程仓库模板新建工程，<strong>需要保证能正常访问github</strong></p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155102345-1182256207.gif" alt="" loading="lazy" /></figure></div><p class="Paragraph ">github中的模板更新并不及时。</p><p class="Paragraph ">模板中的sdk文件夹中的 Core、Debug、Ld、Peripheral、Startup文件夹可能并不是最新的,</p><p class="Paragraph ">建议在<strong>官网下载</strong>最新的evt，替换对应的文件即可。</p><h2 class="Heading Heading--2 ">7.Debug 配置</h2><p class="Paragraph ">通过OpenOCD进行DEBUG调试，可以借用 Cortex-Debug插件，
+<p class="Paragraph ">详细过程参考<strong>eide 使用教程</strong></p><h2 id="heading-7602749b2c864efaa93d3ce701b910ab" class="Heading Heading--2 "><a class="Anchor" href="#heading-7602749b2c864efaa93d3ce701b910ab" aria-label="Anchor">#</a><span class="SemanticString">5. openocd下载配置</span></h2><p class="Paragraph ">通过openocd和wchlink可以对沁恒RISC-V MCU进行程序下载。</p><p class="Paragraph ">在EIDE中需要配置openocd的路径，该工具同样也在MRS的安装目录下：<code>D:\MounRiver\MounRiver_Studio\toolchain\OpenOCD\bin\openocd.exe</code></p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155055251-321173168.gif" alt="" loading="lazy" /></figure></div><h2 id="heading-969d81749e5b400a8826e7eeefd05754" class="Heading Heading--2 "><a class="Anchor" href="#heading-969d81749e5b400a8826e7eeefd05754" aria-label="Anchor">#</a><span class="SemanticString">6. 新建工程</span></h2><p class="Paragraph ">通过github远程仓库模板新建工程，<strong>需要保证能正常访问github</strong></p><div class="Image Image--Normal"><figure><img src="https://img2022.cnblogs.com/blog/1684271/202211/1684271-20221116155102345-1182256207.gif" alt="" loading="lazy" /></figure></div><p class="Paragraph ">github中的模板更新并不及时。</p><p class="Paragraph ">模板中的sdk文件夹中的 Core、Debug、Ld、Peripheral、Startup文件夹可能并不是最新的,</p><p class="Paragraph ">建议在<strong>官网下载</strong>最新的evt，替换对应的文件即可。</p><h2 id="heading-c919c408ef15408c86a1599d4a76e129" class="Heading Heading--2 "><a class="Anchor" href="#heading-c919c408ef15408c86a1599d4a76e129" aria-label="Anchor">#</a><span class="SemanticString">7.Debug 配置</span></h2><p class="Paragraph ">通过OpenOCD进行DEBUG调试，可以借用 Cortex-Debug插件，
 launch.json 配置如下：</p><pre class="Code"><code class="language-json">{    
 &quot;version&quot;: &quot;0.2.0&quot;,    
 &quot;configurations&quot;: [{            

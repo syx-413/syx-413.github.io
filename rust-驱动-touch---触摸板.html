@@ -197,6 +197,61 @@
     }
   })();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
 
   <title>Rust 驱动 Touch - 触摸板&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
@@ -419,8 +474,8 @@
     
   </header>
   <main class="PageRoot">
-    <p class="Paragraph ">参考： https://docs.espressif.com/projects/espressif-esp-iot-solution/zh_CN/latest/input_device/touch_panel.html</p><h1 class="Heading Heading--1 ">Rust 驱动 Touch - 触摸板</h1><h2 class="Heading Heading--2 ">start
-</h2><p class="Paragraph ">在实际应用中，电阻触摸屏必须在使用前进行校准，而电容触摸屏则一般由控制芯片完成该工作，无需额外的校准步骤。驱动中已经集成了电阻触摸屏的校准算法，校准过程使用了三个点来校准，用一个点来验证，当最后验证的误差大于某个阈值将导致校准失败，然后自动重新进行校准，直到校准成功。</p><p class="Paragraph ">调用校准函数 calibration_run() 将会在屏幕上开始校准的过程，校准完成后，参数将 <code>保存在 NVS</code> 中用于下次启动，避免每次使用前的重复校准。</p><p class="Paragraph ">触摸屏按下：不论是电阻还是电容触摸屏，通常的触摸屏控制芯片会有一个用于 <code>通知触摸事件的中断引脚</code> 。但是驱动中没有使用该信号，一方面是因为对于有屏幕的应用需要尽量节省出 IO 给其他外设；另一方面是触摸控制器给出的该信号 <code>不如程序通过寄存器数据判断的准确性高</code> 。对于电阻触摸屏来说，判断按下的依据是 Z 方向的压力大于配置的阈值；对于电容触摸屏则是判断至少有一个触摸点存在。</p><p class="Paragraph ">触摸屏的旋转：触摸屏具有与显示屏一样的 <code>8 个方向</code> ，定义在 touch_panel_dir_t 中。这里的旋转是通过软件换算来实现的，通常把二者的方向设置为相同。但这并不是一成不变的，例如：在使用电容触摸屏时，有可能触摸屏固有的方向与显示屏原始显示方向不一致，如果简单的将这两个方向设置为相同后，将无法正确的点击屏幕内容，这时需要根据实际情况调整。</p><p class="Paragraph ">触摸屏的分辨率设置也是很重要的，因为触摸屏旋转后的换算依赖于触摸屏的宽和高分辨率大小，设置不当将无法得到正确的旋转效果。</p><ul class="BulletedListWrapper">
+    <p class="Paragraph ">参考： https://docs.espressif.com/projects/espressif-esp-iot-solution/zh_CN/latest/input_device/touch_panel.html</p><h1 id="heading-ccab34fc144943a18be3afeeffb11736" class="Heading Heading--1 "><a class="Anchor" href="#heading-ccab34fc144943a18be3afeeffb11736" aria-label="Anchor">#</a><span class="SemanticString">Rust 驱动 Touch - 触摸板</span></h1><h2 id="heading-a2db805ffa24486381a6b5775803978b" class="Heading Heading--2 "><a class="Anchor" href="#heading-a2db805ffa24486381a6b5775803978b" aria-label="Anchor">#</a><span class="SemanticString">start
+</span></h2><p class="Paragraph ">在实际应用中，电阻触摸屏必须在使用前进行校准，而电容触摸屏则一般由控制芯片完成该工作，无需额外的校准步骤。驱动中已经集成了电阻触摸屏的校准算法，校准过程使用了三个点来校准，用一个点来验证，当最后验证的误差大于某个阈值将导致校准失败，然后自动重新进行校准，直到校准成功。</p><p class="Paragraph ">调用校准函数 calibration_run() 将会在屏幕上开始校准的过程，校准完成后，参数将 <code>保存在 NVS</code> 中用于下次启动，避免每次使用前的重复校准。</p><p class="Paragraph ">触摸屏按下：不论是电阻还是电容触摸屏，通常的触摸屏控制芯片会有一个用于 <code>通知触摸事件的中断引脚</code> 。但是驱动中没有使用该信号，一方面是因为对于有屏幕的应用需要尽量节省出 IO 给其他外设；另一方面是触摸控制器给出的该信号 <code>不如程序通过寄存器数据判断的准确性高</code> 。对于电阻触摸屏来说，判断按下的依据是 Z 方向的压力大于配置的阈值；对于电容触摸屏则是判断至少有一个触摸点存在。</p><p class="Paragraph ">触摸屏的旋转：触摸屏具有与显示屏一样的 <code>8 个方向</code> ，定义在 touch_panel_dir_t 中。这里的旋转是通过软件换算来实现的，通常把二者的方向设置为相同。但这并不是一成不变的，例如：在使用电容触摸屏时，有可能触摸屏固有的方向与显示屏原始显示方向不一致，如果简单的将这两个方向设置为相同后，将无法正确的点击屏幕内容，这时需要根据实际情况调整。</p><p class="Paragraph ">触摸屏的分辨率设置也是很重要的，因为触摸屏旋转后的换算依赖于触摸屏的宽和高分辨率大小，设置不当将无法得到正确的旋转效果。</p><ul class="BulletedListWrapper">
 <li class="BulletedList ">电阻触摸：需要校正；</li><li class="BulletedList ">电容触摸：不需要校正，支持多点触摸，而且有些支持固定速率的触摸按钮。</li><li class="BulletedList ">NS2009 电阻触摸：提供 press + position 功能； </li><li class="BulletedList ">FT6X36: 电容触摸：只能提供 position 功能；</li></ul>
 <p class="Paragraph "></p><p class="Paragraph ">初始化：</p><pre class="Code"><code class="language-c">// https://docs.espressif.com/projects/espressif-esp-iot-solution/zh_CN/latest/input_device/touch_panel.html#id5
 touch_panel_driver_t touch; // a touch panel driver
@@ -584,7 +639,8 @@ int ft6236_pos(int pos[2])
     pos[0] = ((XH &amp; 0x0F) &lt;&lt; 8) | XL;
     pos[1] = ((YH &amp; 0x0F) &lt;&lt; 8) | YL;
     return 1;
-}</code></pre><p class="Paragraph ">Makerfabs ESP32-S3 Parallel TFT with Touch: https://github.com/Makerfabs/Makerfabs-ESP32-S3-Parallel-TFT-with-Touch</p><p class="Paragraph ">ESP32 3.5&quot; TFT Touch with Camera: https://wiki.makerfabs.com/ESP32_3.5_TFT_Touch_with_Camera.html</p><p class="Paragraph ">大量 LCD+Touch 的例子：https://github.com/Makerfabs/Project_Touch-Screen-Camera</p><p class="Paragraph "></p><div class="TableOfContents"></div><p class="Paragraph "></p>
+}</code></pre><p class="Paragraph ">Makerfabs ESP32-S3 Parallel TFT with Touch: https://github.com/Makerfabs/Makerfabs-ESP32-S3-Parallel-TFT-with-Touch</p><p class="Paragraph ">ESP32 3.5&quot; TFT Touch with Camera: https://wiki.makerfabs.com/ESP32_3.5_TFT_Touch_with_Camera.html</p><p class="Paragraph ">大量 LCD+Touch 的例子：https://github.com/Makerfabs/Project_Touch-Screen-Camera</p><p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="1"><a href="#heading-ccab34fc144943a18be3afeeffb11736">Rust 驱动 Touch - 触摸板</a></div><div class="TableOfContents__Item" data-level="2"><a href="#heading-a2db805ffa24486381a6b5775803978b">start
+</a></div></aside><p class="Paragraph "></p>
   </main>
     <aside class ="utterances">
       <script src="https://utteranc.es/client.js"
