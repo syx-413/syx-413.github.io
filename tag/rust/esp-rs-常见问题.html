@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
+
+  <title>esp-rs 常见问题&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="esp-rs 常见问题">
+  
+    <meta name="description" content="在 esp-idf-template 生成的模板项目中执行 cargo build 报错: https:&#x2F;&#x2F;github.com&#x2F;esp-rs&#x2F;esp-idf-template&#x2F;issues&#x2F;165 Copy   Using managed esp-idf repository: RemoteSdk...">
+    <meta property="og:description" content="在 esp-idf-template 生成的模板项目中执行 cargo build 报错: https:&#x2F;&#x2F;github.com&#x2F;esp-rs&#x2F;esp-idf-template&#x2F;issues&#x2F;165 Copy   Using managed esp-idf repository: RemoteSdk...">
+  
+  
+    <meta property="og:image" content="🦀">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="..&#x2F;../index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🦀</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">esp-rs 常见问题</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-02T15:02:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <h2 id="heading-dbd81b21b668417fb1bddd0aba4d27b7" class="Heading Heading--2 "><a class="Anchor" href="#heading-dbd81b21b668417fb1bddd0aba4d27b7" aria-label="Anchor">#</a><span class="SemanticString">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</span></h2><ol class="NumberedListWrapper">
+<li class="NumberedList ">https://github.com/esp-rs/esp-idf-template/issues/165</li></ol>
+<p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash">  Using managed esp-idf repository: RemoteSdk { repo_url: None, git_ref: Tag(&quot;v5.1.2&quot;) }
+  Using esp-idf v5.1.2 at &#39;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2&#39;
+  ERROR: /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/espidf.constraints.v5.1.txt doesn&#39;t exist. Perhaps you&#39;ve forgotten to run the install scripts. Please check the installation guide for more information.
+  CMake Error at /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/cmake/build.cmake:363 (message):
+    Some Python dependencies must be installed.  Check above message for
+    details.
+  Call Stack (most recent call first):
+    /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/cmake/build.cmake:498 (__build_check_python)
+    /Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/cmake/project.cmake:547 (idf_build_process)
+    CMakeLists.txt:28 (project)
+
+
+  thread &#39;main&#39; panicked at /Users/zhangjun/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cmake-0.1.50/src/lib.rs:1098:5:
+
+  command did not execute successfully, got: exit status: 1
+
+  build script failed, must exit now
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</code></pre><p class="Paragraph ">解决办法:</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">cargo clean &amp;&amp; rm -rf .embuild &amp;&amp; cargo build </code></pre><h3 id="heading-5ebd3cd374d74a118c0626e28aba40aa" class="Heading Heading--3 "><a class="Anchor" href="#heading-5ebd3cd374d74a118c0626e28aba40aa" aria-label="Anchor">#</a><span class="SemanticString">报错: Missing dependencies for SOCKS support.</span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-bash">  来自 https://github.com/ThrowTheSwitch/Unity 
+   * branch            7d2bf62b7e6afaf38153041a9d53c21aeeca9a25 -&gt; FETCH_HEAD
+  ERROR: Could not install packages due to an OSError: Missing dependencies for SOCKS support.
+
+  WARNING: There was an error checking the latest version of pip.
+  Error: Command &#39;[&#39;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/python_env/idf5.1_py3.12_env/bin/python3&#39;, &#39;-m&#39;, &#39;pip&#39;, &#39;install&#39;, &#39;--upgrade&#39;, &#39;pip&#39;]&#39; returned non-zero exit status 1.
+  Traceback (most recent call last):
+    File &quot;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py&quot;, line 2687, in &lt;module&gt;
+      main(sys.argv[1:])
+    File &quot;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py&quot;, line 2679, in main
+      action_func(args)
+    File &quot;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py&quot;, line 2098, in action_install_python_env
+      subprocess.check_call([sys.executable, &#39;-m&#39;, &#39;venv&#39;,
+    File &quot;/Users/zhangjun/.pyenv/versions/3.12.1/lib/python3.12/subprocess.py&quot;, line 413, in check_call
+      raise CalledProcessError(retcode, cmd)
+  subprocess.CalledProcessError: Command &#39;[&#39;/Users/zhangjun/.pyenv/versions/3.12.1/bin/python3&#39;, &#39;-m&#39;, &#39;venv&#39;, &#39;--clear&#39;, &#39;--upgrade-deps&#39;, &#39;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/python_env/idf5.1_py3.12_env&#39;]&#39; returned non-zero exit status 1.
+  Error: Could not install esp-idf
+
+  Caused by:
+      command &#39;env -u IDF_PYTHON_ENV_PATH -u MSYSTEM IDF_TOOLS_PATH=&quot;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif&quot; &quot;python3&quot; &quot;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2/tools/idf_tools.py&quot; &quot;--idf-path&quot; &quot;/Users/zhangjun/codes/esp32/esp-demo/.embuild/espressif/esp-idf/v5.1.2&quot; &quot;--non-interactive&quot; &quot;install-python-env&quot;&#39; exited with non-zero status code 1
+zj@a:~/codes/esp32/esp-demo$</code></pre><p class="Paragraph ">解决办法: 不使用 socks5 代理, 而是使用 https/http 代理:</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash"># 将下列内容添加到 ~/esp/export.sh 和 ~/esp/export-esp.sh 中
+export all_proxy=&quot;http://192.168.3.2:1080&quot; ALL_PROXY=&quot;http://192.168.3.2:1080&quot;
+
+# 在 ~/.bashrc 中添加如下内容， 用于手动切换： 
+alias enable_http_proxy=&#39;export all_proxy=&quot;http://192.168.3.2:1080&quot; ALL_PROXY=&quot;http://192.168.3.2:1080&quot;&#39;
+alias enable_socks_proxy=&#39;export all_proxy=&quot;socks5h://192.168.3.2:1080&quot; ALL_PROXY=&quot;socks5h://192.168.3.2:1080&quot;&#39;
+alias disable_proxy=&#39;unset all_proxy ALL_PROXY&#39;</code></pre><h3 id="heading-1951903e30c24167976dff02972b65ac" class="Heading Heading--3 "><a class="Anchor" href="#heading-1951903e30c24167976dff02972b65ac" aria-label="Anchor">#</a><span class="SemanticString">rust-analyzer 报错，不能正常解析和补全。</span></h3><p class="Paragraph ">解决办法：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/codes/esp32/esp-demo2/myesp$ cd 
+
+zj@a:~$ rustup component add rust-analyzer
+info: downloading component &#39;rust-analyzer&#39;
+info: installing component &#39;rust-analyzer&#39;
+
+zj@a:~$ ls -l ~/.rustup/toolchains/
+esp/                         nightly-x86_64-apple-darwin/
+
+zj@a:~$ ls -l ~/.rustup/toolchains/nightly-x86_64-apple-darwin/bin/
+total 95M
+-rwxr-xr-x 1 zhangjun  29M  2  8 14:48 cargo*
+-rwxr-xr-x 1 zhangjun 1.1M  2  8 14:48 cargo-clippy*
+-rwxr-xr-x 1 zhangjun 1.5M  2  8 14:49 cargo-fmt*
+-rwxr-xr-x 1 zhangjun  11M  2  8 14:48 clippy-driver*
+-rwxr-xr-x 1 zhangjun  36M  2  8 16:57 rust-analyzer*
+-rwxr-xr-x 1 zhangjun  980  2  8 14:48 rust-gdb*
+-rwxr-xr-x 1 zhangjun 2.2K  2  8 14:49 rust-gdbgui*
+-rwxr-xr-x 1 zhangjun 1.1K  2  8 14:48 rust-lldb*
+-rwxr-xr-x 1 zhangjun 598K  2  8 14:49 rustc*
+-rwxr-xr-x 1 zhangjun  11M  2  8 14:49 rustdoc*
+-rwxr-xr-x 1 zhangjun 6.6M  2  8 14:49 rustfmt*
+
+zj@a:~$ ln -sf ~/.rustup/toolchains/nightly-x86_64-apple-darwin/bin/rust-analyzer ~/.rustup/toolchains/esp/bin/rust-analyzer
+z</code></pre><h3 id="heading-c95692e81495463eb0c6d808b4ec4120" class="Heading Heading--3 "><a class="Anchor" href="#heading-c95692e81495463eb0c6d808b4ec4120" aria-label="Anchor">#</a><span class="SemanticString">报错：warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</span></h3><p class="Paragraph ">这是因为同时 source 了 export.sh 和 export-esp.sh，当构建纯 Rust std/non_std 应用时，只需要 source export-esp.sh 即可。</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">   zj@a:~/code/esp32/std$ source ~/esp/esp-idf/v5.2.1/export.sh
+   zj@a:~/code/esp32/std$ source ~/esp/export-esp.sh
+ 
+   zj@a:~/code/esp32/std$ cargo build
+   warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myesp/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myespv2/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myespv3/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+   package:   /Users/alizj/code/esp32/std/myespv4/Cargo.toml
+   workspace: /Users/alizj/code/esp32/std/Cargo.toml
+   Compiling esp-idf-sys v0.34.1
+   The following warnings were emitted during compilation:
+
+   warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified
+
+   error: failed to run custom build command for `esp-idf-sys v0.34.1`
+
+   Caused by:
+   process didn&#39;t exit successfully: `/Users/alizj/code/esp32/std/target/debug/build/esp-idf-sys-eac13132720836e4/build-script-build` (exit status: 101)
+     --- stdout
+     cargo:rerun-if-env-changed=ESP_IDF_TOOLS_INSTALL_DIR
+     cargo:rerun-if-env-changed=ESP_IDF_SDKCONFIG
+     cargo:rerun-if-env-changed=ESP_IDF_SDKCONFIG_DEFAULTS
+     cargo:rerun-if-env-changed=MCU</code></pre><p class="Paragraph "></p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="2"><a href="#heading-dbd81b21b668417fb1bddd0aba4d27b7">在 esp-idf-template 生成的模板项目中执行 cargo build 报错:</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-5ebd3cd374d74a118c0626e28aba40aa">报错: Missing dependencies for SOCKS support.</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-1951903e30c24167976dff02972b65ac">rust-analyzer 报错，不能正常解析和补全。</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-c95692e81495463eb0c6d808b4ec4120">报错：warning: esp-idf-sys@0.34.1: could not identify the root crate and `ESP_IDF_SYS_ROOT_CRATE` not specified。</a></div></aside>
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

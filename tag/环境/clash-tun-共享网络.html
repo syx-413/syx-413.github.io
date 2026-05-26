@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
+
+  <title>Clash Tun 共享网络&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Clash Tun 共享网络">
+  
+    <meta name="description" content="本篇记录关于配置Clash-Tun的不太容易理解的点 gray 配置防火墙 配置防火墙 配置相关的代理软件 https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;d7a233...">
+    <meta property="og:description" content="本篇记录关于配置Clash-Tun的不太容易理解的点 gray 配置防火墙 配置防火墙 配置相关的代理软件 https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;d7a233...">
+  
+  
+    <meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;0&#x2F;0b&#x2F;Clash_Logo.png">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="..&#x2F;../index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
+</nav>
+
+  <header class="Header">
+    
+      <div class="Header__Cover">
+        <img src="https:&#x2F;&#x2F;www.notion.so&#x2F;images&#x2F;page-cover&#x2F;met_william_morris_1875.jpg">
+      </div>
+    
+    <div class="Header__Spacer ">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span><img class="inline-img-icon" src="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;0&#x2F;0b&#x2F;Clash_Logo.png"></span>
+        
+      </div>
+    
+    <h1 class="Header__Title">Clash Tun 共享网络</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-04-13</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/环境.html" class="tag tag-purple">环境</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">本篇记录关于配置Clash-Tun的不太容易理解的点</p><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="3"><a href="#heading-cafccb348a9344b79af54a99ebb2868b">配置防火墙</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-9d3932a20c3d401a817de1b1e5cc2755">配置防火墙</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-a3f6505842c142a39d8c62662d18001a">Clash 配置</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-df1826be95084277b09d7191bbd272b7">网卡配置</a></div><div class="TableOfContents__Item" data-level="3"><a href="#heading-eeadf77eb9c54a48acbcf2cdd6ebbae1">小结</a></div></aside><h3 id="heading-cafccb348a9344b79af54a99ebb2868b" class="Heading Heading--3 "><a class="Anchor" href="#heading-cafccb348a9344b79af54a99ebb2868b" aria-label="Anchor">#</a><span class="SemanticString">配置防火墙</span></h3><h3 id="heading-9d3932a20c3d401a817de1b1e5cc2755" class="Heading Heading--3 "><a class="Anchor" href="#heading-9d3932a20c3d401a817de1b1e5cc2755" aria-label="Anchor">#</a><span class="SemanticString">配置防火墙</span></h3><p class="Paragraph ">配置相关的代理软件</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/d7a233c5-004b-4efd-8b92-f21f8e4c82c3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=a810904a0ebf2b49af8aab41d454d2b5fa7d6a313e331915f580b80da779a96b&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">这一步是配置防火墙</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6c9ec68e-ac6a-472f-84a7-f9d2da12c286/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=5e147c5329045daffacc9479528299c3bb679da3cb69544d7cf29babaeb3b8ce&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">勾选网络用到的种类</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/71e61063-a9e8-4b7a-adb2-03353856980d/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=3a5f914b2494777bf0d005db8a6edc6fada62e9e7e6ccfc0c400eb4de7610447&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h3 id="heading-a3f6505842c142a39d8c62662d18001a" class="Heading Heading--3 "><a class="Anchor" href="#heading-a3f6505842c142a39d8c62662d18001a" aria-label="Anchor">#</a><span class="SemanticString">Clash 配置</span></h3><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/b2c2f5f7-db95-45c0-829d-d48e89a963bf/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=40d4504d03d059d26400819b4ad60bff111833787c3c99fe521f5208f94c5b54&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h3 id="heading-df1826be95084277b09d7191bbd272b7" class="Heading Heading--3 "><a class="Anchor" href="#heading-df1826be95084277b09d7191bbd272b7" aria-label="Anchor">#</a><span class="SemanticString">网卡配置</span></h3><p class="Paragraph ">控制面板-网络共享-更改网卡配置</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/6cc29020-68cf-491d-9009-722a2da5eb5b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=64c602a37beb3bd1cc3e30addf24309949df4916b4a0b87a636411690383b68e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><p class="Paragraph ">接下来的是关于你想共享的网卡，一般为热点，如果找不到，可以开关一下你的热点，然后可以确定你要用的那个热点网络</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/7d0d7f05-e58e-4462-8697-b4c718048340/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=c5090ffec2c956cf902b0ab0d41898f6b248119a9156e5c30457c57866598146&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/9288d8e1-aa37-4fb0-8406-0a45c368e151/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=aa023117066353413159437ccf44d4878b8e457c249eb07cc542b6f91ec9f36c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/28d9f8e3-02cd-453c-9eb8-0598f370411f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=91f5d9990223b611d6032076aaaf25166c4a46a65dfbf907a030bb0309de2285&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/96a38dbf-459b-472b-8803-8bf88aafee13/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46643N6SDQO%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIH4mt3Z%2B8bkHspClE99pS2NhQzlKGaXfTqHITymhFWIRAiEAy6AiJlzOz0bZa1lM2CneKaox%2BupprB%2BH7wfIxS6ndE4q%2FwMIdxAAGgw2Mzc0MjMxODM4MDUiDBuzxDFdb3IRWfeCICrcAxI1T77Xueu1pDSSf4OR6%2FdAAeflFRIXnOGONVlkbpxS5fjkyl3Zwsj38V9O3%2BAlaOYhAQ9SjSQ7lWIYr%2F158aFs3xgpQ7yflzL7XQUwXbTAYJKwwlYKtNR53NFUbWFZB25%2FKhUJhxmfzh1H8zbSwyCPIx%2B4K0FU%2BHRnZzDG8oki58NJz3CfYaDRxa4PfmpiQ%2FBkLJXf5jWFq0YsH%2BdLhbiEZCOP7B9zdsNIdr%2BGdP4YaWFNWNnMCW3r6%2BcjqM2UCt0ABdx1MzOR4sZZDGABdDcerVsEbRJn7Mu6Wn%2FKCqjUdb6OLrxvr0iHBz%2BUlSvsdKpKDFRLhLjp3xr3n33pBFrxU9MUgRFooXOZ%2BR%2B6iJRuFqJSAuzhu2rkoS%2FlMDAD82rivuXab0CoT6uaq9QHw3UON%2BnTxgMrgs%2BkDydXritjuBILcS7SdmRkBoxNi7j9Rhww0xGosFpDEm5bXHaTojt%2B7RlsOfJowS5BZ4h%2F9Pr0qkY5P0rOuT7J9q2vknr0KtmiE4eQzG2F2xNxnmqvNrf8QTsS1ft10Bi2ItQ7Xt0MXcw6MTlYG7%2FHqoP42zVNC9%2FBDJRkr3SuxjCKv2O8L4PvT%2BdhNeNoyQfLFl51shNoFNk9vljDeslylONAMJTq1NAGOqUBafNi%2BLFIS42%2B3QApMYJAY6PWZOLuSnIFphk0ViAVxIO5svpWdrqD%2BWGZM1jdD4W0bmG%2FHNGKv9%2Bc6j3AN9%2Bzj1ra22nN90HRkkv8gz9dH7p0KJ%2F1IBmY1slbKxLatTz12TtPm5C4eCA%2BCiXp04D3heHck9VSGc56ISuQXkHgl5k%2F9qIKrmW2iUsfrlVFgIKVCA0uRcGuOWVkZdur%2BAvYmYdVs8Zq&X-Amz-Signature=c5d72d4aad5849d3342c71e9e9925951405a63c9feda32693a09bb64c9b75fbf&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><h3 id="heading-eeadf77eb9c54a48acbcf2cdd6ebbae1" class="Heading Heading--3 "><a class="Anchor" href="#heading-eeadf77eb9c54a48acbcf2cdd6ebbae1" aria-label="Anchor">#</a><span class="SemanticString">小结</span></h3><p class="Paragraph ">目前这种方式还存在bug比如共享Wi-Fi 可能连接不上，需要很麻烦的配置。不过我用这个Tun 模式仅仅是为了Arc 浏览器。</p>
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

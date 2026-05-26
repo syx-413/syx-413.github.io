@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
+
+  <title>ESP32中的输出信息&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="ESP32中的输出信息">
+  
+    <meta name="description" content="在写(shui)论文的时候发现，在ESP32输出调试信息关键很少，没有说服力 https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;a3230e1f-8f7f-486c-a6...">
+    <meta property="og:description" content="在写(shui)论文的时候发现，在ESP32输出调试信息关键很少，没有说服力 https:&#x2F;&#x2F;prod-files-secure.s3.us-west-2.amazonaws.com&#x2F;64aa22e9-0197-4842-9162-b3bb3494db5f&#x2F;a3230e1f-8f7f-486c-a6...">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="..&#x2F;../index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">ESP32中的输出信息</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-05-05</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">在写(shui)论文的时候发现，在<code>ESP32</code>输出调试信息关键很少，没有说服力</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/a3230e1f-8f7f-486c-a60c-b0e48bc6e59c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4667ZHABJ7X%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDOu3uqwpXqC7UmY4YsUPbD6ipDWawQJcdzfsYQIfAE5AIhAIRoIkGyl94beRvKwzsj3cMHL%2F6v8MaZQeTOABLOlRTjKv8DCHcQABoMNjM3NDIzMTgzODA1Igx4GW1ibOX04ywb9lgq3AMoJPFd0fTGIpzhrB9y6F36EQk8PWhwpu0ROSxJdPuqkZc7RDOGRIHLGDykZgRloS6C8mIS9jBqVUa2Zkb0C%2BlYiAsHNtSQ09ozPfRm14rg%2FH9%2BdAY%2F3s14PS2DLn9otYlD42AGA7Fc4rN79demWVoW419qN2AYO2st5Yc41nf8n0F4tUcdyWW2CBJp%2FYnc76G%2BrsK7gF9cfsRk4xuckLWhoD0Z11kXwVDCHWEWwxk%2FeBJfsQ3BwU%2FCoRUTZR9Yd0I24KZBNN0QKtdRXFu7fRT1F4x5PxFj09miuxfQyj1GjA2BvIo4qI1i1Yep%2Fm9piNmzUL8hPKB4NoHh7q7B5df%2FxbHtEIuet9S7H1QyeZgS0e4ILZUi9nf5LiQUAHTBRmoDF5ZJHOE5av0CSgAZMG4Yr3pwS83KGJXq1dwedtIvqvNK2Iu7nYJu%2BFVBoBUylRkNwa9tVZ37A68tmUbSogjsDCSQswCqHvXncq%2BSvSdTMAROEndQg41XbijWbU6bjrfGVvqzRffGhbBjPPk4qS0RTGKJFwA%2B8l%2B%2Fl6WfZ3fLYsnr6tUaYPTmFHZ3CxrBz3Q5sXjffNOk2jw6rgSWjqrdtLXCfkt099cKkq%2Bf9hzbW6f6KVoRhVDv%2Fd0LizCa6tTQBjqkAdFNx4kQ5L0dtkLfBXGuefjU6O%2B5%2B0hD5w%2F8IcfgLByxKFa2zlnt0s6T65wHE0mRiAZ8dECWZe1HywJQwSdKc2xFTI5CaQauM71L0qtPV1VlRCNx5%2FtPRNW7rvALEctZuiYk8JE%2F6%2FZRrcd2GnSHlU7QsJBCtvwsbo0qEXAcfXV3VFSC3OeMOdrNKmN0FPTB4WI6jukZlu8UBw1PO0Y5PncNLASu&X-Amz-Signature=8c4554fc099e55ba905ed3e533335266e2e73a3ec5f45828ef9011186c59403a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph ">于是在<code>boot.py </code>寻找相关的解决方法 （GPT）</p><h2 id="heading-c9ef5abd031f4e5fb3c927865ef4104f" class="Heading Heading--2 "><a class="Anchor" href="#heading-c9ef5abd031f4e5fb3c927865ef4104f" aria-label="Anchor">#</a><span class="SemanticString"><strong>启用 ESP32 MicroPython 调试信息</strong></span></h2><p class="Paragraph ">您提供的代码片段展示了如何禁用 ESP32 MicroPython 的调试信息。要启用调试信息，您需要进行以下操作：</p><pre class="Code"><code class="language-python">import esp
+esp.osdebug(None)</code></pre><p class="Paragraph "><strong>2. (可选) 设置调试级别:</strong></p><p class="Paragraph ">您可以使用 <code>esp.osdebug()</code> 函数设置调试信息的级别。默认级别为 <code>0</code>，表示不输出任何调试信息。</p><ul class="BulletedListWrapper">
+<li class="BulletedList "><code>esp.osdebug(None)</code>: 禁用调试信息 (与注释掉代码行相同)</li><li class="BulletedList "><code>esp.osdebug(0)</code>: 无调试信息 (默认)</li><li class="BulletedList "><code>esp.osdebug(1)</code>: 错误信息</li><li class="BulletedList "><code>esp.osdebug(2)</code>: 错误信息和警告</li><li class="BulletedList "><code>esp.osdebug(3)</code>: 错误信息、警告和调试信息</li></ul>
+<p class="Paragraph ">例如，要启用错误信息和警告，可以使用以下代码:</p><pre class="Code"><code class="language-python">import esp
+esp.osdebug(2)</code></pre><h3 id="heading-8017734e9f724bb0ac02bba9ce1b174b" class="Heading Heading--3 "><a class="Anchor" href="#heading-8017734e9f724bb0ac02bba9ce1b174b" aria-label="Anchor">#</a><span class="SemanticString"><strong>查看 ESP32 MicroPython 调试信息</strong></span></h3><p class="Paragraph ">启用 ESP32 MicroPython 调试信息后，您可以通过以下步骤查看这些信息：</p><h3 id="heading-5017f6ef56894fd4aa3bf9aba7e4d6b4" class="Heading Heading--3 "><a class="Anchor" href="#heading-5017f6ef56894fd4aa3bf9aba7e4d6b4" aria-label="Anchor">#</a><span class="SemanticString"><strong>1. 连接串口</strong>:</span></h3><p class="Paragraph ">使用 USB 线将 ESP32 连接到您的电脑。 确保您已安装所需的 USB 驱动程序。</p><h3 id="heading-03baa50bfa164c54b1c73e5ad2ff18b9" class="Heading Heading--3 "><a class="Anchor" href="#heading-03baa50bfa164c54b1c73e5ad2ff18b9" aria-label="Anchor">#</a><span class="SemanticString"><strong>2. 确定串口</strong></span></h3><p class="Paragraph ">:您需要确定 ESP32 连接到哪个串口。 在 Windows 上，您可以使用设备管理器查看可用串口。 在 macOS 或 Linux 上，您可以使用 <code>ls /dev/tty*</code> 命令列出可用串口。</p><h3 id="heading-4c36c8fe021a41b199181f6c81a99420" class="Heading Heading--3 "><a class="Anchor" href="#heading-4c36c8fe021a41b199181f6c81a99420" aria-label="Anchor">#</a><span class="SemanticString"><strong>3. 选择串口监视器</strong>:</span></h3><p class="Paragraph ">选择并打开一个串口监视器应用程序，例如：</p><ul class="BulletedListWrapper">
+<li class="BulletedList "><strong>PuTTY (Windows):</strong> 免费且易于使用的串口监视器。</li><li class="BulletedList "><strong>screen (macOS/Linux):</strong> 终端应用程序，提供串口监视功能。</li><li class="BulletedList "><strong>Arduino IDE 串口监视器:</strong> 如果您使用 Arduino IDE 进行开发，可以直接使用内置的串口监视器。</li></ul>
+<p class="Paragraph "></p><h3 id="heading-498555f6ceff47ca946a718360ee764c" class="Heading Heading--3 "><a class="Anchor" href="#heading-498555f6ceff47ca946a718360ee764c" aria-label="Anchor">#</a><span class="SemanticString">关于监视器的选择</span></h3><p class="Paragraph "><code><strong>pyserial</strong></code><code>-miniterm -f direct</code> 是一个Putty的替代方案</p><p class="Paragraph "><code>pip install pyserial</code> 就可以安装，不过要设置一下相关的波特率，一般micropython也是115200</p><p class="Paragraph "></p><p class="Paragraph "></p><h3 id="heading-8a4cf1d07aef4864ac90ab4a32a2bbc4" class="Heading Heading--3 "><a class="Anchor" href="#heading-8a4cf1d07aef4864ac90ab4a32a2bbc4" aria-label="Anchor">#</a><span class="SemanticString">效果展示</span></h3><p class="Paragraph ">相对于原来的显示内容变多了😈 </p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/c8298e52-a219-434c-91ae-1ddb61b9d0a9/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4667ZHABJ7X%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDOu3uqwpXqC7UmY4YsUPbD6ipDWawQJcdzfsYQIfAE5AIhAIRoIkGyl94beRvKwzsj3cMHL%2F6v8MaZQeTOABLOlRTjKv8DCHcQABoMNjM3NDIzMTgzODA1Igx4GW1ibOX04ywb9lgq3AMoJPFd0fTGIpzhrB9y6F36EQk8PWhwpu0ROSxJdPuqkZc7RDOGRIHLGDykZgRloS6C8mIS9jBqVUa2Zkb0C%2BlYiAsHNtSQ09ozPfRm14rg%2FH9%2BdAY%2F3s14PS2DLn9otYlD42AGA7Fc4rN79demWVoW419qN2AYO2st5Yc41nf8n0F4tUcdyWW2CBJp%2FYnc76G%2BrsK7gF9cfsRk4xuckLWhoD0Z11kXwVDCHWEWwxk%2FeBJfsQ3BwU%2FCoRUTZR9Yd0I24KZBNN0QKtdRXFu7fRT1F4x5PxFj09miuxfQyj1GjA2BvIo4qI1i1Yep%2Fm9piNmzUL8hPKB4NoHh7q7B5df%2FxbHtEIuet9S7H1QyeZgS0e4ILZUi9nf5LiQUAHTBRmoDF5ZJHOE5av0CSgAZMG4Yr3pwS83KGJXq1dwedtIvqvNK2Iu7nYJu%2BFVBoBUylRkNwa9tVZ37A68tmUbSogjsDCSQswCqHvXncq%2BSvSdTMAROEndQg41XbijWbU6bjrfGVvqzRffGhbBjPPk4qS0RTGKJFwA%2B8l%2B%2Fl6WfZ3fLYsnr6tUaYPTmFHZ3CxrBz3Q5sXjffNOk2jw6rgSWjqrdtLXCfkt099cKkq%2Bf9hzbW6f6KVoRhVDv%2Fd0LizCa6tTQBjqkAdFNx4kQ5L0dtkLfBXGuefjU6O%2B5%2B0hD5w%2F8IcfgLByxKFa2zlnt0s6T65wHE0mRiAZ8dECWZe1HywJQwSdKc2xFTI5CaQauM71L0qtPV1VlRCNx5%2FtPRNW7rvALEctZuiYk8JE%2F6%2FZRrcd2GnSHlU7QsJBCtvwsbo0qEXAcfXV3VFSC3OeMOdrNKmN0FPTB4WI6jukZlu8UBw1PO0Y5PncNLASu&X-Amz-Signature=565510205fa9dd25e021007c1d7fa904d0b5ea68ad9c1ed0d4f2afd68fe6bf4e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/8191416a-4b00-4ac6-b657-1d91a3c3c244/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4667ZHABJ7X%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065315Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDOu3uqwpXqC7UmY4YsUPbD6ipDWawQJcdzfsYQIfAE5AIhAIRoIkGyl94beRvKwzsj3cMHL%2F6v8MaZQeTOABLOlRTjKv8DCHcQABoMNjM3NDIzMTgzODA1Igx4GW1ibOX04ywb9lgq3AMoJPFd0fTGIpzhrB9y6F36EQk8PWhwpu0ROSxJdPuqkZc7RDOGRIHLGDykZgRloS6C8mIS9jBqVUa2Zkb0C%2BlYiAsHNtSQ09ozPfRm14rg%2FH9%2BdAY%2F3s14PS2DLn9otYlD42AGA7Fc4rN79demWVoW419qN2AYO2st5Yc41nf8n0F4tUcdyWW2CBJp%2FYnc76G%2BrsK7gF9cfsRk4xuckLWhoD0Z11kXwVDCHWEWwxk%2FeBJfsQ3BwU%2FCoRUTZR9Yd0I24KZBNN0QKtdRXFu7fRT1F4x5PxFj09miuxfQyj1GjA2BvIo4qI1i1Yep%2Fm9piNmzUL8hPKB4NoHh7q7B5df%2FxbHtEIuet9S7H1QyeZgS0e4ILZUi9nf5LiQUAHTBRmoDF5ZJHOE5av0CSgAZMG4Yr3pwS83KGJXq1dwedtIvqvNK2Iu7nYJu%2BFVBoBUylRkNwa9tVZ37A68tmUbSogjsDCSQswCqHvXncq%2BSvSdTMAROEndQg41XbijWbU6bjrfGVvqzRffGhbBjPPk4qS0RTGKJFwA%2B8l%2B%2Fl6WfZ3fLYsnr6tUaYPTmFHZ3CxrBz3Q5sXjffNOk2jw6rgSWjqrdtLXCfkt099cKkq%2Bf9hzbW6f6KVoRhVDv%2Fd0LizCa6tTQBjqkAdFNx4kQ5L0dtkLfBXGuefjU6O%2B5%2B0hD5w%2F8IcfgLByxKFa2zlnt0s6T65wHE0mRiAZ8dECWZe1HywJQwSdKc2xFTI5CaQauM71L0qtPV1VlRCNx5%2FtPRNW7rvALEctZuiYk8JE%2F6%2FZRrcd2GnSHlU7QsJBCtvwsbo0qEXAcfXV3VFSC3OeMOdrNKmN0FPTB4WI6jukZlu8UBw1PO0Y5PncNLASu&X-Amz-Signature=21bd58f2ef805aa4a9b59dd003735df02b3fb5c084dfeffb30f78933988d4fd5&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p>
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

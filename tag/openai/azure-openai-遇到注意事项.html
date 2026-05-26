@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +11,10 @@
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="../css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="../css/theme.css">
-<link rel="stylesheet" type="text/css" href="../css/notablog.css">
-<link rel="stylesheet" type="text/css" href="../css/CustomSetting.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
 <!-- Favicon -->
 
 <style>
@@ -254,21 +253,185 @@
   });
 </script>
 
-  <title>
-    Tag: openai
-  </title>
+  <title>Azure openai 遇到注意事项&nbsp;|&nbsp;My Blog</title>
   <meta property="og:type" content="blog">
-  <meta property="og:title" content="Tag: openai">
+  <meta property="og:title" content="Azure openai 遇到注意事项">
+  
+    <meta name="description" content="使用Azure 的Openai 调用的时候需要注意的的一些地方 比如 model=&quot;gpt-4o&quot; api_version=&quot;2024-02-15-preview&quot;  model 一般为你部署的名字通常是azure_endpoint  https:&#x2F;&#x2F;xxxx.openai.azure.com&#x2F; 的...">
+    <meta property="og:description" content="使用Azure 的Openai 调用的时候需要注意的的一些地方 比如 model=&quot;gpt-4o&quot; api_version=&quot;2024-02-15-preview&quot;  model 一般为你部署的名字通常是azure_endpoint  https:&#x2F;&#x2F;xxxx.openai.azure.com&#x2F; 的...">
+  
+  
+    <meta property="og:image" content="https:&#x2F;&#x2F;arunpotti.com&#x2F;wp-content&#x2F;uploads&#x2F;2021&#x2F;12&#x2F;microsoft_azure.svg_.png">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
 </head>
 
 <body>
   <nav class="Navbar">
-  <a href="../index.html">
+  <a href="..&#x2F;../index.html">
     <div class="Navbar__Btn">
       
       <span>Home</span>
     </div>
   </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
   
   
   
@@ -280,106 +443,90 @@
 </nav>
 
   <header class="Header">
+    
     <div class="Header__Spacer Header__Spacer--NoCover">
     </div>
-    <div style="text-align: center; margin-bottom: 0.5rem; opacity: 0.5; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;">
-        Category
-    </div>
-    <h1 class="Header__Title" style="text-align: center;">
-      openai
-    </h1>
+    
+      <div class="Header__Icon">
+        
+          <span><img class="inline-img-icon" src="https:&#x2F;&#x2F;arunpotti.com&#x2F;wp-content&#x2F;uploads&#x2F;2021&#x2F;12&#x2F;microsoft_azure.svg_.png"></span>
+        
+      </div>
+    
+    <h1 class="Header__Title">Azure openai 遇到注意事项</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-07-03</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/openai.html" class="tag tag-default">openai</a>
+          </span>
+        
+      </div>
+    
   </header>
-  
-  <main style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
-    <div class="ArticleList">
-  
-  <article class="ArticleItem">
-    <div class="ArticleItem__Meta">
-      
-      <span class="ArticleItem__Date">2024-07-03</span>
-      
-      
-      <span class="ArticleItem__Separator">·</span>
-      <span class="ArticleItem__Tags">
-        
-          <a href="../tag/openai.html" class="ArticleItem__Tag">#openai</a>
-        
-      </span>
-      
-    </div>
-
-    <h2 class="ArticleItem__Title">
-      
-        <span class="ArticleItem__Icon">
-          
-            <img src="https:&#x2F;&#x2F;arunpotti.com&#x2F;wp-content&#x2F;uploads&#x2F;2021&#x2F;12&#x2F;microsoft_azure.svg_.png">
-          
-        </span>
-      
-      <a href="../tag&#x2F;openai&#x2F;azure-openai-遇到注意事项.html">
-        Azure openai 遇到注意事项
-      </a>
-    </h2>
-
-    
-
-    
-    <div class="ArticleItem__Excerpt">
-      使用Azure 的Openai 调用的时候需要注意的的一些地方 比如 model=&quot;gpt-4o&quot; api_version=&quot;2024-02-15-preview&quot;  model 一般为你部署的名字通常是azure_endpoint  https:&#x2F;&#x2F;xxxx.openai.azure.com&#x2F; 的...
-    </div>
-    
-
-    <div class="ArticleItem__ReadMore">
-      <a href="../tag&#x2F;openai&#x2F;azure-openai-遇到注意事项.html">Continue reading</a>
-    </div>
-  </article>
-  
-</div>
+  <main class="PageRoot">
+    <h3 id="heading-b059b2ab1dd544c18589e4d709cf1f17" class="Heading Heading--3 "><a class="Anchor" href="#heading-b059b2ab1dd544c18589e4d709cf1f17" aria-label="Anchor">#</a><span class="SemanticString">使用Azure 的Openai 调用的时候需要注意的的一些地方</span></h3><p class="Paragraph ">比如</p><p class="Paragraph "><code>model=&quot;gpt-4o&quot;</code></p><p class="Paragraph "><code>api_version=&quot;2024-02-15-preview&quot;</code></p><p class="Paragraph "></p><p class="Paragraph "><code>model</code> 一般为你部署的名字通常是<code>azure_endpoint</code>  <code>https://xxxx.openai.azure.com/</code> 的<code>xxx</code> 的名字</p><p class="Paragraph "><code>api_version</code> 并不是 <code>gpt</code>的版本 </p><p class="Paragraph "></p><p class="Paragraph ">改动后前</p><pre class="Code"><code class="language-python">from openai import AzureOpenAI
 
 
-    <div class="TagCloud">
-        <h3 class="TagCloud__Title">Exploration</h3>
-        <div class="TagCloud__List">
-        
-            <a href="../tag/单片机.html" class="tag tag-red">
-                单片机 <span class="tag-count">6</span>
-            </a>
-        
-            <a href="../tag/rust.html" class="tag tag-gray">
-                Rust <span class="tag-count">3</span>
-            </a>
-        
-            <a href="../tag/vhdl.html" class="tag tag-blue">
-                VHDL <span class="tag-count">2</span>
-            </a>
-        
-            <a href="../tag/openai.html" class="tag tag-default">
-                openai <span class="tag-count">1</span>
-            </a>
-        
-            <a href="../tag/札记.html" class="tag tag-default">
-                札记 <span class="tag-count">1</span>
-            </a>
-        
-            <a href="../tag/环境.html" class="tag tag-purple">
-                环境 <span class="tag-count">1</span>
-            </a>
-        
-            <a href="../tag/note.html" class="tag tag-gray">
-                note <span class="tag-count">1</span>
-            </a>
-        
-            <a href="../tag/refer.html" class="tag tag-red">
-                Refer <span class="tag-count">1</span>
-            </a>
-        
-        </div>
-    </div>
+client = AzureOpenAI(
+  azure_endpoint = &quot;https://XXXX.openai.azure.com/&quot;, 
+  api_key=&quot;XXXXX&quot;,  
+  api_version=&quot;2024-05-13&quot;
+)
+
+
+message_text = [{&quot;role&quot;:&quot;system&quot;,&quot;content&quot;:&quot;You are an AI assistant that helps people find information.&quot;},{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Was ist 4x6?&quot;}]
+
+completion = client.chat.completions.create(
+  model=&quot;GPT-4o&quot;, # model = &quot;deployment_name&quot;
+  messages = message_text,
+  temperature=0.7,
+  max_tokens=800,
+  top_p=0.95,
+  frequency_penalty=0,
+  presence_penalty=0,
+  stop=None
+)
+
+print(completion.choices[0].message.content)</code></pre><p class="Paragraph "></p><div class="Divider"></div><p class="Paragraph ">改动后</p><pre class="Code"><code class="language-python">from openai import AzureOpenAI
+
+client = AzureOpenAI(
+  azure_endpoint = &quot;https://swcgpt4.openai.azure.com/&quot;,
+  api_key=&quot;XXXX&quot;,
+  api_version=&quot;2024-02-15-preview&quot;
+)
+
+
+message_text = [{&quot;role&quot;:&quot;system&quot;,&quot;content&quot;:&quot;You are an AI assistant that helps people find information.&quot;},{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Was ist 4x6?&quot;}]
+
+completion = client.chat.completions.create(
+  model=&quot;SWgpt40&quot;, # model = &quot;deployment_name&quot;
+  messages = message_text,
+  temperature=0.7,
+  max_tokens=800,
+  top_p=0.95,
+  frequency_penalty=0,
+  presence_penalty=0,
+  stop=None
+)
+
+print(completion.choices[0].message.content)</code></pre><p class="Paragraph "></p><div class="Divider"></div><p class="Paragraph ">参考</p><p class="Paragraph ">stackoverflow同样的问题</p><p class="Paragraph ">微软文档说明</p><p class="Paragraph "></p>
   </main>
-
-  <footer class="Footer">
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
   <div>
-    &copy; Tag: openai 2020~2026
+    &copy; My Blog 2020~2026
   </div>
   <div>
     &centerdot;
@@ -390,6 +537,21 @@
   </div>
 </footer>
 
-</body>
-
-</html>
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

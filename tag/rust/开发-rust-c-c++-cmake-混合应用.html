@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
+
+  <title>开发 Rust&#x2F;C&#x2F;C++ cmake 混合应用&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="开发 Rust&#x2F;C&#x2F;C++ cmake 混合应用">
+  
+    <meta name="description" content="esp-idf 支持链接 C&#x2F;C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs&#x2F;esp-idf-template cmake来创建 Rust + C&#x2F;C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~&#x2F;esp&#x2F;esp-idf...">
+    <meta property="og:description" content="esp-idf 支持链接 C&#x2F;C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs&#x2F;esp-idf-template cmake来创建 Rust + C&#x2F;C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~&#x2F;esp&#x2F;esp-idf...">
+  
+  
+    <meta property="og:image" content="🦀">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="..&#x2F;../index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🦀</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">开发 Rust&#x2F;C&#x2F;C++ cmake 混合应用</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-02T15:01:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">esp-idf 支持链接 C/C++ 或 Rust 编写的 component，而使用 cargo generate esp-rs/esp-idf-template cmake来创建 Rust + C/C++ 混合风格的 std 或 non_std 应用，该应用使用安装的 ~/esp/esp-idf/v5.2.1/ 中的idf.py 和 cmake 来构建。</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust 代码作为一个 component 来集成：components/rust-xxx；</li><li class="BulletedList ">Rust Component 目录的 CMakeLists.txt 文件会调用 cargo build 来将 Rust 代码编译为 esp-idf C 库可以调用的静态库。</li><li class="BulletedList ">该 Rust Compoent 可以是 std 或 non_std 类型。由于 idf.py 已经提供了 esp-idf 库，所以 Rust 代码的 build.rs 不会向 std 应用那样 by 项目下载、编译和链接新的 esp-idf 库，而是直接链接 idf.py 所在的 esp-idf 库。</li></ul>
+<p class="Paragraph ">默认创建启用 HAL（ esp-idf-svc）的 std 应用。</p><p class="Paragraph ">Rust cmake 读取和使用的参数：</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">RUST_DEPS</li><li class="NumberedList ">CONFIG_IDF_TARGET_ARCH_RISCV</li><li class="NumberedList ">SDKCONFIG</li><li class="NumberedList ">IDF_PATH</li></ol>
+<p class="Paragraph ">使用 cargo generate esp-rs/esp-idf-template cmake 创建应用：</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">components/rust-mycmake/CMakeLists.txt 文件封装了构建该 Rust component 的 cargo 命令和参数（没有了.cargo/config.toml 配置，相当于替换了该文件的功能）：</li><div style="margin-left: 20px;"><ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust target：xtensa-esp32s3-espidf</li><li class="BulletedList ">Rust flags： –cfg espidf_time64</li></ul>
+</div>
+<li class="BulletedList ">与 std 默认启用所有 esp-idf components 相比，cmake 项目默认只启用了很少的几个 components，需要在 components/rust-{{project-name}}/CMakeLists.txt 文件中设置 <code>RUST_DEPS</code> 来启用 Rust 依赖的 component；</li></ul>
+<p class="Paragraph ">构建前需要 <code>同时 source</code> esp-idf 的 export.h 和 export-esp.sh。</p><p class="Paragraph ">构建命令是 idf.py build 而非 cargo build。</p><p class="Paragraph ">创建项目，默认是 std 应用</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32$ cargo generate esp-rs/esp-idf-template cmake
+⚠️   Favorite `esp-rs/esp-idf-template` not found in config, using it as a git repository: https://github.com/esp-rs/esp-idf-template.git
+🤷   Project Name: mycmake
+🔧   Destination: /Users/alizj/code/esp32/mycmake ...
+🔧   project-name: mycmake ... 
+🔧   Generating template ...
+✔ 🤷   Configure advanced template options? · true
+✔ 🤷   Rust toolchain (beware: nightly works only for riscv MCUs!) · esp
+✔ 🤷   Enable HAL support? · true
+✔ 🤷   Enable STD support? · true
+🔧   Moving generated files into: `/Users/alizj/code/esp32/mycmake`...
+🔧   Initializing a fresh Git repository
+✨   Done! New project created /Users/alizj/code/esp32/mycmake
+
+zj@a:~/code/esp32/mycmake$ ls
+CMakeLists.txt  components/  diagram.json  main/  sdkconfig.defaults  wokwi.toml
+
+zj@a:~/code/esp32/mycmake$ ls main/
+CMakeLists.txt  main.c</code></pre><p class="Paragraph ">Rust 代码作为一个 component 被集成：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32/mycmake$ ls components/rust-mycmake/
+CMakeLists.txt  Cargo.toml  build.rs  placeholder.c  rust-toolchain.toml  src/
+
+zj@a:~/code/esp32/mycmake$ ls components/rust-mycmake/src/
+lib.rs </code></pre><p class="Paragraph ">Rust componet 的 CMakeLists.txt 文件封装了构建该 Rust 代码的 cargo 命令和配置参数。</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-makefile">zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat CMakeLists.txt
+# If this component depends on other components - be it ESP-IDF or project-specific ones - enumerate those in the double-quotes below, separated by spaces
+# Note that pthread should always be there, or else STD will not work
+set(RUST_DEPS &quot;pthread&quot; &quot;driver&quot; &quot;vfs&quot;)
+# Here&#39;s a non-minimal, reasonable set of ESP-IDF components that one might want enabled for Rust:
+#set(RUST_DEPS &quot;pthread&quot; &quot;esp_http_client&quot; &quot;esp_http_server&quot; &quot;espcoredump&quot; &quot;app_update&quot; &quot;esp_serial_slave_link&quot; &quot;nvs_flash&quot; &quot;spi_flash&quot; &quot;esp_adc_cal&quot; &quot;mqtt&quot;)
+ 
+idf_component_register(
+    SRCS &quot;placeholder.c&quot;
+    INCLUDE_DIRS &quot;&quot;
+    PRIV_REQUIRES &quot;${RUST_DEPS}&quot;
+)
+
+if(CONFIG_IDF_TARGET_ARCH_RISCV)
+    if (CONFIG_IDF_TARGET_ESP32C6 OR CONFIG_IDF_TARGET_ESP32C5 OR CONFIG_IDF_TARGET_ESP32H2)
+        set(RUST_TARGET &quot;riscv32imac-esp-espidf&quot;)
+    else ()
+        set(RUST_TARGET &quot;riscv32imc-esp-espidf&quot;)
+    endif()
+elseif(CONFIG_IDF_TARGET_ESP32)
+    set(RUST_TARGET &quot;xtensa-esp32-espidf&quot;)
+elseif(CONFIG_IDF_TARGET_ESP32S2)
+    set(RUST_TARGET &quot;xtensa-esp32s2-espidf&quot;)
+elseif(CONFIG_IDF_TARGET_ESP32S3)
+    set(RUST_TARGET &quot;xtensa-esp32s3-espidf&quot;)
+else()
+    message(FATAL_ERROR &quot;Unsupported target ${CONFIG_IDF_TARGET}&quot;)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL &quot;Debug&quot;)
+    set(CARGO_BUILD_TYPE &quot;debug&quot;)
+    set(CARGO_BUILD_ARG &quot;&quot;)
+else()
+    set(CARGO_BUILD_TYPE &quot;release&quot;)
+    set(CARGO_BUILD_ARG &quot;--release&quot;)
+endif()
+
+
+set(CARGO_BUILD_STD_ARG -Zbuild-std=std,panic_abort)
+
+
+if(IDF_VERSION_MAJOR GREATER &quot;4&quot;)
+set(ESP_RUSTFLAGS &quot;--cfg espidf_time64&quot;)
+endif()
+
+set(CARGO_PROJECT_DIR &quot;${CMAKE_CURRENT_LIST_DIR}&quot;)
+set(CARGO_BUILD_DIR &quot;${CMAKE_CURRENT_BINARY_DIR}&quot;)
+set(CARGO_TARGET_DIR &quot;${CARGO_BUILD_DIR}/target&quot;)
+
+set(RUST_INCLUDE_DIR &quot;${CARGO_TARGET_DIR}&quot;)
+set(RUST_STATIC_LIBRARY &quot;${CARGO_TARGET_DIR}/${RUST_TARGET}/${CARGO_BUILD_TYPE}/librust_mycmake.a&quot;)
+
+# if this component uses CBindGen to generate a C header, uncomment the lines below and adjust the header name accordingly
+#set(RUST_INCLUDE_HEADER &quot;${RUST_INCLUDE_DIR}/RustApi.h&quot;)
+#set_source_files_properties(&quot;${RUST_INCLUDE_HEADER}&quot; PROPERTIES GENERATED true)
+
+idf_build_get_property(sdkconfig SDKCONFIG)
+idf_build_get_property(idf_path IDF_PATH)
+
+ExternalProject_Add(
+    project_rust_mycmake
+    PREFIX &quot;${CARGO_PROJECT_DIR}&quot;
+    DOWNLOAD_COMMAND &quot;&quot;
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
+        cargo clean --target ${RUST_TARGET} --target-dir ${CARGO_TARGET_DIR}
+    USES_TERMINAL_BUILD true
+    BUILD_COMMAND ${CMAKE_COMMAND} -E env
+        CARGO_CMAKE_BUILD_INCLUDES=$&lt;TARGET_PROPERTY:${COMPONENT_LIB},INCLUDE_DIRECTORIES&gt;
+        CARGO_CMAKE_BUILD_LINK_LIBRARIES=$&lt;TARGET_PROPERTY:${COMPONENT_LIB},LINK_LIBRARIES&gt;
+        CARGO_CMAKE_BUILD_SDKCONFIG=${sdkconfig}
+        CARGO_CMAKE_BUILD_ESP_IDF=${idf_path}
+        CARGO_CMAKE_BUILD_COMPILER=${CMAKE_C_COMPILER}
+        RUSTFLAGS=${ESP_RUSTFLAGS}
+        MCU=${CONFIG_IDF_TARGET}
+        cargo build --target ${RUST_TARGET} --target-dir ${CARGO_TARGET_DIR} ${CARGO_BUILD_ARG} ${CARGO_BUILD_STD_ARG}
+    INSTALL_COMMAND &quot;&quot;
+    BUILD_ALWAYS TRUE
+    TMP_DIR &quot;${CARGO_BUILD_DIR}/tmp&quot;
+    STAMP_DIR &quot;${CARGO_BUILD_DIR}/stamp&quot;
+    DOWNLOAD_DIR &quot;${CARGO_BUILD_DIR}&quot;
+    SOURCE_DIR &quot;${CARGO_PROJECT_DIR}&quot;
+    BINARY_DIR &quot;${CARGO_PROJECT_DIR}&quot;
+    INSTALL_DIR &quot;${CARGO_BUILD_DIR}&quot;
+    BUILD_BYPRODUCTS
+        &quot;${RUST_INCLUDE_HEADER}&quot;
+        &quot;${RUST_STATIC_LIBRARY}&quot;
+)
+
+add_prebuilt_library(library_rust_mycmake &quot;${RUST_STATIC_LIBRARY}&quot; PRIV_REQUIRES &quot;${RUST_DEPS}&quot;)
+add_dependencies(library_rust_mycmake project_rust_mycmake)
+
+target_include_directories(${COMPONENT_LIB} PUBLIC &quot;${RUST_INCLUDE_DIR}&quot;)
+target_link_libraries(${COMPONENT_LIB} PRIVATE library_rust_mycmake)</code></pre><p class="Paragraph ">配置了 crate-type 为 staticlib，故会被编译为 esp-idf 可以链接的 C 库</p><p class="Paragraph "></p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat Cargo.toml
+[package]
+name = &quot;rust-mycmake&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;alizj&quot;]
+edition = &quot;2021&quot; 
+resolver = &quot;2&quot;
+rust-version = &quot;1.71&quot;
+
+[lib]
+crate-type = [&quot;staticlib&quot;]
+
+[profile.release]
+opt-level = &quot;s&quot;
+
+[profile.dev]
+debug = true # Symbols are nice and they don&#39;t increase the size on Flash
+opt-level = &quot;z&quot;
+[features]
+default = [&quot;std&quot;, &quot;embassy&quot;, &quot;esp-idf-svc/native&quot;]
+
+pio = [&quot;esp-idf-svc/pio&quot;]
+std = [&quot;alloc&quot;, &quot;esp-idf-svc/std&quot;]
+alloc = [&quot;esp-idf-svc/alloc&quot;]
+nightly = [&quot;esp-idf-svc/nightly&quot;]
+experimental = [&quot;esp-idf-svc/experimental&quot;]
+embassy = [&quot;esp-idf-svc/embassy-sync&quot;, &quot;esp-idf-svc/critical-section&quot;, &quot;esp-idf-svc/embassy-time-driver&quot;]
+
+[dependencies]
+log = { version = &quot;0.4&quot;, default-features = false }
+esp-idf-svc = { version = &quot;0.48&quot;, default-features = false }
+
+[build-dependencies]
+embuild = &quot;0.31.3&quot;
+
+# 编译为 staticlib，可以被 C 库调用的 Rust 代码
+zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat src/lib.rs
+#[no_mangle]
+extern &quot;C&quot; fn rust_main() -&gt; i32 {
+    // It is necessary to call this function once. Otherwise some patches to the runtime
+    // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
+    esp_idf_svc::sys::link_patches();
+
+    // Bind the log crate to the ESP Logging facilities
+    esp_idf_svc::log::EspLogger::initialize_default();
+
+    log::info!(&quot;Hello, world!&quot;);
+    42
+}
+
+zj@a:~/code/esp32/mycmake/components/rust-mycmake$ cat placeholder.c
+/* Hello World Example
+
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/
+
+/* This is an empty source file to force the build of a CMake library that
+   can participate in the CMake dependency graph. This placeholder library
+   will depend on the actual library generated by external Rust build.
+*/
+
+# main.c 中调用 Rust 的 rust_main() 函数代码
+zj@a:~/code/esp32/mycmake$ cat main/main.c
+/* Hello World Example
+
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/
+#include &lt;stdio.h&gt;
+
+extern int rust_main(void);
+
+void app_main(void) {
+    printf(&quot;Hello world from C!\n&quot;);
+
+    int result = rust_main();
+
+    printf(&quot;Rust returned code: %d\n&quot;, result);
+}</code></pre><p class="Paragraph ">构建前需要 source esp-idf 的 export.h 和 export-esp.sh：</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32/mycmake$ source ~/esp/esp-idf/v5.2.1/export.sh   # esp idf
+zj@a:~/code/esp32/mycmake$ source ~/export-esp.sh   # esp rs，因为后续会 build Rust component </code></pre><p class="Paragraph ">构建：</p><p class="Paragraph "></p><pre class="Code"><code class="language-python">#idf.py set-target [esp32|esp32s2|esp32s3|esp32c2|esp32c3|esp32c6|esp32h2]
+zj@a:~/code/esp32/mycmake$ idf.py build 
+Executing action: all (aliases: build)
+Running ninja in directory /Users/alizj/code/esp32/mycmake/build
+Executing &quot;ninja all&quot;...
+[0/9] Performing build step for &#39;project_rust_mycmake&#39;    Finished release [optimized] target(s) in 0.25s
+[1/1] cd /Users/alizj/code/esp32/mycmake/build/bootloader/esp-idf/esptool_py &amp;&amp; /Users/alizj/.espressif/p...izes.py --offset 0x8000 bootloader 0x1000 /Users/alizj/code/esp32/mycmake/build/bootloader/bootloader.bi
+Bootloader binary size 0x6860 bytes. 0x7a0 bytes (7%) free.
+[3/3] cd /Users/alizj/code/esp32/mycmake/build/esp-idf/esptool_py &amp;&amp; /Users/alizj/.espressif/python_env/i...esp32/mycmake/build/partition_table/partition-table.bin /Users/alizj/code/esp32/mycmake/build/mycmake.bi
+mycmake.bin binary size 0x5b770 bytes. Smallest app partition is 0x100000 bytes. 0xa4890 bytes (64%) free.
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 2MB --flash_freq 40m 0x1000 build/bootloader/bootloader.bin 0x8000 build/partition_table/partition-table.bin 0x10000 build/mycmake.bin
+or from the &quot;/Users/alizj/code/esp32/mycmake/build&quot; directory
+ python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash &quot;@flash_args&quot;
+
+# 构建的产物位于 build 目录下 。</code></pre><p class="Paragraph ">烧录到设备 flash</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash">idf.py -p /dev/cu.usbmodem2101 flash monitor</code></pre><p class="Paragraph ">参考:</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">esp-idf-template 的 cmake 文档;</li><li class="NumberedList ">Integrating a Rust Component into an ESP-IDF Project</li></ol>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

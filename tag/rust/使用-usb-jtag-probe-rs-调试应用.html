@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
+
+  <title>使用 USB-JTAG&#x2F;probe-rs 调试应用&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="使用 USB-JTAG&#x2F;probe-rs 调试应用">
+  
+    <meta name="description" content="ESP32-S3 开发版一般有两个 USB 接口，一般标记为 UART 和 USB，后者是支持 USB-Serial-JTAG 调试的接口，该接口包含两个 USB 设备： USB-CDC-ACM：PC 识别为 USB 串口设备，可以用于下载固件和打印芯片输出的日志； JTAG 设备：可以被用来进行 ...">
+    <meta property="og:description" content="ESP32-S3 开发版一般有两个 USB 接口，一般标记为 UART 和 USB，后者是支持 USB-Serial-JTAG 调试的接口，该接口包含两个 USB 设备： USB-CDC-ACM：PC 识别为 USB 串口设备，可以用于下载固件和打印芯片输出的日志； JTAG 设备：可以被用来进行 ...">
+  
+  
+    <meta property="og:image" content="🦀">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="..&#x2F;../index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🦀</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">使用 USB-JTAG&#x2F;probe-rs 调试应用</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-02T15:02:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">ESP32-S3 开发版一般有两个 USB 接口，一般标记为 UART 和 USB，后者是支持 USB-Serial-JTAG 调试的接口，该接口包含两个 USB 设备：</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">USB-CDC-ACM：PC 识别为 USB 串口设备，可以用于下载固件和打印芯片输出的日志；</li><li class="NumberedList ">JTAG 设备：可以被用来进行 JTAG 调试；</li></ol>
+<h3 id="heading-7c9fed20f014411ea3b3bd2080f8064d" class="Heading Heading--3 "><a class="Anchor" href="#heading-7c9fed20f014411ea3b3bd2080f8064d" aria-label="Anchor">#</a><span class="SemanticString">查看 MaxcOS USE-Serial-JTAG 设备信息：</span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/docs$ system_profiler SPUSBDataType | grep -A 11 &quot;USB JTAG&quot; 
+        USB JTAG/serial debug unit:
+
+          Product ID: 0x1001
+          Vendor ID: 0x303a
+          Version: 1.01
+          Serial Number: 3C:84:27:04:FE:18
+          Speed: Up to 12 Mb/s
+          Manufacturer: Espressif
+          Location ID: 0x02100000 / 2
+          Current Available (mA): 500
+          Current Required (mA): 500
+          Extra Operating Current (mA): 0</code></pre><p class="Paragraph ">对应的设备名称为 /dev/tty.usbmodem* 或 /dev/cu.usbmodem*：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/docs$ ls -l /dev/*.usbmodem*
+crw-rw-rw- 1 root 9, 11  5 10 21:38 /dev/cu.usbmodem2101 
+crw-rw-rw- 1 root 9, 10  5 10 20:16 /dev/tty.usbmodem2101</code></pre><div class="Image Image--Normal"><figure><img src="https://blog.opsnull.com/images/debug/2024-05-10_21-38-25_screenshot.png" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/docs$ espflash board-info
+[2024-05-10T13:38:06Z INFO ] Detected 2 serial ports
+[2024-05-10T13:38:06Z INFO ] Ports which match a known common dev board are highlighted
+[2024-05-10T13:38:06Z INFO ] Please select a port
+[2024-05-10T13:38:19Z INFO ] Serial port: &#39;/dev/cu.usbmodem2101&#39;
+[2024-05-10T13:38:19Z INFO ] Connecting...
+[2024-05-10T13:38:21Z INFO ] Using flash stub 
+Chip type:         esp32s3 (revision v0.2)
+Crystal frequency: 40 MHz
+Flash size:        16MB
+Features:          WiFi, BLE
+MAC address:       3c:84:27:04:fe:18
+
+# 使用 probe-rs 工具
+zj@a:~/docs$ probe-rs info
+Probing target via JTAG
+
+ WARN probe_rs::probe::espusbjtag: More than one TAP detected, defaulting to tap0
+No DAP interface was found on the connected probe. ARM-specific information cannot be printed.
+Error while reading RISC-V info: Connected target is not a RISC-V device.
+Xtensa Chip:
+  IDCODE: 00120034e5
+    Version:      1
+    Part:         8195
+    Manufacturer: 626 (Tensilica)
+
+Probing target via SWD
+
+Error identifying target using protocol SWD: Probe does not support SWD
+
+zj@a:~/docs$</code></pre><p class="Paragraph ">由于 ESP32-S3 自带 USB-Serial-JTAG Controller，故不需要单独的外接 debug probe 硬件来进行烧写或调试。确认方法：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">cargo espflash board-info 
+# or 
+espflash board-info</code></pre><p class="Paragraph ">ESP32-S3 支持使用 probe-rs 或 ESP32 fork 的 OpenCDC 进行 JTAG 调试。</p><p class="Paragraph ">probe-rs 是一个使用 JTAG 接口进行芯片 flash 烧写和调试的工具，支持 RISC-V/ARM/Xtensor。</p><p class="Paragraph ">安装 probe-rs 和相关工具：</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-bash">zj@a:~/docs$ cargo install probe-rs --features cli 
+   Installed package `probe-rs v0.23.0` (executables `cargo-embed`, `cargo-flash`, `probe-rs`)</code></pre><p class="Paragraph ">probe-rs 最重要的是 run 命令，可以集成到 cargo run 中：.cargo/config.toml</p><p class="Paragraph ">Copy</p><pre class="Code"><code class="language-toml">[target.&lt;architecture-triple&gt;]
+runner = &#39;probe-rs run --chip esp32s3&#39;</code></pre><p class="Paragraph ">Now you can execute <code>cargo run</code> in your project as you would for any native binaries and you will receive <code>RTT and defmt logs</code> in that very same console as if you wrote to standard out.</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">It makes it possible to <code>flash, start and print logs</code> from your target with a simple cargo run.</li></ul>
+<p class="Paragraph "><code>probe-rs attach</code> works exactly like <code>probe-rs run</code> except that it <code>does not issue a reset and does not flash</code> the target on connecting to preserve the currently running state. This is great for inspecting a target - where you might not even have knowledge of the firmware - without altering its state.</p><p class="Paragraph ">probe-rs 实现了 DAP 协议，可以直接在 VS Code 中调试代码。</p><p class="Paragraph ">probe-rs 和 DAP 集成：https://probe.rs/docs/tools/debugger/</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">下载 probe-vs 的 vs-code 插件：页面右侧 Resouces 下的 Download Extension https://marketplace.visualstudio.com/items?itemName=probe-rs.probe-rs-debugger</li><li class="NumberedList ">解压 vsix 文件到 emacs 目录，参考：https://github.com/svaante/dape</li><li class="NumberedList ">配置 dape；</li></ol>
+<p class="Paragraph ">probe-rs 示例：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/code/slint/examples$ ls -l /dev/*usbmodem*
+crw-rw-rw- 1 root 9, 9  5 11 17:38 /dev/cu.usbmodem2101
+crw-rw-rw- 1 root 9, 8  5 11 17:38 /dev/tty.usbmodem2101
+
+zj@a:~/code/slint/examples$ probe-rs  list
+The following debug probes were found: 
+[0]: ESP JTAG (VID: 303a, PID: 1001, Serial: 3C:84:27:04:FE:18, EspJtag)
+
+zj@a:~/code/slint/examples$ probe-rs  info
+Probing target via JTAG
+
+ WARN probe_rs::probe::espusbjtag: More than one TAP detected, defaulting to tap0
+No DAP interface was found on the connected probe. ARM-specific information cannot be printed.
+Error while reading RISC-V info: Connected target is not a RISC-V device.
+Xtensa Chip:
+  IDCODE: 00120034e5
+    Version:      1
+    Part:         8195
+    Manufacturer: 626 (Tensilica)
+
+Probing target via SWD
+
+Error identifying target using protocol SWD: Probe does not support SWD
+
+
+zj@a:~/code/slint/examples$ probe-rs  chip list  |grep esp
+esp32c6
+        esp32c6
+esp32s2
+        esp32s2
+esp32h2
+        esp32h2
+esp32s3
+        esp32s3
+esp32
+        esp32-3.3v
+esp32c2
+        esp32c2
+esp32c3
+        esp32c3
+esp32c6_lp
+        esp32c6_lp
+
+zj@a:~/code/slint/examples$ probe-rs  chip info esp32s3
+esp32s3
+Cores (1):
+    - cpu0 (Xtensa)
+NVM: 0x00000000..0x04000000 (64.00 MiB)
+RAM: 0x3fc88000..0x3fcf0000 (416.00 KiB)
+RAM: 0x3fcf0000..0x3fd00000 (64.00 KiB)
+RAM: 0x40370000..0x40378000 (32.00 KiB)
+RAM: 0x40378000..0x403e0000 (416.00 KiB)
+NVM: 0x42000000..0x44000000 (32.00 MiB)
+NVM: 0x3c000000..0x3e000000 (32.00 MiB)</code></pre><aside class="TableOfContents"><div class="TableOfContents__Header">Contents</div><div class="TableOfContents__Item" data-level="3"><a href="#heading-7c9fed20f014411ea3b3bd2080f8064d">查看 MaxcOS USE-Serial-JTAG 设备信息：</a></div></aside>
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

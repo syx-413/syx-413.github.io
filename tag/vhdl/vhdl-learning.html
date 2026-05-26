@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
+
+  <title>VHDL learning&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="VHDL learning">
+  
+    <meta name="description" content="https:&#x2F;&#x2F;miyo.github.io&#x2F;learning_fpga&#x2F;docs&#x2F;book01&#x2F;languages&#x2F; 两种基本处理方法——并发处理语句和顺序处理语句 重复一下，在硬件编程中，需要处理独立运行的模块。也就是说，用于描述硬件的语言需要能够描述独立运行的同时并行处理。然而，根据想要实现的...">
+    <meta property="og:description" content="https:&#x2F;&#x2F;miyo.github.io&#x2F;learning_fpga&#x2F;docs&#x2F;book01&#x2F;languages&#x2F; 两种基本处理方法——并发处理语句和顺序处理语句 重复一下，在硬件编程中，需要处理独立运行的模块。也就是说，用于描述硬件的语言需要能够描述独立运行的同时并行处理。然而，根据想要实现的...">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="..&#x2F;../index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
+</nav>
+
+  <header class="Header">
+    
+      <div class="Header__Cover">
+        <img src="https:&#x2F;&#x2F;is3-ssl.mzstatic.com&#x2F;image&#x2F;thumb&#x2F;Purple124&#x2F;v4&#x2F;41&#x2F;e5&#x2F;c6&#x2F;41e5c6ba-2868-669c-fc06-8a7b004751fe&#x2F;AppIcon-0-0-1x_U007emarketing-0-0-0-4-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png&#x2F;1200x630wa.png">
+      </div>
+    
+    <div class="Header__Spacer ">
+    </div>
+    
+    <h1 class="Header__Title">VHDL learning</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2025-05-31T19:25:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/vhdl.html" class="tag tag-blue">VHDL</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <p class="Paragraph ">https://miyo.github.io/learning_fpga/docs/book01/languages/</p><h3 id="heading-205fc3f52a88803ab883ed35a0556718" class="Heading Heading--3 "><a class="Anchor" href="#heading-205fc3f52a88803ab883ed35a0556718" aria-label="Anchor">#</a><span class="SemanticString"><strong>两种基本处理方法——并发处理语句和顺序处理语句</strong></span></h3><p class="Paragraph ">重复一下，在硬件编程中，需要处理独立运行的模块。也就是说，用于描述硬件的语言需要能够描述独立运行的同时并行处理。然而，根据想要实现的处理，有时需要描述条件分支等具有依赖关系的处理。为了满足这些要求，<code>VHDL </code>和 <code>Verilog HDL</code> 都支持两种称为同时处理语句和顺序处理语句的描述方式。具体的描述方法将在后面说明，但请先记住这两种方式的思路。</p><h3 id="heading-205fc3f52a8880618549e27b0450375e" class="Heading Heading--3 "><a class="Anchor" href="#heading-205fc3f52a8880618549e27b0450375e" aria-label="Anchor">#</a><span class="SemanticString"><strong>并行语句</strong></span></h3><p class="Paragraph ">同时处理语句是指不受周围处理影响而独立运行的处理。多个同时处理语句会在某个特定的时间点同时处理。因此，描述顺序或各处理语句之间不存在语法顺序，而是根据“某个时间点”输入的值生成输出。输出确定之前的时间取决于物理上在设备中电流流动的速度或信号延迟。</p><h3 id="heading-205fc3f52a888019bdccdcfbbb6072bf" class="Heading Heading--3 "><a class="Anchor" href="#heading-205fc3f52a888019bdccdcfbbb6072bf" aria-label="Anchor">#</a><span class="SemanticString"><strong>顺序处理语句</strong></span></h3><p class="Paragraph ">顺序处理语句是指根据语法等规定多个处理之间顺序的处理。例如，软件中必不可少的分支等控制语句的表达需要顺序</p><p class="Paragraph ">在VHDL 和 Verilog HDL 中可以使用加减算、逻辑运算、比较等运算符。在软件编程中，使用运算符编写的处理会被转换为给处理器的指令，但在 HDL 中，这些运算会被合成成相应的硬件逻辑，如 LUT 或 FF 的组合。</p><p class="Paragraph ">在 FPGA 中，有些包含小型数字信号处理器或乘法器，如果条件合适，可以使用它们与软件编程类似，HDL中也可以使用赋值运算将运算结果赋值给其他（或相同）变量。</p><p class="Paragraph ">HDL 的赋值有阻塞赋值和非阻塞赋值两种类型。阻塞赋值是立即在该点赋值并继续的赋值。另一方面，非阻塞赋规定了多个赋值语句中的同时执行。C 语言等单线程软件编程中的赋值相当于 HDL 中的阻塞赋值。</p><p class="Paragraph "></p><p class="Paragraph "></p><h2 id="heading-204fc3f52a888089bc3be4089aa90f2e" class="Heading Heading--2 "><a class="Anchor" href="#heading-204fc3f52a888089bc3be4089aa90f2e" aria-label="Anchor">#</a><span class="SemanticString">语法注意点</span></h2><p class="Paragraph ">变量可以具有字母数字名称：它们必须以字母或 <code>“_”</code> 开头<em>，并且不能以 </em><code>“_” </code>结尾。 Verilog HDL 区分大小写。</p><h3 id="heading-205fc3f52a8880f4970dec131c921f38" class="Heading Heading--3 "><a class="Anchor" href="#heading-205fc3f52a8880f4970dec131c921f38" aria-label="Anchor">#</a><span class="SemanticString"><strong>值的基本类型 — &#39;0&#39;，&#39;1&#39;，&#39;Z&#39;，&#39;X&#39;</strong></span></h3><p class="Paragraph ">常常使用的数值 包括 <code>0</code> <code>1</code>  <code>z / Z</code>(高阻关断)  <code>x  X(0/1)</code></p><p class="Paragraph ">硬件的值取 <code>&#39;0&#39;</code> 和 <code>&#39;1&#39;</code> 的值。此外，硬件还存在高阻态，表示<span class="SemanticString__Fragment--ColorPink">“电阻无限大”</span>的状态，在 VHDL 或 Verilog HDL 中用 <code>&#39;Z&#39; </code> 表示。值“电阻无限大”可能有些难以理解。物理上，可以想象开关断开状态。当多个信号合并到一个时，<code>&#39;Z&#39; </code>表示“不影响其他值”。</p><blockquote class="Quote ">在 HDL 中可以使用高阻抗来表示开关关闭</blockquote><p class="Paragraph "></p><p class="Paragraph ">另外，&#39;0&#39; 或 &#39;1&#39; 都可以作为不定值的概念存在，这用 &#39;X&#39; 表示。</p><p class="Paragraph "><code>;</code>  非常重要</p><h2 id="heading-205fc3f52a88809d8162fff66c3a22c4" class="Heading Heading--2 "><a class="Anchor" href="#heading-205fc3f52a88809d8162fff66c3a22c4" aria-label="Anchor">#</a><span class="SemanticString"><strong>模块构成</strong></span></h2><p class="Paragraph ">VHDL 编写的模块的概要。在 VHDL 中，将目标模块大致分为 <code>entity</code> 和 <code>architecture</code> 来编写。 <code>entity</code> 定义了连接到外部的输入输出端口等电路的外部框架， <code>architecture</code> 定义了使用的函数定义和处理内容等电路的内部</p><h3 id="heading-204fc3f52a888070bfc7cfcd7044bca6" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a888070bfc7cfcd7044bca6" aria-label="Anchor">#</a><span class="SemanticString">library and package</span></h3><pre class="Code"><code class="language-vhdl">LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_1164.ALL;</code></pre><h3 id="heading-204fc3f52a88802b881fe7c0ebc48c67" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a88802b881fe7c0ebc48c67" aria-label="Anchor">#</a><span class="SemanticString">entity</span></h3><p class="Paragraph "><code>entity</code> 定义电路的轮廓，例如连接到外部的 input/output 端口的声明</p><h3 id="heading-204fc3f52a88805d874edab3748be264" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a88805d874edab3748be264" aria-label="Anchor">#</a><span class="SemanticString">architecture</span></h3><p class="Paragraph "><code>architecture</code> 定义电路的内部，例如要使用的函数的定义和处理内容</p><p class="Paragraph "></p><p class="Paragraph "> VHDL 中可以描述的常数的例子</p><div class="Table"><table class="Table__Simple" style="width: 100%"><thead><tr><th class="Table__Cell" style="font-weight: bold;">例子</th><th class="Table__Cell" style="font-weight: bold;">说明</th></tr></thead><tbody><tr><td class="Table__Cell">true，false</td><td class="Table__Cell">布尔值</td></tr><tr><td class="Table__Cell">32，8 ，1000</td><td class="Table__Cell">整数</td></tr><tr><td class="Table__Cell">&quot;111&quot;，&quot;0100&quot; ，X&quot;10&quot;</td><td class="Table__Cell">多条信号线所取的信号值</td></tr><tr><td class="Table__Cell">&#39;1&#39;，&#39;0&#39; ，&#39;Z&#39;，&#39;X&#39;</td><td class="Table__Cell">1 条信号线所取的信号值</td></tr></tbody></table></div><h2 id="heading-204fc3f52a8880a18dfeffa88c3cce71" class="Heading Heading--2 "><a class="Anchor" href="#heading-204fc3f52a8880a18dfeffa88c3cce71" aria-label="Anchor">#</a><span class="SemanticString">VHDL 中的变量都有类型</span></h2><p class="Paragraph ">定义了很多种类型，也可以定义自己的类型。常用的五种类型。</p><p class="Paragraph "> <code>std_logic</code> 、 <code>std_logic_vector</code> 对应硬件信号类型， </p><p class="Paragraph "><code>signed</code> 和 <code>unsigned</code> 用于表示可以进行加减运算的值， </p><p class="Paragraph "><code>integer</code> 可以表示一般数值</p><p class="Paragraph "></p><div class="Table"><table class="Table__Simple" style="width: 100%"><thead><tr><th class="Table__Cell" style="font-weight: bold;"> 类型名</th><th class="Table__Cell" style="font-weight: bold;">说明</th></tr></thead><tbody><tr><td class="Table__Cell">从 n 到 m 的整数</td><td class="Table__Cell">integer n to m</td></tr><tr><td class="Table__Cell">n 位有符号的算术可操作值</td><td class="Table__Cell">signed(n-1 downto 0)</td></tr><tr><td class="Table__Cell">n 位无符号的算术可操作值</td><td class="Table__Cell">unsigned(n-1 downto 0)</td></tr><tr><td class="Table__Cell">n 位信号线</td><td class="Table__Cell">std_logic_vector(n-1 downto 0)</td></tr><tr><td class="Table__Cell">1 位信号线</td><td class="Table__Cell">std_logic</td></tr></tbody></table></div><h3 id="heading-204fc3f52a88801a9860d30c6e1c50ef" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a88801a9860d30c6e1c50ef" aria-label="Anchor">#</a><span class="SemanticString"><strong>1-bitの信号</strong></span></h3><p class="Paragraph "><code>std_logic</code> 是 VHDL 的基本 1 Bit 信号类型。 <code>&#39;0&#39;</code> ， <code>&#39;1&#39;</code> ，以及高阻态的 <code>&#39;Z&#39;</code> ，不定值的 <code>&#39;X&#39;</code> 都可以作为其值。这些值直接对应硬件。</p><h3 id="heading-204fc3f52a88802e8a2fda5acceee13a" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a88802e8a2fda5acceee13a" aria-label="Anchor">#</a><span class="SemanticString"><strong>n 位信号</strong></span></h3><p class="Paragraph "><code>std_logic_vector(n downto 0)</code> 是 <code>std_logic</code> 个 <code>std_logi_vector</code> 并排组成的 n 位信号线类型，称为 n 位 <code>std_logi_vector</code> 类型。 </p><p class="Paragraph "><code>std_logic_vector</code> 类型的变量 <code>a</code> 中的元素可以取出 <code>a(3)</code> ， <code>a(4 downto 2)</code> 等。前者是 <code>std_logic</code> 类型，后者是 3 位的 <code>std_logic_vector</code> 类型。</p><p class="Paragraph "> <code>downto</code> 表示 <code>std_logic</code> 的序列，从 MSB 降序编号。也就是说，对于 <code>std_logic_vector(n-1 downto 0)</code> 的位序列，MSB 是 <code>std_logic_vector(n-1)</code> ，LSB 是 <code>std_logic_vector(0)</code> 。</p><p class="Paragraph ">也可以使用 <code>to</code> 逆序排列，这时可以像 <code>std_logic_vector(n to 0)</code> 这样表示。</p><p class="Paragraph "></p><h2 id="heading-204fc3f52a888063b28cf9bee40a2046" class="Heading Heading--2 "><a class="Anchor" href="#heading-204fc3f52a888063b28cf9bee40a2046" aria-label="Anchor">#</a><span class="SemanticString"><strong>模块的外部描述 — entity</strong></span></h2><p class="Paragraph "><code>entity</code> 代表模块的外框，通过模块名称和输入输出信号来定义。例如，以下描述相当于定义了一个名为 <code>test</code> ，输入信号为 <code>pClk</code> 和 <code>pReset</code>，输出信号为 <code>Q</code> 的模块的外框。</p><p class="Paragraph "></p><pre class="Code"><code class="language-vhdl">entity test is
+ port (
+   pClk   : in std_logic;
+   Q      : out std_logic;
+   pReset : in std_logic -- 在最后一个之后不加
+ );
+end entity;</code></pre><h3 id="heading-204fc3f52a888005b040d0cbf7a56bdf" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a888005b040d0cbf7a56bdf" aria-label="Anchor">#</a><span class="SemanticString"><strong>定义端口</strong></span></h3><p class="Paragraph ">端口是硬件模块的输入输出。在 <code>entity</code> 的 <code>port(~);</code> 中，通过指定信号的方向和类型来定义。</p><p class="Paragraph ">信号方向有 <code>in</code> （输入）、 <code>out</code> （输出）和 <code>inout</code> （输入输出）三种。</p><p class="Paragraph ">每个端口通过<span class="SemanticString__Fragment--ColorBlue">“名称 : 方向 类型”</span>来定义。例如</p><pre class="Code"><code class="language-vhdl">pClk : in std_logic
+-- or together definate
+pR, pG, pB : in std_logic</code></pre><p class="Paragraph ">这样的描述相当于定义了 <code>pClk</code> 的 <code>std_logic</code> 输入端口（ <code>in</code> ）。相同方向和类型的多个端口名也可以用“,”来并列定义。例如，</p><p class="Paragraph ">可以将 3 个输入信号 <code>pR</code> ， <code>pG</code> ， <code>pB</code> 一起定义。</p><h3 id="heading-204fc3f52a8880768cebf20965270c82" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a8880768cebf20965270c82" aria-label="Anchor">#</a><span class="SemanticString"><strong>定义常量</strong></span></h3><p class="Paragraph ">可以在 <code>entity</code> 中定义模块内使用的常量</p><pre class="Code"><code class="language-vhdl">entity test is
+  generic (
+    width  : integer := 640;
+    height : integer := 480
+  );
+  port (
+    pClk : in std_logic;
+    Q : out std_logic;
+    pReset : in std_logic
+  );
+end test;</code></pre><p class="Paragraph "></p><p class="Paragraph ">这个以 <code>width</code> 的名称定义了一个值为 640 的 <code>integer</code> 类型，即整数的常量。这个常量可以在 <code>entity</code> 内部，以及内部处理描述的 <code>architecture</code> 中使用</p><h3 id="heading-204fc3f52a8880809e7fcec8b1ad8e1c" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a8880809e7fcec8b1ad8e1c" aria-label="Anchor">#</a><span class="SemanticString"><strong>内部处理描述 — architecture  </strong></span></h3><p class="Paragraph ">在 VHDL 中， <code>architecture</code> 用于描述模块的处理内容。描述的基本流程如下：</p><pre class="Code"><code class="language-vhdl">architecture RTL of test is
+  (在这里写变量的定义等。)
+begin
+  (在这里描述处理内容。)
+end RTL;</code></pre><p class="Paragraph ">上述是用于描述名为 <code>test</code> 的模块内容的块。</p><h3 id="heading-204fc3f52a8880c3a93cfa4b08e403f0" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a8880c3a93cfa4b08e403f0" aria-label="Anchor">#</a><span class="SemanticString"><strong>变量的定义</strong></span></h3><p class="Paragraph "><strong>变量的定义</strong></p><pre class="Code"><code class="language-vhdl">signal 名前 : 型 := 初期値;
+-- second
+signal counter : std_logic_vector(9 downto 0); -- 10 bit
+--third
+signal counter : std_logic_vector(width-1 downto 0); --width</code></pre><p class="Paragraph ">例如，10 位的数组可以这样定义。</p><p class="Paragraph "></p><p class="Paragraph ">此外，可以使用 <code>generic</code> 定义的值 <code>width</code> 来定义宽度为 width 的 <code>std_logic_vector</code> 型的信号。这里 <code>width−1</code> 的值在综合时确定.</p><h3 id="heading-204fc3f52a88806fb18ae5847e402a52" class="Heading Heading--3 "><a class="Anchor" href="#heading-204fc3f52a88806fb18ae5847e402a52" aria-label="Anchor">#</a><span class="SemanticString"><strong>运算符和运算</strong></span></h3><p class="Paragraph ">将典型的运算符汇总在表 3 中。如果将逻辑运算符定义为 <code>std_logic_vector</code> 类型，则会对对应的每个比特的值之间应用逻辑运算并返回结果。例如，“ <code>&quot;10&quot; and &quot;11&quot;</code> ”会变成“ <code>&quot;10&quot;</code> ”，“ <code>&quot;10&quot; or &quot;11&quot;</code> ”会变成“ <code>&quot;11&quot;</code> ”。比较运算的结果是 <code>true</code> 或 <code>false</code> 的真值。可以看出它具备了许多常见的编程语言所拥有的运算功能。但是，表 3 的说明中标注了(*1)的算术运算或比较数值大小的运算，只能用于 <code>unsigned</code> 类型、 <code>signed</code> 类型或 <code>integer</code> 的变量或常量，或者相当于数值的立即数</p><p class="Paragraph "></p><div class="Table"><table class="Table__Simple" style="width: 100%"><thead><tr><th class="Table__Cell" style="font-weight: bold;">Description</th><th class="Table__Cell" style="font-weight: bold;">Name</th><th class="Table__Cell" style="font-weight: bold;">Operate</th></tr></thead><tbody><tr><td class="Table__Cell">从 a 中取出第 b 个到第 c 个信号线的束</td><td class="Table__Cell">a(b downto c)</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">从 a 中取出第 b 个信号</td><td class="Table__Cell">a(b)</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">
+将 a 和 b 按照这个顺序排列的信号线束</td><td class="Table__Cell">数组操作</td><td class="Table__Cell">
+a &amp; b</td></tr><tr><td class="Table__Cell">a 的 b 次方 </td><td class="Table__Cell">a ** b</td><td class="Table__Cell">a^b</td></tr><tr><td class="Table__Cell">a 除以 b</td><td class="Table__Cell">a / b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">a乘b </td><td class="Table__Cell">a * b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">a 减 b (*1)</td><td class="Table__Cell">a-b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">
+逻辑乘积。a 和 b 都为 &#39;1&#39; 则 &#39;1&#39; ，否则 &#39;0&#39; </td><td class="Table__Cell"> 逻辑运算</td><td class="Table__Cell">
+a AND b</td></tr><tr><td class="Table__Cell">
+a 和 b 相加 (*1)</td><td class="Table__Cell">  算术运算</td><td class="Table__Cell">
+a+b</td></tr><tr><td class="Table__Cell">如果 a 和 b 小于等于，则 true ，否则 false 。(*1)</td><td class="Table__Cell">a &lt;= b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">如果 a 和 b 大于等于，则 true ，否则 false 。(*1)</td><td class="Table__Cell">a &gt;= b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">如果 a 和 b 更小，则 true ，否则 false 。(*1)</td><td class="Table__Cell">a &lt; b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">如果 a 比 b 大，则为 true ，否则为 false ．(*1)</td><td class="Table__Cell">a &gt; b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">如果 a 和 b 不相等，则为 true ，否则为 false</td><td class="Table__Cell">a =/ b</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">如果 a 和 b 相等 true 否则 false</td><td class="Table__Cell">比较运算</td><td class="Table__Cell">a = b</td></tr><tr><td class="Table__Cell">否定。a 为 &#39;0&#39; 则 &#39;1&#39; 。 &#39;1&#39; 则 &#39;0&#39;</td><td class="Table__Cell">NOT a</td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">排他的逻辑乘积。a 和 b 中只有一个为 &#39;1&#39; 则 &#39;1&#39; ，否则 &#39;0&#39;</td><td class="Table__Cell">a XOR b </td><td class="Table__Cell"></td></tr><tr><td class="Table__Cell">逻辑和。a 和 b 中有一个或两个为 &#39;1&#39; 则 &#39;1&#39; ，否则 &#39;0&#39; </td><td class="Table__Cell">a OR b</td><td class="Table__Cell"></td></tr></tbody></table></div><pre class="Code"><code class="language-vhdl">library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</code></pre><blockquote class="Quote ColorfulBlock--BgGreen">• 对于 <code>std_logic_vector</code> 类型，如果要进行算术运算，通常需要先转换为 <code>signed</code> 或 <code>unsigned</code> 类型，再进行运算，运算完后再转换为 <code>std_logic_vector</code> 类型。</blockquote><p class="Paragraph "></p><pre class="Code"><code class="language-vhdl">signal B : std_logic_vector(15 downto 0);
+-- 取 B 的高 8 位
+signal high_byte : std_logic_vector(7 downto 0);
+high_byte &lt;= B(15 downto 8);</code></pre><p class="Paragraph "></p><blockquote class="Quote ColorfulBlock--BgGreen">逻辑移位 :左移逻辑 (<code>sll</code>)：将位向量左移指定的位数，右侧补 0。右移逻辑 (<code>srl</code>)：将位向量右移指定的位数，左侧补 0。
+算术移位 :左移算术 (<code>sla</code>)：与 <code>sll </code>类似，但通常用于有符号数时。右移算术 (<code>sra</code>)：将位向量右移时保留符号位（最左边的比特）。
+旋转（循环移位）操作 :左旋 (<code>rol</code>)：将最高有效位送到最低有效位，实现循环左移。右旋 (<code>ror</code>)：实现循环右移。</blockquote><p class="Paragraph "></p><p class="Paragraph "></p><h3 id="heading-205fc3f52a88809aa090f9bb3fd8b045" class="Heading Heading--3 "><a class="Anchor" href="#heading-205fc3f52a88809aa090f9bb3fd8b045" aria-label="Anchor">#</a><span class="SemanticString">计算结果的代入</span></h3><p class="Paragraph ">计算结果可以通过赋值语句赋值给其他（或相同）变量。赋值有阻塞赋值和非阻塞赋值两种。</p><p class="Paragraph ">:= 阻塞赋值</p><p class="Paragraph ">&lt;= 非阻塞赋值</p><p class="Paragraph "><code>Q &lt;= counter(width-1);</code></p><p class="Paragraph ">这种描述相当于取出 <code>std_logic_vector</code> 型变量 <code>counter</code> 的 <code>(width-1)</code> 个，并赋值给 <code>Q</code> 的硬件描述。在 VHDL 中， <code>signal</code> 变量在初始化之外不能使用阻塞赋值</p><h3 id="heading-205fc3f52a8880919624c59d5701ed62" class="Heading Heading--3 "><a class="Anchor" href="#heading-205fc3f52a8880919624c59d5701ed62" aria-label="Anchor">#</a><span class="SemanticString">类型转换</span></h3><pre class="Code"><code class="language-vhdl">a &lt;= &quot;00000000&quot; &amp; b; -- 正在用8位的0（即=00000000）填充不足的8位
+b &lt;= a(7 downto 0);  -- 只将a的下位8位赋值给b。</code></pre><p class="Paragraph ">类型转换需要使用专用函数。例如，将 <code>std_logic_vector</code> 转换为 <code>unsigned</code> 类型或 <code>signed</code> 类型时，分别使用 <code>unsigned</code> 函数或 <code>signed</code> 函数。</p><p class="Paragraph "><code>unsigned(c);</code></p><p class="Paragraph ">如果这样写， <code>std_logic_vector</code> 类型的变量 <code>c</code> 可以转换为 <code>unsigned</code> 类型。</p><p class="Paragraph ">反之，将 <code>unsigned</code> 类型或 <code>singed</code> 类型的变量转换为 <code>std_logic_vector</code> 类型时，使用 <code>std_logic_vector</code> 函数</p><pre class="Code"><code class="language-vhdl">std_logic_vector(d);</code></pre><p class="Paragraph "></p><p class="Paragraph ">如果这样写， <code>unsigned</code> 类型的变量 <code>d</code> 可以转换为 <code>std_logic_vector</code> 类型。</p>
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  

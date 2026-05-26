@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/theme.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/notablog.css">
+<link rel="stylesheet" type="text/css" href="..&#x2F;../css/CustomSetting.css">
+<!-- Favicon -->
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+<script>
+  (function () {
+    var storageKey = "rsnotablog-theme";
+    var windowNamePrefix = "__rsnotablog_theme__:";
+    var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function getSystemTheme() {
+      return darkQuery && darkQuery.matches ? "dark" : "light";
+    }
+
+    function getWindowNameTheme() {
+      try {
+        if (typeof window.name !== "string") return null;
+        if (!window.name.startsWith(windowNamePrefix)) return null;
+        var value = window.name.slice(windowNamePrefix.length);
+        return value === "dark" || value === "light" ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setWindowNameTheme(theme) {
+      try {
+        window.name = windowNamePrefix + theme;
+      } catch (_) {}
+    }
+
+    function getStoredTheme() {
+      try {
+        var saved = localStorage.getItem(storageKey);
+        if (saved === "dark" || saved === "light") return saved;
+      } catch (_) {
+      }
+
+      return getWindowNameTheme();
+    }
+
+    function persistTheme(theme) {
+      setWindowNameTheme(theme);
+
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (_) {}
+    }
+
+    function clearPersistedTheme() {
+      setWindowNameTheme(getSystemTheme());
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (_) {}
+    }
+
+    function getThemeLabel(theme) {
+      return theme === "dark" ? "暗色" : "亮色";
+    }
+
+    function getThemeSymbol(theme) {
+      return theme === "dark" ? "夜间" : "日间";
+    }
+
+    function getOppositeTheme(theme) {
+      return theme === "dark" ? "light" : "dark";
+    }
+
+    function syncThemeLinks(theme) {
+      document.querySelectorAll("a[href]").forEach(function (link) {
+        var href = link.getAttribute("href");
+        if (!href || href.startsWith("http") || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("javascript:")) {
+          return;
+        }
+
+        try {
+          var url = new URL(href, window.location.href);
+          url.searchParams.set("theme", theme);
+          link.setAttribute("href", url.pathname + url.search + url.hash);
+        } catch (_) {}
+      });
+    }
+
+    function getResolvedTheme() {
+      try {
+        var urlTheme = new URL(window.location.href).searchParams.get("theme");
+        if (urlTheme === "dark" || urlTheme === "light") return urlTheme;
+      } catch (_) {}
+
+      return getStoredTheme() || getSystemTheme();
+    }
+
+    function getUtterancesTheme(theme) {
+      return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function syncThemeControls(theme) {
+      var buttons = document.querySelectorAll("[data-theme-toggle]");
+      buttons.forEach(function (button) {
+        var icon = button.querySelector("[data-theme-icon]");
+        var label = button.querySelector("[data-theme-label]");
+        var currentThemeLabel = getThemeLabel(theme);
+        var nextThemeLabel = getThemeLabel(getOppositeTheme(theme));
+
+        button.setAttribute("aria-label", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("title", "当前主题：" + currentThemeLabel + "。点击切换到" + nextThemeLabel);
+        button.setAttribute("data-theme-current", theme);
+
+        if (icon) icon.textContent = getThemeSymbol(theme);
+        if (label) label.textContent = currentThemeLabel;
+      });
+    }
+
+    function syncUtterances(theme) {
+      var frame = document.querySelector(".utterances-frame");
+      if (!frame || !frame.contentWindow) return;
+
+      frame.contentWindow.postMessage(
+        { type: "set-theme", theme: getUtterancesTheme(theme) },
+        "https://utteranc.es"
+      );
+    }
+
+    function applyTheme(theme, shouldPersist) {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute("content", theme === "dark" ? "#101418" : "#fbfaf7");
+      }
+
+      if (shouldPersist) {
+        persistTheme(theme);
+      }
+
+      syncThemeControls(theme);
+      syncUtterances(theme);
+      syncThemeLinks(theme);
+      document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+    }
+
+    window.__applyTheme = applyTheme;
+    window.__toggleTheme = function () {
+      applyTheme(getResolvedTheme() === "dark" ? "light" : "dark", true);
+    };
+
+    applyTheme(getResolvedTheme(), false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.__toggleTheme();
+        });
+      });
+
+      syncThemeControls(getResolvedTheme());
+
+      window.setTimeout(function () {
+        syncUtterances(getResolvedTheme());
+      }, 1200);
+    });
+
+    if (darkQuery) {
+      var handleSystemThemeChange = function () {
+        if (!getStoredTheme()) {
+          applyTheme(getSystemTheme(), false);
+        }
+      };
+
+      if (typeof darkQuery.addEventListener === "function") {
+        darkQuery.addEventListener("change", handleSystemThemeChange);
+      } else if (typeof darkQuery.addListener === "function") {
+        darkQuery.addListener(handleSystemThemeChange);
+      }
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tocLinks = Array.prototype.slice.call(
+      document.querySelectorAll(".TableOfContents__Item > a[href^='#']")
+    );
+
+    if (!tocLinks.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    var linkMap = new Map();
+    tocLinks.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        linkMap.set(target.id, link.closest(".TableOfContents__Item"));
+      }
+    });
+
+    if (!linkMap.size) {
+      return;
+    }
+
+    var setActive = function (id) {
+      linkMap.forEach(function (item, key) {
+        item.classList.toggle("active", key === id);
+      });
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) { return entry.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+
+        if (visible.length) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1]
+      }
+    );
+
+    linkMap.forEach(function (_, id) {
+      var target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+
+    var initial = tocLinks[0].getAttribute("href").slice(1);
+    if (initial) {
+      setActive(initial);
+    }
+  });
+</script>
+
+  <title>开发 Rust std 应用&nbsp;|&nbsp;My Blog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="开发 Rust std 应用">
+  
+    <meta name="description" content="对于 std 应用  对于 std 应用, 核心是使用 esp-idf-sys 和它绑定链接到的 C&#x2F;C++ 库 esp-idf。 构建的 target 是 xtensa-esp32s3-espidf, 而 non_std 应用的 target 是 xtensa-esp32s3-none-elf e...">
+    <meta property="og:description" content="对于 std 应用  对于 std 应用, 核心是使用 esp-idf-sys 和它绑定链接到的 C&#x2F;C++ 库 esp-idf。 构建的 target 是 xtensa-esp32s3-espidf, 而 non_std 应用的 target 是 xtensa-esp32s3-none-elf e...">
+  
+  
+    <meta property="og:image" content="🦀">
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="..&#x2F;../index.html">
+    <div class="Navbar__Btn">
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;杂项.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">😷</span>&nbsp;
+        
+      
+      <span>杂项</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;note.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🎶</span>&nbsp;
+        
+      
+      <span>Note</span>
+    </div>
+  </a>
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;uncategorized&#x2F;about.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🤓</span>&nbsp;
+        
+      
+      <span>About</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;wiki&#x2F;onedrive-vercel--立即上手.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">☁️</span>&nbsp;
+        
+      
+      <span>OneDrive Vercel  立即上手</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span class="Navbar__Delim">&centerdot;</span>
+  <a href="..&#x2F;../tag&#x2F;blog&#x2F;blog-mark.html">
+    <div class="Navbar__Btn">
+      
+        
+          <span class="inline-img-icon">🥅</span>&nbsp;
+        
+      
+      <span>blog mark</span>
+    </div>
+  </a>
+  
+  
+  
+  
+  
+  
+  <div class="Navbar__Spacer"></div>
+  <button class="Navbar__Btn Navbar__ThemeToggle" type="button" data-theme-toggle>
+    <span class="Navbar__ThemeToggleIcon" data-theme-icon>日间</span>
+    <span data-theme-label>亮色</span>
+  </button>
+</nav>
+
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+      <div class="Header__Icon">
+        
+          <span class="inline-img-icon">🦀</span>
+        
+      </div>
+    
+    <h1 class="Header__Title">开发 Rust std 应用</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on 2024-09-02T14:59:00+08:00</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/rust.html" class="tag tag-gray">Rust</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag">
+            <a href="..&#x2F;../tag/单片机.html" class="tag tag-red">单片机</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <main class="PageRoot">
+    <h2 id="heading-ccd95b333796404b85b472ab6a46c8e8" class="Heading Heading--2 "><a class="Anchor" href="#heading-ccd95b333796404b85b472ab6a46c8e8" aria-label="Anchor">#</a><span class="SemanticString">对于 std 应用</span></h2><p class="Paragraph "></p><p class="Paragraph ">对于 std 应用, 核心是使用 esp-idf-sys 和它绑定链接到的 C/C++ 库 esp-idf。</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">构建的 target 是 <code>xtensa-esp32s3-espidf</code>, 而 non_std 应用的 target 是 <code>xtensa-esp32s3-none-elf</code></li></ul>
+<p class="Paragraph ">esp-idf 是 C/C++ 开发的，运行 FreeRTOS 操作系统，为 Rust std 提供了 newlib enviroment 实现（~/.rustup/toolchains/esp 目录），</p><p class="Paragraph ">这样 std 应用可以使用 Rust 标准库的各种类型和特性，如 Vec/HashMap/Box，net，heap 内存分配、thread/Mutex 等；</p><p class="Paragraph "></p><p class="Paragraph ">Rust std 应用与 esp-idf 之间的 3 种互操作方式（这些 std 库惯例是 esp-idf- 开头）：</p><ol class="NumberedListWrapper">
+<li class="NumberedList "><code>esp-idf-sys</code> crate：esp-idf 的 unsafe binding，Gives <code>raw (unsafe) access</code> to drivers, Wi-Fi and more.</li><li class="NumberedList "><code>esp-idf-svc</code> crate：esp-idf 的 safe binding，抽象层次更高，实现了 embedded-svc trait。</li><li class="NumberedList "><code>esp-idf-hal</code> crate：实现了 <code>embedded-hal</code> trait，支持 async，底层也是基于 esp-idf；</li></ol>
+<p class="Paragraph ">它们之间的层次关系: <code>esp-idf-svc -&gt; esp-idf-hal -&gt; esp-idf-sys(esp-idf 的 Rust binding).</code></p><p class="Paragraph "></p><p class="Paragraph ">embedded-hal 和 embedded-svc 是 Rust embedded workgroup 定义的厂商中立的嵌入式规范.</p><p class="Paragraph "></p><p class="Paragraph ">编译 esp-idf-sys 时, build.rs 会会自动下载/安装/配置/编译和链接 esp-idf 库，</p><p class="Paragraph ">安装到 $ESP_IDF_TOOLS_INSTALL_DIR 位置，默认为 by 项目的 .embuild/espressif 目录。</p><p class="Paragraph "></p><p class="Paragraph ">esp-idf-sys 默认启用 <code>esp-idf</code> 所有的 <code>Component</code>（静态库的形式） ，这样可以后续直接链接他们(后续也可以通过 <code>esp_idf_components</code>, $ESP_IDF_COMPONENTS 来配置）。</p><p class="Paragraph "></p><p class="Paragraph ">esp-idf-sys 也支持添加本地和远程的 C/C++ Component，在构建 esp-idf-sys 时自动使用 bindgen 将它封装为Rust 接口，后续自动链接到可执行程序中。（参考后文）。</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/fdc7d164-d9c5-45ee-a354-d0b025c45732/image%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666N2WFJS3%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065313Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIFYhO7Hv9IUfbBW%2BP06qj4PO%2Fb7sDBTAuyZUzOPQYjNJAiBHQWVqdru75aJRepLMVRU6q6O2OWSSYHHXW2b0LIvf4yr%2FAwh3EAAaDDYzNzQyMzE4MzgwNSIMk5%2BnYYJx0UJR6PbeKtwD26G6Mmii3Qqs4Mh6xattqulu255zexrfNDUkYgQmWvgNfavZCeJ3%2FSd91MxhDe6wxYLzr%2FRw0tSZXbc8xzuepBIk0oH2kF4D7S0hrS2k8VYsA5N4SIjNqLMu66x8xQmRM011XF4NM2IGTcsZIQVzgNncNB52%2FoicEIeaXAslf4ddHwD7GYXbmeilUBUtyhRSDYPrxQw36PMDUWru8e1sPs3RavrrHJuKWzUAvuLd%2FfyDrDYJ1oiBH9LOMEqmZZONpOnAS5vSpxiKjbl1yZ5oi1bxn1%2FixWVIIB6LNFMBcR%2B3WcHZfr1cYAXOXD2VEuzO3R4gajo8GTupwnhXWy78jbfIFqbPgSfw4pk1t5NROlTIWaIa9jY5rz1IzHVccjRGGjeOGOfZkUC93Hp4D8hZGCjEads9bARcDOQF63Jfs%2Bkwkm1Q8jVD3twYwlLuC45gZSWN9sc3s6sNy%2Bk7a3CPDUZIXtFKFIcHjYGPweGCpfArja98w%2BlFNGahtY9eQBtDLqfSXUfoIuWxzg6oOCOBDN%2FOxcbNCXu6%2Fa4mmlgQY9eYy3PiMs4RQdXQ5O%2FT0bVsyUULrqGiYOQo83m62NcbRENnM4cOTEDzCMhA1bwA%2F1eSINRX634ObiHN6iYw3%2BnU0AY6pgGPw2g0Y7AaIo4%2BLotXazMoSWTfpBVaphY2YlJh5LLVTwFK1H03o2MFj494OKfJ0xWr%2F1ILR9c45nxPEpbPni7Eb8t%2FvFKNAIDLpzGm6wJKzs5uOwMP%2FgZVsC5pRZfKssTgl%2FiPCUEaxxiHiOIzxWLhlKg6fEBTZNJO5Q1a0%2F8vCr0xUEudTmGQckaSAAaSUjkwFvvEshN1Pq2TqMM1ehFD9OW3wHgD&X-Amz-Signature=b6515aedf10a404cebe6745b0713772cafc675c9461bb4f630bc7e23e3cbc16d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><p class="Paragraph ">如果 esp-idf-hal 不满足需求（如缺少一些 esp32 的寄存器的操作），可以使用 <code>esp-rs/esp-pacs</code> 下的esp32s3 create, 它是使用 svd2rust 工具来基于芯片的 svd 自动生成的库。</p><p class="Paragraph "></p><p class="Paragraph ">https://apollolabsblog.hashnode.dev/the-embedded-rust-esp-development-ecosystem</p><div class="Image Image--Normal"><figure><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/64aa22e9-0197-4842-9162-b3bb3494db5f/cae98e63-d9a9-4fff-86dd-709ef6f5834a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666N2WFJS3%2F20260526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260526T065314Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEK7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIFYhO7Hv9IUfbBW%2BP06qj4PO%2Fb7sDBTAuyZUzOPQYjNJAiBHQWVqdru75aJRepLMVRU6q6O2OWSSYHHXW2b0LIvf4yr%2FAwh3EAAaDDYzNzQyMzE4MzgwNSIMk5%2BnYYJx0UJR6PbeKtwD26G6Mmii3Qqs4Mh6xattqulu255zexrfNDUkYgQmWvgNfavZCeJ3%2FSd91MxhDe6wxYLzr%2FRw0tSZXbc8xzuepBIk0oH2kF4D7S0hrS2k8VYsA5N4SIjNqLMu66x8xQmRM011XF4NM2IGTcsZIQVzgNncNB52%2FoicEIeaXAslf4ddHwD7GYXbmeilUBUtyhRSDYPrxQw36PMDUWru8e1sPs3RavrrHJuKWzUAvuLd%2FfyDrDYJ1oiBH9LOMEqmZZONpOnAS5vSpxiKjbl1yZ5oi1bxn1%2FixWVIIB6LNFMBcR%2B3WcHZfr1cYAXOXD2VEuzO3R4gajo8GTupwnhXWy78jbfIFqbPgSfw4pk1t5NROlTIWaIa9jY5rz1IzHVccjRGGjeOGOfZkUC93Hp4D8hZGCjEads9bARcDOQF63Jfs%2Bkwkm1Q8jVD3twYwlLuC45gZSWN9sc3s6sNy%2Bk7a3CPDUZIXtFKFIcHjYGPweGCpfArja98w%2BlFNGahtY9eQBtDLqfSXUfoIuWxzg6oOCOBDN%2FOxcbNCXu6%2Fa4mmlgQY9eYy3PiMs4RQdXQ5O%2FT0bVsyUULrqGiYOQo83m62NcbRENnM4cOTEDzCMhA1bwA%2F1eSINRX634ObiHN6iYw3%2BnU0AY6pgGPw2g0Y7AaIo4%2BLotXazMoSWTfpBVaphY2YlJh5LLVTwFK1H03o2MFj494OKfJ0xWr%2F1ILR9c45nxPEpbPni7Eb8t%2FvFKNAIDLpzGm6wJKzs5uOwMP%2FgZVsC5pRZfKssTgl%2FiPCUEaxxiHiOIzxWLhlKg6fEBTZNJO5Q1a0%2F8vCr0xUEudTmGQckaSAAaSUjkwFvvEshN1Pq2TqMM1ehFD9OW3wHgD&X-Amz-Signature=263bff66d1021f2e33350c5f7a0bf0543f0de101c93a0bb10c6ddc68fd8b51a5&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" loading="lazy" /></figure></div><p class="Paragraph "></p><h2 id="heading-cb2b2b479ff24841b42b95c834da4dd8" class="Heading Heading--2 "><a class="Anchor" href="#heading-cb2b2b479ff24841b42b95c834da4dd8" aria-label="Anchor">#</a><span class="SemanticString">使用 esp-rs/esp-idf-template 模板</span></h2><p class="Paragraph "></p><p class="Paragraph ">使用 esp-rs/esp-idf-template 模板来创建 std 应用:</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">在编译 esp-idf-sys 时自动下载和安装 esp-idf 框架到项目的 .embuild/espressif/esp-idf 目录下;</li><li class="BulletedList ">可以配置项目的 .cargo/config.toml 文件, 添加 env ESP_IDF_TOOLS_INSTALL_DIR = “global” 来使用全局 <code>~/.espressif/</code> 下的 esp-idf 工具链(建议).</li><li class="BulletedList ">sdkconfig.defaults 文件为 esp-idf 的缺省参数提供 override 参数如 stack size, log level；</li></ul>
+<p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/codes/esp32/$ cargo generate esp-rs/esp-idf-template cargo
+⚠️   Favorite `esp-rs/esp-idf-template` not found in config, using it as a git repository: https://github.com/esp-rs/esp-idf-template.git
+🔧   project-name: myesp ...
+🔧   Generating template ...
+✔ 🤷   Which MCU to target? · esp32s3
+✔ 🤷   Configure advanced template options? · true
+✔ 🤷   Enable STD support? · true
+✔ 🤷   Configure project to use Dev Containers (VS Code and GitHub Codespaces)? · false
+✔ 🤷   Configure project to support Wokwi simulation with Wokwi VS Code extension? · false
+✔ 🤷   Add CI files for GitHub Action? · false
+✔ 🤷   ESP-IDF version (master = UNSTABLE) · v5.1
+🔧   Moving generated files into: `/Users/zhangjun/codes/esp32/esp-demo2/myesp`...
+🔧   Initializing a fresh Git repository
+✨   Done! New project created /Users/zhangjun/codes/esp32/esp-demo2/myesp
+
+zj@a:~/codes/esp32/$ cd myesp
+
+zj@a:~/code/esp32/std/myespv4$ cat src/main.rs
+fn main() {
+    // It is necessary to call this function once. Otherwise some patches to the runtime
+    // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
+    esp_idf_svc::sys::link_patches();
+
+    // Bind the log crate to the ESP Logging facilities
+    esp_idf_svc::log::EspLogger::initialize_default();
+
+    log::info!(&quot;Hello, world!&quot;);
+}</code></pre><h3 id="heading-32020fd8821a4a4d9e0852a204bbec46" class="Heading Heading--3 "><a class="Anchor" href="#heading-32020fd8821a4a4d9e0852a204bbec46" aria-label="Anchor">#</a><span class="SemanticString">按需修改 <code>Cargo.toml</code>：</span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/std/myesp$ cat Cargo.toml
+[package]
+name = &quot;myesp&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;alizj&quot;]
+edition = &quot;2021&quot; 
+resolver = &quot;2&quot;
+rust-version = &quot;1.71&quot;
+
+[profile.release]
+opt-level = &quot;s&quot;
+
+[profile.dev]
+debug = true    # Symbols are nice and they don&#39;t increase the size on Flash
+opt-level = &quot;z&quot;
+
+[features]
+# 缺省 features：重点是包含 std 和 esp-idf-svc/native
+# esp-idf-svc/native 指的是 native 平台类型，除此之外还有 pio 平台类型。
+default = [&quot;std&quot;, &quot;embassy&quot;, &quot;esp-idf-svc/native&quot;]
+# std 包含 alloc 和 esp-idf-svc/std
+std = [&quot;alloc&quot;, &quot;esp-idf-svc/binstart&quot;, &quot;esp-idf-svc/std&quot;]
+# alloc 依赖 esp-idf-svc/alloc
+alloc = [&quot;esp-idf-svc/alloc&quot;]
+# embassy 也仅依赖 esp-idf-svc
+embassy = [&quot;esp-idf-svc/embassy-sync&quot;, &quot;esp-idf-svc/critical-section&quot;, &quot;esp-idf-svc/embassy-time-driver&quot;]
+# 总结：cargo gen 通过模板创建的 std 应用仅依赖 std 和 esp-idf-svc
+
+pio = [&quot;esp-idf-svc/pio&quot;]
+nightly = [&quot;esp-idf-svc/nightly&quot;]
+experimental = [&quot;esp-idf-svc/experimental&quot;]
+
+[dependencies]
+# 通过 log 打印日志，esp-idf-svc 提供了 log 的具体实现
+log = { version = &quot;0.4&quot;, default-features = false }
+# std 类型的 crate
+esp-idf-svc = { version = &quot;0.48&quot;, default-features = false }
+
+[build-dependencies] # build.rs 编译脚本的依赖
+embuild = &quot;0.31.3&quot;   # build.rs 依赖 embuild</code></pre><h3 id="heading-db9b662178504b609e66c7a0737ab6f4" class="Heading Heading--3 "><a class="Anchor" href="#heading-db9b662178504b609e66c7a0737ab6f4" aria-label="Anchor">#</a><span class="SemanticString">修改 <code>.cargo/config.toml</code> </span></h3><p class="Paragraph "></p><p class="Paragraph ">修改 <code>.cargo/config.toml</code>文件中的 <code>ESP_IDF_VERSION</code> 为最新版本，内容如下：</p><p class="Paragraph "></p><pre class="Code"><code class="language-toml">zj@a:~/codes/esp32/myesp$ cat .cargo/config.toml
+[build]
+target = &quot;xtensa-esp32s3-espidf&quot;  # 要构建的 target，这里使用链接 esp-idf 的 target
+ 
+[target.xtensa-esp32s3-espidf]  # target 对应的配置
+linker = &quot;ldproxy&quot; # 位于 ~/.cargo/bin/
+# runner = &quot;espflash --monitor&quot; # Select this runner for espflash v1.x.x
+runner = &quot;espflash flash --monitor&quot; # Select this runner for espflash v2.x.x
+rustflags = [ &quot;--cfg&quot;,  &quot;espidf_time64&quot;] # Extending time_t for ESP IDF 5: https://github.com/esp-rs/rust/issues/110
+
+[unstable]
+build-std = [&quot;std&quot;, &quot;panic_abort&quot;]  # 构建和使用 std（对于 no_std 是 core）
+
+[env]  # 被 embuild 使用的环境变量
+MCU=&quot;esp32s3&quot;
+# Note: this variable is not used by the pio builder (`cargo build --features pio`)
+ESP_IDF_VERSION = &quot;v5.2.1&quot;
+# 使用全局 ~/.espressif/ 工具链，默认是 by 项目 workspace 的。
+ESP_IDF_TOOLS_INSTALL_DIR = &quot;global&quot;</code></pre><p class="Paragraph "></p><h3 id="heading-9662be3579fc44bd84b1dcceace26e5a" class="Heading Heading--3 "><a class="Anchor" href="#heading-9662be3579fc44bd84b1dcceace26e5a" aria-label="Anchor">#</a><span class="SemanticString">按需修改 esp-idf 的配置参数文件</span></h3><p class="Paragraph "></p><p class="Paragraph ">按需修改 esp-idf 的配置参数文件：<code>sdkconfig.defaults</code></p><pre class="Code"><code class="language-bash">zj@a:~/docs$ cat ~/code/esp32/std/myespv2/sdkconfig.defaults
+# Rust often needs a bit of an extra main task stack size compared to C (the default is 3K)
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8000 
+
+# Use this to set FreeRTOS kernel tick frequency to 1000 Hz (100 Hz by default).
+# This allows to use 1 ms granuality for thread sleeps (10 ms by default).
+#CONFIG_FREERTOS_HZ=1000
+
+# Workaround for https://github.com/espressif/esp-idf/issues/7631
+#CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=n
+#CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=n</code></pre><h3 id="heading-a58d875ced0c441fb32f5a70fbef40ce" class="Heading Heading--3 "><a class="Anchor" href="#heading-a58d875ced0c441fb32f5a70fbef40ce" aria-label="Anchor">#</a><span class="SemanticString">按需修改 <code>rust-toolchain.toml</code> </span></h3><p class="Paragraph "></p><pre class="Code"><code class="language-toml"># esp32 rust 项目通过 rust-toolchain.toml 来选择 channel 和 target
+zj@a:~/code/esp32/myespv2$ cat rust-toolchain.toml
+[toolchain] 
+channel = &quot;esp&quot;  # ~/.rustup/toolchains/ 下的目录名称，这里使用 esp toolchain
+
+# 使用 embuild crate 来安装和构建 esp-idf framework
+# 对于 non_std 应用，不依赖 esp-idf， 故不需要 build.rs .
+zj@a:~/code/esp32/myespv2$ cat build.rs
+fn main() {
+    embuild::espidf::sysenv::output();
+}</code></pre><h2 id="heading-46a6fccd60a748048f18ea57639baacd" class="Heading Heading--2 "><a class="Anchor" href="#heading-46a6fccd60a748048f18ea57639baacd" aria-label="Anchor">#</a><span class="SemanticString">构建项目：</span></h2><ol class="NumberedListWrapper">
+<li class="NumberedList ">每次构建前都需要先 <span class="SemanticString__Fragment--ColorRed"><code><strong>source ~/esp/export-esp.sh</strong></code></span><strong> </strong>脚本。</li><li class="NumberedList ">不能启用 python env，不能使用 socks 代理，需要设置环境变量；</li><li class="NumberedList ">构建过程中默认下载和安装 <code>esp-idf </code>到 <code>workspace </code>的 <code>.embuild/espressif/ </code>目录；</li></ol>
+<p class="Paragraph "> </p><pre class="Code"><code class="language-bash"># 构建 std 应用时，不能 source source ~/esp/esp-idf/v5.2.1/export.sh 文件，否则会构建失败。
+zj@a:~/code/esp32/myesp$ source ~/esp/export-esp.sh
+zj@a:~/code/esp32/myesp$ cargo build 
+
+# by workspace 安装的 esp-idf 到 .embuild/espressif/ 目录
+zj@a:~/code/esp32/myespv2$ ls -l .embuild/espressif/
+total 4.0K
+drwxr-xr-x 6 alizj  192  5  5 14:54 dist/
+drwxr-xr-x 3 alizj   96  5  5 14:49 esp-idf/
+-rw-r--r-- 1 alizj 2.8K  5  5 14:51 espidf.constraints.v5.2.txt
+drwxr-xr-x 3 alizj   96  5  5 14:51 python_env/
+drwxr-xr-x 6 alizj  192  5  5 14:54 tools/
+
+# dist 下载的内容被解压到 .embuild/espressif/tools/ 目录
+zj@a:~/code/esp32/myespv2$ ls -l .embuild/espressif/dist/
+total 193M
+-rw-r--r-- 1 alizj  70M  5  5 14:52 cmake-3.24.0-macos-universal.tar.gz
+-rw-r--r-- 1 alizj  15M  5  5 14:54 esp32ulp-elf-2.35_20220830-macos-arm64.tar.gz
+-rw-r--r-- 1 alizj 271K  5  5 14:52 ninja-mac-v1.11.1.zip
+-rw-r--r-- 1 alizj  96M  5  5 14:51 xtensa-esp-elf-13.2.0_20230928-aarch64-apple-darwin.tar.xz # 交叉编译工具链
+
+zj@a:~/code/esp32/myespv2$ ls -l .embuild/espressif/tools/
+total 0
+drwxr-xr-x 3 alizj 96  5  5 14:52 cmake/
+drwxr-xr-x 3 alizj 96  5  5 14:54 esp32ulp-elf/ # ULP (Ultra-Low-Powered)
+drwxr-xr-x 3 alizj 96  5  5 14:52 ninja/
+drwxr-xr-x 3 alizj 96  5  5 14:51 xtensa-esp-elf/
+
+# esp-idf framework，被安装到 python_env/ 目录
+zj@a:~/code/esp32/myespv2$ ls -l .embuild/espressif/esp-idf/v5.2.1/
+total 172K
+-rw-r--r--  1 alizj  12K  5  5 14:49 CMakeLists.txt
+-rw-r--r--  1 alizj 4.2K  5  5 14:49 COMPATIBILITY.md
+-rw-r--r--  1 alizj 4.3K  5  5 14:49 COMPATIBILITY_CN.md
+-rw-r--r--  1 alizj  314  5  5 14:49 CONTRIBUTING.md
+-rw-r--r--  1 alizj  25K  5  5 14:49 Kconfig
+-rw-r--r--  1 alizj  12K  5  5 14:49 LICENSE
+-rw-r--r--  1 alizj 8.9K  5  5 14:49 README.md
+-rw-r--r--  1 alizj 8.8K  5  5 14:49 README_CN.md
+-rw-r--r--  1 alizj  532  5  5 14:49 SECURITY.md
+-rw-r--r--  1 alizj 3.7K  5  5 14:49 SUPPORT_POLICY.md
+-rw-r--r--  1 alizj 3.4K  5  5 14:49 SUPPORT_POLICY_CN.md
+-rw-r--r--  1 alizj  721  5  5 14:49 add_path.sh
+drwxr-xr-x 81 alizj 2.6K  5  5 14:49 components/
+-rw-r--r--  1 alizj  12K  5  5 14:49 conftest.py
+drwxr-xr-x 15 alizj  480  5  5 14:49 docs/
+drwxr-xr-x 22 alizj  704  5  5 14:49 examples/
+-rw-r--r--  1 alizj 3.9K  5  5 14:49 export.bat
+-rw-r--r--  1 alizj 3.7K  5  5 14:49 export.fish
+-rw-r--r--  1 alizj 3.5K  5  5 14:49 export.ps1
+-rw-r--r--  1 alizj 8.0K  5  5 14:49 export.sh
+-rw-r--r--  1 alizj 1.8K  5  5 14:49 install.bat
+-rwxr-xr-x  1 alizj  971  5  5 14:49 install.fish*
+-rw-r--r--  1 alizj  982  5  5 14:49 install.ps1
+-rwxr-xr-x  1 alizj 1004  5  5 14:49 install.sh*
+-rw-r--r--  1 alizj  889  5  5 14:49 pytest.ini
+-rw-r--r--  1 alizj 2.0K  5  5 14:49 sdkconfig.rename
+-rw-r--r--  1 alizj  530  5  5 14:49 sonar-project.properties
+drwxr-xr-x 47 alizj 1.5K  5  5 14:51 tools/
+
+zj@a:~/code/esp32/myesp$ ls target/
+CACHEDIR.TAG  debug/  xtensa-esp32s3-espidf/</code></pre><p class="Paragraph ">构建结果位于 <code>target/xtensa-esp32s3-espidf </code>目录下：</p><p class="Paragraph "></p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32/myesp$ ls -l target/xtensa-esp32s3-espidf/debug/
+total 11M 
+-rw-r--r--   1 alizj  21K  5  5 14:45 bootloader.bin # bootloader
+drwxr-xr-x  18 alizj  576  5  5 14:39 build/
+drwxr-xr-x 178 alizj 5.6K  5  5 14:45 deps/
+drwxr-xr-x   2 alizj   64  5  5 14:39 examples/
+drwxr-xr-x   3 alizj   96  5  5 14:45 incremental/
+-rwxr-xr-x   1 alizj  11M  5  5 14:45 myesp*  # 二进制程序
+-rw-r--r--   1 alizj  153  5  5 14:45 myesp.d
+-rw-r--r--   1 alizj 3.0K  5  5 14:45 partition-table.bin # 分区表
+
+zj@a:~/code/esp32/myesp$ file target/xtensa-esp32s3-espidf/debug/myesp
+target/xtensa-esp32s3-espidf/debug/myesp: ELF 32-bit LSB executable, Tensilica Xtensa, version 1 (SYSV), statically linked, with debug_info, not stripped</code></pre><p class="Paragraph "><span class="SemanticString__Fragment--ColorRed">构建失败的解决办法：</span></p><ol class="NumberedListWrapper">
+<li class="NumberedList ">cargo clen 清理 target 目录；</li><li class="NumberedList ">手动清理 .embuild 目录；</li><li class="NumberedList ">不能启用 socks 代理；</li><li class="NumberedList ">不能开启 python venv；</li></ol>
+<p class="Paragraph "> </p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32/myesp$ cargo clean
+zj@a:~/code/esp32/myesp$ rm -rf .embuild/
+zj@a:~/code/esp32/myesp$ ls
+Cargo.lock  Cargo.toml  build.rs  rust-toolchain.toml  sdkconfig.defaults  src/
+zj@a:~/code/esp32/myesp$ cargo build
+ 
+# cargo build 会安装 esp-idf，期间会安装 python venv 和按照 python 包。所以，不能使用 python 不支
+# 持的 socks 代理，也不能启用 python env。
+zj@a:~/code/esp32/$ enable_http_proxy
+zj@a:~/code/esp32/$ export DIR_TO_REMOVE=/Users/alizj/.venv/bin
+zj@a:~/code/esp32/$ export PATH=$(echo $PATH | sed -e &quot;s;:$DIR_TO_REMOVE;;&quot; -e &quot;s;$DIR_TO_REMOVE:;;&quot; -e &quot;s;$DIR_TO_REMOVE;;&quot;)
+
+# 如果是 Mac M1 笔记本，需要给 cargo build 添加环境变量 CRATE_CC_NO_DEFAULTS=1，否则会构建失败，报错：
+# xtensa-esp-elf-gcc: error: unrecognized command-line option &#39;--target=xtensa-esp32s3-espidf&#39;
+# 参考：https://github.com/rust-lang/cc-rs/issues/1005
+zj@a:~/code/esp32/$ export CRATE_CC_NO_DEFAULTS=1</code></pre><p class="Paragraph ">参考：</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">https://docs.esp-rs.org/std-training/01_intro.html</li><li class="NumberedList ">https://github.com/esp-rs/std-training</li><li class="NumberedList ">https://github.com/danclive/esp-examples/tree/main</li></ol>
+<p class="Paragraph "></p><h2 id="heading-8885e11752484ec4a677b2f5adbb9a0a" class="Heading Heading--2 "><a class="Anchor" href="#heading-8885e11752484ec4a677b2f5adbb9a0a" aria-label="Anchor">#</a><span class="SemanticString">1 为 Rust std 应用添加组件 component #</span></h2><p class="Paragraph ">使用 <code>cargo build</code> 构建基于 <code>eps-idf-sys</code> 的 <code>std</code> 应用时, <code>build.rs</code> 构建脚本执行的 <code>embuild crate</code> 会下载 <code>esp-idf</code> 库，使用 <code>bindgen</code> 来生成<code> Rust</code> 接口，将编译后的 <code>component</code> 静态库链接到 Rust 可执行程序。</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">Rust 习惯使用<code> xx-sys</code> 来命名其他语言<code> xx </code>项目的 <code>Rust wrapper</code>，所以 <code>esp-idf-sys</code> 是 C 项目<code> esp-idf</code> 的 <code>Rust wrapper</code>。</li><div style="margin-left: 20px;"><p class="Paragraph "><code>esp-idf</code> 内置了大量 <code>component</code>，同时社区和 <code>component registry </code>上还有大量其他 <code>component </code>可供使用。</p></div>
+</ul>
+<p class="Paragraph ">内置<code> component</code> 的 <code>bindgen</code> 由 <code>esp-idf-sys</code> 的 <code>bindings.h</code><code> </code>头文件定义。</p><div style="margin-left: 20px;"><p class="Paragraph "><code>esp-idf-sys</code> 默认启用了 所有内置<code> component</code> ，并链接到 <code>Rust</code> 可执行程序。可以通过配置 <code>esp_idf_components</code>, <code>$ESP_IDF_COMPONENTS </code>来指定要</p></div>
+<p class="Paragraph ">接的 <code>esp-id</code>f 内置 <code>component </code>列表。</p><p class="Paragraph "> </p><pre class="Code"><code class="language-bash">[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_common/libesp_common.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_timer/libesp_timer.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/app_trace/libapp_trace.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_event/libesp_event.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/nvs_flash/libnvs_flash.a 
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_phy/libesp_phy.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/vfs/libvfs.a
+// ...
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=/Users/alizj/code/esp32/std/.embuild/espressif/esp-idf/v5.2.1/components/esp_wifi/lib/esp32s3/libcore.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=/Users/alizj/code/esp32/std/.embuild/espressif/esp-idf/v5.2.1/components/esp_wifi/lib/esp32s3/libespnow.a
+// ...
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_coex/libesp_coex.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/esp_wifi/libesp_wifi.a
+// ...
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=esp-idf/mbedtls/mbedtls/3rdparty/p256-m/libp256m.a
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=/Users/alizj/code/esp32/std/.embuild/espressif/esp-idf/v5.2.1/components/esp_wifi/lib/esp32s3/libcore.a
+[esp32-camera-binding 0.1.0]
+// ...
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=-Wl,--wrap=_Unwind_Backtrace
+[esp32-camera-binding 0.1.0] cargo:rustc-link-arg=-Wl,--wrap=__cxa_call_unexpected</code></pre><p class="Paragraph ">为 esp-idf-sys 添加 外部额外的 <code>component</code> ，让 esp-idf-sys bindgen 它的头文件，并进行编译和链接。</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">bindgen 为 C 生成的 Rust 接口会放到 esp-idf-sys module 中供 Rust 程序使用。</li></ul>
+<p class="Paragraph ">esp-idf-sys crate 提供了一些影响 esp-idf bindgen、编译构建的配置参数和 .cargo/config.tom 环境变量：</p><ul class="BulletedListWrapper">
+<li class="BulletedList ">https://github.com/esp-rs/esp-idf-sys/blob/master/BUILD-OPTIONS.md</li><li class="BulletedList ">https://docs.esp-rs.org/esp-idf-svc/esp_idf_sys/index.html</li></ul>
+<p class="Paragraph ">添加 <code>extral component</code> 示例：</p><p class="Paragraph "> </p><pre class="Code"><code class="language-toml"># 在 workspace 的 members 列表里添加待创建的 crate package 目录名称
+zj@a:~/code/esp32/std$ cat Cargo.toml
+[workspace] 
+resolver = &quot;2&quot;
+members = [
+  &quot;myesp&quot;,
+  &quot;myespv2&quot;,
+  &quot;myespv3&quot;,
+  &quot;myespv4&quot;,
+  &quot;esp32-camera-binding&quot; # 待创建的 create package 目录名称
+]
+#...
+
+# 由于 workspace 的 Cargo.toml 中没有配置 [package], 即该 workspace 没有默认的 root crate, 它是一
+# 个virtual workspace.
+#
+# 对于 virtual workspace, 必须在 workspace 的 .cargo/config.toml 文件中, 通过环境变量
+# ESP_IDF_SYS_ROOT_CRATE=&quot;esp32-camera-binding&quot; 来指定 root crate, 如 esp32-camera-binding.
+zj@a:~/code/esp32/std$ cat .cargo/config.toml
+[env]
+ESP_IDF_SYS_ROOT_CRATE=&quot;esp32-camera-binding&quot; # 关键! 否则编译 esp32-camera-binding 时不会进行 bindgen 转换.
+
+# 创建上面定义的 esp32-camera-binding std 项目
+zj@a:~/code/esp32/std$ cargo generate esp-rs/esp-idf-template cargo
+zj@a:~/code/esp32/std$ cd esp32-camera-binding/
+
+# clone 要 bindgen 的 esp-idf component 项目到本地
+zj@a:~/code/esp32/std/esp32-camera-binding$ git clone git@github.com:espressif/esp32-camera.git
+zj@a:~/code/esp32/std/esp32-camera-binding$ ls
+Cargo.toml  bindings.h  build.rs  esp32-camera/  src/
+
+# 创建一个 bindings.h 文件，内容为 bindgen 要转换的 component 头文件列表，
+# 可以查看项目目录中头文件名称。
+zj@a:~/code/esp32/std/esp32-camera-binding$ cat bindings.h
+#include &quot;esp_camera.h&quot;
+
+# 配置刚创建的 package 的 Cargo.toml 文件，添加 [[package.metadata.esp-idf-sys.extra_components]]
+# 这样在编译 esp-idf-sys 时，会自动使用 bindgen 将 bindings.h 中的头文件生成到 esp-idf-sys 的 module 中，
+# 同时也会编译该 component 为静态库，后续可以链接到 Rust 可执行程序中。
+zj@a:~/code/esp32/std/esp32-camera-binding$ cat Cargo.toml
+[package]
+name = &quot;esp32-camera-binding&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;alizj&quot;]
+edition = &quot;2021&quot;
+resolver = &quot;2&quot;
+rust-version = &quot;1.71&quot;
+
+[profile.release]
+opt-level = &quot;s&quot;
+
+[profile.dev]
+debug = true
+opt-level = &quot;z&quot;
+
+[features]
+default = [&quot;std&quot;, &quot;embassy&quot;, &quot;esp-idf-svc/native&quot;, &quot;esp-idf-sys/native&quot;]
+
+pio = [&quot;esp-idf-svc/pio&quot;]
+std = [&quot;alloc&quot;, &quot;esp-idf-svc/binstart&quot;, &quot;esp-idf-svc/std&quot;]
+alloc = [&quot;esp-idf-svc/alloc&quot;]
+nightly = [&quot;esp-idf-svc/nightly&quot;]
+experimental = [&quot;esp-idf-svc/experimental&quot;]
+embassy = [&quot;esp-idf-svc/embassy-sync&quot;, &quot;esp-idf-svc/critical-section&quot;, &quot;esp-idf-svc/embassy-time-driver&quot;]
+
+[dependencies]
+log = { version = &quot;0.4&quot;, default-features = false }
+esp-idf-svc = { version = &quot;0.48&quot;, default-features = false }
+esp-idf-sys = { version = &quot;0.34.1&quot;} # 添加 esp-idf-sys 依赖
+esp-idf-hal = { version = &quot;0.43.1&quot;}
+
+[build-dependencies]
+embuild = &quot;0.31.3&quot;
+
+# esp-idf-sys 的构建脚本 embuild 在编译 esp-idf C 时使用的配置参数.
+#
+# 通过在 crate package 的 Cargo.toml 文件, 而非 workspace 级别的 .cargo/config.toml 的环境变量来配置,
+# 可以更灵活和个性化.
+#
+# 下面的 package.metadata.esp-idf-sys 只能在 root crate 中配置才能生效, 而 root crate 的配置方式有两种:
+# 1. 在 workspace 的 Cargo.toml 中配置的 [package] 称为 root crate;
+# 2. 否则, 需要在 workspace 的 .cargo/config.toml 中用环境变量配置 ESP_IDF_SYS_ROOT_CRATE 配置 root crate 如 &quot;esp32-camera-binding&quot;.
+[package.metadata.esp-idf-sys]
+esp_idf_tools_install_dir = &quot;workspace&quot;
+esp_idf_sdkconfig = &quot;sdkconfig&quot; # 相对于 workspace 目录
+esp_idf_sdkconfig_defaults = [&quot;sdkconfig.defaults&quot;, &quot;sdkconfig.defaults.esp32s3&quot;] # 相对于 workspace 目录
+#esp_idf_components = [&quot;pthread&quot;]
+# native builder only
+esp_idf_version = &quot;v5.2.1&quot;
+
+[[package.metadata.esp-idf-sys.extra_components]]  # 为 esp-idf-sys 添加额外的 C component
+component_dirs = [ &quot;esp32-camera&quot; ]  # 本地 component 目录列表
+bindings_header = &quot;bindings.h&quot;  # bindgen 头文件，内容为 component 的头文件
+bindings_module = &quot;camera&quot;  # bindgen 转换后的 Rust 代码所属的 esp-idf-sys module
+zj@a:~/code/esp32/std/esp32-camera-binding$</code></pre><p class="Paragraph ">上面是手动将 component 下载到本地，还可以添加 ESP-IDF component registry 中的 <code>remote component</code> ，这时 esp-idf 会自动下载到本地。</p><p class="Paragraph "> </p><pre class="Code"><code class="language-toml">[package.metadata.esp-idf-sys.extra_components.0.remote_component]
+# The name of the remote component. Corresponds to a key in the dependencies of
+# `idf_component.yml`.
+name = &quot;component_name&quot;
+# The version of the remote component. Corresponds to the `version` field of the
+# `idf_component.yml`. 
+version = &quot;1.2&quot;
+# A git url that contains this remote component. Corresponds to the `git`
+# field of the `idf_component.yml`.
+#
+# This field is optional.
+git = &quot;https://github.com/espressif/esp32-camera.git&quot;
+
+# A path to the component.
+# Corresponds to the `path` field of the `idf_component.yml`.
+#
+# Note: This should not be used for local components, use
+# `component_dirs` of extra components instead.
+#
+# This field is optional.
+path = &quot;path/to/component&quot;
+
+# A url to a custom component registry. Corresponds to the `service_url`
+# field of the `idf_component.yml`.
+#
+# This field is optional.
+service_url = &quot;https://componentregistry.company.com&quot;</code></pre><p class="Paragraph ">remote component 示例:</p><p class="Paragraph "> </p><pre class="Code"><code class="language-toml">zj@a:~/code/esp32/std/esp32-camera-binding$ cat Cargo.toml
+[package] 
+name = &quot;esp32-camera-binding&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;alizj&quot;]
+edition = &quot;2021&quot;
+resolver = &quot;2&quot;
+rust-version = &quot;1.71&quot;
+
+[profile.release]
+opt-level = &quot;s&quot;
+
+[profile.dev]
+debug = true    # Symbols are nice and they don&#39;t increase the size on Flash
+opt-level = &quot;z&quot;
+
+[features]
+default = [&quot;std&quot;, &quot;embassy&quot;, &quot;esp-idf-svc/native&quot;, &quot;esp-idf-sys/native&quot;]
+pio = [&quot;esp-idf-svc/pio&quot;]
+std = [&quot;alloc&quot;, &quot;esp-idf-svc/binstart&quot;, &quot;esp-idf-svc/std&quot;]
+alloc = [&quot;esp-idf-svc/alloc&quot;]
+nightly = [&quot;esp-idf-svc/nightly&quot;]
+experimental = [&quot;esp-idf-svc/experimental&quot;]
+embassy = [&quot;esp-idf-svc/embassy-sync&quot;, &quot;esp-idf-svc/critical-section&quot;, &quot;esp-idf-svc/embassy-time-driver&quot;]
+
+[dependencies]
+log = { version = &quot;0.4&quot;, default-features = false }
+esp-idf-svc = { version = &quot;0.48&quot; }
+esp-idf-sys = { version = &quot;0.34.1&quot;}
+esp-idf-hal = { version = &quot;0.43.1&quot;}
+embedded-svc = &quot;0.21&quot;
+anyhow = &quot;1&quot;
+base64 = &quot;0.13.0&quot;
+
+[build-dependencies]
+embuild = &quot;0.31.3&quot;
+
+# esp-idf-sys 的构建脚本 embuild 在编译 esp-idf C 时使用的配置参数.
+#
+# 通过在 crate package 的 Cargo.toml 文件, 而非 workspace 级别的 .cargo/config.toml 的环境变量来配
+# 置,可以更灵活和个性化.
+#
+# 下面的 package.metadata.esp-idf-sys 只能在 root crate 中配置才能生效, 而 root crate 的配置方式有两种:
+# 1. 在 workspace 的 Cargo.toml 中配置的 [package] 称为 root crate;
+# 2. 否则, 需要在 workspace 的 .cargo/config.toml 中用环境变量配置 ESP_IDF_SYS_ROOT_CRATE 配置 root crate 如 &quot;esp32-camera-binding&quot;.
+[package.metadata.esp-idf-sys]
+esp_idf_tools_install_dir = &quot;workspace&quot;
+esp_idf_sdkconfig = &quot;sdkconfig&quot; # 相对于 workspace 目录
+esp_idf_sdkconfig_defaults = [&quot;sdkconfig.defaults&quot;, &quot;sdkconfig.defaults.esp32s3&quot;] # 相对于 workspace 目录
+#esp_idf_components = [&quot;pthread&quot;]
+# native builder only
+esp_idf_version = &quot;v5.2.1&quot;
+
+# 对于 virtual workspace 类型, 必须在 .cargo/config.toml 中配置 ESP_IDF_SYS_ROOT_CRATE 来指定 root crate package.
+#esp_idf_sys_root_crate=&quot;esp32-camera-binding&quot;
+
+[[package.metadata.esp-idf-sys.extra_components]]
+component_dirs = &quot;esp32-camera&quot;  # 本地 component
+bindings_header = &quot;bindings.h&quot;
+bindings_module = &quot;camera&quot;
+
+[[package.metadata.esp-idf-sys.extra_components]]
+remote_component = { name = &quot;espressif/button&quot;, version = &quot;3.2.0&quot;} # 远程 ESP-IDF component registry
+bindings_header = &quot;bindings.h&quot;
+bindings_module = &quot;button&quot;
+zj@a:~/code/esp32/std/esp32-camera-binding$
+
+zj@a:~/code/esp32/std/esp32-camera-binding$ cat bindings.h  # 两个 component 的头文件
+#include &quot;esp_camera.h&quot;
+#include &quot;iot_button.h&quot;</code></pre><p class="Paragraph ">cargo build 会自动将 component 下载到本地，然后进行 bindgen 和链接：</p><p class="Paragraph "> </p><pre class="Code"><code class="language-bash">zj@a:~/code/esp32/std/esp32-camera-binding$ ls -l ../target/xtensa-esp32s3-espidf/debug/build/esp-idf-sys-7b038a52fa416f70/out
+total 5.3M
+-rw-r--r--  1 alizj 1.4K  7 24  2006 CMakeLists.txt
+-rw-r--r--  1 alizj 5.2M  5 24 12:36 bindings.rs  # eps-idf-sys 所有 component Rust 接口绑定
+drwxr-xr-x 36 alizj 1.2K  5 24 12:36 build/
+-rw-r--r--  1 alizj 2.6K  5 24 12:36 esp-idf-build.json
+-rw-r--r--  1 alizj  147  5 24 12:36 gen-sdkconfig.defaults
+drwxr-xr-x  5 alizj  160  5 24 12:35 main/
+drwxr-xr-x  4 alizj  128  5 24 12:35 managed_components/ # 自动下载到本地的 remote component 目录
+-rw-r--r--  1 alizj  62K  5 24 12:36 sdkconfig
+
+zj@a:~/code/esp32/std/esp32-camera-binding$ ls -l ../target/xtensa-esp32s3-espidf/debug/build/esp-idf-sys-7b038a52fa416f70/out/managed_components/
+total 0
+drwxr-xr-x 16 alizj 512  5 24 12:35 espressif__button/  # button
+drwxr-xr-x 19 alizj 608  5 24 12:35 espressif__cmake_utilities/
+zj@a:~/code/esp32/std/esp32-camera-binding$ ls -l ../target/xtensa-esp32s3-espidf/debug/build/esp-idf-sys-7b038a52fa416f70/out/managed_components/espressif__button/
+total 84K
+-rw-r--r-- 1 alizj 2.4K  1  9 16:34 CHANGELOG.md
+-rw-r--r-- 1 alizj  487  1  9 16:34 CMakeLists.txt
+-rw-r--r-- 1 alizj 1.8K  1  9 16:34 Kconfig
+-rw-r--r-- 1 alizj 1.7K  1  9 16:34 README.md
+-rw-r--r-- 1 alizj  12K  1  9 16:34 button_adc.c
+-rw-r--r-- 1 alizj 2.6K  1  9 16:34 button_gpio.c
+-rw-r--r-- 1 alizj 2.0K  1  9 16:34 button_matrix.c 
+drwxr-xr-x 3 alizj   96  1  9 16:34 examples/
+-rw-r--r-- 1 alizj  440  1  9 16:34 idf_component.yml
+drwxr-xr-x 6 alizj  192  1  9 16:34 include/
+-rw-r--r-- 1 alizj  30K  1  9 16:34 iot_button.c
+-rw-r--r-- 1 alizj  12K  1  9 16:34 license.txt
+drwxr-xr-x 8 alizj  256  1  9 16:34 test_apps/
+
+zj@a:~/code/esp32/std/esp32-camera-binding$ grep -A 3 &#39;pub mod camera&#39; ../target/xtensa-esp32s3-espidf/debug/build/esp-idf-sys-7b038a52fa416f70/out/bindings.rs
+pub mod camera {
+    /* automatically generated by rust-bindgen 0.63.0 */
+
+    #[repr(C)]
+
+zj@a:~/code/esp32/std/esp32-camera-binding$ grep -A 3 &#39;pub mod button&#39; ../target/xtensa-esp32s3-espidf/debug/build/esp-idf-sys-7b038a52fa416f70/out/bindings.rs
+pub mod button {
+    /* automatically generated by rust-bindgen 0.63.0 */
+
+    #[repr(C)]</code></pre><h2 id="heading-e19eea356cf04bb9b882d5018fbb16eb" class="Heading Heading--2 "><a class="Anchor" href="#heading-e19eea356cf04bb9b882d5018fbb16eb" aria-label="Anchor">#</a><span class="SemanticString">2 配置 <code>esp-rs</code> 项目的 <code>esp-idf-sys</code> 参数 </span></h2><p class="Paragraph ">各<code> esp-idf-sys</code> 配置参数有环境变量和 metadata 两种方式（环境变量的优先级更高）：</p><ol class="NumberedListWrapper">
+<li class="NumberedList ">在 <code>.cargo/config.toml</code> 中配置 <code>env </code>环境变量、<code>rusts flags</code>；</li></ol>
+
+  </main>
+    <aside class ="utterances">
+      <script src="https://utteranc.es/client.js"
+      repo="syx-413/syx-413.github.io"
+      issue-term="pathname"
+      theme="preferred-color-scheme"
+      crossorigin="anonymous"
+      async>
+  </script>
+  </aside>
+    <footer class="Footer">
+  <div>
+    &copy; My Blog 2020~2026
+  </div>
+  <div>
+    &centerdot;
+  </div>
+  <div>
+    Powered by
+    <a href="https://github.com/dragonman225/notablog" target="_blank" rel="noopener noreferrer"> notablog</a>.
+  </div>
+</footer>
+
+    
+    <!-- Scripts for Prism.js and KaTeX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>
+      // Auto-render block equations
+      document.querySelectorAll('.equation-block').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: true });
+      });
+      // Auto-render inline equations
+      document.querySelectorAll('.equation-inline').forEach(function(el) {
+          katex.render(el.textContent, el, { displayMode: false });
+      });
+    </script>
+  </body>
+  </html>
+  
